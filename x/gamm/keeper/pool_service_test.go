@@ -261,7 +261,7 @@ func (suite *KeeperTestSuite) TestSpotPriceOverflow() {
 			suite.Require().NoError(err)
 			var poolSpotPrice sdk.Dec
 			var poolErr error
-			mokiassert.ConditionalPanic(suite.T(), tc.panics, func() {
+			osmoassert.ConditionalPanic(suite.T(), tc.panics, func() {
 				poolSpotPrice, poolErr = pool.SpotPrice(suite.Ctx, tc.baseAssetDenom, tc.quoteAssetDenom)
 			})
 			keeperSpotPrice, keeperErr := suite.App.GAMMKeeper.CalculateSpotPrice(suite.Ctx, poolId, tc.quoteAssetDenom, tc.baseAssetDenom)

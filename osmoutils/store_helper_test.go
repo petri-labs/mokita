@@ -16,8 +16,8 @@ import (
 	paramskeeper "github.com/cosmos/cosmos-sdk/x/params/keeper"
 	paramstypes "github.com/cosmos/cosmos-sdk/x/params/types"
 
-	"github.com/petri-labs/mokita/osmoutils"
-	"github.com/petri-labs/mokita/osmoutils/noapptest"
+	"github.com/osmosis-labs/osmosis/osmoutils"
+	"github.com/osmosis-labs/osmosis/osmoutils/noapptest"
 	"github.com/osmosis-labs/osmosis/osmoutils/osmoassert"
 )
 
@@ -822,7 +822,7 @@ func (s *TestSuite) TestMustGet() {
 				osmoutils.MustSet(s.store, []byte(key), value)
 			}
 
-			mokiassert.ConditionalPanic(s.T(), tc.expectPanic, func() {
+			osmoassert.ConditionalPanic(s.T(), tc.expectPanic, func() {
 				for key, expectedValue := range tc.expectedGetKeyValues {
 					// System under test.
 					osmoutils.MustGet(s.store, []byte(key), tc.actualResultProto)
@@ -968,7 +968,7 @@ func (s *TestSuite) TestMustSet() {
 
 	for name, tc := range tests {
 		s.Run(name, func() {
-			mokiassert.ConditionalPanic(s.T(), tc.expectPanic, func() {
+			osmoassert.ConditionalPanic(s.T(), tc.expectPanic, func() {
 				osmoutils.MustSet(s.store, []byte(tc.setKey), tc.setValue)
 			})
 
@@ -1030,7 +1030,7 @@ func (s *TestSuite) TestMustGetDec() {
 				osmoutils.MustSetDec(s.store, []byte(key), value)
 			}
 
-			mokiassert.ConditionalPanic(s.T(), tc.expectPanic, func() {
+			osmoassert.ConditionalPanic(s.T(), tc.expectPanic, func() {
 				for key, expectedValue := range tc.expectedGetKeyValues {
 					// System under test.
 					actualDec := osmoutils.MustGetDec(s.store, []byte(key))

@@ -168,7 +168,7 @@ func TestCalcSingleAssetJoin(t *testing.T) {
 			}
 
 			assertPoolStateNotModified(t, pool, func() {
-				mokiassert.ConditionalPanic(t, tc.expectPanic, sut)
+				osmoassert.ConditionalPanic(t, tc.expectPanic, sut)
 			})
 		})
 	}
@@ -684,7 +684,7 @@ func TestCalcSingleAssetInAndOut_InverseRelationship(t *testing.T) {
 				)
 
 				tol := sdk.NewDec(1)
-				mokiassert.DecApproxEq(t, initialCalcTokenOut.ToDec(), inverseCalcTokenOut, tol)
+				osmoassert.DecApproxEq(t, initialCalcTokenOut.ToDec(), inverseCalcTokenOut, tol)
 			})
 		}
 	}

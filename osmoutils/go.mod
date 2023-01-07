@@ -1,4 +1,4 @@
-module github.com/petri-labs/mokita/osmoutils
+module github.com/osmosis-labs/osmosis/osmoutils
 
 go 1.18
 

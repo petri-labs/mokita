@@ -6,7 +6,7 @@ import (
 	"github.com/cosmos/cosmos-sdk/types/address"
 	authtypes "github.com/cosmos/cosmos-sdk/x/auth/types"
 
-	"github.com/petri-labs/mokita/osmoutils"
+	"github.com/osmosis-labs/osmosis/osmoutils"
 	"github.com/osmosis-labs/osmosis/osmoutils/osmoassert"
 )
 
@@ -60,7 +60,7 @@ func (s *TestSuite) TestCreateModuleAccount() {
 				s.accountKeeper.SetAccount(s.ctx, priorAcc)
 			}
 			err := osmoutils.CreateModuleAccount(s.ctx, s.accountKeeper, tc.moduleAccAddr)
-			mokiassert.ConditionalError(s.T(), tc.expErr, err)
+			osmoassert.ConditionalError(s.T(), tc.expErr, err)
 		})
 	}
 }

@@ -9,7 +9,7 @@ import (
 
 	wasmkeeper "github.com/CosmWasm/wasmd/x/wasm/keeper"
 
-	"github.com/petri-labs/mokita/osmoutils"
+	"github.com/osmosis-labs/osmosis/osmoutils"
 	"github.com/petri-labs/mokita/x/gamm/pool-models/balancer"
 	gammtypes "github.com/petri-labs/mokita/x/gamm/types"
 	minttypes "github.com/petri-labs/mokita/x/mint/types"

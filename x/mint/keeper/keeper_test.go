@@ -381,7 +381,7 @@ func (suite *KeeperTestSuite) TestDistributeToModule() {
 	for name, tc := range tests {
 		suite.Run(name, func() {
 			suite.Setup()
-			mokiassert.ConditionalPanic(suite.T(), tc.expectPanic, func() {
+			osmoassert.ConditionalPanic(suite.T(), tc.expectPanic, func() {
 				mintKeeper := suite.App.MintKeeper
 				bankKeeper := suite.App.BankKeeper
 				accountKeeper := suite.App.AccountKeeper
@@ -617,7 +617,7 @@ func (suite *KeeperTestSuite) TestDistributeDeveloperRewards() {
 		suite.Run(name, func() {
 			suite.Setup()
 
-			mokiassert.ConditionalPanic(suite.T(), tc.expectPanic, func() {
+			osmoassert.ConditionalPanic(suite.T(), tc.expectPanic, func() {
 				mintKeeper := suite.App.MintKeeper
 				bankKeeper := suite.App.BankKeeper
 				accountKeeper := suite.App.AccountKeeper

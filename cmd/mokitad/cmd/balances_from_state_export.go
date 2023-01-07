@@ -12,7 +12,7 @@ import (
 	tmjson "github.com/tendermint/tendermint/libs/json"
 	tmtypes "github.com/tendermint/tendermint/types"
 
-	"github.com/petri-labs/mokita/osmoutils"
+	"github.com/osmosis-labs/osmosis/osmoutils"
 	appparams "github.com/petri-labs/mokita/app/params"
 	gammtypes "github.com/petri-labs/mokita/x/gamm/types"
 	lockuptypes "github.com/petri-labs/mokita/x/lockup/types"

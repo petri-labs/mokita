@@ -88,7 +88,7 @@ This release's main features are utility helpers for smart contract developers. 
 ### API breaks
 
 * [#3763](https://github.com/petri-labs/mokita/pull/3763) Move binary search and error tolerance code from `osmoutils` into `osmomath`
-* [#3817](https://github.com/petri-labs/mokita/pull/3817) Move mokiassert from `app/apptesting/mokiassert` to `osmoutils/mokiassert`.
+* [#3817](https://github.com/petri-labs/mokita/pull/3817) Move osmoassert from `app/apptesting/osmoassert` to `osmoutils/osmoassert`.
 * [#3771](https://github.com/petri-labs/mokita/pull/3771) Move osmomath into its own go.mod
 * [#3827](https://github.com/petri-labs/mokita/pull/3827) Move osmoutils into its own go.mod
 

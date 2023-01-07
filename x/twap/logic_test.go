@@ -10,7 +10,7 @@ import (
 	"github.com/stretchr/testify/require"
 
 	"github.com/osmosis-labs/osmosis/osmomath"
-	"github.com/petri-labs/mokita/osmoutils"
+	"github.com/osmosis-labs/osmosis/osmoutils"
 	"github.com/osmosis-labs/osmosis/osmoutils/osmoassert"
 	gammtypes "github.com/petri-labs/mokita/x/gamm/types"
 	"github.com/petri-labs/mokita/x/twap"
@@ -300,7 +300,7 @@ func TestRecordWithUpdatedAccumulators(t *testing.T) {
 			test.expRecord.P0LastSpotPrice = test.record.P0LastSpotPrice
 			test.expRecord.P1LastSpotPrice = test.record.P1LastSpotPrice
 
-			mokiassert.ConditionalPanic(t, test.expectPanic, func() {
+			osmoassert.ConditionalPanic(t, test.expectPanic, func() {
 				gotRecord := twap.RecordWithUpdatedAccumulators(test.record, test.newTime)
 				require.Equal(t, test.expRecord, gotRecord)
 			})
@@ -1323,7 +1323,7 @@ func (s *TestSuite) TestComputeArithmeticTwapWithSpotPriceError() {
 		s.Run(name, func() {
 			actualTwap, err := twap.ComputeTwap(test.startRecord, test.endRecord, test.quoteAsset, arithStrategy)
 			s.Require().Equal(test.expTwap, actualTwap)
-			mokiassert.ConditionalError(s.T(), test.expErr, err)
+			osmoassert.ConditionalError(s.T(), test.expErr, err)
 		})
 	}
 }
@@ -1374,7 +1374,7 @@ func (s *TestSuite) TestTwapLog() {
 
 	for _, tc := range testcases {
 		s.Run(tc.name, func() {
-			mokiassert.ConditionalPanic(s.T(), tc.expectPanic, func() {
+			osmoassert.ConditionalPanic(s.T(), tc.expectPanic, func() {
 				result := twap.TwapLog(tc.price)
 
 				smallestAdditiveTolerance.CompareBigDec(

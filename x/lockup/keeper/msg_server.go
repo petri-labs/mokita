@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/petri-labs/mokita/osmoutils"
+	"github.com/osmosis-labs/osmosis/osmoutils"
 	"github.com/petri-labs/mokita/x/lockup/types"
 
 	sdk "github.com/cosmos/cosmos-sdk/types"

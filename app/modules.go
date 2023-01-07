@@ -51,7 +51,7 @@ import (
 	"github.com/cosmos/cosmos-sdk/x/upgrade"
 	upgradetypes "github.com/cosmos/cosmos-sdk/x/upgrade/types"
 
-	"github.com/petri-labs/mokita/osmoutils/partialord"
+	"github.com/osmosis-labs/osmosis/osmoutils/partialord"
 	appparams "github.com/petri-labs/mokita/app/params"
 	_ "github.com/petri-labs/mokita/client/docs/statik"
 	"github.com/petri-labs/mokita/simulation/simtypes"

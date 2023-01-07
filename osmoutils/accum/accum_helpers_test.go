@@ -3,7 +3,7 @@ package accum_test
 import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 
-	"github.com/petri-labs/mokita/osmoutils/accum"
+	"github.com/osmosis-labs/osmosis/osmoutils/accum"
 )
 
 func (suite *AccumTestSuite) TestValidateAccumulatorValue() {
