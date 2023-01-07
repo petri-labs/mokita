@@ -18,7 +18,7 @@ import (
 
 	"github.com/petri-labs/mokita/osmoutils"
 	"github.com/petri-labs/mokita/osmoutils/noapptest"
-	"github.com/petri-labs/mokita/osmoutils/mokiassert"
+	"github.com/osmosis-labs/osmosis/osmoutils/osmoassert"
 )
 
 // We need to setup a test suite with account keeper

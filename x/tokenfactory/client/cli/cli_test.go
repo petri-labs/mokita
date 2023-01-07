@@ -3,7 +3,7 @@ package cli_test
 import (
 	"testing"
 
-	"github.com/petri-labs/mokita/osmoutils/mokicli"
+	"github.com/osmosis-labs/osmosis/osmoutils/osmocli"
 	"github.com/petri-labs/mokita/x/tokenfactory/client/cli"
 	"github.com/petri-labs/mokita/x/tokenfactory/types"
 )

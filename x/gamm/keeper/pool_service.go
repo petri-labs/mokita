@@ -7,7 +7,7 @@ import (
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 	banktypes "github.com/cosmos/cosmos-sdk/x/bank/types"
 
-	"github.com/petri-labs/mokita/osmomath"
+	"github.com/osmosis-labs/osmosis/osmomath"
 	"github.com/petri-labs/mokita/x/gamm/types"
 	swaproutertypes "github.com/petri-labs/mokita/x/swaprouter/types"
 )
