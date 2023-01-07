@@ -1,7 +1,7 @@
 package grpc 
 
 // THIS FILE IS GENERATED CODE, DO NOT EDIT
-// SOURCE AT `proto/osmosis/swaprouter/v1beta1/query.yml`
+// SOURCE AT `proto/mokita/swaprouter/v1beta1/query.yml`
 
 import (
 	context "context"
@@ -10,8 +10,8 @@ import (
 	"google.golang.org/grpc/status"
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
-	"github.com/osmosis-labs/osmosis/v13/x/swaprouter/client"
-	"github.com/osmosis-labs/osmosis/v13/x/swaprouter/client/queryproto"
+	"github.com/petri-labs/mokita/x/swaprouter/client"
+	"github.com/petri-labs/mokita/x/swaprouter/client/queryproto"
 )
 
 type Querier struct {

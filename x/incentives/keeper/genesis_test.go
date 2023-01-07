@@ -9,17 +9,17 @@ import (
 	"github.com/stretchr/testify/require"
 	tmproto "github.com/tendermint/tendermint/proto/tendermint/types"
 
-	osmoapp "github.com/osmosis-labs/osmosis/v13/app"
+	mokiapp "github.com/petri-labs/mokita/app"
 
-	"github.com/osmosis-labs/osmosis/v13/x/incentives/types"
-	lockuptypes "github.com/osmosis-labs/osmosis/v13/x/lockup/types"
+	"github.com/petri-labs/mokita/x/incentives/types"
+	lockuptypes "github.com/petri-labs/mokita/x/lockup/types"
 )
 
 // TestIncentivesExportGenesis tests export genesis command for the incentives module.
 func TestIncentivesExportGenesis(t *testing.T) {
 	// export genesis using default configurations
 	// ensure resulting genesis params match default params
-	app := osmoapp.Setup(false)
+	app := mokiapp.Setup(false)
 	ctx := app.BaseApp.NewContext(false, tmproto.Header{})
 	genesis := app.IncentivesKeeper.ExportGenesis(ctx)
 	require.Equal(t, genesis.Params.DistrEpochIdentifier, "week")
@@ -68,7 +68,7 @@ func TestIncentivesExportGenesis(t *testing.T) {
 
 // TestIncentivesInitGenesis takes a genesis state and tests initializing that genesis for the incentives module.
 func TestIncentivesInitGenesis(t *testing.T) {
-	app := osmoapp.Setup(false)
+	app := mokiapp.Setup(false)
 	ctx := app.BaseApp.NewContext(false, tmproto.Header{})
 
 	// checks that the default genesis parameters pass validation

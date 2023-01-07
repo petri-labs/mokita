@@ -8,8 +8,8 @@ import (
 	"github.com/cosmos/cosmos-sdk/types/errors"
 	"github.com/stretchr/testify/suite"
 
-	"github.com/osmosis-labs/osmosis/v13/app/apptesting"
-	"github.com/osmosis-labs/osmosis/v13/x/epochs/types"
+	"github.com/petri-labs/mokita/app/apptesting"
+	"github.com/petri-labs/mokita/x/epochs/types"
 )
 
 type KeeperTestSuite struct {

@@ -10,7 +10,7 @@ import (
 type QueryYml struct {
 	// Keeper struct descriptor
 	Keeper Keeper `yaml:"keeper"`
-	// Path to client folder e.g. "github.com/osmosis-labs/osmosis/v13/x/twap/client"
+	// Path to client folder e.g. "github.com/petri-labs/mokita/x/twap/client"
 	ClientPath string `yaml:"client_path"`
 	// list of all queries, key is the query name, e.g. `GetArithmeticTwap`
 	Queries map[string]YmlQueryDescriptor `yaml:"queries"`
@@ -19,7 +19,7 @@ type QueryYml struct {
 }
 
 type Keeper struct {
-	// e.g. github.com/osmosis-labs/osmosis/v13/x/twap
+	// e.g. github.com/petri-labs/mokita/x/twap
 	Path string `yaml:"path"`
 	// e.g. Keeper
 	Struct string `yaml:"struct"`
@@ -52,7 +52,7 @@ func ReadYmlFile(filepath string) (QueryYml, error) {
 	return query, nil
 }
 
-// input is of form github.com/osmosis-labs/osmosis/vXX/{PATH}
+// input is of form github.com/petri-labs/mokita/vXX/{PATH}
 // returns PATH
 func ParseFilePathFromImportPath(importPath string) string {
 	splits := strings.Split(importPath, "/")

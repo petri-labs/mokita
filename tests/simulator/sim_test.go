@@ -12,40 +12,40 @@ import (
 
 	"github.com/cosmos/cosmos-sdk/simapp/helpers"
 
-	osmosim "github.com/osmosis-labs/osmosis/v13/simulation/executor"
-	"github.com/osmosis-labs/osmosis/v13/simulation/simtypes/simlogger"
+	mokisim "github.com/petri-labs/mokita/simulation/executor"
+	"github.com/petri-labs/mokita/simulation/simtypes/simlogger"
 )
 
 // Profile with:
-// /usr/local/go/bin/go test -benchmem -run=^$ github.com/osmosis-labs/osmosis/simapp -bench ^BenchmarkFullAppSimulation$ -Commit=true -cpuprofile cpu.out
+// /usr/local/go/bin/go test -benchmem -run=^$ github.com/petri-labs/mokita/simapp -bench ^BenchmarkFullAppSimulation$ -Commit=true -cpuprofile cpu.out
 func BenchmarkFullAppSimulation(b *testing.B) {
 	// -Enabled=true -NumBlocks=1000 -BlockSize=200 \
 	// -Period=1 -Commit=true -Seed=57 -v -timeout 24h
-	osmosim.FlagEnabledValue = true
-	osmosim.FlagNumBlocksValue = 1000
-	osmosim.FlagBlockSizeValue = 200
-	osmosim.FlagCommitValue = true
-	osmosim.FlagVerboseValue = true
-	// osmosim.FlagPeriodValue = 1000
+	mokisim.FlagEnabledValue = true
+	mokisim.FlagNumBlocksValue = 1000
+	mokisim.FlagBlockSizeValue = 200
+	mokisim.FlagCommitValue = true
+	mokisim.FlagVerboseValue = true
+	// mokisim.FlagPeriodValue = 1000
 	fullAppSimulation(b, false)
 }
 
 func TestFullAppSimulation(t *testing.T) {
 	// -Enabled=true -NumBlocks=1000 -BlockSize=200 \
 	// -Period=1 -Commit=true -Seed=57 -v -timeout 24h
-	osmosim.FlagEnabledValue = true
-	osmosim.FlagNumBlocksValue = 200
-	osmosim.FlagBlockSizeValue = 25
-	osmosim.FlagCommitValue = true
-	osmosim.FlagVerboseValue = true
-	osmosim.FlagPeriodValue = 10
-	osmosim.FlagSeedValue = 11
-	osmosim.FlagWriteStatsToDB = true
+	mokisim.FlagEnabledValue = true
+	mokisim.FlagNumBlocksValue = 200
+	mokisim.FlagBlockSizeValue = 25
+	mokisim.FlagCommitValue = true
+	mokisim.FlagVerboseValue = true
+	mokisim.FlagPeriodValue = 10
+	mokisim.FlagSeedValue = 11
+	mokisim.FlagWriteStatsToDB = true
 	fullAppSimulation(t, true)
 }
 
 func fullAppSimulation(tb testing.TB, is_testing bool) {
-	config, db, logger, cleanup, err := osmosim.SetupSimulation("goleveldb-app-sim", "Simulation")
+	config, db, logger, cleanup, err := mokisim.SetupSimulation("goleveldb-app-sim", "Simulation")
 	if err != nil {
 		tb.Fatalf("simulation setup failed: %s", err.Error())
 	}
@@ -56,11 +56,11 @@ func fullAppSimulation(tb testing.TB, is_testing bool) {
 	config.ExecutionDbConfig.UseMerkleTree = !is_testing
 
 	// Run randomized simulation:
-	_, _, simErr := osmosim.SimulateFromSeed(
+	_, _, simErr := mokisim.SimulateFromSeed(
 		tb,
 		os.Stdout,
-		OsmosisAppCreator(logger, db),
-		OsmosisInitFns,
+		MokisisAppCreator(logger, db),
+		MokisisInitFns,
 		config,
 	)
 
@@ -69,18 +69,18 @@ func fullAppSimulation(tb testing.TB, is_testing bool) {
 	}
 
 	if config.ExecutionDbConfig.UseMerkleTree {
-		osmosim.PrintStats(db)
+		mokisim.PrintStats(db)
 	}
 }
 
 // TODO: Make another test for the fuzzer itself, which just has noOp txs
 // and doesn't depend on the application.
 func TestAppStateDeterminism(t *testing.T) {
-	// if !osmosim.FlagEnabledValue {
+	// if !mokisim.FlagEnabledValue {
 	// 	t.Skip("skipping application simulation")
 	// }
 
-	config := osmosim.NewConfigFromFlags()
+	config := mokisim.NewConfigFromFlags()
 	config.ExportConfig.ExportParamsPath = ""
 	config.NumBlocks = 50
 	config.BlockSize = 5
@@ -109,11 +109,11 @@ func TestAppStateDeterminism(t *testing.T) {
 			)
 
 			// Run randomized simulation:
-			lastCommitId, _, simErr := osmosim.SimulateFromSeed(
+			lastCommitId, _, simErr := mokisim.SimulateFromSeed(
 				t,
 				os.Stdout,
-				OsmosisAppCreator(logger, db),
-				OsmosisInitFns,
+				MokisisAppCreator(logger, db),
+				MokisisInitFns,
 				config,
 			)
 

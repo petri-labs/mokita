@@ -6,7 +6,7 @@ import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/gogo/protobuf/proto"
 
-	"github.com/osmosis-labs/osmosis/v13/x/twap/types"
+	"github.com/petri-labs/mokita/x/twap/types"
 )
 
 func (s *TestSuite) TestMigrateExistingPools() {

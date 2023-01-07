@@ -2,17 +2,17 @@ package v13_test
 
 import (
 	"fmt"
-	ibchookstypes "github.com/osmosis-labs/osmosis/x/ibc-hooks/types"
+	ibchookstypes "github.com/petri-labs/mokita/x/ibc-hooks/types"
 	"testing"
 
-	ibcratelimittypes "github.com/osmosis-labs/osmosis/v13/x/ibc-rate-limit/types"
+	ibcratelimittypes "github.com/petri-labs/mokita/x/ibc-rate-limit/types"
 
 	"github.com/cosmos/cosmos-sdk/store/prefix"
 	upgradetypes "github.com/cosmos/cosmos-sdk/x/upgrade/types"
 	"github.com/stretchr/testify/suite"
 	abci "github.com/tendermint/tendermint/abci/types"
 
-	"github.com/osmosis-labs/osmosis/v13/app/apptesting"
+	"github.com/petri-labs/mokita/app/apptesting"
 )
 
 type UpgradeTestSuite struct {

@@ -17,8 +17,8 @@ import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/cosmos/cosmos-sdk/types/module"
 
-	"github.com/osmosis-labs/osmosis/v13/x/protorev/keeper"
-	"github.com/osmosis-labs/osmosis/v13/x/protorev/types"
+	"github.com/petri-labs/mokita/x/protorev/keeper"
+	"github.com/petri-labs/mokita/x/protorev/types"
 )
 
 var (
@@ -30,7 +30,7 @@ var (
 // AppModuleBasic
 // ----------------------------------------------------------------------------
 
-// AppModuleBasic implements the AppModuleBasic interface that defines the independent methods a Cosmos SDK module needs to implement.
+// AppModuleBasic implements the AppModuleBasic interface that defines the independent methods a Cmokis SDK module needs to implement.
 type AppModuleBasic struct {
 	cdc codec.BinaryCodec
 }

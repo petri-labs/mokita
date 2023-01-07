@@ -5,7 +5,7 @@ import (
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 
-	"github.com/osmosis-labs/osmosis/v13/x/superfluid/types"
+	"github.com/petri-labs/mokita/x/superfluid/types"
 )
 
 const totalSuperfluidDelegationInvariantName = "total-superfluid-delegation-invariant-name"
@@ -62,7 +62,7 @@ func TotalSuperfluidDelegationInvariant(keeper Keeper) sdk.Invariant {
 				return sdk.FormatInvariant(types.ModuleName, totalSuperfluidDelegationInvariantName,
 					"\tonly single coin lockup is eligible for superfluid staking"), true
 			}
-			amount := keeper.GetSuperfluidOSMOTokens(ctx, lock.Coins[0].Denom, lock.Coins[0].Amount)
+			amount := keeper.GetSuperfluidMOKITokens(ctx, lock.Coins[0].Denom, lock.Coins[0].Amount)
 			totalExpectedSuperfluidAmount = totalExpectedSuperfluidAmount.Add(amount)
 		}
 

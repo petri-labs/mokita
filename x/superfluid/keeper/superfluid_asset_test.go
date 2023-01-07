@@ -1,7 +1,7 @@
 package keeper_test
 
 import (
-	"github.com/osmosis-labs/osmosis/v13/x/superfluid/types"
+	"github.com/petri-labs/mokita/x/superfluid/types"
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 )
@@ -41,10 +41,10 @@ func (suite *KeeperTestSuite) TestSuperfluidAssetSetGetDeleteFlow() {
 	suite.Require().Len(assets, 0)
 }
 
-func (suite *KeeperTestSuite) TestGetRiskAdjustedOsmoValue() {
+func (suite *KeeperTestSuite) TestGetRiskAdjustedMokiValue() {
 	suite.SetupTest()
 
-	adjustedValue := suite.App.SuperfluidKeeper.GetRiskAdjustedOsmoValue(
+	adjustedValue := suite.App.SuperfluidKeeper.GetRiskAdjustedMokiValue(
 		suite.Ctx,
 		types.SuperfluidAsset{Denom: "gamm/pool/1", AssetType: types.SuperfluidAssetTypeLPShare},
 		sdk.NewInt(100),

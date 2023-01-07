@@ -5,13 +5,13 @@ import (
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 
-	events "github.com/osmosis-labs/osmosis/v13/x/swaprouter/events"
+	events "github.com/petri-labs/mokita/x/swaprouter/events"
 
-	"github.com/osmosis-labs/osmosis/v13/x/concentrated-liquidity/internal/math"
-	"github.com/osmosis-labs/osmosis/v13/x/concentrated-liquidity/internal/swapstrategy"
-	"github.com/osmosis-labs/osmosis/v13/x/concentrated-liquidity/types"
-	gammtypes "github.com/osmosis-labs/osmosis/v13/x/gamm/types"
-	swaproutertypes "github.com/osmosis-labs/osmosis/v13/x/swaprouter/types"
+	"github.com/petri-labs/mokita/x/concentrated-liquidity/internal/math"
+	"github.com/petri-labs/mokita/x/concentrated-liquidity/internal/swapstrategy"
+	"github.com/petri-labs/mokita/x/concentrated-liquidity/types"
+	gammtypes "github.com/petri-labs/mokita/x/gamm/types"
+	swaproutertypes "github.com/petri-labs/mokita/x/swaprouter/types"
 )
 
 type SwapState struct {

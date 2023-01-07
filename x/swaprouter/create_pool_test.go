@@ -6,12 +6,12 @@ import (
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 
-	"github.com/osmosis-labs/osmosis/v13/app/apptesting"
-	clmodel "github.com/osmosis-labs/osmosis/v13/x/concentrated-liquidity/model"
-	"github.com/osmosis-labs/osmosis/v13/x/gamm/pool-models/balancer"
-	balancertypes "github.com/osmosis-labs/osmosis/v13/x/gamm/pool-models/balancer"
-	gammtypes "github.com/osmosis-labs/osmosis/v13/x/gamm/types"
-	"github.com/osmosis-labs/osmosis/v13/x/swaprouter/types"
+	"github.com/petri-labs/mokita/app/apptesting"
+	clmodel "github.com/petri-labs/mokita/x/concentrated-liquidity/model"
+	"github.com/petri-labs/mokita/x/gamm/pool-models/balancer"
+	balancertypes "github.com/petri-labs/mokita/x/gamm/pool-models/balancer"
+	gammtypes "github.com/petri-labs/mokita/x/gamm/types"
+	"github.com/petri-labs/mokita/x/swaprouter/types"
 )
 
 func (suite *KeeperTestSuite) TestPoolCreationFee() {

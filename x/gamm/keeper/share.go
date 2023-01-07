@@ -3,9 +3,9 @@ package keeper
 import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 
-	"github.com/osmosis-labs/osmosis/v13/x/gamm/types"
-	"github.com/osmosis-labs/osmosis/v13/x/swaprouter/events"
-	swaproutertypes "github.com/osmosis-labs/osmosis/v13/x/swaprouter/types"
+	"github.com/petri-labs/mokita/x/gamm/types"
+	"github.com/petri-labs/mokita/x/swaprouter/events"
+	swaproutertypes "github.com/petri-labs/mokita/x/swaprouter/types"
 )
 
 func (k Keeper) applyJoinPoolStateChange(ctx sdk.Context, pool swaproutertypes.PoolI, joiner sdk.AccAddress, numShares sdk.Int, joinCoins sdk.Coins) error {

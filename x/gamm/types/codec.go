@@ -12,19 +12,19 @@ import (
 // on the provided LegacyAmino codec. These types are used for Amino JSON serialization.
 func RegisterLegacyAminoCodec(cdc *codec.LegacyAmino) {
 	cdc.RegisterInterface((*CFMMPoolI)(nil), nil)
-	cdc.RegisterConcrete(&MsgJoinPool{}, "osmosis/gamm/join-pool", nil)
-	cdc.RegisterConcrete(&MsgExitPool{}, "osmosis/gamm/exit-pool", nil)
-	cdc.RegisterConcrete(&MsgSwapExactAmountIn{}, "osmosis/gamm/swap-exact-amount-in", nil)
-	cdc.RegisterConcrete(&MsgSwapExactAmountOut{}, "osmosis/gamm/swap-exact-amount-out", nil)
-	cdc.RegisterConcrete(&MsgJoinSwapExternAmountIn{}, "osmosis/gamm/join-swap-extern-amount-in", nil)
-	cdc.RegisterConcrete(&MsgJoinSwapShareAmountOut{}, "osmosis/gamm/join-swap-share-amount-out", nil)
-	cdc.RegisterConcrete(&MsgExitSwapExternAmountOut{}, "osmosis/gamm/exit-swap-extern-amount-out", nil)
-	cdc.RegisterConcrete(&MsgExitSwapShareAmountIn{}, "osmosis/gamm/exit-swap-share-amount-in", nil)
+	cdc.RegisterConcrete(&MsgJoinPool{}, "mokita/gamm/join-pool", nil)
+	cdc.RegisterConcrete(&MsgExitPool{}, "mokita/gamm/exit-pool", nil)
+	cdc.RegisterConcrete(&MsgSwapExactAmountIn{}, "mokita/gamm/swap-exact-amount-in", nil)
+	cdc.RegisterConcrete(&MsgSwapExactAmountOut{}, "mokita/gamm/swap-exact-amount-out", nil)
+	cdc.RegisterConcrete(&MsgJoinSwapExternAmountIn{}, "mokita/gamm/join-swap-extern-amount-in", nil)
+	cdc.RegisterConcrete(&MsgJoinSwapShareAmountOut{}, "mokita/gamm/join-swap-share-amount-out", nil)
+	cdc.RegisterConcrete(&MsgExitSwapExternAmountOut{}, "mokita/gamm/exit-swap-extern-amount-out", nil)
+	cdc.RegisterConcrete(&MsgExitSwapShareAmountIn{}, "mokita/gamm/exit-swap-share-amount-in", nil)
 }
 
 func RegisterInterfaces(registry types.InterfaceRegistry) {
 	registry.RegisterInterface(
-		"osmosis.gamm.v1beta1.PoolI", // N.B.: the old proto-path is preserved for backwards-compatibility.
+		"mokita.gamm.v1beta1.PoolI", // N.B.: the old proto-path is preserved for backwards-compatibility.
 		(*CFMMPoolI)(nil),
 	)
 

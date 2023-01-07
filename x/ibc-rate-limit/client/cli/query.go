@@ -3,16 +3,16 @@ package cli
 import (
 	"github.com/spf13/cobra"
 
-	"github.com/osmosis-labs/osmosis/osmoutils/osmocli"
-	"github.com/osmosis-labs/osmosis/v13/x/ibc-rate-limit/types"
+	"github.com/petri-labs/mokita/mokiutils/mokicli"
+	"github.com/petri-labs/mokita/x/ibc-rate-limit/types"
 )
 
 // GetQueryCmd returns the cli query commands for this module.
 func GetQueryCmd() *cobra.Command {
-	cmd := osmocli.QueryIndexCmd(types.ModuleName)
+	cmd := mokicli.QueryIndexCmd(types.ModuleName)
 
 	cmd.AddCommand(
-		osmocli.GetParams[*types.QueryParamsRequest](
+		mokicli.GetParams[*types.QueryParamsRequest](
 			types.ModuleName, types.NewQueryClient),
 	)
 

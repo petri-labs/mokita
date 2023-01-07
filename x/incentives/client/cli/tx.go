@@ -7,9 +7,9 @@ import (
 
 	"github.com/spf13/cobra"
 
-	"github.com/osmosis-labs/osmosis/osmoutils/osmocli"
-	"github.com/osmosis-labs/osmosis/v13/x/incentives/types"
-	lockuptypes "github.com/osmosis-labs/osmosis/v13/x/lockup/types"
+	"github.com/petri-labs/mokita/mokiutils/mokicli"
+	"github.com/petri-labs/mokita/x/incentives/types"
+	lockuptypes "github.com/petri-labs/mokita/x/lockup/types"
 
 	"github.com/cosmos/cosmos-sdk/client"
 	"github.com/cosmos/cosmos-sdk/client/flags"
@@ -19,7 +19,7 @@ import (
 
 // GetTxCmd returns the transaction commands for this module.
 func GetTxCmd() *cobra.Command {
-	cmd := osmocli.TxIndexCmd(types.ModuleName)
+	cmd := mokicli.TxIndexCmd(types.ModuleName)
 	cmd.AddCommand(
 		NewCreateGaugeCmd(),
 		NewAddToGaugeCmd(),
@@ -108,7 +108,7 @@ func NewCreateGaugeCmd() *cobra.Command {
 }
 
 func NewAddToGaugeCmd() *cobra.Command {
-	return osmocli.BuildTxCli[*types.MsgAddToGauge](&osmocli.TxCliDesc{
+	return mokicli.BuildTxCli[*types.MsgAddToGauge](&mokicli.TxCliDesc{
 		Use:   "add-to-gauge [gauge_id] [rewards] [flags]",
 		Short: "add coins to gauge to distribute more rewards to users",
 	})

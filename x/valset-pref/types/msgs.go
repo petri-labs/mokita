@@ -6,8 +6,8 @@ import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 
-	"github.com/osmosis-labs/osmosis/osmomath"
-	"github.com/osmosis-labs/osmosis/osmoutils"
+	"github.com/petri-labs/mokita/mokimath"
+	"github.com/petri-labs/mokita/mokiutils"
 )
 
 // constants
@@ -51,13 +51,13 @@ func (m MsgSetValidatorSetPreference) ValidateBasic() error {
 	}
 
 	// check that all the validator address are unique
-	containsDuplicate := osmoutils.ContainsDuplicate(validatorAddrs)
+	containsDuplicate := mokiutils.ContainsDuplicate(validatorAddrs)
 	if containsDuplicate {
 		return fmt.Errorf("The validator operator address are duplicated")
 	}
 
 	// Round to 2 digit after the decimal. For ex: 0.999 = 1.0, 0.874 = 0.87, 0.5123 = 0.51
-	roundedValue := osmomath.SigFigRound(totalWeight, sdk.NewDec(10).Power(2).TruncateInt())
+	roundedValue := mokimath.SigFigRound(totalWeight, sdk.NewDec(10).Power(2).TruncateInt())
 
 	// check if the total validator distribution weights equal 1
 	if !roundedValue.Equal(sdk.OneDec()) {
@@ -191,13 +191,13 @@ func (m MsgRedelegateValidatorSet) ValidateBasic() error {
 	}
 
 	// check that all the validator address are unique
-	containsDuplicate := osmoutils.ContainsDuplicate(validatorAddrs)
+	containsDuplicate := mokiutils.ContainsDuplicate(validatorAddrs)
 	if containsDuplicate {
 		return fmt.Errorf("The validator operator address are duplicated")
 	}
 
 	// Round to 2 digit after the decimal. For ex: 0.999 = 1.0, 0.874 = 0.87, 0.5123 = 0.51
-	roundedValue := osmomath.SigFigRound(totalWeight, sdk.NewDec(10).Power(2).TruncateInt())
+	roundedValue := mokimath.SigFigRound(totalWeight, sdk.NewDec(10).Power(2).TruncateInt())
 
 	// check if the total validator distribution weights equal 1
 	if !roundedValue.Equal(sdk.OneDec()) {

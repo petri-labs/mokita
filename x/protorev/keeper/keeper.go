@@ -10,7 +10,7 @@ import (
 	paramtypes "github.com/cosmos/cosmos-sdk/x/params/types"
 	"github.com/tendermint/tendermint/libs/log"
 
-	"github.com/osmosis-labs/osmosis/v13/x/protorev/types"
+	"github.com/petri-labs/mokita/x/protorev/types"
 )
 
 type (

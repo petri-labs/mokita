@@ -193,15 +193,15 @@ $RECYCLE.BIN/
 
 # End of https://www.toptal.com/developers/gitignore/api/intellij,vscode,macos,windows
 
-/osmosisd
+/mokitad
 /.idea/
 /artifacts/
 /.vscode/
 /.VSCodeCounter/
 /scripts/local/
-/x/incentives/keeper/osmosis_testing/
+/x/incentives/keeper/mokita_testing/
 tools-stamp
-/tests/localosmosis/.osmosisd/*
+/tests/localmokita/.mokitad/*
 *.save
 *.save.*
 

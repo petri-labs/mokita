@@ -6,10 +6,10 @@ import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	banktypes "github.com/cosmos/cosmos-sdk/x/bank/types"
 
-	cl "github.com/osmosis-labs/osmosis/v13/x/concentrated-liquidity"
-	clmodel "github.com/osmosis-labs/osmosis/v13/x/concentrated-liquidity/model"
-	cltypes "github.com/osmosis-labs/osmosis/v13/x/concentrated-liquidity/types"
-	swaproutertypes "github.com/osmosis-labs/osmosis/v13/x/swaprouter/types"
+	cl "github.com/petri-labs/mokita/x/concentrated-liquidity"
+	clmodel "github.com/petri-labs/mokita/x/concentrated-liquidity/model"
+	cltypes "github.com/petri-labs/mokita/x/concentrated-liquidity/types"
+	swaproutertypes "github.com/petri-labs/mokita/x/swaprouter/types"
 )
 
 // TestCreateConcentratedPool_Events tests that events are correctly emitted

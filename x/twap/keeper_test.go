@@ -8,10 +8,10 @@ import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/stretchr/testify/suite"
 
-	"github.com/osmosis-labs/osmosis/osmoutils/osmoassert"
-	"github.com/osmosis-labs/osmosis/v13/app/apptesting"
-	"github.com/osmosis-labs/osmosis/v13/x/twap"
-	"github.com/osmosis-labs/osmosis/v13/x/twap/types"
+	"github.com/petri-labs/mokita/mokiutils/mokiassert"
+	"github.com/petri-labs/mokita/app/apptesting"
+	"github.com/petri-labs/mokita/x/twap"
+	"github.com/petri-labs/mokita/x/twap/types"
 )
 
 // TODO: Consider switching this everywhere
@@ -236,7 +236,7 @@ func (suite *TestSuite) TestTwapInitGenesis() {
 			twapKeeper := suite.App.TwapKeeper
 
 			// Test.
-			osmoassert.ConditionalPanic(suite.T(), tc.expectPanic, func() { twapKeeper.InitGenesis(ctx, tc.twapGenesis) })
+			mokiassert.ConditionalPanic(suite.T(), tc.expectPanic, func() { twapKeeper.InitGenesis(ctx, tc.twapGenesis) })
 			if tc.expectPanic {
 				return
 			}

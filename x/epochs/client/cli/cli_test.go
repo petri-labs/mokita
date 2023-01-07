@@ -3,14 +3,14 @@ package cli_test
 import (
 	"testing"
 
-	"github.com/osmosis-labs/osmosis/osmoutils/osmocli"
-	"github.com/osmosis-labs/osmosis/v13/x/epochs/client/cli"
-	"github.com/osmosis-labs/osmosis/v13/x/epochs/types"
+	"github.com/petri-labs/mokita/mokiutils/mokicli"
+	"github.com/petri-labs/mokita/x/epochs/client/cli"
+	"github.com/petri-labs/mokita/x/epochs/types"
 )
 
 func TestGetCmdCurrentEpoch(t *testing.T) {
 	desc, _ := cli.GetCmdCurrentEpoch()
-	tcs := map[string]osmocli.QueryCliTestCase[*types.QueryCurrentEpochRequest]{
+	tcs := map[string]mokicli.QueryCliTestCase[*types.QueryCurrentEpochRequest]{
 		"basic test": {
 			Cmd: "day",
 			ExpectedQuery: &types.QueryCurrentEpochRequest{
@@ -18,16 +18,16 @@ func TestGetCmdCurrentEpoch(t *testing.T) {
 			},
 		},
 	}
-	osmocli.RunQueryTestCases(t, desc, tcs)
+	mokicli.RunQueryTestCases(t, desc, tcs)
 }
 
 func TestGetCmdEpochsInfo(t *testing.T) {
 	desc, _ := cli.GetCmdEpochInfos()
-	tcs := map[string]osmocli.QueryCliTestCase[*types.QueryEpochsInfoRequest]{
+	tcs := map[string]mokicli.QueryCliTestCase[*types.QueryEpochsInfoRequest]{
 		"basic test": {
 			Cmd:           "",
 			ExpectedQuery: &types.QueryEpochsInfoRequest{},
 		},
 	}
-	osmocli.RunQueryTestCases(t, desc, tcs)
+	mokicli.RunQueryTestCases(t, desc, tcs)
 }

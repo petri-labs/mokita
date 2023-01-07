@@ -29,19 +29,19 @@ import (
 	tmtypes "github.com/tendermint/tendermint/proto/tendermint/types"
 	dbm "github.com/tendermint/tm-db"
 
-	"github.com/osmosis-labs/osmosis/v13/app"
-	"github.com/osmosis-labs/osmosis/v13/x/gamm/pool-models/balancer"
-	gammtypes "github.com/osmosis-labs/osmosis/v13/x/gamm/types"
-	lockupkeeper "github.com/osmosis-labs/osmosis/v13/x/lockup/keeper"
-	lockuptypes "github.com/osmosis-labs/osmosis/v13/x/lockup/types"
-	minttypes "github.com/osmosis-labs/osmosis/v13/x/mint/types"
-	swaproutertypes "github.com/osmosis-labs/osmosis/v13/x/swaprouter/types"
+	"github.com/petri-labs/mokita/app"
+	"github.com/petri-labs/mokita/x/gamm/pool-models/balancer"
+	gammtypes "github.com/petri-labs/mokita/x/gamm/types"
+	lockupkeeper "github.com/petri-labs/mokita/x/lockup/keeper"
+	lockuptypes "github.com/petri-labs/mokita/x/lockup/types"
+	minttypes "github.com/petri-labs/mokita/x/mint/types"
+	swaproutertypes "github.com/petri-labs/mokita/x/swaprouter/types"
 )
 
 type KeeperTestHelper struct {
 	suite.Suite
 
-	App         *app.OsmosisApp
+	App         *app.MokisisApp
 	Ctx         sdk.Context
 	QueryHelper *baseapp.QueryServiceTestHelper
 	TestAccs    []sdk.AccAddress
@@ -55,7 +55,7 @@ var (
 // Setup sets up basic environment for suite (App, Ctx, and test accounts)
 func (s *KeeperTestHelper) Setup() {
 	s.App = app.Setup(false)
-	s.Ctx = s.App.BaseApp.NewContext(false, tmtypes.Header{Height: 1, ChainID: "osmosis-1", Time: time.Now().UTC()})
+	s.Ctx = s.App.BaseApp.NewContext(false, tmtypes.Header{Height: 1, ChainID: "mokita-1", Time: time.Now().UTC()})
 	s.QueryHelper = &baseapp.QueryServiceTestHelper{
 		GRPCQueryRouter: s.App.GRPCQueryRouter(),
 		Ctx:             s.Ctx,
@@ -273,10 +273,10 @@ func (s *KeeperTestHelper) SetupGammPoolsWithBondDenomMultiplier(multipliers []s
 	pools := []gammtypes.CFMMPoolI{}
 	for index, multiplier := range multipliers {
 		token := fmt.Sprintf("token%d", index)
-		uosmoAmount := gammtypes.InitPoolSharesSupply.ToDec().Mul(multiplier).RoundInt()
+		umokiAmount := gammtypes.InitPoolSharesSupply.ToDec().Mul(multiplier).RoundInt()
 
 		s.FundAcc(acc1, sdk.NewCoins(
-			sdk.NewCoin(bondDenom, uosmoAmount.Mul(sdk.NewInt(10))),
+			sdk.NewCoin(bondDenom, umokiAmount.Mul(sdk.NewInt(10))),
 			sdk.NewInt64Coin(token, 100000),
 		).Add(params.PoolCreationFee...))
 
@@ -286,7 +286,7 @@ func (s *KeeperTestHelper) SetupGammPoolsWithBondDenomMultiplier(multipliers []s
 			// pool assets
 			defaultFooAsset = balancer.PoolAsset{
 				Weight: sdk.NewInt(100),
-				Token:  sdk.NewCoin(bondDenom, uosmoAmount),
+				Token:  sdk.NewCoin(bondDenom, umokiAmount),
 			}
 			defaultBarAsset = balancer.PoolAsset{
 				Weight: sdk.NewInt(100),

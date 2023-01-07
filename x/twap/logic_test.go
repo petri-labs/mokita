@@ -9,13 +9,13 @@ import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/stretchr/testify/require"
 
-	"github.com/osmosis-labs/osmosis/osmomath"
-	"github.com/osmosis-labs/osmosis/osmoutils"
-	"github.com/osmosis-labs/osmosis/osmoutils/osmoassert"
-	gammtypes "github.com/osmosis-labs/osmosis/v13/x/gamm/types"
-	"github.com/osmosis-labs/osmosis/v13/x/twap"
-	"github.com/osmosis-labs/osmosis/v13/x/twap/types"
-	"github.com/osmosis-labs/osmosis/v13/x/twap/types/twapmock"
+	"github.com/petri-labs/mokita/mokimath"
+	"github.com/petri-labs/mokita/mokiutils"
+	"github.com/petri-labs/mokita/mokiutils/mokiassert"
+	gammtypes "github.com/petri-labs/mokita/x/gamm/types"
+	"github.com/petri-labs/mokita/x/twap"
+	"github.com/petri-labs/mokita/x/twap/types"
+	"github.com/petri-labs/mokita/x/twap/types/twapmock"
 )
 
 var (
@@ -300,7 +300,7 @@ func TestRecordWithUpdatedAccumulators(t *testing.T) {
 			test.expRecord.P0LastSpotPrice = test.record.P0LastSpotPrice
 			test.expRecord.P1LastSpotPrice = test.record.P1LastSpotPrice
 
-			osmoassert.ConditionalPanic(t, test.expectPanic, func() {
+			mokiassert.ConditionalPanic(t, test.expectPanic, func() {
 				gotRecord := twap.RecordWithUpdatedAccumulators(test.record, test.newTime)
 				require.Equal(t, test.expRecord, gotRecord)
 			})
@@ -933,7 +933,7 @@ func (s *TestSuite) TestUpdateRecords() {
 				},
 				// The new record added.
 				// TODO: it should not be possible to add a record between existing records.
-				// https://github.com/osmosis-labs/osmosis/issues/2686
+				// https://github.com/petri-labs/mokita/issues/2686
 				{
 					spotPriceA:   sdk.OneDec(),
 					spotPriceB:   sdk.OneDec().Add(sdk.OneDec()),
@@ -1230,7 +1230,7 @@ func (s *TestSuite) TestAfterCreatePool() {
 			s.Require().Equal(tc.poolId, poolId)
 			s.Require().NoError(err)
 
-			denoms := osmoutils.CoinsDenoms(tc.poolCoins)
+			denoms := mokiutils.CoinsDenoms(tc.poolCoins)
 			denomPairs := types.GetAllUniqueDenomPairs(denoms)
 			expectedRecords := []types.TwapRecord{}
 			for _, denomPair := range denomPairs {
@@ -1323,7 +1323,7 @@ func (s *TestSuite) TestComputeArithmeticTwapWithSpotPriceError() {
 		s.Run(name, func() {
 			actualTwap, err := twap.ComputeTwap(test.startRecord, test.endRecord, test.quoteAsset, arithStrategy)
 			s.Require().Equal(test.expTwap, actualTwap)
-			osmoassert.ConditionalError(s.T(), test.expErr, err)
+			mokiassert.ConditionalError(s.T(), test.expErr, err)
 		})
 	}
 }
@@ -1340,7 +1340,7 @@ func (s *TestSuite) TestTwapLog_CorrectBase() {
 }
 
 func (s *TestSuite) TestTwapLog() {
-	smallestAdditiveTolerance := osmomath.ErrTolerance{
+	smallestAdditiveTolerance := mokimath.ErrTolerance{
 		AdditiveTolerance: sdk.SmallestDec(),
 	}
 
@@ -1374,12 +1374,12 @@ func (s *TestSuite) TestTwapLog() {
 
 	for _, tc := range testcases {
 		s.Run(tc.name, func() {
-			osmoassert.ConditionalPanic(s.T(), tc.expectPanic, func() {
+			mokiassert.ConditionalPanic(s.T(), tc.expectPanic, func() {
 				result := twap.TwapLog(tc.price)
 
 				smallestAdditiveTolerance.CompareBigDec(
-					osmomath.BigDecFromSDKDec(tc.expected),
-					osmomath.BigDecFromSDKDec(result),
+					mokimath.BigDecFromSDKDec(tc.expected),
+					mokimath.BigDecFromSDKDec(result),
 				)
 			})
 		})

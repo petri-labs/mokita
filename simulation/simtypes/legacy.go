@@ -35,8 +35,8 @@ func GenAndDeliverTxWithRandFees(
 		return simulation.NoOpMsg(moduleName, msg.Type(), "message doesn't leave room for fees"), nil, err
 	}
 
-	// Only allow fees in "uosmo"
-	coins = sdk.NewCoins(sdk.NewCoin("uosmo", coins.AmountOf("uosmo")))
+	// Only allow fees in "umoki"
+	coins = sdk.NewCoins(sdk.NewCoin("umoki", coins.AmountOf("umoki")))
 
 	fees, err = simulation.RandomFees(r, ctx, coins)
 	if err != nil {

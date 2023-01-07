@@ -15,8 +15,8 @@ import (
 	authtypes "github.com/cosmos/cosmos-sdk/x/auth/types"
 	"golang.org/x/exp/maps"
 
-	"github.com/osmosis-labs/osmosis/osmoutils"
-	"github.com/osmosis-labs/osmosis/v13/simulation/simtypes"
+	"github.com/petri-labs/mokita/mokiutils"
+	"github.com/petri-labs/mokita/simulation/simtypes"
 )
 
 // Manager defines a simulation manager that provides the high level utility
@@ -109,7 +109,7 @@ func (m Manager) legacyActions(seed int64, cdc codec.JSONCodec) []simtypes.Actio
 	// second pass generate actions
 	actions := []simtypes.ActionsWithMetadata{}
 	for _, moduleName := range m.moduleManager.OrderInitGenesis {
-		// wasmd simulation has txfee assumptions that don't work with Osmosis.
+		// wasmd simulation has txfee assumptions that don't work with Mokisis.
 		// TODO: Make an issue / PR on their repo
 		if moduleName == "wasm" {
 			continue
@@ -131,7 +131,7 @@ func (m Manager) legacyActions(seed int64, cdc codec.JSONCodec) []simtypes.Actio
 func (m Manager) Actions(seed int64, cdc codec.JSONCodec) []simtypes.ActionsWithMetadata {
 	actions := m.legacyActions(seed, cdc)
 	moduleKeys := maps.Keys(m.Modules)
-	osmoutils.SortSlice(moduleKeys)
+	mokiutils.SortSlice(moduleKeys)
 	for _, simModuleName := range moduleKeys {
 		for _, action := range m.Modules[simModuleName].Actions() {
 			var actionWithMetaData simtypes.ActionsWithMetadata
@@ -148,9 +148,9 @@ func (m Manager) Actions(seed int64, cdc codec.JSONCodec) []simtypes.ActionsWith
 // and I want to move on to the more interesting goals of this simulation refactor.
 // We do need to come back and un-screw up alot of this genesis work.
 //
-// Thankfully for Osmosis-custom modules, we don't really care about genesis logic. (yet)
+// Thankfully for Mokisis-custom modules, we don't really care about genesis logic. (yet)
 // The architectural errors for future readers revolve around on the design of the
-// * Design of the AppStateFn (just look at it, osmosis/simapp/state.go)
+// * Design of the AppStateFn (just look at it, mokita/simapp/state.go)
 //   - Abstraction leaks overt amounts of code riddle it!
 //
 // * Configs being read key by key per module via AppParams, should be a typed config

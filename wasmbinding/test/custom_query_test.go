@@ -15,48 +15,48 @@ import (
 	"github.com/cosmos/cosmos-sdk/simapp"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 
-	"github.com/osmosis-labs/osmosis/v13/app"
-	"github.com/osmosis-labs/osmosis/v13/wasmbinding/bindings"
-	"github.com/osmosis-labs/osmosis/v13/x/gamm/pool-models/balancer"
+	"github.com/petri-labs/mokita/app"
+	"github.com/petri-labs/mokita/wasmbinding/bindings"
+	"github.com/petri-labs/mokita/x/gamm/pool-models/balancer"
 )
 
-// we must pay this many uosmo for every pool we create
+// we must pay this many umoki for every pool we create
 var poolFee int64 = 1000000000
 
 var defaultFunds = sdk.NewCoins(
 	sdk.NewInt64Coin("uatom", 333000000),
-	sdk.NewInt64Coin("uosmo", 555000000+2*poolFee),
+	sdk.NewInt64Coin("umoki", 555000000+2*poolFee),
 	sdk.NewInt64Coin("ustar", 999000000),
 )
 
-func SetupCustomApp(t *testing.T, addr sdk.AccAddress) (*app.OsmosisApp, sdk.Context) {
-	osmosis, ctx := CreateTestInput()
-	wasmKeeper := osmosis.WasmKeeper
+func SetupCustomApp(t *testing.T, addr sdk.AccAddress) (*app.MokisisApp, sdk.Context) {
+	mokita, ctx := CreateTestInput()
+	wasmKeeper := mokita.WasmKeeper
 
-	storeReflectCode(t, ctx, osmosis, addr)
+	storeReflectCode(t, ctx, mokita, addr)
 
 	cInfo := wasmKeeper.GetCodeInfo(ctx, 1)
 	require.NotNil(t, cInfo)
 
-	return osmosis, ctx
+	return mokita, ctx
 }
 
 func TestQueryFullDenom(t *testing.T) {
 	actor := RandomAccountAddress()
-	osmosis, ctx := SetupCustomApp(t, actor)
+	mokita, ctx := SetupCustomApp(t, actor)
 
-	reflect := instantiateReflectContract(t, ctx, osmosis, actor)
+	reflect := instantiateReflectContract(t, ctx, mokita, actor)
 	require.NotEmpty(t, reflect)
 
 	// query full denom
-	query := bindings.OsmosisQuery{
+	query := bindings.MokisisQuery{
 		FullDenom: &bindings.FullDenom{
 			CreatorAddr: reflect.String(),
 			Subdenom:    "ustart",
 		},
 	}
 	resp := bindings.FullDenomResponse{}
-	queryCustom(t, ctx, osmosis, reflect, query, &resp)
+	queryCustom(t, ctx, mokita, reflect, query, &resp)
 
 	expected := fmt.Sprintf("factory/%s/ustart", reflect.String())
 	require.EqualValues(t, expected, resp.Denom)
@@ -74,7 +74,7 @@ type ChainResponse struct {
 	Data []byte `json:"data"`
 }
 
-func queryCustom(t *testing.T, ctx sdk.Context, osmosis *app.OsmosisApp, contract sdk.AccAddress, request bindings.OsmosisQuery, response interface{}) {
+func queryCustom(t *testing.T, ctx sdk.Context, mokita *app.MokisisApp, contract sdk.AccAddress, request bindings.MokisisQuery, response interface{}) {
 	msgBz, err := json.Marshal(request)
 	require.NoError(t, err)
 
@@ -86,7 +86,7 @@ func queryCustom(t *testing.T, ctx sdk.Context, osmosis *app.OsmosisApp, contrac
 	queryBz, err := json.Marshal(query)
 	require.NoError(t, err)
 
-	resBz, err := osmosis.WasmKeeper.QuerySmart(ctx, contract, queryBz)
+	resBz, err := mokita.WasmKeeper.QuerySmart(ctx, contract, queryBz)
 	require.NoError(t, err)
 	var resp ChainResponse
 	err = json.Unmarshal(resBz, &resp)
@@ -102,9 +102,9 @@ func assertValidShares(t *testing.T, shares wasmvmtypes.Coin, poolID uint64) {
 	require.Greater(t, len(shares.Amount), 18)
 }
 
-func storeReflectCode(t *testing.T, ctx sdk.Context, osmosis *app.OsmosisApp, addr sdk.AccAddress) {
-	govKeeper := osmosis.GovKeeper
-	wasmCode, err := os.ReadFile("../testdata/osmo_reflect.wasm")
+func storeReflectCode(t *testing.T, ctx sdk.Context, mokita *app.MokisisApp, addr sdk.AccAddress) {
+	govKeeper := mokita.GovKeeper
+	wasmCode, err := os.ReadFile("../testdata/moki_reflect.wasm")
 	require.NoError(t, err)
 
 	src := wasmtypes.StoreCodeProposalFixture(func(p *wasmtypes.StoreCodeProposal) {
@@ -124,9 +124,9 @@ func storeReflectCode(t *testing.T, ctx sdk.Context, osmosis *app.OsmosisApp, ad
 	require.NoError(t, err)
 }
 
-func instantiateReflectContract(t *testing.T, ctx sdk.Context, osmosis *app.OsmosisApp, funder sdk.AccAddress) sdk.AccAddress {
+func instantiateReflectContract(t *testing.T, ctx sdk.Context, mokita *app.MokisisApp, funder sdk.AccAddress) sdk.AccAddress {
 	initMsgBz := []byte("{}")
-	contractKeeper := keeper.NewDefaultPermissionKeeper(osmosis.WasmKeeper)
+	contractKeeper := keeper.NewDefaultPermissionKeeper(mokita.WasmKeeper)
 	codeID := uint64(1)
 	addr, _, err := contractKeeper.Instantiate(ctx, codeID, funder, funder, initMsgBz, "demo contract", nil)
 	require.NoError(t, err)
@@ -134,9 +134,9 @@ func instantiateReflectContract(t *testing.T, ctx sdk.Context, osmosis *app.Osmo
 	return addr
 }
 
-func fundAccount(t *testing.T, ctx sdk.Context, osmosis *app.OsmosisApp, addr sdk.AccAddress, coins sdk.Coins) {
+func fundAccount(t *testing.T, ctx sdk.Context, mokita *app.MokisisApp, addr sdk.AccAddress, coins sdk.Coins) {
 	err := simapp.FundAccount(
-		osmosis.BankKeeper,
+		mokita.BankKeeper,
 		ctx,
 		addr,
 		coins,
@@ -144,7 +144,7 @@ func fundAccount(t *testing.T, ctx sdk.Context, osmosis *app.OsmosisApp, addr sd
 	require.NoError(t, err)
 }
 
-func preparePool(t *testing.T, ctx sdk.Context, osmosis *app.OsmosisApp, addr sdk.AccAddress, funds []sdk.Coin) uint64 {
+func preparePool(t *testing.T, ctx sdk.Context, mokita *app.MokisisApp, addr sdk.AccAddress, funds []sdk.Coin) uint64 {
 	var assets []balancer.PoolAsset
 	for _, coin := range funds {
 		assets = append(assets, balancer.PoolAsset{
@@ -159,7 +159,7 @@ func preparePool(t *testing.T, ctx sdk.Context, osmosis *app.OsmosisApp, addr sd
 	}
 
 	msg := balancer.NewMsgCreateBalancerPool(addr, poolParams, assets, "")
-	poolId, err := osmosis.SwapRouterKeeper.CreatePool(ctx, &msg)
+	poolId, err := mokita.SwapRouterKeeper.CreatePool(ctx, &msg)
 	require.NoError(t, err)
 	return poolId
 }

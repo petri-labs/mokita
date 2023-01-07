@@ -472,27 +472,27 @@ reference queues are removed.
 Bond tokens in a LP for a set duration
 
 ```sh
-osmosisd tx lockup lock-tokens [tokens] --duration --from --chain-id
+mokitad tx lockup lock-tokens [tokens] --duration --from --chain-id
 ```
 
 ::: details Example
 
-To lockup `15.527546134174465309gamm/pool/3` tokens for a `one day` bonding period from `WALLET_NAME` on the osmosis mainnet:
+To lockup `15.527546134174465309gamm/pool/3` tokens for a `one day` bonding period from `WALLET_NAME` on the mokita mainnet:
 
 ```bash
-osmosisd tx lockup lock-tokens 15527546134174465309gamm/pool/3 --duration="24h" --from WALLET_NAME --chain-id osmosis-1
+mokitad tx lockup lock-tokens 15527546134174465309gamm/pool/3 --duration="24h" --from WALLET_NAME --chain-id mokita-1
 ```
 
-To lockup `25.527546134174465309gamm/pool/13` tokens for a `one week` bonding period from `WALLET_NAME` on the osmosis testnet:
+To lockup `25.527546134174465309gamm/pool/13` tokens for a `one week` bonding period from `WALLET_NAME` on the mokita testnet:
 
 ```bash
-osmosisd tx lockup lock-tokens 25527546134174465309gamm/pool/13 --duration="168h" --from WALLET_NAME --chain-id osmo-test-4
+mokitad tx lockup lock-tokens 25527546134174465309gamm/pool/13 --duration="168h" --from WALLET_NAME --chain-id moki-test-4
 ```
 
-To lockup `35.527546134174465309 gamm/pool/197` tokens for a `two week` bonding period from `WALLET_NAME` on the osmosis mainnet:
+To lockup `35.527546134174465309 gamm/pool/197` tokens for a `two week` bonding period from `WALLET_NAME` on the mokita mainnet:
 
 ```bash
-osmosisd tx lockup lock-tokens 35527546134174465309gamm/pool/197 --duration="336h" --from WALLET_NAME --chain-id osmosis-1
+mokitad tx lockup lock-tokens 35527546134174465309gamm/pool/197 --duration="336h" --from WALLET_NAME --chain-id mokita-1
 ```
 :::
 
@@ -502,15 +502,15 @@ osmosisd tx lockup lock-tokens 35527546134174465309gamm/pool/197 --duration="336
 Begin the unbonding process for tokens given their unique lock ID
 
 ```sh
-osmosisd tx lockup begin-unlock-by-id [id] --from --chain-id
+mokitad tx lockup begin-unlock-by-id [id] --from --chain-id
 ```
 
 ::: details Example
 
-To begin the unbonding time for all bonded tokens under id `75` from `WALLET_NAME` on the osmosis mainnet:
+To begin the unbonding time for all bonded tokens under id `75` from `WALLET_NAME` on the mokita mainnet:
 
 ```bash
-osmosisd tx lockup begin-unlock-by-id 75 --from WALLET_NAME --chain-id osmosis-1
+mokitad tx lockup begin-unlock-by-id 75 --from WALLET_NAME --chain-id mokita-1
 ```
 :::
 ::: warning Note
@@ -522,16 +522,16 @@ The ID corresponds to the unique ID given to your lockup transaction (explained 
 Begin unbonding process for all bonded tokens in a wallet
 
 ```sh
-osmosisd tx lockup begin-unlock-tokens --from --chain-id
+mokitad tx lockup begin-unlock-tokens --from --chain-id
 ```
 
 ::: details Example
 
-To begin unbonding time for ALL pools and ALL bonded tokens in `WALLET_NAME` on the osmosis mainnet:
+To begin unbonding time for ALL pools and ALL bonded tokens in `WALLET_NAME` on the mokita mainnet:
 
 
 ```bash
-osmosisd tx lockup begin-unlock-tokens --from=WALLET_NAME --chain-id=osmosis-1 --yes
+mokitad tx lockup begin-unlock-tokens --from=WALLET_NAME --chain-id=mokita-1 --yes
 ```
 :::
 
@@ -591,7 +591,7 @@ In this example, the current UNIX time is `1639776682`, 2 days from now is appro
 An account's `ADDRESS` is locked in both the `1 day` and `1 week` gamm/pool/3. To query the `ADDRESS` with a timestamp 2 days from now `1639971082`:
 
 ```bash
-osmosisd query lockup account-locked-beforetime ADDRESS 1639971082
+mokitad query lockup account-locked-beforetime ADDRESS 1639971082
 ```
 
 In this example will output the `1 day` lock but not the `1 week` lock:
@@ -604,13 +604,13 @@ locks:
     denom: gamm/pool/3
   duration: 24h
   end_time: "2021-12-18T23:32:58.900715388Z"
-  owner: osmo1xqhlshlhs5g0acqgrkafdemvf5kz4pp4c2x259
+  owner: moki1xqhlshlhs5g0acqgrkafdemvf5kz4pp4c2x259
 ```
 
 If querying the same `ADDRESS` with a timestamp 15 days from now `1641094282`:
 
 ```bash
-osmosisd query lockup account-locked-beforetime ADDRESS 1641094282
+mokitad query lockup account-locked-beforetime ADDRESS 1641094282
 ```
 
 In this example will output both the `1 day` and `1 week` lock:
@@ -623,14 +623,14 @@ locks:
     denom: gamm/pool/3
   duration: 604800.000006193s
   end_time: "0001-01-01T00:00:00Z"
-  owner: osmo1xqhlshlhs5g0acqgrkafdemvf5kz4pp4c2x259
+  owner: moki1xqhlshlhs5g0acqgrkafdemvf5kz4pp4c2x259
 - ID: "571839"
   coins:
   - amount: "15527546134174465309"
     denom: gamm/pool/3
   duration: 24h
   end_time: "2021-12-18T23:32:58.900715388Z"
-  owner: osmo1xqhlshlhs5g0acqgrkafdemvf5kz4pp4c2x259
+  owner: moki1xqhlshlhs5g0acqgrkafdemvf5kz4pp4c2x259
 ```
 :::
 
@@ -640,13 +640,13 @@ locks:
 Query an account's locked (bonded) LP tokens
 
 ```sh
-osmosisd query lockup account-locked-coins [address]
+mokitad query lockup account-locked-coins [address]
 ```
 
 :::: details Example
 
 ```bash
-osmosisd query lockup account-locked-coins osmo1xqhlshlhs5g0acqgrkafdemvf5kz4pp4c2x259
+mokitad query lockup account-locked-coins moki1xqhlshlhs5g0acqgrkafdemvf5kz4pp4c2x259
 ```
 
 An example output:
@@ -678,7 +678,7 @@ You may also specify a --height flag to see bonded LP tokens at a specified heig
 Query an account's locked records that are greater than or equal to a specified lock duration
 
 ```sh
-osmosisd query lockup account-locked-longer-duration [address] [duration]
+mokitad query lockup account-locked-longer-duration [address] [duration]
 ```
 
 ::: details Example
@@ -686,7 +686,7 @@ osmosisd query lockup account-locked-longer-duration [address] [duration]
 Here is an example of querying an `ADDRESS` for all `1 day` or greater bonding periods:
 
 ```bash
-osmosisd query lockup account-locked-longer-duration osmo1xqhlshlhs5g0acqgrkafdemvf5kz4pp4c2x259 24h
+mokitad query lockup account-locked-longer-duration moki1xqhlshlhs5g0acqgrkafdemvf5kz4pp4c2x259 24h
 ```
 
 An example output:
@@ -699,14 +699,14 @@ locks:
     denom: gamm/pool/3
   duration: 604800.000006193s
   end_time: "0001-01-01T00:00:00Z"
-  owner: osmo1xqhlshlhs5g0acqgrkafdemvf5kz4pp4c2x259
+  owner: moki1xqhlshlhs5g0acqgrkafdemvf5kz4pp4c2x259
 - ID: "571839"
   coins:
   - amount: "15527546134174465309"
     denom: gamm/pool/3
   duration: 24h
   end_time: "2021-12-18T23:32:58.900715388Z"
-  owner: osmo1xqhlshlhs5g0acqgrkafdemvf5kz4pp4c2x259
+  owner: moki1xqhlshlhs5g0acqgrkafdemvf5kz4pp4c2x259
 ```
 :::
 
@@ -716,7 +716,7 @@ locks:
 Query an account's locked records for a denom that is locked equal to or greater than the specified duration AND match a specified denom
 
 ```sh
-osmosisd query lockup account-locked-longer-duration-denom [address] [duration] [denom]
+mokitad query lockup account-locked-longer-duration-denom [address] [duration] [denom]
 ```
 
 ::: details Example
@@ -724,7 +724,7 @@ osmosisd query lockup account-locked-longer-duration-denom [address] [duration] 
 Here is an example of an `ADDRESS` that is locked in both the `1 day` and `1 week` for both the gamm/pool/3 and gamm/pool/1, then queries the `ADDRESS` for all bonding periods equal to or greater than `1 day` for just the gamm/pool/3:
 
 ```bash
-osmosisd query lockup account-locked-longer-duration-denom osmo1xqhlshlhs5g0acqgrkafdemvf5kz4pp4c2x259 24h gamm/pool/3
+mokitad query lockup account-locked-longer-duration-denom moki1xqhlshlhs5g0acqgrkafdemvf5kz4pp4c2x259 24h gamm/pool/3
 ```
 
 An example output:
@@ -737,14 +737,14 @@ locks:
     denom: gamm/pool/3
   duration: 24h
   end_time: "0001-01-01T00:00:00Z"
-  owner: osmo1xqhlshlhs5g0acqgrkafdemvf5kz4pp4c2x259
+  owner: moki1xqhlshlhs5g0acqgrkafdemvf5kz4pp4c2x259
 - ID: "572027"
   coins:
   - amount: "16120691802759484268"
     denom: gamm/pool/3
   duration: 604800.000006193s
   end_time: "0001-01-01T00:00:00Z"
-  owner: osmo1xqhlshlhs5g0acqgrkafdemvf5kz4pp4c2x259
+  owner: moki1xqhlshlhs5g0acqgrkafdemvf5kz4pp4c2x259
 ```
 
 As shown, the gamm/pool/3 is returned but not the gamm/pool/1 due to the denom filter.
@@ -756,7 +756,7 @@ As shown, the gamm/pool/3 is returned but not the gamm/pool/1 due to the denom f
 Query an account's locked records for a denom that is locked equal to or greater than the specified duration AND is not in the process of being unlocked
 
 ```sh
-osmosisd query lockup account-locked-longer-duration-not-unlocking [address] [duration]
+mokitad query lockup account-locked-longer-duration-not-unlocking [address] [duration]
 ```
 
 ::: details Example
@@ -764,7 +764,7 @@ osmosisd query lockup account-locked-longer-duration-not-unlocking [address] [du
 Here is an example of an `ADDRESS` that is locked in both the `1 day` and `1 week` gamm/pool/3, begins unlocking process for the `1 day` bond, and queries the `ADDRESS` for all bonding periods equal to or greater than `1 day` that are not unbonding:
 
 ```bash
-osmosisd query lockup account-locked-longer-duration-not-unlocking osmo1xqhlshlhs5g0acqgrkafdemvf5kz4pp4c2x259 24h
+mokitad query lockup account-locked-longer-duration-not-unlocking moki1xqhlshlhs5g0acqgrkafdemvf5kz4pp4c2x259 24h
 ```
 
 An example output:
@@ -777,7 +777,7 @@ locks:
     denom: gamm/pool/3
   duration: 604800.000006193s
   end_time: "0001-01-01T00:00:00Z"
-  owner: osmo1xqhlshlhs5g0acqgrkafdemvf5kz4pp4c2x259
+  owner: moki1xqhlshlhs5g0acqgrkafdemvf5kz4pp4c2x259
 ```
 
 The `1 day` bond does not show since it is in the process of unbonding.
@@ -789,7 +789,7 @@ The `1 day` bond does not show since it is in the process of unbonding.
 Query the locked records of an account with the unlock time beyond timestamp (UNIX)
 
 ```bash
-osmosisd query lockup account-locked-pasttime [address] [timestamp]
+mokitad query lockup account-locked-pasttime [address] [timestamp]
 ```
 
 ::: details Example
@@ -797,7 +797,7 @@ osmosisd query lockup account-locked-pasttime [address] [timestamp]
 Here is an example of an account that is locked in both the `1 day` and `1 week` gamm/pool/3. In this example, the UNIX time is currently `1639776682` and queries an `ADDRESS` for UNIX time two days later from the current time (which in this example would be `1639971082`)
 
 ```bash
-osmosisd query lockup account-locked-pasttime osmo1xqhlshlhs5g0acqgrkafdemvf5kz4pp4c2x259 1639971082
+mokitad query lockup account-locked-pasttime moki1xqhlshlhs5g0acqgrkafdemvf5kz4pp4c2x259 1639971082
 ```
 
 The example output:
@@ -810,7 +810,7 @@ locks:
     denom: gamm/pool/3
   duration: 604800.000006193s
   end_time: "0001-01-01T00:00:00Z"
-  owner: osmo1xqhlshlhs5g0acqgrkafdemvf5kz4pp4c2x259
+  owner: moki1xqhlshlhs5g0acqgrkafdemvf5kz4pp4c2x259
 ```
 
 Note that the `1 day` lock ID did not display because, if the unbonding time began counting down from the time the command was executed, the bonding period would be complete before the two day window given by the UNIX timestamp input.
@@ -822,7 +822,7 @@ Note that the `1 day` lock ID did not display because, if the unbonding time beg
 Query the locked records of an account with the unlock time beyond timestamp (unix) and filter by a specific denom
 
 ```bash
-osmosisd query lockup account-locked-pasttime-denom osmo1xqhlshlhs5g0acqgrkafdemvf5kz4pp4c2x259 [timestamp] [denom]
+mokitad query lockup account-locked-pasttime-denom moki1xqhlshlhs5g0acqgrkafdemvf5kz4pp4c2x259 [timestamp] [denom]
 ```
 
 ::: details Example
@@ -830,7 +830,7 @@ osmosisd query lockup account-locked-pasttime-denom osmo1xqhlshlhs5g0acqgrkafdem
 Here is an example of an account that is locked in both the `1 day` and `1 week` gamm/pool/3 and `1 day` and `1 week` gamm/pool/1. In this example, the UNIX time is currently `1639776682` and queries an `ADDRESS` for UNIX time two days later from the current time (which in this example would be `1639971082`) and filters for gamm/pool/3
 
 ```bash
-osmosisd query lockup account-locked-pasttime-denom osmo1xqhlshlhs5g0acqgrkafdemvf5kz4pp4c2x259 1639971082 gamm/pool/3
+mokitad query lockup account-locked-pasttime-denom moki1xqhlshlhs5g0acqgrkafdemvf5kz4pp4c2x259 1639971082 gamm/pool/3
 ```
 
 The example output:
@@ -843,7 +843,7 @@ locks:
     denom: gamm/pool/3
   duration: 604800.000006193s
   end_time: "0001-01-01T00:00:00Z"
-  owner: osmo1xqhlshlhs5g0acqgrkafdemvf5kz4pp4c2x259
+  owner: moki1xqhlshlhs5g0acqgrkafdemvf5kz4pp4c2x259
 ```
 
 Note that the `1 day` lock ID did not display because, if the unbonding time began counting down from the time the command was executed, the bonding period would be complete before the two day window given by the UNIX timestamp input. Additionally, neither of the `1 day` or `1 week` lock IDs for gamm/pool/1 showed due to the denom filter.
@@ -855,7 +855,7 @@ Note that the `1 day` lock ID did not display because, if the unbonding time beg
 Query the locked records of an account with the unlock time beyond timestamp (unix) AND is not in the process of unlocking
 
 ```sh
-osmosisd query lockup account-locked-pasttime [address] [timestamp]
+mokitad query lockup account-locked-pasttime [address] [timestamp]
 ```
 
 ::: details Example
@@ -863,7 +863,7 @@ osmosisd query lockup account-locked-pasttime [address] [timestamp]
 Here is an example of an account that is locked in both the `1 day` and `1 week` gamm/pool/3. In this example, the UNIX time is currently `1639776682` and queries an `ADDRESS` for UNIX time two days later from the current time (which in this example would be `1639971082`) AND is not unlocking:
 
 ```bash
-osmosisd query lockup account-locked-pasttime osmo1xqhlshlhs5g0acqgrkafdemvf5kz4pp4c2x259 1639971082
+mokitad query lockup account-locked-pasttime moki1xqhlshlhs5g0acqgrkafdemvf5kz4pp4c2x259 1639971082
 ```
 
 The example output:
@@ -876,7 +876,7 @@ locks:
     denom: gamm/pool/3
   duration: 604800.000006193s
   end_time: "0001-01-01T00:00:00Z"
-  owner: osmo1xqhlshlhs5g0acqgrkafdemvf5kz4pp4c2x259
+  owner: moki1xqhlshlhs5g0acqgrkafdemvf5kz4pp4c2x259
 ```
 
 Note that the `1 day` lock ID did not display because, if the unbonding time began counting down from the time the command was executed, the bonding period would be complete before the two day window given by the UNIX timestamp input. Additionally, if ID 572027 were to begin the unlocking process, the query would have returned blank.
@@ -888,7 +888,7 @@ Note that the `1 day` lock ID did not display because, if the unbonding time beg
 Query an address's LP shares that have completed the unlocking period and are ready to be withdrawn
 
 ```bash
-osmosisd query lockup account-unlockable-coins ADDRESS
+mokitad query lockup account-unlockable-coins ADDRESS
 ```
 
 
@@ -898,13 +898,13 @@ osmosisd query lockup account-unlockable-coins ADDRESS
 Query an address's LP shares that are currently unlocking
 
 ```sh
-osmosisd query lockup account-unlocking-coins [address]
+mokitad query lockup account-unlocking-coins [address]
 ```
 
 ::: details Example
 
 ```bash
-osmosisd query lockup account-unlocking-coins osmo1xqhlshlhs5g0acqgrkafdemvf5kz4pp4c2x259
+mokitad query lockup account-unlocking-coins moki1xqhlshlhs5g0acqgrkafdemvf5kz4pp4c2x259
 ```
 
 Example output:
@@ -922,7 +922,7 @@ coins:
 Query a lock record by its ID
 
 ```sh
-osmosisd query lockup lock-by-id [id]
+mokitad query lockup lock-by-id [id]
 ```
 
 ::: details Example
@@ -932,7 +932,7 @@ Every time a user bonds tokens to an LP, a unique lock ID is created for that tr
 Here is an example viewing the lock record for ID 9:
 
 ```bash
-osmosisd query lockup lock-by-id 9
+mokitad query lockup lock-by-id 9
 ```
 
 And its output:
@@ -945,10 +945,10 @@ lock:
     denom: gamm/pool/2
   duration: 336h
   end_time: "0001-01-01T00:00:00Z"
-  owner: osmo16r39ghhwqjcwxa8q3yswlz8jhzldygy66vlm82
+  owner: moki16r39ghhwqjcwxa8q3yswlz8jhzldygy66vlm82
 ```
 
-In summary, this shows wallet `osmo16r39ghhwqjcwxa8q3yswlz8jhzldygy66vlm82` bonded `2449472.670 gamm/pool/2` LP shares for a `2 week` locking period.
+In summary, this shows wallet `moki16r39ghhwqjcwxa8q3yswlz8jhzldygy66vlm82` bonded `2449472.670 gamm/pool/2` LP shares for a `2 week` locking period.
 :::
 
 
@@ -957,13 +957,13 @@ In summary, this shows wallet `osmo16r39ghhwqjcwxa8q3yswlz8jhzldygy66vlm82` bond
 Query the balance of all LP shares (bonded and unbonded)
 
 ```sh
-osmosisd query lockup module-balance
+mokitad query lockup module-balance
 ```
 
 ::: details Example
 
 ```bash
-osmosisd query lockup module-balance
+mokitad query lockup module-balance
 ```
 
 An example output:
@@ -1011,13 +1011,13 @@ coins:
 Query the balance of all bonded LP shares
 
 ```sh
-osmosisd query lockup module-locked-amount
+mokitad query lockup module-locked-amount
 ```
 
 ::: details Example
 
 ```bash
-osmosisd query lockup module-locked-amount
+mokitad query lockup module-locked-amount
 ```
 
 An example output:
@@ -1071,7 +1071,7 @@ NOTE: This command seems to only work on gRPC and on CLI returns an EOF error.
 Output all locks into a json file
 
 ```sh
-osmosisd query lockup output-all-locks [max lock ID]
+mokitad query lockup output-all-locks [max lock ID]
 ```
 
 :::: details Example
@@ -1079,7 +1079,7 @@ osmosisd query lockup output-all-locks [max lock ID]
 This example command outputs locks 1-1000 and saves to a json file:
 
 ```bash
-osmosisd query lockup output-all-locks 1000
+mokitad query lockup output-all-locks 1000
 ```
 ::: warning Note
 If a lockup has been completed, the lockup status will show as "0" (or successful) and no further information will be available. To get further information on a completed lock, run the lock-by-id query.
@@ -1092,7 +1092,7 @@ If a lockup has been completed, the lockup status will show as "0" (or successfu
 Query locked amount for a specific denom in the duration provided
 
 ```sh
-osmosisd query lockup total-locked-of-denom [denom] --min-duration
+mokitad query lockup total-locked-of-denom [denom] --min-duration
 ```
 
 :::: details Example
@@ -1100,7 +1100,7 @@ osmosisd query lockup total-locked-of-denom [denom] --min-duration
 This example command outputs the amount of `gamm/pool/2` LP shares that locked in the `2 week` bonding period:
 
 ```bash
-osmosisd query lockup total-locked-of-denom gamm/pool/2 --min-duration "336h"
+mokitad query lockup total-locked-of-denom gamm/pool/2 --min-duration "336h"
 ```
 
 Which, at the time of this writing outputs `14106985399822075248947045` which is equivalent to `14106985.3998 gamm/pool/2`
@@ -1112,50 +1112,50 @@ NOTE: As of this writing, there is a bug that defaults the min duration to days 
 
 ```sh
 # 1 day 100stake lock-tokens command
-osmosisd tx lockup lock-tokens 200stake --duration="86400s" --from=validator --chain-id=testing --keyring-backend=test --yes
+mokitad tx lockup lock-tokens 200stake --duration="86400s" --from=validator --chain-id=testing --keyring-backend=test --yes
 
 # 5s 100stake lock-tokens command
-osmosisd tx lockup lock-tokens 100stake --duration="5s" --from=validator --chain-id=testing --keyring-backend=test --yes
+mokitad tx lockup lock-tokens 100stake --duration="5s" --from=validator --chain-id=testing --keyring-backend=test --yes
 
 # begin unlock tokens, NOTE: add more gas when unlocking more than two locks in a same command
-osmosisd tx lockup begin-unlock-tokens --from=validator --gas=500000 --chain-id=testing --keyring-backend=test --yes
+mokitad tx lockup begin-unlock-tokens --from=validator --gas=500000 --chain-id=testing --keyring-backend=test --yes
 
 # unlock tokens, NOTE: add more gas when unlocking more than two locks in a same command
-osmosisd tx lockup unlock-tokens --from=validator --gas=500000 --chain-id=testing --keyring-backend=test --yes
+mokitad tx lockup unlock-tokens --from=validator --gas=500000 --chain-id=testing --keyring-backend=test --yes
 
 # unlock specific period lock
-osmosisd tx lockup unlock-by-id 1 --from=validator --chain-id=testing --keyring-backend=test --yes
+mokitad tx lockup unlock-by-id 1 --from=validator --chain-id=testing --keyring-backend=test --yes
 
 # account balance
-osmosisd query bank balances $(osmosisd keys show -a validator --keyring-backend=test)
+mokitad query bank balances $(mokitad keys show -a validator --keyring-backend=test)
 
 # query module balance
-osmosisd query lockup module-balance
+mokitad query lockup module-balance
 
 # query locked amount
-osmosisd query lockup module-locked-amount
+mokitad query lockup module-locked-amount
 
 # query lock by id
-osmosisd query lockup lock-by-id 1
+mokitad query lockup lock-by-id 1
 
 # query account unlockable coins
-osmosisd query lockup account-unlockable-coins $(osmosisd keys show -a validator --keyring-backend=test)
+mokitad query lockup account-unlockable-coins $(mokitad keys show -a validator --keyring-backend=test)
 
 # query account locks by denom past time
-osmosisd query lockup account-locked-pasttime-denom $(osmosisd keys show -a validator --keyring-backend=test) 1611879610 stake
+mokitad query lockup account-locked-pasttime-denom $(mokitad keys show -a validator --keyring-backend=test) 1611879610 stake
 
 # query account locks past time
-osmosisd query lockup account-locked-pasttime $(osmosisd keys show -a validator --keyring-backend=test) 1611879610
+mokitad query lockup account-locked-pasttime $(mokitad keys show -a validator --keyring-backend=test) 1611879610
 
 # query account locks by denom with longer duration
-osmosisd query lockup account-locked-longer-duration-denom $(osmosisd keys show -a validator --keyring-backend=test) 5.1s stake
+mokitad query lockup account-locked-longer-duration-denom $(mokitad keys show -a validator --keyring-backend=test) 5.1s stake
 
 # query account locks with longer duration
-osmosisd query lockup account-locked-longer-duration $(osmosisd keys show -a validator --keyring-backend=test) 5.1s
+mokitad query lockup account-locked-longer-duration $(mokitad keys show -a validator --keyring-backend=test) 5.1s
 
 # query account locked coins
-osmosisd query lockup account-locked-coins $(osmosisd keys show -a validator --keyring-backend=test)
+mokitad query lockup account-locked-coins $(mokitad keys show -a validator --keyring-backend=test)
 
 # query account locks before time
-osmosisd query lockup account-locked-beforetime $(osmosisd keys show -a validator --keyring-backend=test) 1611879610
+mokitad query lockup account-locked-beforetime $(mokitad keys show -a validator --keyring-backend=test) 1611879610
 ```

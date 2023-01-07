@@ -8,9 +8,9 @@ import (
 	"github.com/stretchr/testify/require"
 	tmproto "github.com/tendermint/tendermint/proto/tendermint/types"
 
-	osmoapp "github.com/osmosis-labs/osmosis/v13/app"
-	cl "github.com/osmosis-labs/osmosis/v13/x/concentrated-liquidity"
-	"github.com/osmosis-labs/osmosis/v13/x/concentrated-liquidity/types"
+	mokiapp "github.com/petri-labs/mokita/app"
+	cl "github.com/petri-labs/mokita/x/concentrated-liquidity"
+	"github.com/petri-labs/mokita/x/concentrated-liquidity/types"
 )
 
 var (
@@ -23,7 +23,7 @@ var (
 // It checks that the state is initialized correctly based on the provided genesis.
 func TestInitGenesis(t *testing.T) {
 	// Set up the app and context
-	app := osmoapp.Setup(false)
+	app := mokiapp.Setup(false)
 	ctx := app.BaseApp.NewContext(false, tmproto.Header{})
 	now := ctx.BlockTime()
 	ctx = ctx.WithBlockTime(now.Add(time.Second))
@@ -40,7 +40,7 @@ func TestInitGenesis(t *testing.T) {
 // It checks that the correct genesis state is returned.
 func TestExportGenesis(t *testing.T) {
 	// Set up the app and context
-	app := osmoapp.Setup(false)
+	app := mokiapp.Setup(false)
 	ctx := app.BaseApp.NewContext(false, tmproto.Header{})
 	now := ctx.BlockTime()
 	ctx = ctx.WithBlockTime(now.Add(time.Second))
@@ -57,13 +57,13 @@ func TestExportGenesis(t *testing.T) {
 // It checks that the exported genesis can be marshaled and unmarshaled without panicking.
 func TestMarshalUnmarshalGenesis(t *testing.T) {
 	// Set up the app and context
-	app := osmoapp.Setup(false)
+	app := mokiapp.Setup(false)
 	ctx := app.BaseApp.NewContext(false, tmproto.Header{})
 	now := ctx.BlockTime()
 	ctx = ctx.WithBlockTime(now.Add(time.Second))
 
 	// Create an app module for the ConcentratedLiquidityKeeper
-	encodingConfig := osmoapp.MakeEncodingConfig()
+	encodingConfig := mokiapp.MakeEncodingConfig()
 	appCodec := encodingConfig.Marshaler
 	appModule := cl.NewAppModule(appCodec, *app.ConcentratedLiquidityKeeper)
 
@@ -72,7 +72,7 @@ func TestMarshalUnmarshalGenesis(t *testing.T) {
 
 	// Test that the exported genesis can be marshaled and unmarshaled without panicking
 	assert.NotPanics(t, func() {
-		app := osmoapp.Setup(false)
+		app := mokiapp.Setup(false)
 		ctx := app.BaseApp.NewContext(false, tmproto.Header{})
 		ctx = ctx.WithBlockTime(now.Add(time.Second))
 		am := cl.NewAppModule(appCodec, *app.ConcentratedLiquidityKeeper)

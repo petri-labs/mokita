@@ -3,10 +3,10 @@ package v13
 import (
 	store "github.com/cosmos/cosmos-sdk/store/types"
 
-	"github.com/osmosis-labs/osmosis/v13/app/upgrades"
+	"github.com/petri-labs/mokita/app/upgrades"
 )
 
-// UpgradeName defines the on-chain upgrade name for the Osmosis v13 upgrade.
+// UpgradeName defines the on-chain upgrade name for the Mokisis v13 upgrade.
 const UpgradeName = "v13"
 
 var Upgrade = upgrades.Upgrade{

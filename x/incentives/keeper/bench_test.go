@@ -9,9 +9,9 @@ import (
 	"github.com/tendermint/tendermint/crypto/secp256k1"
 	tmproto "github.com/tendermint/tendermint/proto/tendermint/types"
 
-	"github.com/osmosis-labs/osmosis/v13/app"
-	"github.com/osmosis-labs/osmosis/v13/x/incentives/types"
-	lockuptypes "github.com/osmosis-labs/osmosis/v13/x/lockup/types"
+	"github.com/petri-labs/mokita/app"
+	"github.com/petri-labs/mokita/x/incentives/types"
+	lockuptypes "github.com/petri-labs/mokita/x/lockup/types"
 
 	"github.com/cosmos/cosmos-sdk/simapp"
 	sdk "github.com/cosmos/cosmos-sdk/types"
@@ -75,7 +75,7 @@ func benchmarkDistributionLogic(numAccts, numDenoms, numGauges, numLockups, numD
 	blockStartTime := time.Now().UTC()
 	app, cleanupFn := app.SetupTestingAppWithLevelDb(false)
 	defer cleanupFn()
-	ctx := app.BaseApp.NewContext(false, tmproto.Header{Height: 1, ChainID: "osmosis-1", Time: blockStartTime})
+	ctx := app.BaseApp.NewContext(false, tmproto.Header{Height: 1, ChainID: "mokita-1", Time: blockStartTime})
 
 	r := rand.New(rand.NewSource(10))
 

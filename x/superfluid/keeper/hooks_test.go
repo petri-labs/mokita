@@ -6,9 +6,9 @@ import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	stakingtypes "github.com/cosmos/cosmos-sdk/x/staking/types"
 
-	lockupkeeper "github.com/osmosis-labs/osmosis/v13/x/lockup/keeper"
-	lockuptypes "github.com/osmosis-labs/osmosis/v13/x/lockup/types"
-	"github.com/osmosis-labs/osmosis/v13/x/superfluid/types"
+	lockupkeeper "github.com/petri-labs/mokita/x/lockup/keeper"
+	lockuptypes "github.com/petri-labs/mokita/x/lockup/types"
+	"github.com/petri-labs/mokita/x/superfluid/types"
 )
 
 func (suite *KeeperTestSuite) TestSuperfluidAfterEpochEnd() {
@@ -71,7 +71,7 @@ func (suite *KeeperTestSuite) TestSuperfluidAfterEpochEnd() {
 			}
 
 			// check lptoken twap value set
-			newEpochMultiplier := suite.App.SuperfluidKeeper.GetOsmoEquivalentMultiplier(suite.Ctx, denoms[0])
+			newEpochMultiplier := suite.App.SuperfluidKeeper.GetMokiEquivalentMultiplier(suite.Ctx, denoms[0])
 			suite.Require().Equal(newEpochMultiplier, sdk.NewDec(15))
 
 			for index, lock := range locks {

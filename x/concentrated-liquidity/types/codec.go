@@ -10,13 +10,13 @@ import (
 
 func RegisterCodec(cdc *codec.LegacyAmino) {
 	cdc.RegisterInterface((*ConcentratedPoolExtension)(nil), nil)
-	cdc.RegisterConcrete(&MsgCreatePosition{}, "osmosis/cl-create-position", nil)
-	cdc.RegisterConcrete(&MsgWithdrawPosition{}, "osmosis/cl-withdraw-position", nil)
+	cdc.RegisterConcrete(&MsgCreatePosition{}, "mokita/cl-create-position", nil)
+	cdc.RegisterConcrete(&MsgWithdrawPosition{}, "mokita/cl-withdraw-position", nil)
 }
 
 func RegisterInterfaces(registry cdctypes.InterfaceRegistry) {
 	registry.RegisterInterface(
-		"osmosis.concentratedliquidity.v1beta1.ConcentratedPoolExtension",
+		"mokita.concentratedliquidity.v1beta1.ConcentratedPoolExtension",
 		(*ConcentratedPoolExtension)(nil),
 	)
 

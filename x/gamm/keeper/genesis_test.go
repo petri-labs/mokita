@@ -11,14 +11,14 @@ import (
 	"github.com/tendermint/tendermint/crypto/ed25519"
 	tmproto "github.com/tendermint/tendermint/proto/tendermint/types"
 
-	osmoapp "github.com/osmosis-labs/osmosis/v13/app"
-	"github.com/osmosis-labs/osmosis/v13/x/gamm"
-	"github.com/osmosis-labs/osmosis/v13/x/gamm/pool-models/balancer"
-	"github.com/osmosis-labs/osmosis/v13/x/gamm/types"
+	mokiapp "github.com/petri-labs/mokita/app"
+	"github.com/petri-labs/mokita/x/gamm"
+	"github.com/petri-labs/mokita/x/gamm/pool-models/balancer"
+	"github.com/petri-labs/mokita/x/gamm/types"
 )
 
 func TestGammInitGenesis(t *testing.T) {
-	app := osmoapp.Setup(false)
+	app := mokiapp.Setup(false)
 	ctx := app.BaseApp.NewContext(false, tmproto.Header{})
 
 	balancerPool, err := balancer.NewBalancerPool(1, balancer.PoolParams{
@@ -67,12 +67,12 @@ func TestGammInitGenesis(t *testing.T) {
 }
 
 func TestGammExportGenesis(t *testing.T) {
-	app := osmoapp.Setup(false)
+	app := mokiapp.Setup(false)
 	ctx := app.BaseApp.NewContext(false, tmproto.Header{})
 
 	acc1 := sdk.AccAddress(ed25519.GenPrivKey().PubKey().Address().Bytes())
 	err := simapp.FundAccount(app.BankKeeper, ctx, acc1, sdk.NewCoins(
-		sdk.NewCoin("uosmo", sdk.NewInt(10000000000)),
+		sdk.NewCoin("umoki", sdk.NewInt(10000000000)),
 		sdk.NewInt64Coin("foo", 100000),
 		sdk.NewInt64Coin("bar", 100000),
 	))
@@ -115,15 +115,15 @@ func TestGammExportGenesis(t *testing.T) {
 }
 
 func TestMarshalUnmarshalGenesis(t *testing.T) {
-	app := osmoapp.Setup(false)
+	app := mokiapp.Setup(false)
 	ctx := app.BaseApp.NewContext(false, tmproto.Header{})
 
-	encodingConfig := osmoapp.MakeEncodingConfig()
+	encodingConfig := mokiapp.MakeEncodingConfig()
 	appCodec := encodingConfig.Marshaler
 	am := gamm.NewAppModule(appCodec, *app.GAMMKeeper, app.AccountKeeper, app.BankKeeper)
 	acc1 := sdk.AccAddress(ed25519.GenPrivKey().PubKey().Address().Bytes())
 	err := simapp.FundAccount(app.BankKeeper, ctx, acc1, sdk.NewCoins(
-		sdk.NewCoin("uosmo", sdk.NewInt(10000000000)),
+		sdk.NewCoin("umoki", sdk.NewInt(10000000000)),
 		sdk.NewInt64Coin("foo", 100000),
 		sdk.NewInt64Coin("bar", 100000),
 	))

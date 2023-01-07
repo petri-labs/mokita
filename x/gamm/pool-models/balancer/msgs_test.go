@@ -8,10 +8,10 @@ import (
 	"github.com/cosmos/cosmos-sdk/crypto/keys/ed25519"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 
-	"github.com/osmosis-labs/osmosis/v13/app/apptesting"
-	appParams "github.com/osmosis-labs/osmosis/v13/app/params"
-	balancer "github.com/osmosis-labs/osmosis/v13/x/gamm/pool-models/balancer"
-	"github.com/osmosis-labs/osmosis/v13/x/gamm/types"
+	"github.com/petri-labs/mokita/app/apptesting"
+	appParams "github.com/petri-labs/mokita/app/params"
+	balancer "github.com/petri-labs/mokita/x/gamm/pool-models/balancer"
+	"github.com/petri-labs/mokita/x/gamm/types"
 )
 
 func TestMsgCreateBalancerPool_ValidateBasic(t *testing.T) {
@@ -186,7 +186,7 @@ func TestMsgCreateBalancerPool_ValidateBasic(t *testing.T) {
 		{
 			name: "valid governor: address",
 			msg: createMsg(func(msg balancer.MsgCreateBalancerPool) balancer.MsgCreateBalancerPool {
-				msg.FuturePoolGovernor = "osmo1fqlr98d45v5ysqgp6h56kpujcj4cvsjnjq9nck"
+				msg.FuturePoolGovernor = "moki1fqlr98d45v5ysqgp6h56kpujcj4cvsjnjq9nck"
 				return msg
 			}),
 			expectPass: true,

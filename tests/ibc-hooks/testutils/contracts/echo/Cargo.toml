@@ -2,7 +2,7 @@
 name = "echo"
 description = "Cosmwasm contract that always returns the same response"
 version = "0.1.0"
-authors = ["osmosis contributors"]
+authors = ["mokita contributors"]
 edition = "2021"
 
 exclude = [

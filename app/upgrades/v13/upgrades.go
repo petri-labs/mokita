@@ -13,10 +13,10 @@ import (
 	upgradetypes "github.com/cosmos/cosmos-sdk/x/upgrade/types"
 	transfertypes "github.com/cosmos/ibc-go/v4/modules/apps/transfer/types"
 
-	"github.com/osmosis-labs/osmosis/v13/app/keepers"
-	"github.com/osmosis-labs/osmosis/v13/app/upgrades"
-	ibcratelimittypes "github.com/osmosis-labs/osmosis/v13/x/ibc-rate-limit/types"
-	lockuptypes "github.com/osmosis-labs/osmosis/v13/x/lockup/types"
+	"github.com/petri-labs/mokita/app/keepers"
+	"github.com/petri-labs/mokita/app/upgrades"
+	ibcratelimittypes "github.com/petri-labs/mokita/x/ibc-rate-limit/types"
+	lockuptypes "github.com/petri-labs/mokita/x/lockup/types"
 )
 
 //go:embed rate_limiter.wasm
@@ -48,7 +48,7 @@ func setupRateLimiting(ctx sdk.Context, keepers *keepers.AppKeepers) error {
 	if err != nil {
 		return err
 	}
-	addrStr, err := sdk.Bech32ifyAddressBytes("osmo", addr)
+	addrStr, err := sdk.Bech32ifyAddressBytes("moki", addr)
 	if err != nil {
 		return err
 	}

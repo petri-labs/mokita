@@ -6,8 +6,8 @@ import (
 
 	"github.com/stretchr/testify/suite"
 
-	"github.com/osmosis-labs/osmosis/v13/app/apptesting"
-	swaprouterqueryproto "github.com/osmosis-labs/osmosis/v13/x/swaprouter/client/queryproto"
+	"github.com/petri-labs/mokita/app/apptesting"
+	swaprouterqueryproto "github.com/petri-labs/mokita/x/swaprouter/client/queryproto"
 )
 
 type QueryTestSuite struct {
@@ -32,7 +32,7 @@ func (s *QueryTestSuite) TestQueriesNeverAlterState() {
 	}{
 		{
 			"Query num pools",
-			"/osmosis.swaprouter.v1beta1.Query/NumPools",
+			"/mokita.swaprouter.v1beta1.Query/NumPools",
 			&swaprouterqueryproto.NumPoolsRequest{},
 			&swaprouterqueryproto.NumPoolsResponse{},
 		},

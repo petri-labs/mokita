@@ -3,17 +3,17 @@ package v14
 import (
 	store "github.com/cosmos/cosmos-sdk/store/types"
 
-	ibchookstypes "github.com/osmosis-labs/osmosis/x/ibc-hooks/types"
+	ibchookstypes "github.com/petri-labs/mokita/x/ibc-hooks/types"
 
-	"github.com/osmosis-labs/osmosis/v13/app/upgrades"
-	cltypes "github.com/osmosis-labs/osmosis/v13/x/concentrated-liquidity/types"
-	downtimetypes "github.com/osmosis-labs/osmosis/v13/x/downtime-detector/types"
-	protorevtypes "github.com/osmosis-labs/osmosis/v13/x/protorev/types"
-	swaproutertypes "github.com/osmosis-labs/osmosis/v13/x/swaprouter/types"
-	valsetpreftypes "github.com/osmosis-labs/osmosis/v13/x/valset-pref/types"
+	"github.com/petri-labs/mokita/app/upgrades"
+	cltypes "github.com/petri-labs/mokita/x/concentrated-liquidity/types"
+	downtimetypes "github.com/petri-labs/mokita/x/downtime-detector/types"
+	protorevtypes "github.com/petri-labs/mokita/x/protorev/types"
+	swaproutertypes "github.com/petri-labs/mokita/x/swaprouter/types"
+	valsetpreftypes "github.com/petri-labs/mokita/x/valset-pref/types"
 )
 
-// UpgradeName defines the on-chain upgrade name for the Osmosis v14 upgrade.
+// UpgradeName defines the on-chain upgrade name for the Mokisis v14 upgrade.
 const UpgradeName = "v14"
 
 var Upgrade = upgrades.Upgrade{

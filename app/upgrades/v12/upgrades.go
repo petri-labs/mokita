@@ -11,12 +11,12 @@ import (
 	icahosttypes "github.com/cosmos/ibc-go/v4/modules/apps/27-interchain-accounts/host/types"
 	ibctransfertypes "github.com/cosmos/ibc-go/v4/modules/apps/transfer/types"
 
-	gammtypes "github.com/osmosis-labs/osmosis/v13/x/gamm/types"
-	superfluidtypes "github.com/osmosis-labs/osmosis/v13/x/superfluid/types"
+	gammtypes "github.com/petri-labs/mokita/x/gamm/types"
+	superfluidtypes "github.com/petri-labs/mokita/x/superfluid/types"
 
-	"github.com/osmosis-labs/osmosis/v13/app/keepers"
-	"github.com/osmosis-labs/osmosis/v13/app/upgrades"
-	twaptypes "github.com/osmosis-labs/osmosis/v13/x/twap/types"
+	"github.com/petri-labs/mokita/app/keepers"
+	"github.com/petri-labs/mokita/app/upgrades"
+	twaptypes "github.com/petri-labs/mokita/x/twap/types"
 )
 
 // We set the app version to pre-upgrade because it will be incremented by one
@@ -32,7 +32,7 @@ func CreateUpgradeHandler(
 	return func(ctx sdk.Context, plan upgradetypes.Plan, fromVM module.VersionMap) (module.VersionMap, error) {
 		// Although the app version was already set during the v9 upgrade, our v10 was a fork and
 		// v11 was decided to be limited to the "gauge creation minimum fee" change only:
-		// https://github.com/osmosis-labs/osmosis/pull/2202
+		// https://github.com/petri-labs/mokita/pull/2202
 		//
 		// As a result, the upgrade handler was not executed to increment the app version.
 		// This change helps to correctly set the app version for v12.

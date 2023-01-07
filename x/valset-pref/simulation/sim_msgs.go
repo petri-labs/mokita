@@ -8,12 +8,12 @@ import (
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	stakingtypes "github.com/cosmos/cosmos-sdk/x/staking/types"
-	osmosimtypes "github.com/osmosis-labs/osmosis/v13/simulation/simtypes"
-	valsetkeeper "github.com/osmosis-labs/osmosis/v13/x/valset-pref"
-	"github.com/osmosis-labs/osmosis/v13/x/valset-pref/types"
+	mokisimtypes "github.com/petri-labs/mokita/simulation/simtypes"
+	valsetkeeper "github.com/petri-labs/mokita/x/valset-pref"
+	"github.com/petri-labs/mokita/x/valset-pref/types"
 )
 
-func RandomMsgSetValSetPreference(k valsetkeeper.Keeper, sim *osmosimtypes.SimCtx, ctx sdk.Context) (*types.MsgSetValidatorSetPreference, error) {
+func RandomMsgSetValSetPreference(k valsetkeeper.Keeper, sim *mokisimtypes.SimCtx, ctx sdk.Context) (*types.MsgSetValidatorSetPreference, error) {
 	var preferences []types.ValidatorPreference
 
 	// Start with a weight of 1
@@ -46,7 +46,7 @@ func RandomMsgSetValSetPreference(k valsetkeeper.Keeper, sim *osmosimtypes.SimCt
 	}, nil
 }
 
-func RandomMsgDelegateToValSet(k valsetkeeper.Keeper, sim *osmosimtypes.SimCtx, ctx sdk.Context) (*types.MsgDelegateToValidatorSet, error) {
+func RandomMsgDelegateToValSet(k valsetkeeper.Keeper, sim *mokisimtypes.SimCtx, ctx sdk.Context) (*types.MsgDelegateToValidatorSet, error) {
 	delegator := sim.RandomSimAccount()
 	// check if the delegator valset created
 	err := GetRandomExistingValSet(ctx, k, sim, delegator.Address)
@@ -62,7 +62,7 @@ func RandomMsgDelegateToValSet(k valsetkeeper.Keeper, sim *osmosimtypes.SimCtx, 
 	}, nil
 }
 
-func RandomMsgUnDelegateToValSet(k valsetkeeper.Keeper, sim *osmosimtypes.SimCtx, ctx sdk.Context) (*types.MsgUndelegateFromValidatorSet, error) {
+func RandomMsgUnDelegateToValSet(k valsetkeeper.Keeper, sim *mokisimtypes.SimCtx, ctx sdk.Context) (*types.MsgUndelegateFromValidatorSet, error) {
 	delegator := sim.RandomSimAccount()
 	// check if the delegator valset created
 	err := GetRandomExistingValSet(ctx, k, sim, delegator.Address)
@@ -83,7 +83,7 @@ func RandomMsgUnDelegateToValSet(k valsetkeeper.Keeper, sim *osmosimtypes.SimCtx
 	}, nil
 }
 
-func RandomValidator(ctx sdk.Context, sim *osmosimtypes.SimCtx) *stakingtypes.Validator {
+func RandomValidator(ctx sdk.Context, sim *mokisimtypes.SimCtx) *stakingtypes.Validator {
 	rand.Seed(time.Now().UnixNano())
 
 	validators := sim.StakingKeeper().GetAllValidators(ctx)
@@ -95,7 +95,7 @@ func RandomValidator(ctx sdk.Context, sim *osmosimtypes.SimCtx) *stakingtypes.Va
 }
 
 // TODO: Change this to user GetDelegations() once #3857 gets merged, issue created
-func GetRandomExistingValSet(ctx sdk.Context, k valsetkeeper.Keeper, sim *osmosimtypes.SimCtx, delegatorAddr sdk.AccAddress) error {
+func GetRandomExistingValSet(ctx sdk.Context, k valsetkeeper.Keeper, sim *mokisimtypes.SimCtx, delegatorAddr sdk.AccAddress) error {
 	// Get Valset delegations
 	_, found := k.GetValidatorSetPreference(ctx, delegatorAddr.String())
 	if !found {
@@ -105,7 +105,7 @@ func GetRandomExistingValSet(ctx sdk.Context, k valsetkeeper.Keeper, sim *osmosi
 	return nil
 }
 
-func GetRandomExistingDelegation(ctx sdk.Context, k valsetkeeper.Keeper, sim *osmosimtypes.SimCtx, delegatorAddr sdk.AccAddress) error {
+func GetRandomExistingDelegation(ctx sdk.Context, k valsetkeeper.Keeper, sim *mokisimtypes.SimCtx, delegatorAddr sdk.AccAddress) error {
 	// gets the existing delegation
 	existingDelegations := sim.StakingKeeper().GetDelegatorDelegations(ctx, delegatorAddr, math.MaxUint16)
 	if len(existingDelegations) == 0 {

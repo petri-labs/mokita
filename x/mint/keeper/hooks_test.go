@@ -6,17 +6,17 @@ import (
 	"github.com/stretchr/testify/suite"
 	tmproto "github.com/tendermint/tendermint/proto/tendermint/types"
 
-	"github.com/osmosis-labs/osmosis/osmoutils/osmoassert"
-	osmoapp "github.com/osmosis-labs/osmosis/v13/app"
-	"github.com/osmosis-labs/osmosis/v13/x/mint/keeper"
-	"github.com/osmosis-labs/osmosis/v13/x/mint/types"
+	"github.com/petri-labs/mokita/mokiutils/mokiassert"
+	mokiapp "github.com/petri-labs/mokita/app"
+	"github.com/petri-labs/mokita/x/mint/keeper"
+	"github.com/petri-labs/mokita/x/mint/types"
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 )
 
 const (
 	// Most values here are taken from mainnet genesis to mimic real-world behavior:
-	// https://github.com/osmosis-labs/networks/raw/main/osmosis-1/genesis.json
+	// https://github.com/mokita-labs/networks/raw/main/mokita-1/genesis.json
 	defaultGenesisEpochProvisions = "821917808219.178082191780821917"
 	defaultEpochIdentifier        = "day"
 	// actual value taken from mainnet for sanity checking calculations.
@@ -363,7 +363,7 @@ func (suite *KeeperTestSuite) TestAfterEpochEnd() {
 				MintingRewardsDistributionStartEpoch: tc.mintStartEpoch,
 			}
 
-			app := osmoapp.Setup(false)
+			app := mokiapp.Setup(false)
 			ctx := app.BaseApp.NewContext(false, tmproto.Header{})
 
 			mintKeeper := app.MintKeeper
@@ -406,20 +406,20 @@ func (suite *KeeperTestSuite) TestAfterEpochEnd() {
 
 			// Validate developer account balance.
 			developerAccountBalanceAfterHook := bankKeeper.GetBalance(ctx, accountKeeper.GetModuleAddress(types.DeveloperVestingModuleAcctName), sdk.DefaultBondDenom)
-			osmoassert.DecApproxEq(suite.T(), developerAccountBalanceBeforeHook.Amount.Sub(expectedDevRewards.TruncateInt()).ToDec(), developerAccountBalanceAfterHook.Amount.ToDec(), maxArithmeticTolerance)
+			mokiassert.DecApproxEq(suite.T(), developerAccountBalanceBeforeHook.Amount.Sub(expectedDevRewards.TruncateInt()).ToDec(), developerAccountBalanceAfterHook.Amount.ToDec(), maxArithmeticTolerance)
 
 			// Validate supply.
-			osmoassert.DecApproxEq(suite.T(), expectedSupply.Add(tc.expectedDistribution).Sub(expectedDevRewards), app.BankKeeper.GetSupply(ctx, sdk.DefaultBondDenom).Amount.ToDec(), maxArithmeticTolerance)
+			mokiassert.DecApproxEq(suite.T(), expectedSupply.Add(tc.expectedDistribution).Sub(expectedDevRewards), app.BankKeeper.GetSupply(ctx, sdk.DefaultBondDenom).Amount.ToDec(), maxArithmeticTolerance)
 
 			// Validate supply with offset.
-			osmoassert.DecApproxEq(suite.T(), expectedSupplyWithOffset.Add(tc.expectedDistribution), app.BankKeeper.GetSupplyWithOffset(ctx, sdk.DefaultBondDenom).Amount.ToDec(), maxArithmeticTolerance)
+			mokiassert.DecApproxEq(suite.T(), expectedSupplyWithOffset.Add(tc.expectedDistribution), app.BankKeeper.GetSupplyWithOffset(ctx, sdk.DefaultBondDenom).Amount.ToDec(), maxArithmeticTolerance)
 
 			// Validate epoch provisions.
 			suite.Require().Equal(tc.expectedLastReductionEpochNum, mintKeeper.GetLastReductionEpochNum(ctx))
 
 			if !tc.expectedDistribution.IsZero() {
 				// Validate distribution.
-				osmoassert.DecApproxEq(suite.T(), tc.expectedDistribution, mintKeeper.GetMinter(ctx).EpochProvisions, sdk.NewDecWithPrec(1, 6))
+				mokiassert.DecApproxEq(suite.T(), tc.expectedDistribution, mintKeeper.GetMinter(ctx).EpochProvisions, sdk.NewDecWithPrec(1, 6))
 			}
 		})
 	}
@@ -429,9 +429,9 @@ func (suite *KeeperTestSuite) TestAfterEpochEnd() {
 // Make sure that more specific test specs are added to validate the expected
 // supply for correctness.
 //
-// Ref: https://github.com/osmosis-labs/osmosis/issues/1917
+// Ref: https://github.com/petri-labs/mokita/issues/1917
 func (suite *KeeperTestSuite) TestAfterEpochEnd_FirstYearThirdening_RealParameters() {
-	app := osmoapp.Setup(false)
+	app := mokiapp.Setup(false)
 	ctx := app.BaseApp.NewContext(false, tmproto.Header{})
 	mintKeeper := app.MintKeeper
 	accountKeeper := app.AccountKeeper
@@ -453,63 +453,63 @@ func (suite *KeeperTestSuite) TestAfterEpochEnd_FirstYearThirdening_RealParamete
 		},
 		WeightedDeveloperRewardsReceivers: []types.WeightedAddress{
 			{
-				Address: "osmo14kjcwdwcqsujkdt8n5qwpd8x8ty2rys5rjrdjj",
+				Address: "moki14kjcwdwcqsujkdt8n5qwpd8x8ty2rys5rjrdjj",
 				Weight:  sdk.NewDecWithPrec(2887, 4),
 			},
 			{
-				Address: "osmo1gw445ta0aqn26suz2rg3tkqfpxnq2hs224d7gq",
+				Address: "moki1gw445ta0aqn26suz2rg3tkqfpxnq2hs224d7gq",
 				Weight:  sdk.NewDecWithPrec(229, 3),
 			},
 			{
-				Address: "osmo13lt0hzc6u3htsk7z5rs6vuurmgg4hh2ecgxqkf",
+				Address: "moki13lt0hzc6u3htsk7z5rs6vuurmgg4hh2ecgxqkf",
 				Weight:  sdk.NewDecWithPrec(1625, 4),
 			},
 			{
-				Address: "osmo1kvc3he93ygc0us3ycslwlv2gdqry4ta73vk9hu",
+				Address: "moki1kvc3he93ygc0us3ycslwlv2gdqry4ta73vk9hu",
 				Weight:  sdk.NewDecWithPrec(109, 3),
 			},
 			{
-				Address: "osmo19qgldlsk7hdv3ddtwwpvzff30pxqe9phq9evxf",
+				Address: "moki19qgldlsk7hdv3ddtwwpvzff30pxqe9phq9evxf",
 				Weight:  sdk.NewDecWithPrec(995, 3).Quo(sdk.NewDec(10)), // 0.0995
 			},
 			{
-				Address: "osmo19fs55cx4594een7qr8tglrjtt5h9jrxg458htd",
+				Address: "moki19fs55cx4594een7qr8tglrjtt5h9jrxg458htd",
 				Weight:  sdk.NewDecWithPrec(6, 1).Quo(sdk.NewDec(10)), // 0.06
 			},
 			{
-				Address: "osmo1ssp6px3fs3kwreles3ft6c07mfvj89a544yj9k",
+				Address: "moki1ssp6px3fs3kwreles3ft6c07mfvj89a544yj9k",
 				Weight:  sdk.NewDecWithPrec(15, 2).Quo(sdk.NewDec(10)), // 0.015
 			},
 			{
-				Address: "osmo1c5yu8498yzqte9cmfv5zcgtl07lhpjrj0skqdx",
+				Address: "moki1c5yu8498yzqte9cmfv5zcgtl07lhpjrj0skqdx",
 				Weight:  sdk.NewDecWithPrec(1, 1).Quo(sdk.NewDec(10)), // 0.01
 			},
 			{
-				Address: "osmo1yhj3r9t9vw7qgeg22cehfzj7enwgklw5k5v7lj",
+				Address: "moki1yhj3r9t9vw7qgeg22cehfzj7enwgklw5k5v7lj",
 				Weight:  sdk.NewDecWithPrec(75, 2).Quo(sdk.NewDec(100)), // 0.0075
 			},
 			{
-				Address: "osmo18nzmtyn5vy5y45dmcdnta8askldyvehx66lqgm",
+				Address: "moki18nzmtyn5vy5y45dmcdnta8askldyvehx66lqgm",
 				Weight:  sdk.NewDecWithPrec(7, 1).Quo(sdk.NewDec(100)), // 0.007
 			},
 			{
-				Address: "osmo1z2x9z58cg96ujvhvu6ga07yv9edq2mvkxpgwmc",
+				Address: "moki1z2x9z58cg96ujvhvu6ga07yv9edq2mvkxpgwmc",
 				Weight:  sdk.NewDecWithPrec(5, 1).Quo(sdk.NewDec(100)), // 0.005
 			},
 			{
-				Address: "osmo1tvf3373skua8e6480eyy38avv8mw3hnt8jcxg9",
+				Address: "moki1tvf3373skua8e6480eyy38avv8mw3hnt8jcxg9",
 				Weight:  sdk.NewDecWithPrec(25, 2).Quo(sdk.NewDec(100)), // 0.0025
 			},
 			{
-				Address: "osmo1zs0txy03pv5crj2rvty8wemd3zhrka2ne8u05n",
+				Address: "moki1zs0txy03pv5crj2rvty8wemd3zhrka2ne8u05n",
 				Weight:  sdk.NewDecWithPrec(25, 2).Quo(sdk.NewDec(100)), // 0.0025
 			},
 			{
-				Address: "osmo1djgf9p53n7m5a55hcn6gg0cm5mue4r5g3fadee",
+				Address: "moki1djgf9p53n7m5a55hcn6gg0cm5mue4r5g3fadee",
 				Weight:  sdk.NewDecWithPrec(1, 1).Quo(sdk.NewDec(100)), // 0.001
 			},
 			{
-				Address: "osmo1488zldkrn8xcjh3z40v2mexq7d088qkna8ceze",
+				Address: "moki1488zldkrn8xcjh3z40v2mexq7d088qkna8ceze",
 				Weight:  sdk.NewDecWithPrec(8, 1).Quo(sdk.NewDec(1000)), // 0.0008
 			},
 		},

@@ -3,9 +3,9 @@ package types
 import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 
-	epochtypes "github.com/osmosis-labs/osmosis/v13/x/epochs/types"
-	gammtypes "github.com/osmosis-labs/osmosis/v13/x/gamm/types"
-	swaproutertypes "github.com/osmosis-labs/osmosis/v13/x/swaprouter/types"
+	epochtypes "github.com/petri-labs/mokita/x/epochs/types"
+	gammtypes "github.com/petri-labs/mokita/x/gamm/types"
+	swaproutertypes "github.com/petri-labs/mokita/x/swaprouter/types"
 )
 
 // AccountKeeper defines the account contract that must be fulfilled when

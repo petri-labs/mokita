@@ -26,10 +26,10 @@ func getDefaultGenesisStateBytes() []byte {
 	return defaultGenesisBz
 }
 
-// Setup initializes a new OsmosisApp.
-func Setup(isCheckTx bool) *OsmosisApp {
+// Setup initializes a new MokisisApp.
+func Setup(isCheckTx bool) *MokisisApp {
 	db := dbm.NewMemDB()
-	app := NewOsmosisApp(log.NewNopLogger(), db, nil, true, map[int64]bool{}, DefaultNodeHome, 0, simapp.EmptyAppOptions{}, GetWasmEnabledProposals(), EmptyWasmOpts)
+	app := NewMokisisApp(log.NewNopLogger(), db, nil, true, map[int64]bool{}, DefaultNodeHome, 0, simapp.EmptyAppOptions{}, GetWasmEnabledProposals(), EmptyWasmOpts)
 	if !isCheckTx {
 		stateBytes := getDefaultGenesisStateBytes()
 
@@ -45,15 +45,15 @@ func Setup(isCheckTx bool) *OsmosisApp {
 	return app
 }
 
-// SetupTestingAppWithLevelDb initializes a new OsmosisApp intended for testing,
+// SetupTestingAppWithLevelDb initializes a new MokisisApp intended for testing,
 // with LevelDB as a db.
-func SetupTestingAppWithLevelDb(isCheckTx bool) (app *OsmosisApp, cleanupFn func()) {
-	dir := "osmosis_testing"
-	db, err := sdk.NewLevelDB("osmosis_leveldb_testing", dir)
+func SetupTestingAppWithLevelDb(isCheckTx bool) (app *MokisisApp, cleanupFn func()) {
+	dir := "mokita_testing"
+	db, err := sdk.NewLevelDB("mokita_leveldb_testing", dir)
 	if err != nil {
 		panic(err)
 	}
-	app = NewOsmosisApp(log.NewNopLogger(), db, nil, true, map[int64]bool{}, DefaultNodeHome, 5, simapp.EmptyAppOptions{}, GetWasmEnabledProposals(), EmptyWasmOpts)
+	app = NewMokisisApp(log.NewNopLogger(), db, nil, true, map[int64]bool{}, DefaultNodeHome, 5, simapp.EmptyAppOptions{}, GetWasmEnabledProposals(), EmptyWasmOpts)
 	if !isCheckTx {
 		genesisState := NewDefaultGenesisState()
 		stateBytes, err := json.MarshalIndent(genesisState, "", " ")

@@ -5,9 +5,9 @@ import (
 
 	abci "github.com/tendermint/tendermint/abci/types"
 
-	lockuptypes "github.com/osmosis-labs/osmosis/v13/x/lockup/types"
-	"github.com/osmosis-labs/osmosis/v13/x/superfluid/keeper"
-	"github.com/osmosis-labs/osmosis/v13/x/superfluid/types"
+	lockuptypes "github.com/petri-labs/mokita/x/lockup/types"
+	"github.com/petri-labs/mokita/x/superfluid/keeper"
+	"github.com/petri-labs/mokita/x/superfluid/types"
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	stakingtypes "github.com/cosmos/cosmos-sdk/x/staking/types"
@@ -70,14 +70,14 @@ func (suite *KeeperTestSuite) TestSuperfluidDelegate() {
 
 			denoms, _ := suite.SetupGammPoolsAndSuperfluidAssets([]sdk.Dec{sdk.NewDec(20), sdk.NewDec(20)})
 
-			// get pre-superfluid delgations osmo supply and supplyWithOffset
+			// get pre-superfluid delgations moki supply and supplyWithOffset
 			presupply := suite.App.BankKeeper.GetSupply(suite.Ctx, bondDenom)
 			presupplyWithOffset := suite.App.BankKeeper.GetSupplyWithOffset(suite.Ctx, bondDenom)
 
 			// setup superfluid delegations
 			_, intermediaryAccs, locks := suite.setupSuperfluidDelegations(valAddrs, tc.superDelegations, denoms)
 
-			// ensure post-superfluid delegations osmo supplywithoffset is the same while supply is not
+			// ensure post-superfluid delegations moki supplywithoffset is the same while supply is not
 			postsupply := suite.App.BankKeeper.GetSupply(suite.Ctx, bondDenom)
 			postsupplyWithOffset := suite.App.BankKeeper.GetSupplyWithOffset(suite.Ctx, bondDenom)
 			suite.Require().False(postsupply.IsEqual(presupply), "presupply: %s   postsupply: %s", presupply, postsupply)
@@ -252,7 +252,7 @@ func (suite *KeeperTestSuite) TestSuperfluidUndelegate() {
 					lock = &lockuptypes.PeriodLock{}
 				}
 
-				// get pre-superfluid delgations osmo supply and supplyWithOffset
+				// get pre-superfluid delgations moki supply and supplyWithOffset
 				presupply := suite.App.BankKeeper.GetSupply(suite.Ctx, bondDenom)
 				presupplyWithOffset := suite.App.BankKeeper.GetSupplyWithOffset(suite.Ctx, bondDenom)
 
@@ -264,7 +264,7 @@ func (suite *KeeperTestSuite) TestSuperfluidUndelegate() {
 				}
 				suite.Require().NoError(err)
 
-				// ensure post-superfluid delegations osmo supplywithoffset is the same while supply is not
+				// ensure post-superfluid delegations moki supplywithoffset is the same while supply is not
 				postsupply := suite.App.BankKeeper.GetSupply(suite.Ctx, bondDenom)
 				postsupplyWithOffset := suite.App.BankKeeper.GetSupplyWithOffset(suite.Ctx, bondDenom)
 				suite.Require().False(postsupply.IsEqual(presupply), "presupply: %s   postsupply: %s", presupply, postsupply)
@@ -487,7 +487,7 @@ func (suite *KeeperTestSuite) TestRefreshIntermediaryDelegationAmounts() {
 			}
 
 			for denom, multiplier := range tc.multipliersByDenom {
-				suite.App.SuperfluidKeeper.SetOsmoEquivalentMultiplier(suite.Ctx, 2, denom, multiplier)
+				suite.App.SuperfluidKeeper.SetMokiEquivalentMultiplier(suite.Ctx, 2, denom, multiplier)
 			}
 
 			suite.App.SuperfluidKeeper.RefreshIntermediaryDelegationAmounts(suite.Ctx)
@@ -500,7 +500,7 @@ func (suite *KeeperTestSuite) TestRefreshIntermediaryDelegationAmounts() {
 				lpTokenAmount := sdk.NewInt(1000000)
 				decAmt := multiplier.Mul(lpTokenAmount.ToDec())
 				asset := suite.App.SuperfluidKeeper.GetSuperfluidAsset(suite.Ctx, intermediaryAcc.Denom)
-				expAmount := suite.App.SuperfluidKeeper.GetRiskAdjustedOsmoValue(suite.Ctx, asset, decAmt.RoundInt())
+				expAmount := suite.App.SuperfluidKeeper.GetRiskAdjustedMokiValue(suite.Ctx, asset, decAmt.RoundInt())
 
 				// check delegation changes
 				valAddr, err := sdk.ValAddressFromBech32(intermediaryAcc.ValAddr)

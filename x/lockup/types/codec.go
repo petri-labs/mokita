@@ -9,9 +9,9 @@ import (
 )
 
 func RegisterCodec(cdc *codec.LegacyAmino) {
-	cdc.RegisterConcrete(&MsgLockTokens{}, "osmosis/lockup/lock-tokens", nil)
-	cdc.RegisterConcrete(&MsgBeginUnlockingAll{}, "osmosis/lockup/begin-unlock-tokens", nil)
-	cdc.RegisterConcrete(&MsgBeginUnlocking{}, "osmosis/lockup/begin-unlock-period-lock", nil)
+	cdc.RegisterConcrete(&MsgLockTokens{}, "mokita/lockup/lock-tokens", nil)
+	cdc.RegisterConcrete(&MsgBeginUnlockingAll{}, "mokita/lockup/begin-unlock-tokens", nil)
+	cdc.RegisterConcrete(&MsgBeginUnlocking{}, "mokita/lockup/begin-unlock-period-lock", nil)
 }
 
 func RegisterInterfaces(registry cdctypes.InterfaceRegistry) {

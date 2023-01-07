@@ -7,8 +7,8 @@ import (
 
 	"github.com/gorilla/mux"
 	"github.com/grpc-ecosystem/grpc-gateway/runtime"
-	"github.com/osmosis-labs/osmosis/v13/simulation/simtypes"
-	simulation "github.com/osmosis-labs/osmosis/v13/x/valset-pref/simulation"
+	"github.com/petri-labs/mokita/simulation/simtypes"
+	simulation "github.com/petri-labs/mokita/x/valset-pref/simulation"
 
 	"github.com/cosmos/cosmos-sdk/client"
 	"github.com/cosmos/cosmos-sdk/codec"
@@ -16,12 +16,12 @@ import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/cosmos/cosmos-sdk/types/module"
 
-	keeper "github.com/osmosis-labs/osmosis/v13/x/valset-pref"
-	validatorprefclient "github.com/osmosis-labs/osmosis/v13/x/valset-pref/client"
-	valsetprefcli "github.com/osmosis-labs/osmosis/v13/x/valset-pref/client/cli"
-	"github.com/osmosis-labs/osmosis/v13/x/valset-pref/client/grpc"
-	"github.com/osmosis-labs/osmosis/v13/x/valset-pref/client/queryproto"
-	"github.com/osmosis-labs/osmosis/v13/x/valset-pref/types"
+	keeper "github.com/petri-labs/mokita/x/valset-pref"
+	validatorprefclient "github.com/petri-labs/mokita/x/valset-pref/client"
+	valsetprefcli "github.com/petri-labs/mokita/x/valset-pref/client/cli"
+	"github.com/petri-labs/mokita/x/valset-pref/client/grpc"
+	"github.com/petri-labs/mokita/x/valset-pref/client/queryproto"
+	"github.com/petri-labs/mokita/x/valset-pref/types"
 	"github.com/spf13/cobra"
 	abci "github.com/tendermint/tendermint/abci/types"
 )

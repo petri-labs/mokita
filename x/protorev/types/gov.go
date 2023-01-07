@@ -15,9 +15,9 @@ const (
 
 func init() {
 	govtypes.RegisterProposalType(ProposalTypeSetProtoRevEnabled)
-	govtypes.RegisterProposalTypeCodec(&SetProtoRevEnabledProposal{}, "osmosis/SetProtoRevEnabledProposal")
+	govtypes.RegisterProposalTypeCodec(&SetProtoRevEnabledProposal{}, "mokita/SetProtoRevEnabledProposal")
 	govtypes.RegisterProposalType(ProposalTypeSetProtoRevAdminAccount)
-	govtypes.RegisterProposalTypeCodec(&SetProtoRevAdminAccountProposal{}, "osmosis/SetProtoRevAdminAccountProposal")
+	govtypes.RegisterProposalTypeCodec(&SetProtoRevAdminAccountProposal{}, "mokita/SetProtoRevAdminAccountProposal")
 }
 
 var (

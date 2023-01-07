@@ -3,32 +3,32 @@ package cli
 import (
 	"github.com/spf13/cobra"
 
-	"github.com/osmosis-labs/osmosis/osmoutils/osmocli"
-	"github.com/osmosis-labs/osmosis/v13/x/concentrated-liquidity/types"
+	"github.com/petri-labs/mokita/mokiutils/mokicli"
+	"github.com/petri-labs/mokita/x/concentrated-liquidity/types"
 )
 
 // GetQueryCmd returns the cli query commands for this module.
 func GetQueryCmd() *cobra.Command {
-	cmd := osmocli.QueryIndexCmd(types.ModuleName)
-	osmocli.AddQueryCmd(cmd, types.NewQueryClient, GetCmdPool)
-	osmocli.AddQueryCmd(cmd, types.NewQueryClient, GetCmdPools)
+	cmd := mokicli.QueryIndexCmd(types.ModuleName)
+	mokicli.AddQueryCmd(cmd, types.NewQueryClient, GetCmdPool)
+	mokicli.AddQueryCmd(cmd, types.NewQueryClient, GetCmdPools)
 	cmd.AddCommand(
-		osmocli.GetParams[*types.QueryParamsRequest](
+		mokicli.GetParams[*types.QueryParamsRequest](
 			types.ModuleName, types.NewQueryClient),
 	)
 	return cmd
 }
 
-func GetCmdPool() (*osmocli.QueryDescriptor, *types.QueryPoolRequest) {
-	return &osmocli.QueryDescriptor{
+func GetCmdPool() (*mokicli.QueryDescriptor, *types.QueryPoolRequest) {
+	return &mokicli.QueryDescriptor{
 		Use:   "pool [poolID]",
 		Short: "Query pool",
 		Long: `{{.Short}}{{.ExampleHeader}}
 {{.CommandPrefix}} pool 1`}, &types.QueryPoolRequest{}
 }
 
-func GetCmdPools() (*osmocli.QueryDescriptor, *types.QueryPoolsRequest) {
-	return &osmocli.QueryDescriptor{
+func GetCmdPools() (*mokicli.QueryDescriptor, *types.QueryPoolsRequest) {
+	return &mokicli.QueryDescriptor{
 		Use:   "pools",
 		Short: "Query pools",
 		Long: `{{.Short}}{{.ExampleHeader}}

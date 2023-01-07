@@ -7,19 +7,19 @@ import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/golang/mock/gomock"
 
-	"github.com/osmosis-labs/osmosis/v13/tests/mocks"
-	"github.com/osmosis-labs/osmosis/v13/x/gamm/keeper"
-	"github.com/osmosis-labs/osmosis/v13/x/gamm/pool-models/balancer"
-	balancertypes "github.com/osmosis-labs/osmosis/v13/x/gamm/pool-models/balancer"
-	"github.com/osmosis-labs/osmosis/v13/x/gamm/pool-models/stableswap"
-	"github.com/osmosis-labs/osmosis/v13/x/gamm/types"
-	swaproutertypes "github.com/osmosis-labs/osmosis/v13/x/swaprouter/types"
+	"github.com/petri-labs/mokita/tests/mocks"
+	"github.com/petri-labs/mokita/x/gamm/keeper"
+	"github.com/petri-labs/mokita/x/gamm/pool-models/balancer"
+	balancertypes "github.com/petri-labs/mokita/x/gamm/pool-models/balancer"
+	"github.com/petri-labs/mokita/x/gamm/pool-models/stableswap"
+	"github.com/petri-labs/mokita/x/gamm/types"
+	swaproutertypes "github.com/petri-labs/mokita/x/swaprouter/types"
 )
 
 var (
 	defaultPoolAssetsStableSwap = sdk.Coins{
 		sdk.NewCoin("atom", sdk.NewInt(100)),
-		sdk.NewCoin("osmo", sdk.NewInt(100)),
+		sdk.NewCoin("moki", sdk.NewInt(100)),
 	}
 	defaultPoolParamsStableSwap = stableswap.PoolParams{
 		SwapFee: sdk.NewDecWithPrec(1, 2),
@@ -27,9 +27,9 @@ var (
 	}
 	defaultPoolId                        = uint64(1)
 	defaultAcctFundsStableSwap sdk.Coins = sdk.NewCoins(
-		sdk.NewCoin("uosmo", sdk.NewInt(10000000000)),
+		sdk.NewCoin("umoki", sdk.NewInt(10000000000)),
 		sdk.NewCoin("atom", sdk.NewInt(100)),
-		sdk.NewCoin("osmo", sdk.NewInt(100)),
+		sdk.NewCoin("moki", sdk.NewInt(100)),
 	)
 )
 
@@ -40,7 +40,7 @@ var (
 // 	"github.com/cosmos/cosmos-sdk/simapp"
 // 	sdk "github.com/cosmos/cosmos-sdk/types"
 
-// 	"github.com/osmosis-labs/osmosis/v13/x/gamm/types"
+// 	"github.com/petri-labs/mokita/x/gamm/types"
 // )
 
 // func (suite *KeeperTestSuite) TestCleanupPool() {
@@ -51,7 +51,7 @@ var (
 // 			suite.Ctx,
 // 			acc,
 // 			sdk.NewCoins(
-// 				sdk.NewCoin("uosmo", sdk.NewInt(1000000000)),
+// 				sdk.NewCoin("umoki", sdk.NewInt(1000000000)),
 // 				sdk.NewCoin("foo", sdk.NewInt(1000)),
 // 				sdk.NewCoin("bar", sdk.NewInt(1000)),
 // 				sdk.NewCoin("baz", sdk.NewInt(1000)),
@@ -126,7 +126,7 @@ var (
 // 			coins[i] = sdk.Coin{denoms[i], amount}
 // 		}
 // 		coinOf[acc.String()] = coins
-// 		coins = append(coins, sdk.NewCoin("uosmo", sdk.NewInt(1000000000)))
+// 		coins = append(coins, sdk.NewCoin("umoki", sdk.NewInt(1000000000)))
 
 // 		suite.FundAcc(
 // 			suite.App.BankKeeper,
@@ -170,7 +170,7 @@ var (
 // 		suite.Ctx,
 // 		acc1,
 // 		sdk.NewCoins(
-// 			sdk.NewCoin("uosmo", sdk.NewInt(1000000000)),
+// 			sdk.NewCoin("umoki", sdk.NewInt(1000000000)),
 // 			sdk.NewCoin("foo", sdk.NewInt(1000)),
 // 			sdk.NewCoin("bar", sdk.NewInt(1000)),
 // 			sdk.NewCoin("baz", sdk.NewInt(1000)),
@@ -210,7 +210,7 @@ var (
 // 		suite.Ctx,
 // 		acc1,
 // 		sdk.NewCoins(
-// 			sdk.NewCoin("uosmo", sdk.NewInt(1000000000)),
+// 			sdk.NewCoin("umoki", sdk.NewInt(1000000000)),
 // 			sdk.NewCoin("foo", sdk.NewInt(1000)),
 // 			sdk.NewCoin("bar", sdk.NewInt(1000)),
 // 			sdk.NewCoin("baz", sdk.NewInt(1000)),

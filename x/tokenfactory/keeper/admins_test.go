@@ -6,7 +6,7 @@ import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	banktypes "github.com/cosmos/cosmos-sdk/x/bank/types"
 
-	"github.com/osmosis-labs/osmosis/v13/x/tokenfactory/types"
+	"github.com/petri-labs/mokita/x/tokenfactory/types"
 )
 
 func (suite *KeeperTestSuite) TestAdminMsgs() {
@@ -89,7 +89,7 @@ func (suite *KeeperTestSuite) TestMintDenom() {
 		{
 			desc:      "denom does not exist",
 			amount:    10,
-			mintDenom: "factory/osmo1t7egva48prqmzl59x5ngv4zx0dtrwewc9m7z44/evmos",
+			mintDenom: "factory/moki1t7egva48prqmzl59x5ngv4zx0dtrwewc9m7z44/evmos",
 			admin:     suite.TestAccs[0].String(),
 			valid:     false,
 		},
@@ -143,7 +143,7 @@ func (suite *KeeperTestSuite) TestBurnDenom() {
 		{
 			desc:      "denom does not exist",
 			amount:    10,
-			burnDenom: "factory/osmo1t7egva48prqmzl59x5ngv4zx0dtrwewc9m7z44/evmos",
+			burnDenom: "factory/moki1t7egva48prqmzl59x5ngv4zx0dtrwewc9m7z44/evmos",
 			admin:     suite.TestAccs[0].String(),
 			valid:     false,
 		},
@@ -293,14 +293,14 @@ func (suite *KeeperTestSuite) TestSetDenomMetaData() {
 						Exponent: 0,
 					},
 					{
-						Denom:    "uosmo",
+						Denom:    "umoki",
 						Exponent: 6,
 					},
 				},
 				Base:    suite.defaultDenom,
-				Display: "uosmo",
-				Name:    "OSMO",
-				Symbol:  "OSMO",
+				Display: "umoki",
+				Name:    "MOKI",
+				Symbol:  "MOKI",
 			}),
 			expectedPass: true,
 		},
@@ -314,14 +314,14 @@ func (suite *KeeperTestSuite) TestSetDenomMetaData() {
 						Exponent: 0,
 					},
 					{
-						Denom:    "uosmo",
+						Denom:    "umoki",
 						Exponent: 6,
 					},
 				},
 				Base:    fmt.Sprintf("factory/%s/litecoin", suite.TestAccs[0].String()),
-				Display: "uosmo",
-				Name:    "OSMO",
-				Symbol:  "OSMO",
+				Display: "umoki",
+				Name:    "MOKI",
+				Symbol:  "MOKI",
 			}),
 			expectedPass: false,
 		},
@@ -331,18 +331,18 @@ func (suite *KeeperTestSuite) TestSetDenomMetaData() {
 				Description: "yeehaw",
 				DenomUnits: []*banktypes.DenomUnit{
 					{
-						Denom:    "uosmo",
+						Denom:    "umoki",
 						Exponent: 0,
 					},
 					{
-						Denom:    "uosmoo",
+						Denom:    "umokio",
 						Exponent: 6,
 					},
 				},
-				Base:    "uosmo",
-				Display: "uosmoo",
-				Name:    "OSMO",
-				Symbol:  "OSMO",
+				Base:    "umoki",
+				Display: "umokio",
+				Name:    "MOKI",
+				Symbol:  "MOKI",
 			}),
 			expectedPass: false,
 		},
@@ -356,14 +356,14 @@ func (suite *KeeperTestSuite) TestSetDenomMetaData() {
 						Exponent: 0,
 					},
 					{
-						Denom:    "uosmo",
+						Denom:    "umoki",
 						Exponent: 6,
 					},
 				},
 				Base:    suite.defaultDenom,
-				Display: "uosmo",
-				Name:    "OSMO",
-				Symbol:  "OSMO",
+				Display: "umoki",
+				Name:    "MOKI",
+				Symbol:  "MOKI",
 			}),
 			expectedPass: false,
 		},
@@ -378,9 +378,9 @@ func (suite *KeeperTestSuite) TestSetDenomMetaData() {
 					},
 				},
 				Base:    suite.defaultDenom,
-				Display: "uosmo",
-				Name:    "OSMO",
-				Symbol:  "OSMO",
+				Display: "umoki",
+				Name:    "MOKI",
+				Symbol:  "MOKI",
 			}),
 			expectedPass: false,
 		},

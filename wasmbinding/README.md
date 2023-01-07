@@ -17,13 +17,13 @@ This package provides first class support for:
 - Commands
 
 ```sh
-  osmosisd tx wasm -h
+  mokitad tx wasm -h
 ```
 
 - Query
 
 ```sh
-  osmosisd query wasm -h
+  mokitad query wasm -h
 ```
 
 ## Tests

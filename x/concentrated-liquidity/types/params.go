@@ -26,7 +26,7 @@ func NewParams(authorizedTickSpacing []uint64) Params {
 
 // DefaultParams returns default concentrated-liquidity module parameters.
 // TODO: Decide on what these should be initially.
-// https://github.com/osmosis-labs/osmosis/issues/3684
+// https://github.com/petri-labs/mokita/issues/3684
 func DefaultParams() Params {
 	return Params{
 		AuthorizedTickSpacing: []uint64{1, 10, 60, 200},

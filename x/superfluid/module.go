@@ -1,8 +1,8 @@
 /*
 The superfluid module handles all logic in relation to
-the superfluid staking feature on Osmosis. Namely:
-- Methods to lock funds and mint synthetic osmo for staking
-- Daily minting and burning of the purpose of adjusting synthetic osmo lockups.
+the superfluid staking feature on Mokisis. Namely:
+- Methods to lock funds and mint synthetic moki for staking
+- Daily minting and burning of the purpose of adjusting synthetic moki lockups.
 - Staking reward distribution via the intermediary account.
 */
 package superfluid
@@ -26,11 +26,11 @@ import (
 	simtypes "github.com/cosmos/cosmos-sdk/types/simulation"
 	stakingtypes "github.com/cosmos/cosmos-sdk/x/staking/types"
 
-	"github.com/osmosis-labs/osmosis/v13/x/mint/client/rest"
-	"github.com/osmosis-labs/osmosis/v13/x/superfluid/client/cli"
-	"github.com/osmosis-labs/osmosis/v13/x/superfluid/keeper"
-	"github.com/osmosis-labs/osmosis/v13/x/superfluid/simulation"
-	"github.com/osmosis-labs/osmosis/v13/x/superfluid/types"
+	"github.com/petri-labs/mokita/x/mint/client/rest"
+	"github.com/petri-labs/mokita/x/superfluid/client/cli"
+	"github.com/petri-labs/mokita/x/superfluid/keeper"
+	"github.com/petri-labs/mokita/x/superfluid/simulation"
+	"github.com/petri-labs/mokita/x/superfluid/types"
 )
 
 var (

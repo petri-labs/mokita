@@ -19,7 +19,7 @@ const (
 
 const (
 	prefixTokenPairRoutes = iota + 1
-	prefixOsmoPools
+	prefixMokiPools
 	prefixAtomPools
 	prefixNumberOfTrades
 	prefixProfitsByDenom
@@ -32,8 +32,8 @@ var (
 	// KeyPrefixTokenPairRoutes is the prefix for the TokenPairArbRoutes store
 	KeyPrefixTokenPairRoutes = []byte{prefixTokenPairRoutes}
 
-	// KeyPrefixOsmoPools is the prefix for the osmo pool store
-	KeyPrefixOsmoPools = []byte{prefixOsmoPools}
+	// KeyPrefixMokiPools is the prefix for the moki pool store
+	KeyPrefixMokiPools = []byte{prefixMokiPools}
 
 	// KeyPrefixAtomPools is the prefix for the atom pool store
 	KeyPrefixAtomPools = []byte{prefixAtomPools}
@@ -52,9 +52,9 @@ var (
 	KeyPrefixProfitsByRoute = []byte{prefixProfitsByRoute}
 )
 
-// Returns the key needed to fetch the osmo pool for a given denom
-func GetKeyPrefixOsmoPool(denom string) []byte {
-	return append(KeyPrefixOsmoPools, []byte(denom)...)
+// Returns the key needed to fetch the moki pool for a given denom
+func GetKeyPrefixMokiPool(denom string) []byte {
+	return append(KeyPrefixMokiPools, []byte(denom)...)
 }
 
 // Returns the key needed to fetch the atom pool for a given denom

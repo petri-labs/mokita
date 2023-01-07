@@ -13,10 +13,10 @@ import (
 
 	"github.com/stretchr/testify/require"
 
-	"github.com/osmosis-labs/osmosis/v13/tests/e2e/configurer/chain"
-	"github.com/osmosis-labs/osmosis/v13/tests/e2e/containers"
-	"github.com/osmosis-labs/osmosis/v13/tests/e2e/initialization"
-	"github.com/osmosis-labs/osmosis/v13/tests/e2e/util"
+	"github.com/petri-labs/mokita/tests/e2e/configurer/chain"
+	"github.com/petri-labs/mokita/tests/e2e/containers"
+	"github.com/petri-labs/mokita/tests/e2e/initialization"
+	"github.com/petri-labs/mokita/tests/e2e/util"
 )
 
 // baseConfigurer is the base implementation for the
@@ -85,7 +85,7 @@ func (bc *baseConfigurer) RunIBC() error {
 func (bc *baseConfigurer) runIBCRelayer(chainConfigA *chain.Config, chainConfigB *chain.Config) error {
 	bc.t.Log("starting Hermes relayer container...")
 
-	tmpDir, err := os.MkdirTemp("", "osmosis-e2e-testnet-hermes-")
+	tmpDir, err := os.MkdirTemp("", "mokita-e2e-testnet-hermes-")
 	if err != nil {
 		return err
 	}
@@ -159,7 +159,7 @@ func (bc *baseConfigurer) runIBCRelayer(chainConfigA *chain.Config, chainConfigB
 	// transport errors.
 	time.Sleep(10 * time.Second)
 
-	// create the client, connection and channel between the two Osmosis chains
+	// create the client, connection and channel between the two Mokisis chains
 	return bc.connectIBCChains(chainConfigA, chainConfigB)
 }
 

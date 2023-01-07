@@ -1,13 +1,13 @@
 {
   "swagger": "2.0",
   "info": {
-    "title": "Osmosis - gRPC Gateway docs",
+    "title": "Mokisis - gRPC Gateway docs",
     "description": "A REST interface for state queries, legacy transactions",
     "version": "1.0.0"
   },
   "apis": [
     {
-      "url": "../../tmp-swagger-gen/osmosis/epochs/query.swagger.json",
+      "url": "../../tmp-swagger-gen/mokita/epochs/query.swagger.json",
       "operationIds": {
         "rename": {
           "Params": "EpochsParams"
@@ -15,7 +15,7 @@
       }
     },
     {
-      "url": "../../tmp-swagger-gen/osmosis/gamm/v1beta1/query.swagger.json",
+      "url": "../../tmp-swagger-gen/mokita/gamm/v1beta1/query.swagger.json",
       "operationIds": {
         "rename": {
           "Params": "GAMMParams"
@@ -23,7 +23,7 @@
       }
     },
     {
-      "url": "../../tmp-swagger-gen/osmosis/incentives/query.swagger.json",
+      "url": "../../tmp-swagger-gen/mokita/incentives/query.swagger.json",
       "operationIds": {
         "rename": {
           "Params": "IncentivesParams"
@@ -31,7 +31,7 @@
       }
     },
     {
-      "url": "../../tmp-swagger-gen/osmosis/lockup/query.swagger.json",
+      "url": "../../tmp-swagger-gen/mokita/lockup/query.swagger.json",
       "operationIds": {
         "rename": {
           "Params": "LockupParams"
@@ -39,7 +39,7 @@
       }
     },
     {
-      "url": "../../tmp-swagger-gen/osmosis/mint/v1beta1/query.swagger.json",
+      "url": "../../tmp-swagger-gen/mokita/mint/v1beta1/query.swagger.json",
       "operationIds": {
         "rename": {
           "Params": "MintParams"
@@ -47,7 +47,7 @@
       }
     },
     {
-      "url": "../../tmp-swagger-gen/osmosis/pool-incentives/v1beta1/query.swagger.json",
+      "url": "../../tmp-swagger-gen/mokita/pool-incentives/v1beta1/query.swagger.json",
       "operationIds": {
         "rename": {
           "LockableDurations": "PoolLockableDurations",
@@ -56,7 +56,7 @@
       }
     },
     {
-      "url": "../../tmp-swagger-gen/osmosis/superfluid/query.swagger.json",
+      "url": "../../tmp-swagger-gen/mokita/superfluid/query.swagger.json",
       "operationIds": {
         "rename": {
           "Params": "SuperfluidParams"
@@ -64,7 +64,7 @@
       }
     },
     {
-      "url": "../../tmp-swagger-gen/osmosis/tokenfactory/v1beta1/query.swagger.json",
+      "url": "../../tmp-swagger-gen/mokita/tokenfactory/v1beta1/query.swagger.json",
       "operationIds": {
         "rename": {
           "Params": "TokenfactoryParams"
@@ -72,7 +72,7 @@
       }
     },
     {
-      "url": "../../tmp-swagger-gen/osmosis/txfees/v1beta1/query.swagger.json",
+      "url": "../../tmp-swagger-gen/mokita/txfees/v1beta1/query.swagger.json",
       "operationIds": {
         "rename": {
           "Params": "TxFeesParams",
@@ -148,7 +148,7 @@
       "url": "../../tmp-swagger-gen/cosmos/mint/v1beta1/query.swagger.json",
       "operationIds": {
         "rename": {
-          "Params": "CosmosMintParams"
+          "Params": "CmokisMintParams"
         }
       }
     },

@@ -7,11 +7,11 @@ import (
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 
-	gammtypes "github.com/osmosis-labs/osmosis/v13/x/gamm/types"
-	lockuptypes "github.com/osmosis-labs/osmosis/v13/x/lockup/types"
+	gammtypes "github.com/petri-labs/mokita/x/gamm/types"
+	lockuptypes "github.com/petri-labs/mokita/x/lockup/types"
 
-	"github.com/osmosis-labs/osmosis/v13/x/superfluid/keeper/internal/events"
-	"github.com/osmosis-labs/osmosis/v13/x/superfluid/types"
+	"github.com/petri-labs/mokita/x/superfluid/keeper/internal/events"
+	"github.com/petri-labs/mokita/x/superfluid/types"
 )
 
 type msgServer struct {
@@ -35,9 +35,9 @@ var _ types.MsgServer = msgServer{}
 // - lock should not be unlocking
 // - lock should not have a different superfluid staking position
 // - lock duration should be greater or equal to the staking.Unbonding time
-// Note that the amount of delegation is not equal to the equivalent amount of osmo within the lock.
-// Instead, we use the osmo equivalent multiplier stored in the latest epoch, calculate how much
-// osmo equivalent is in lock, and use the risk adjusted osmo value. The minimum risk ratio works as a parameter
+// Note that the amount of delegation is not equal to the equivalent amount of moki within the lock.
+// Instead, we use the moki equivalent multiplier stored in the latest epoch, calculate how much
+// moki equivalent is in lock, and use the risk adjusted moki value. The minimum risk ratio works as a parameter
 // to better incentivize and balance between superfluid staking and vanilla staking.
 // Delegation does not happen directly from msg.Sender, but instead delegation is done via intermediary account.
 func (server msgServer) SuperfluidDelegate(goCtx context.Context, msg *types.MsgSuperfluidDelegate) (*types.MsgSuperfluidDelegateResponse, error) {

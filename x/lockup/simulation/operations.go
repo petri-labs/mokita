@@ -6,10 +6,10 @@ import (
 
 	legacysimulationtype "github.com/cosmos/cosmos-sdk/types/simulation"
 
-	"github.com/osmosis-labs/osmosis/osmoutils"
-	"github.com/osmosis-labs/osmosis/v13/simulation/simtypes"
-	"github.com/osmosis-labs/osmosis/v13/x/lockup/keeper"
-	"github.com/osmosis-labs/osmosis/v13/x/lockup/types"
+	"github.com/petri-labs/mokita/mokiutils"
+	"github.com/petri-labs/mokita/simulation/simtypes"
+	"github.com/petri-labs/mokita/x/lockup/keeper"
+	"github.com/petri-labs/mokita/x/lockup/types"
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 )
@@ -51,12 +51,12 @@ var notUnlockingFilter = func(l types.PeriodLock) bool { return !l.IsUnlocking()
 
 func accountHasLockConstraint(k keeper.Keeper, ctx sdk.Context) simtypes.SimAccountConstraint {
 	return func(acc legacysimulationtype.Account) bool {
-		return len(osmoutils.Filter(notUnlockingFilter, k.GetAccountPeriodLocks(ctx, acc.Address))) != 0
+		return len(mokiutils.Filter(notUnlockingFilter, k.GetAccountPeriodLocks(ctx, acc.Address))) != 0
 	}
 }
 
 func randLock(k keeper.Keeper, sim *simtypes.SimCtx, ctx sdk.Context, addr sdk.AccAddress) types.PeriodLock {
 	locks := k.GetAccountPeriodLocks(ctx, addr)
-	notUnlockingLocks := osmoutils.Filter(notUnlockingFilter, locks)
+	notUnlockingLocks := mokiutils.Filter(notUnlockingFilter, locks)
 	return simtypes.RandSelect(sim, notUnlockingLocks...)
 }

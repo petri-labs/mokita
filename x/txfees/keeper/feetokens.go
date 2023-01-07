@@ -3,7 +3,7 @@ package keeper
 import (
 	"github.com/gogo/protobuf/proto"
 
-	"github.com/osmosis-labs/osmosis/v13/x/txfees/types"
+	"github.com/petri-labs/mokita/x/txfees/types"
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
@@ -56,7 +56,7 @@ func (k Keeper) CalcFeeSpotPrice(ctx sdk.Context, inputDenom string) (sdk.Dec, e
 }
 
 // GetFeeToken returns the fee token record for a specific denom,
-// In our case the baseDenom is uosmo.
+// In our case the baseDenom is umoki.
 func (k Keeper) GetBaseDenom(ctx sdk.Context) (denom string, err error) {
 	store := ctx.KVStore(k.storeKey)
 

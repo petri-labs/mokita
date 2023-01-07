@@ -11,11 +11,11 @@ import (
 	ante "github.com/cosmos/cosmos-sdk/x/auth/ante"
 	"github.com/cosmos/cosmos-sdk/x/auth/signing"
 
-	osmoante "github.com/osmosis-labs/osmosis/v13/ante"
-	v9 "github.com/osmosis-labs/osmosis/v13/app/upgrades/v9"
+	mokiante "github.com/petri-labs/mokita/ante"
+	v9 "github.com/petri-labs/mokita/app/upgrades/v9"
 
-	txfeeskeeper "github.com/osmosis-labs/osmosis/v13/x/txfees/keeper"
-	txfeestypes "github.com/osmosis-labs/osmosis/v13/x/txfees/types"
+	txfeeskeeper "github.com/petri-labs/mokita/x/txfees/keeper"
+	txfeestypes "github.com/petri-labs/mokita/x/txfees/types"
 )
 
 // Link to default ante handler used by cosmos sdk:
@@ -34,8 +34,8 @@ func NewAnteHandler(
 ) sdk.AnteHandler {
 	mempoolFeeOptions := txfeestypes.NewMempoolFeeOptions(appOpts)
 	mempoolFeeDecorator := txfeeskeeper.NewMempoolFeeDecorator(*txFeesKeeper, mempoolFeeOptions)
-	sendblockOptions := osmoante.NewSendBlockOptions(appOpts)
-	sendblockDecorator := osmoante.NewSendBlockDecorator(sendblockOptions)
+	sendblockOptions := mokiante.NewSendBlockOptions(appOpts)
+	sendblockDecorator := mokiante.NewSendBlockDecorator(sendblockOptions)
 	deductFeeDecorator := txfeeskeeper.NewDeductFeeDecorator(*txFeesKeeper, ak, bankKeeper, nil)
 	return sdk.ChainAnteDecorators(
 		ante.NewSetUpContextDecorator(), // outermost AnteDecorator. SetUpContext must be called first

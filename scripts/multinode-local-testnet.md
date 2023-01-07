@@ -8,7 +8,7 @@ greater than 66% power online.
 
 ## Instructions
 
-Clone the osmosis repo
+Clone the mokita repo
 
 Checkout the branch you are looking to test
 
@@ -31,11 +31,11 @@ Validator3: `tmux a -t validator3`
 Directories
 -----------
 
-Validator1: `$HOME/.osmosisd/validator1`
+Validator1: `$HOME/.mokitad/validator1`
 
-Validator2: `$HOME/.osmosisd/validator2`
+Validator2: `$HOME/.mokitad/validator2`
 
-Validator3: `$HOME/.osmosisd/validator3`
+Validator3: `$HOME/.mokitad/validator3`
 
 Ports
 -----
@@ -52,14 +52,14 @@ particular node.
 Examples
 --------
 
-Validator2: `osmosisd status --node "tcp://localhost:26654"`
+Validator2: `mokitad status --node "tcp://localhost:26654"`
 
-Validator3: `osmosisd status --node "tcp://localhost:26651"`
+Validator3: `mokitad status --node "tcp://localhost:26651"`
 
 or
 
 Validator1:
-`osmosisd keys list --keyring-backend test --home $HOME/.osmosisd/validator1`
+`mokitad keys list --keyring-backend test --home $HOME/.mokitad/validator1`
 
 Validator2:
-`osmosisd keys list --keyring-backend test --home $HOME/.osmosisd/validator2`
+`mokitad keys list --keyring-backend test --home $HOME/.mokitad/validator2`

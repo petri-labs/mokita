@@ -1,4 +1,4 @@
-module github.com/osmosis-labs/osmosis/v13
+module github.com/petri-labs/mokita
 
 go 1.18
 
@@ -16,10 +16,10 @@ require (
 	github.com/grpc-ecosystem/grpc-gateway v1.16.0
 	github.com/mattn/go-sqlite3 v1.14.16
 	github.com/ory/dockertest/v3 v3.9.1
-	github.com/osmosis-labs/go-mutesting v0.0.0-20221208041716-b43bcd97b3b3
-	github.com/osmosis-labs/osmosis/osmomath v0.0.0-20230105183030-bccf5202f260
-	github.com/osmosis-labs/osmosis/osmoutils v0.0.0-20230105184425-1e6fcd979d99
-	github.com/osmosis-labs/osmosis/x/ibc-hooks v0.0.0-20230106090955-07448a793aaa
+	github.com/mokita-labs/go-mutesting v0.0.0-20221208041716-b43bcd97b3b3
+	github.com/petri-labs/mokita/mokimath v0.0.0-20230105183030-bccf5202f260
+	github.com/petri-labs/mokita/mokiutils v0.0.0-20230105184425-1e6fcd979d99
+	github.com/petri-labs/mokita/x/ibc-hooks v0.0.0-20230106090955-07448a793aaa
 	github.com/pkg/errors v0.9.1
 	github.com/rakyll/statik v0.1.7
 	github.com/spf13/cast v1.5.0
@@ -299,14 +299,14 @@ require (
 )
 
 replace (
-	// osmosis-patched wasmd
-	// ToDo: replace the commit hash with v0.30.0-osmo-v14 once the version is tagged
-	github.com/CosmWasm/wasmd => github.com/osmosis-labs/wasmd v0.29.2-0.20221222131554-7c8ea36a6e30
+	// mokita-patched wasmd
+	// ToDo: replace the commit hash with v0.30.0-moki-v14 once the version is tagged
+	github.com/CosmWasm/wasmd => github.com/mokita-labs/wasmd v0.29.2-0.20221222131554-7c8ea36a6e30
 	// dragonberry
 	github.com/confio/ics23/go => github.com/cosmos/cosmos-sdk/ics23/go v0.8.0
-	// Our cosmos-sdk branch is:  https://github.com/osmosis-labs/cosmos-sdk, current branch: v13.x. Direct commit link: https://github.com/osmosis-labs/cosmos-sdk/commit/8757a61551aa1ea993c85a523e18094ab555b1d7
-	// tag: https://github.com/osmosis-labs/cosmos-sdk/releases/tag/sdk-v13.0.0-rc2
-	github.com/cosmos/cosmos-sdk => github.com/osmosis-labs/cosmos-sdk v0.45.1-0.20221118211718-545aed73e94e
+	// Our cosmos-sdk branch is:  https://github.com/mokita-labs/cosmos-sdk, current branch: v13.x. Direct commit link: https://github.com/mokita-labs/cosmos-sdk/commit/8757a61551aa1ea993c85a523e18094ab555b1d7
+	// tag: https://github.com/mokita-labs/cosmos-sdk/releases/tag/sdk-v13.0.0-rc2
+	github.com/cosmos/cosmos-sdk => github.com/mokita-labs/cosmos-sdk v0.45.1-0.20221118211718-545aed73e94e
 	// use cosmos-compatible protobufs
 	github.com/gogo/protobuf => github.com/regen-network/protobuf v1.3.3-alpha.regen.1
 	// use grpc compatible with cosmos protobufs

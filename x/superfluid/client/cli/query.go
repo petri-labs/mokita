@@ -5,8 +5,8 @@ import (
 
 	"github.com/spf13/cobra"
 
-	"github.com/osmosis-labs/osmosis/osmoutils/osmocli"
-	"github.com/osmosis-labs/osmosis/v13/x/superfluid/types"
+	"github.com/petri-labs/mokita/mokiutils/mokicli"
+	"github.com/petri-labs/mokita/x/superfluid/types"
 
 	"github.com/cosmos/cosmos-sdk/client"
 	"github.com/cosmos/cosmos-sdk/client/flags"
@@ -14,7 +14,7 @@ import (
 
 // GetQueryCmd returns the cli query commands for this module.
 func GetQueryCmd() *cobra.Command {
-	cmd := osmocli.QueryIndexCmd(types.ModuleName)
+	cmd := mokicli.QueryIndexCmd(types.ModuleName)
 
 	cmd.AddCommand(
 		GetCmdQueryParams(),
@@ -67,7 +67,7 @@ $ <appd> query superfluid params
 }
 
 func GetCmdAllSuperfluidAssets() *cobra.Command {
-	return osmocli.SimpleQueryCmd[*types.AllAssetsRequest](
+	return mokicli.SimpleQueryCmd[*types.AllAssetsRequest](
 		"all-superfluid-assets",
 		"Query all superfluid assets", "",
 		types.ModuleName, types.NewQueryClient,
@@ -75,7 +75,7 @@ func GetCmdAllSuperfluidAssets() *cobra.Command {
 }
 
 func GetCmdAssetMultiplier() *cobra.Command {
-	return osmocli.SimpleQueryCmd[*types.AssetMultiplierRequest](
+	return mokicli.SimpleQueryCmd[*types.AssetMultiplierRequest](
 		"asset-multiplier [denom]",
 		"Query asset multiplier by denom",
 		`{{.Short}}{{.ExampleHeader}}
@@ -86,7 +86,7 @@ func GetCmdAssetMultiplier() *cobra.Command {
 }
 
 func GetCmdAllIntermediaryAccounts() *cobra.Command {
-	return osmocli.SimpleQueryCmd[*types.AllIntermediaryAccountsRequest](
+	return mokicli.SimpleQueryCmd[*types.AllIntermediaryAccountsRequest](
 		"all-intermediary-accounts",
 		"Query all superfluid intermediary accounts",
 		`{{.Short}}`,
@@ -95,7 +95,7 @@ func GetCmdAllIntermediaryAccounts() *cobra.Command {
 }
 
 func GetCmdConnectedIntermediaryAccount() *cobra.Command {
-	return osmocli.SimpleQueryCmd[*types.ConnectedIntermediaryAccountRequest](
+	return mokicli.SimpleQueryCmd[*types.ConnectedIntermediaryAccountRequest](
 		"connected-intermediary-account [lock_id]",
 		"Query connected intermediary account",
 		`{{.Short}}{{.ExampleHeader}}
@@ -108,7 +108,7 @@ func GetCmdConnectedIntermediaryAccount() *cobra.Command {
 // GetCmdSuperfluidDelegationAmount returns the coins superfluid delegated for a
 // delegator, validator, denom.
 func GetCmdSuperfluidDelegationAmount() *cobra.Command {
-	return osmocli.SimpleQueryCmd[*types.SuperfluidDelegationAmountRequest](
+	return mokicli.SimpleQueryCmd[*types.SuperfluidDelegationAmountRequest](
 		"superfluid-delegation-amount [delegator_address] [validator_address] [denom]",
 		"Query coins superfluid delegated for a delegator, validator, denom", "",
 		types.ModuleName, types.NewQueryClient,
@@ -117,7 +117,7 @@ func GetCmdSuperfluidDelegationAmount() *cobra.Command {
 
 // GetCmdSuperfluidDelegationsByDelegator returns the coins superfluid delegated for the specified delegator.
 func GetCmdSuperfluidDelegationsByDelegator() *cobra.Command {
-	return osmocli.SimpleQueryCmd[*types.SuperfluidDelegationAmountRequest](
+	return mokicli.SimpleQueryCmd[*types.SuperfluidDelegationAmountRequest](
 		"superfluid-delegation-by-delegator [delegator_address]",
 		"Query coins superfluid delegated for the specified delegator", "",
 		types.ModuleName, types.NewQueryClient,
@@ -126,7 +126,7 @@ func GetCmdSuperfluidDelegationsByDelegator() *cobra.Command {
 
 // GetCmdSuperfluidUndelegationsByDelegator returns the coins superfluid undelegated for the specified delegator.
 func GetCmdSuperfluidUndelegationsByDelegator() *cobra.Command {
-	return osmocli.SimpleQueryCmd[*types.SuperfluidUndelegationsByDelegatorRequest](
+	return mokicli.SimpleQueryCmd[*types.SuperfluidUndelegationsByDelegatorRequest](
 		"superfluid-undelegation-by-delegator [delegator_address]",
 		"Query coins superfluid undelegated for the specified delegator", "",
 		types.ModuleName, types.NewQueryClient,
@@ -135,15 +135,15 @@ func GetCmdSuperfluidUndelegationsByDelegator() *cobra.Command {
 
 // GetCmdTotalSuperfluidDelegations returns total amount of base denom delegated via superfluid staking.
 func GetCmdTotalSuperfluidDelegations() *cobra.Command {
-	return osmocli.SimpleQueryCmd[*types.TotalSuperfluidDelegationsRequest](
+	return mokicli.SimpleQueryCmd[*types.TotalSuperfluidDelegationsRequest](
 		"total-superfluid-delegations",
-		"Query total amount of osmo delegated via superfluid staking", "",
+		"Query total amount of moki delegated via superfluid staking", "",
 		types.ModuleName, types.NewQueryClient,
 	)
 }
 
 func GetCmdTotalDelegationByDelegator() *cobra.Command {
-	return osmocli.SimpleQueryCmd[*types.QueryTotalDelegationByDelegatorRequest](
+	return mokicli.SimpleQueryCmd[*types.QueryTotalDelegationByDelegatorRequest](
 		"total-delegation-by-delegator [delegator_address]",
 		"Query both superfluid delegation and normal delegation", "",
 		types.ModuleName, types.NewQueryClient,
@@ -151,7 +151,7 @@ func GetCmdTotalDelegationByDelegator() *cobra.Command {
 }
 
 func GetCmdUnpoolWhitelist() *cobra.Command {
-	return osmocli.SimpleQueryCmd[*types.QueryUnpoolWhitelistRequest](
+	return mokicli.SimpleQueryCmd[*types.QueryUnpoolWhitelistRequest](
 		"unpool-whitelist",
 		"Query whitelisted pool ids to unpool", "",
 		types.ModuleName, types.NewQueryClient,

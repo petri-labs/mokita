@@ -15,12 +15,12 @@ import (
 	"github.com/spf13/cobra"
 	abci "github.com/tendermint/tendermint/abci/types"
 
-	"github.com/osmosis-labs/osmosis/v13/simulation/simtypes"
-	gammsimulation "github.com/osmosis-labs/osmosis/v13/x/gamm/simulation"
-	"github.com/osmosis-labs/osmosis/v13/x/swaprouter"
-	"github.com/osmosis-labs/osmosis/v13/x/swaprouter/client/cli"
-	"github.com/osmosis-labs/osmosis/v13/x/swaprouter/client/queryproto"
-	"github.com/osmosis-labs/osmosis/v13/x/swaprouter/types"
+	"github.com/petri-labs/mokita/simulation/simtypes"
+	gammsimulation "github.com/petri-labs/mokita/x/gamm/simulation"
+	"github.com/petri-labs/mokita/x/swaprouter"
+	"github.com/petri-labs/mokita/x/swaprouter/client/cli"
+	"github.com/petri-labs/mokita/x/swaprouter/client/queryproto"
+	"github.com/petri-labs/mokita/x/swaprouter/types"
 )
 
 var (
@@ -141,7 +141,7 @@ func (AppModule) ConsensusVersion() uint64 { return 1 }
 // GenerateGenesisState creates a randomized GenState of the swaprouter module.
 func (am AppModule) SimulatorGenesisState(simState *module.SimulationState, s *simtypes.SimCtx) {
 	swaprouterGen := types.DefaultGenesis()
-	// change the pool creation fee denom from uosmo to stake
+	// change the pool creation fee denom from umoki to stake
 	swaprouterGen.Params.PoolCreationFee = sdk.NewCoins(gammsimulation.PoolCreationFee)
 	DefaultGenJson := simState.Cdc.MustMarshalJSON(swaprouterGen)
 	simState.GenState[types.ModuleName] = DefaultGenJson

@@ -9,11 +9,11 @@ import (
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 
-	appparams "github.com/osmosis-labs/osmosis/v13/app/params"
-	"github.com/osmosis-labs/osmosis/v13/tests/e2e/configurer/chain"
-	"github.com/osmosis-labs/osmosis/v13/tests/e2e/configurer/config"
-	"github.com/osmosis-labs/osmosis/v13/tests/e2e/containers"
-	"github.com/osmosis-labs/osmosis/v13/tests/e2e/initialization"
+	appparams "github.com/petri-labs/mokita/app/params"
+	"github.com/petri-labs/mokita/tests/e2e/configurer/chain"
+	"github.com/petri-labs/mokita/tests/e2e/configurer/config"
+	"github.com/petri-labs/mokita/tests/e2e/containers"
+	"github.com/petri-labs/mokita/tests/e2e/initialization"
 )
 
 type UpgradeSettings struct {
@@ -55,7 +55,7 @@ func (uc *UpgradeConfigurer) ConfigureChains() error {
 
 func (uc *UpgradeConfigurer) ConfigureChain(chainConfig *chain.Config) error {
 	uc.t.Logf("starting upgrade e2e infrastructure for chain-id: %s", chainConfig.Id)
-	tmpDir, err := os.MkdirTemp("", "osmosis-e2e-testnet-")
+	tmpDir, err := os.MkdirTemp("", "mokita-e2e-testnet-")
 	if err != nil {
 		return err
 	}
@@ -120,8 +120,8 @@ func (uc *UpgradeConfigurer) CreatePreUpgradeState() error {
 		return err
 	}
 
-	chainA.SendIBC(chainB, chainB.NodeConfigs[0].PublicAddress, initialization.OsmoToken)
-	chainB.SendIBC(chainA, chainA.NodeConfigs[0].PublicAddress, initialization.OsmoToken)
+	chainA.SendIBC(chainB, chainB.NodeConfigs[0].PublicAddress, initialization.MokiToken)
+	chainB.SendIBC(chainA, chainA.NodeConfigs[0].PublicAddress, initialization.MokiToken)
 	chainA.SendIBC(chainB, chainB.NodeConfigs[0].PublicAddress, initialization.StakeToken)
 	chainB.SendIBC(chainA, chainA.NodeConfigs[0].PublicAddress, initialization.StakeToken)
 
@@ -210,8 +210,8 @@ func (uc *UpgradeConfigurer) runForkUpgrade() error {
 func (uc *UpgradeConfigurer) upgradeContainers(chainConfig *chain.Config, propHeight int64) error {
 	// upgrade containers to the locally compiled daemon
 	uc.t.Logf("starting upgrade for chain-id: %s...", chainConfig.Id)
-	uc.containerManager.OsmosisRepository = containers.CurrentBranchOsmoRepository
-	uc.containerManager.OsmosisTag = containers.CurrentBranchOsmoTag
+	uc.containerManager.MokisisRepository = containers.CurrentBranchMokiRepository
+	uc.containerManager.MokisisTag = containers.CurrentBranchMokiTag
 
 	for _, node := range chainConfig.NodeConfigs {
 		if err := node.Run(); err != nil {

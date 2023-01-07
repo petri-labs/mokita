@@ -10,8 +10,8 @@ import (
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 	"github.com/gogo/protobuf/proto"
 
-	"github.com/osmosis-labs/osmosis/osmoutils/sumtree"
-	"github.com/osmosis-labs/osmosis/v13/x/lockup/types"
+	"github.com/petri-labs/mokita/mokiutils/sumtree"
+	"github.com/petri-labs/mokita/x/lockup/types"
 )
 
 // WithdrawAllMaturedLocks withdraws every lock thats in the process of unlocking, and has finished unlocking by
@@ -620,7 +620,7 @@ func (k Keeper) accumulationStore(ctx sdk.Context, denom string) sumtree.Tree {
 // removeTokensFromLock is called by lockup slash function.
 // Called by the superfluid module ONLY.
 func (k Keeper) removeTokensFromLock(ctx sdk.Context, lock *types.PeriodLock, coins sdk.Coins) error {
-	// TODO: Handle 100% slash eventually, not needed for osmosis codebase atm.
+	// TODO: Handle 100% slash eventually, not needed for mokita codebase atm.
 	lock.Coins = lock.Coins.Sub(coins)
 
 	err := k.setLock(ctx, *lock)

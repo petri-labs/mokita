@@ -11,11 +11,11 @@ import (
 )
 
 func RegisterCodec(cdc *codec.LegacyAmino) {
-	cdc.RegisterConcrete(&MsgCreateDenom{}, "osmosis/tokenfactory/create-denom", nil)
-	cdc.RegisterConcrete(&MsgMint{}, "osmosis/tokenfactory/mint", nil)
-	cdc.RegisterConcrete(&MsgBurn{}, "osmosis/tokenfactory/burn", nil)
-	// cdc.RegisterConcrete(&MsgForceTransfer{}, "osmosis/tokenfactory/force-transfer", nil)
-	cdc.RegisterConcrete(&MsgChangeAdmin{}, "osmosis/tokenfactory/change-admin", nil)
+	cdc.RegisterConcrete(&MsgCreateDenom{}, "mokita/tokenfactory/create-denom", nil)
+	cdc.RegisterConcrete(&MsgMint{}, "mokita/tokenfactory/mint", nil)
+	cdc.RegisterConcrete(&MsgBurn{}, "mokita/tokenfactory/burn", nil)
+	// cdc.RegisterConcrete(&MsgForceTransfer{}, "mokita/tokenfactory/force-transfer", nil)
+	cdc.RegisterConcrete(&MsgChangeAdmin{}, "mokita/tokenfactory/change-admin", nil)
 }
 
 func RegisterInterfaces(registry cdctypes.InterfaceRegistry) {

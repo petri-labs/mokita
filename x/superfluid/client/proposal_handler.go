@@ -1,8 +1,8 @@
 package client
 
 import (
-	"github.com/osmosis-labs/osmosis/v13/x/superfluid/client/cli"
-	"github.com/osmosis-labs/osmosis/v13/x/superfluid/client/rest"
+	"github.com/petri-labs/mokita/x/superfluid/client/cli"
+	"github.com/petri-labs/mokita/x/superfluid/client/rest"
 
 	govclient "github.com/cosmos/cosmos-sdk/x/gov/client"
 )

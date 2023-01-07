@@ -7,9 +7,9 @@ import (
 	"github.com/spf13/cobra"
 	flag "github.com/spf13/pflag"
 
-	"github.com/osmosis-labs/osmosis/osmoutils"
-	"github.com/osmosis-labs/osmosis/osmoutils/osmocli"
-	"github.com/osmosis-labs/osmosis/v13/x/superfluid/types"
+	"github.com/petri-labs/mokita/mokiutils"
+	"github.com/petri-labs/mokita/mokiutils/mokicli"
+	"github.com/petri-labs/mokita/x/superfluid/types"
 
 	"github.com/cosmos/cosmos-sdk/client"
 	"github.com/cosmos/cosmos-sdk/client/flags"
@@ -21,7 +21,7 @@ import (
 
 // GetTxCmd returns the transaction commands for this module.
 func GetTxCmd() *cobra.Command {
-	cmd := osmocli.TxIndexCmd(types.ModuleName)
+	cmd := mokicli.TxIndexCmd(types.ModuleName)
 	cmd.AddCommand(
 		NewSuperfluidDelegateCmd(),
 		NewSuperfluidUndelegateCmd(),
@@ -73,14 +73,14 @@ func NewSuperfluidDelegateCmd() *cobra.Command {
 }
 
 func NewSuperfluidUndelegateCmd() *cobra.Command {
-	return osmocli.BuildTxCli[*types.MsgSuperfluidUndelegate](&osmocli.TxCliDesc{
+	return mokicli.BuildTxCli[*types.MsgSuperfluidUndelegate](&mokicli.TxCliDesc{
 		Use:   "undelegate [lock_id] [flags]",
 		Short: "superfluid undelegate a lock from a validator",
 	})
 }
 
 func NewSuperfluidUnbondLockCmd() *cobra.Command {
-	return osmocli.BuildTxCli[*types.MsgSuperfluidUnbondLock](&osmocli.TxCliDesc{
+	return mokicli.BuildTxCli[*types.MsgSuperfluidUnbondLock](&mokicli.TxCliDesc{
 		Use:   "unbond-lock [lock_id] [flags]",
 		Short: "unbond lock that has been superfluid staked",
 	})
@@ -281,7 +281,7 @@ func NewCmdLockAndSuperfluidDelegate() *cobra.Command {
 }
 
 func NewCmdUnPoolWhitelistedPool() *cobra.Command {
-	return osmocli.BuildTxCli[*types.MsgUnPoolWhitelistedPool](&osmocli.TxCliDesc{
+	return mokicli.BuildTxCli[*types.MsgUnPoolWhitelistedPool](&mokicli.TxCliDesc{
 		Use:   "unpool-whitelisted-pool [pool_id] [flags]",
 		Short: "unpool whitelisted pool",
 	})
@@ -296,7 +296,7 @@ func NewCmdUpdateUnpoolWhitelistProposal() *cobra.Command {
 		Long: "This proposal will update the unpool whitelist if passed. " +
 			"Every pool id must be valid. If the pool id is invalid, the proposal will not be submitted. " +
 			"If the flag to overwrite is set, the whitelist is completely overridden. Otherwise, it is appended to the existing whitelist, having all duplicates removed.",
-		Example: "osmosisd tx gov submit-proposal update-unpool-whitelist --pool-ids \"1, 2, 3\" --title \"Title\" --description \"Description\"",
+		Example: "mokitad tx gov submit-proposal update-unpool-whitelist --pool-ids \"1, 2, 3\" --title \"Title\" --description \"Description\"",
 		RunE: func(cmd *cobra.Command, args []string) error {
 			clientCtx, err := client.GetClientTxContext(cmd)
 			if err != nil {
@@ -357,7 +357,7 @@ func parseUpdateUnpoolWhitelistArgsToContent(flags *flag.FlagSet) (govtypes.Cont
 		return nil, err
 	}
 
-	poolIds, err := osmoutils.ParseUint64SliceFromString(poolIdsStr, ",")
+	poolIds, err := mokiutils.ParseUint64SliceFromString(poolIdsStr, ",")
 	if err != nil {
 		return nil, err
 	}

@@ -7,8 +7,8 @@ import (
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 
-	clmodel "github.com/osmosis-labs/osmosis/v13/x/concentrated-liquidity/model"
-	"github.com/osmosis-labs/osmosis/v13/x/concentrated-liquidity/types"
+	clmodel "github.com/petri-labs/mokita/x/concentrated-liquidity/model"
+	"github.com/petri-labs/mokita/x/concentrated-liquidity/types"
 )
 
 type msgServer struct {

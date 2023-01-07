@@ -8,11 +8,11 @@ import (
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 
-	"github.com/osmosis-labs/osmosis/osmomath"
-	sdkrand "github.com/osmosis-labs/osmosis/v13/simulation/simtypes/random"
-	"github.com/osmosis-labs/osmosis/v13/x/gamm/pool-models/balancer"
-	"github.com/osmosis-labs/osmosis/v13/x/twap"
-	"github.com/osmosis-labs/osmosis/v13/x/twap/types"
+	"github.com/petri-labs/mokita/mokimath"
+	sdkrand "github.com/petri-labs/mokita/simulation/simtypes/random"
+	"github.com/petri-labs/mokita/x/gamm/pool-models/balancer"
+	"github.com/petri-labs/mokita/x/twap"
+	"github.com/petri-labs/mokita/x/twap/types"
 )
 
 var (
@@ -904,11 +904,11 @@ func (s *TestSuite) TestGeometricTwapToNow_BalancerPool_Randomized() {
 			twap, err := app.TwapKeeper.GetGeometricTwapToNow(ctx, 1, denom0, denom1, oldTime)
 			s.Require().NoError(err)
 
-			osmomath.ErrTolerance{
+			mokimath.ErrTolerance{
 				MultiplicativeTolerance: sdk.SmallestDec(),
 			}.CompareBigDec(
-				osmomath.BigDecFromSDKDec(spotPrice),
-				osmomath.BigDecFromSDKDec(twap),
+				mokimath.BigDecFromSDKDec(spotPrice),
+				mokimath.BigDecFromSDKDec(twap),
 			)
 		})
 	}

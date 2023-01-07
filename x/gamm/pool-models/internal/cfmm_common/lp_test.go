@@ -6,11 +6,11 @@ import (
 
 	"github.com/stretchr/testify/require"
 
-	"github.com/osmosis-labs/osmosis/v13/x/gamm/pool-models/balancer"
-	"github.com/osmosis-labs/osmosis/v13/x/gamm/pool-models/internal/cfmm_common"
-	"github.com/osmosis-labs/osmosis/v13/x/gamm/pool-models/stableswap"
-	gammtypes "github.com/osmosis-labs/osmosis/v13/x/gamm/types"
-	swaproutertypes "github.com/osmosis-labs/osmosis/v13/x/swaprouter/types"
+	"github.com/petri-labs/mokita/x/gamm/pool-models/balancer"
+	"github.com/petri-labs/mokita/x/gamm/pool-models/internal/cfmm_common"
+	"github.com/petri-labs/mokita/x/gamm/pool-models/stableswap"
+	gammtypes "github.com/petri-labs/mokita/x/gamm/types"
+	swaproutertypes "github.com/petri-labs/mokita/x/swaprouter/types"
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 )

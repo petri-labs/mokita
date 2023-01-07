@@ -8,7 +8,7 @@ import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/gogo/protobuf/proto"
 
-	"github.com/osmosis-labs/osmosis/osmoutils"
+	"github.com/petri-labs/mokita/mokiutils"
 )
 
 const (
@@ -47,18 +47,18 @@ var (
 // TODO: make utility command to automatically interlace separators
 
 func FormatMostRecentTWAPKey(poolId uint64, denom1, denom2 string) []byte {
-	poolIdS := osmoutils.FormatFixedLengthU64(poolId)
+	poolIdS := mokiutils.FormatFixedLengthU64(poolId)
 	return []byte(fmt.Sprintf("%s%s%s%s%s%s", mostRecentTWAPsPrefix, poolIdS, KeySeparator, denom1, KeySeparator, denom2))
 }
 
 // TODO: Replace historical management with ORM, we currently accept 2x write amplification right now.
 func FormatHistoricalTimeIndexTWAPKey(accumulatorWriteTime time.Time, poolId uint64, denom1, denom2 string) []byte {
-	timeS := osmoutils.FormatTimeString(accumulatorWriteTime)
+	timeS := mokiutils.FormatTimeString(accumulatorWriteTime)
 	return []byte(fmt.Sprintf("%s%s%s%d%s%s%s%s", HistoricalTWAPTimeIndexPrefix, timeS, KeySeparator, poolId, KeySeparator, denom1, KeySeparator, denom2))
 }
 
 func FormatHistoricalPoolIndexTWAPKey(poolId uint64, denom1, denom2 string, accumulatorWriteTime time.Time) []byte {
-	timeS := osmoutils.FormatTimeString(accumulatorWriteTime)
+	timeS := mokiutils.FormatTimeString(accumulatorWriteTime)
 	return []byte(fmt.Sprintf("%s%d%s%s%s%s%s%s", HistoricalTWAPPoolIndexPrefix, poolId, KeySeparator, denom1, KeySeparator, denom2, KeySeparator, timeS))
 }
 
@@ -67,7 +67,7 @@ func FormatHistoricalPoolIndexTimePrefix(poolId uint64, denom1, denom2 string) [
 }
 
 func FormatHistoricalPoolIndexTimeSuffix(poolId uint64, denom1, denom2 string, accumulatorWriteTime time.Time) []byte {
-	timeS := osmoutils.FormatTimeString(accumulatorWriteTime)
+	timeS := mokiutils.FormatTimeString(accumulatorWriteTime)
 	// . acts as a suffix for lexicographical orderings
 	return []byte(fmt.Sprintf("%s%d%s%s%s%s%s%s.", HistoricalTWAPPoolIndexPrefix, poolId, KeySeparator, denom1, KeySeparator, denom2, KeySeparator, timeS))
 }
@@ -75,11 +75,11 @@ func FormatHistoricalPoolIndexTimeSuffix(poolId uint64, denom1, denom2 string, a
 // GetAllMostRecentTwapsForPool returns all of the most recent twap records for a pool id.
 // if the pool id doesn't exist, then this returns a blank list.
 func GetAllMostRecentTwapsForPool(store sdk.KVStore, poolId uint64) ([]TwapRecord, error) {
-	poolIdS := osmoutils.FormatFixedLengthU64(poolId)
-	poolIdPlusOneS := osmoutils.FormatFixedLengthU64(poolId + 1)
+	poolIdS := mokiutils.FormatFixedLengthU64(poolId)
+	poolIdPlusOneS := mokiutils.FormatFixedLengthU64(poolId + 1)
 	startPrefix := fmt.Sprintf("%s%s%s", mostRecentTWAPsPrefix, poolIdS, KeySeparator)
 	endPrefix := fmt.Sprintf("%s%s%s", mostRecentTWAPsPrefix, poolIdPlusOneS, KeySeparator)
-	return osmoutils.GatherValuesFromStore(store, []byte(startPrefix), []byte(endPrefix), ParseTwapFromBz)
+	return mokiutils.GatherValuesFromStore(store, []byte(startPrefix), []byte(endPrefix), ParseTwapFromBz)
 }
 
 func ParseTwapFromBz(bz []byte) (twap TwapRecord, err error) {

@@ -7,8 +7,8 @@ import (
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 
-	"github.com/osmosis-labs/osmosis/osmomath"
-	"github.com/osmosis-labs/osmosis/v13/x/twap/types"
+	"github.com/petri-labs/mokita/mokimath"
+	"github.com/petri-labs/mokita/x/twap/types"
 )
 
 func newTwapRecord(k types.AmmInterface, ctx sdk.Context, poolId uint64, denom0, denom1 string) (types.TwapRecord, error) {
@@ -273,5 +273,5 @@ func twapLog(price sdk.Dec) sdk.Dec {
 		panic("twap: cannot take logarithm of zero")
 	}
 
-	return osmomath.BigDecFromSDKDec(price).LogBase2().SDKDec()
+	return mokimath.BigDecFromSDKDec(price).LogBase2().SDKDec()
 }

@@ -3,7 +3,7 @@ package keeper
 import (
 	"fmt"
 
-	"github.com/osmosis-labs/osmosis/v13/x/protorev/types"
+	"github.com/petri-labs/mokita/x/protorev/types"
 
 	"github.com/cosmos/cosmos-sdk/store/prefix"
 	sdk "github.com/cosmos/cosmos-sdk/types"
@@ -71,31 +71,31 @@ func (k Keeper) DeleteAllTokenPairArbRoutes(ctx sdk.Context) {
 	k.DeleteAllEntriesForKeyPrefix(ctx, types.KeyPrefixTokenPairRoutes)
 }
 
-// GetOsmoPool returns the pool id of the Osmo pool for the given denom paired with Osmo
-func (k Keeper) GetOsmoPool(ctx sdk.Context, denom string) (uint64, error) {
-	store := prefix.NewStore(ctx.KVStore(k.storeKey), types.KeyPrefixOsmoPools)
-	key := types.GetKeyPrefixOsmoPool(denom)
+// GetMokiPool returns the pool id of the Moki pool for the given denom paired with Moki
+func (k Keeper) GetMokiPool(ctx sdk.Context, denom string) (uint64, error) {
+	store := prefix.NewStore(ctx.KVStore(k.storeKey), types.KeyPrefixMokiPools)
+	key := types.GetKeyPrefixMokiPool(denom)
 
 	bz := store.Get(key)
 	if len(bz) == 0 {
-		return 0, fmt.Errorf("no osmo pool for denom %s", denom)
+		return 0, fmt.Errorf("no moki pool for denom %s", denom)
 	}
 
 	poolId := sdk.BigEndianToUint64(bz)
 	return poolId, nil
 }
 
-// SetOsmoPool sets the pool id of the Osmo pool for the given denom paired with Osmo
-func (k Keeper) SetOsmoPool(ctx sdk.Context, denom string, poolId uint64) {
-	store := prefix.NewStore(ctx.KVStore(k.storeKey), types.KeyPrefixOsmoPools)
-	key := types.GetKeyPrefixOsmoPool(denom)
+// SetMokiPool sets the pool id of the Moki pool for the given denom paired with Moki
+func (k Keeper) SetMokiPool(ctx sdk.Context, denom string, poolId uint64) {
+	store := prefix.NewStore(ctx.KVStore(k.storeKey), types.KeyPrefixMokiPools)
+	key := types.GetKeyPrefixMokiPool(denom)
 
 	store.Set(key, sdk.Uint64ToBigEndian(poolId))
 }
 
-// DeleteAllOsmoPools deletes all the Osmo pools from modules store
-func (k Keeper) DeleteAllOsmoPools(ctx sdk.Context) {
-	k.DeleteAllEntriesForKeyPrefix(ctx, types.KeyPrefixOsmoPools)
+// DeleteAllMokiPools deletes all the Moki pools from modules store
+func (k Keeper) DeleteAllMokiPools(ctx sdk.Context) {
+	k.DeleteAllEntriesForKeyPrefix(ctx, types.KeyPrefixMokiPools)
 }
 
 // GetAtomPool returns the pool id of the Atom pool for the given denom paired with Atom

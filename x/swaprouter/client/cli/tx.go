@@ -16,9 +16,9 @@ import (
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 
-	"github.com/osmosis-labs/osmosis/v13/x/gamm/pool-models/balancer"
-	"github.com/osmosis-labs/osmosis/v13/x/gamm/pool-models/stableswap"
-	"github.com/osmosis-labs/osmosis/v13/x/swaprouter/types"
+	"github.com/petri-labs/mokita/x/gamm/pool-models/balancer"
+	"github.com/petri-labs/mokita/x/gamm/pool-models/stableswap"
+	"github.com/petri-labs/mokita/x/swaprouter/types"
 )
 
 func NewTxCmd() *cobra.Command {
@@ -156,8 +156,8 @@ func NewCreatePoolCmd() *cobra.Command {
 		Long:  `Must provide path to a pool JSON file (--pool-file) describing the pool to be created`,
 		Example: `Sample pool JSON file contents:
 {
-	"weights": "4uatom,4osmo,2uakt",
-	"initial-deposit": "100uatom,5osmo,20uakt",
+	"weights": "4uatom,4moki,2uakt",
+	"initial-deposit": "100uatom,5moki,20uakt",
 	"swap-fee": "0.01",
 	"exit-fee": "0.01",
 	"future-governor": "168h"

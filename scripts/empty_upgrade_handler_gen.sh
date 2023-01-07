@@ -6,7 +6,7 @@
 
 # Also insures that all the imports make use of a current module version from go mod:
 # (see:    module=$(go mod edit -json | jq ".Module.Path")      in this script)
-# Github workflow which calls this script can be found here: osmosis/.github/workflows/auto-update-upgrade.yml
+# Github workflow which calls this script can be found here: mokita/.github/workflows/auto-update-upgrade.yml
 
  latest_version=0
  for f in app/upgrades/*; do 
@@ -56,7 +56,7 @@
  echo -e ")\n" >> $CONSTANTS_FILE
  
  # constants.go logic
- echo "// UpgradeName defines the on-chain upgrade name for the Osmosis $version_create upgrade." >> $CONSTANTS_FILE
+ echo "// UpgradeName defines the on-chain upgrade name for the Mokisis $version_create upgrade." >> $CONSTANTS_FILE
  echo "const UpgradeName = ${bracks}$version_create$bracks" >> $CONSTANTS_FILE
  echo "
 var Upgrade = upgrades.Upgrade{

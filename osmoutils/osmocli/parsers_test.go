@@ -1,4 +1,4 @@
-package osmocli
+package mokicli
 
 import (
 	"reflect"

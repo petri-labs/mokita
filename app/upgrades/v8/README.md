@@ -1,6 +1,6 @@
 # V8 Upgrade
 
-The v8 upgrade is an emergency upgrade coordinated according to osmosis governance proposals [225](https://www.mintscan.io/osmosis/proposals/225), [226](https://www.mintscan.io/osmosis/proposals/226).   And thus by implication of 225, incentive proposals [222](https://www.mintscan.io/osmosis/proposals/222), [223](https://www.mintscan.io/osmosis/proposals/223), and [224](https://www.mintscan.io/osmosis/proposals/224).
+The v8 upgrade is an emergency upgrade coordinated according to mokita governance proposals [225](https://www.mintscan.io/mokita/proposals/225), [226](https://www.mintscan.io/mokita/proposals/226).   And thus by implication of 225, incentive proposals [222](https://www.mintscan.io/mokita/proposals/222), [223](https://www.mintscan.io/mokita/proposals/223), and [224](https://www.mintscan.io/mokita/proposals/224).
 
 ## Adjusting Incentives for 222, 223, 224
 
@@ -23,7 +23,7 @@ Let's review the states a position in a pool may be to be able to understand the
 ```sh
   ┌─────────────────────────┐   ┌─────────────────────────┐
   │  sdk.Coin               │   │  sdk.Coin               │
-  │  Denom:  UST            │   │  Denom:  uOSMO          │
+  │  Denom:  UST            │   │  Denom:  uMOKI          │
   │  Amount: 5.647          │   │  Amount: 1              │
   └───────────┬─────────────┘   └───────────┬─────────────┘
               │                             │

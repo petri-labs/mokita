@@ -13,18 +13,18 @@ import (
 	"github.com/cosmos/cosmos-sdk/simapp"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 
-	"github.com/osmosis-labs/osmosis/v13/app"
+	"github.com/petri-labs/mokita/app"
 )
 
-func CreateTestInput() (*app.OsmosisApp, sdk.Context) {
-	osmosis := app.Setup(false)
-	ctx := osmosis.BaseApp.NewContext(false, tmproto.Header{Height: 1, ChainID: "osmosis-1", Time: time.Now().UTC()})
-	return osmosis, ctx
+func CreateTestInput() (*app.MokisisApp, sdk.Context) {
+	mokita := app.Setup(false)
+	ctx := mokita.BaseApp.NewContext(false, tmproto.Header{Height: 1, ChainID: "mokita-1", Time: time.Now().UTC()})
+	return mokita, ctx
 }
 
-func FundAccount(t *testing.T, ctx sdk.Context, osmosis *app.OsmosisApp, acct sdk.AccAddress) {
-	err := simapp.FundAccount(osmosis.BankKeeper, ctx, acct, sdk.NewCoins(
-		sdk.NewCoin("uosmo", sdk.NewInt(10000000000)),
+func FundAccount(t *testing.T, ctx sdk.Context, mokita *app.MokisisApp, acct sdk.AccAddress) {
+	err := simapp.FundAccount(mokita.BankKeeper, ctx, acct, sdk.NewCoins(
+		sdk.NewCoin("umoki", sdk.NewInt(10000000000)),
 	))
 	require.NoError(t, err)
 }

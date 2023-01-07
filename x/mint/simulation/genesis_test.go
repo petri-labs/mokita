@@ -8,8 +8,8 @@ import (
 
 	"github.com/stretchr/testify/require"
 
-	"github.com/osmosis-labs/osmosis/v13/x/mint/simulation"
-	"github.com/osmosis-labs/osmosis/v13/x/mint/types"
+	"github.com/petri-labs/mokita/x/mint/simulation"
+	"github.com/petri-labs/mokita/x/mint/types"
 
 	"github.com/cosmos/cosmos-sdk/codec"
 	codectypes "github.com/cosmos/cosmos-sdk/codec/types"

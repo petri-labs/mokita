@@ -3,8 +3,8 @@ package keeper
 import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 
-	"github.com/osmosis-labs/osmosis/v13/x/protorev/types"
-	swaproutertypes "github.com/osmosis-labs/osmosis/v13/x/swaprouter/types"
+	"github.com/petri-labs/mokita/x/protorev/types"
+	swaproutertypes "github.com/petri-labs/mokita/x/swaprouter/types"
 )
 
 // IterateRoutes checks the profitability of every single route that is passed in
@@ -27,14 +27,14 @@ func (k Keeper) IterateRoutes(ctx sdk.Context, routes []swaproutertypes.SwapAmou
 			continue
 		}
 
-		// If arb doesn't start and end with uosmo, then we convert the profit to uosmo, and compare profits in terms of uosmo
-		if inputCoin.Denom != types.OsmosisDenomination {
-			uosmoProfit, err := k.ConvertProfits(ctx, inputCoin, profit)
+		// If arb doesn't start and end with umoki, then we convert the profit to umoki, and compare profits in terms of umoki
+		if inputCoin.Denom != types.MokisisDenomination {
+			umokiProfit, err := k.ConvertProfits(ctx, inputCoin, profit)
 			if err != nil {
 				k.Logger(ctx).Error("Error converting profits: ", err)
 				continue
 			}
-			profit = uosmoProfit
+			profit = umokiProfit
 		}
 
 		// Select the optimal route King of the Hill style (route with the highest profit will be executed)
@@ -48,10 +48,10 @@ func (k Keeper) IterateRoutes(ctx sdk.Context, routes []swaproutertypes.SwapAmou
 	return maxProfitInputCoin, maxProfit, optimalRoute
 }
 
-// ConvertProfits converts the profit denom to uosmo to allow for a fair comparison of profits
+// ConvertProfits converts the profit denom to umoki to allow for a fair comparison of profits
 func (k Keeper) ConvertProfits(ctx sdk.Context, inputCoin sdk.Coin, profit sdk.Int) (sdk.Int, error) {
-	// Get highest liquidity pool ID for the input coin and uosmo
-	conversionPoolID, err := k.GetOsmoPool(ctx, inputCoin.Denom)
+	// Get highest liquidity pool ID for the input coin and umoki
+	conversionPoolID, err := k.GetMokiPool(ctx, inputCoin.Denom)
 	if err != nil {
 		return profit, err
 	}
@@ -62,15 +62,15 @@ func (k Keeper) ConvertProfits(ctx sdk.Context, inputCoin sdk.Coin, profit sdk.I
 		return profit, err
 	}
 
-	// Calculate the amount of uosmo that we can get if we swapped the
-	// profited amount of the orignal asset through the highest uosmo liquidity pool
+	// Calculate the amount of umoki that we can get if we swapped the
+	// profited amount of the orignal asset through the highest umoki liquidity pool
 	conversionTokenOut, err := conversionPool.CalcOutAmtGivenIn(ctx, sdk.NewCoins(sdk.NewCoin(inputCoin.Denom, profit)),
-		types.OsmosisDenomination, conversionPool.GetSwapFee(ctx))
+		types.MokisisDenomination, conversionPool.GetSwapFee(ctx))
 	if err != nil {
 		return profit, err
 	}
 
-	// return the profit denominated in uosmo
+	// return the profit denominated in umoki
 	return conversionTokenOut.Amount, nil
 }
 

@@ -1,12 +1,12 @@
 package v4
 
 import (
-	"github.com/osmosis-labs/osmosis/v13/app/upgrades"
+	"github.com/petri-labs/mokita/app/upgrades"
 
 	store "github.com/cosmos/cosmos-sdk/store/types"
 )
 
-// UpgradeName defines the on-chain upgrade name for the Osmosis v4 upgrade.
+// UpgradeName defines the on-chain upgrade name for the Mokisis v4 upgrade.
 const UpgradeName = "v4"
 
 var Upgrade = upgrades.Upgrade{

@@ -12,7 +12,7 @@ There are two kinds of `gauges`, perpetual and non-perpetual ones.
 
 - Non perpetual ones get removed from active queue after the the distribution period finish but perpetual ones persist.
 - For non perpetual ones, they distribute the tokens equally per epoch during the `gauge` is in the active period.
-- For perpetual ones, it distribute all the tokens at a single time and somewhere else put the tokens regularly to distribute the tokens, it's mainly used to distribute minted OSMO tokens to LP token stakers.
+- For perpetual ones, it distribute all the tokens at a single time and somewhere else put the tokens regularly to distribute the tokens, it's mainly used to distribute minted MOKI tokens to LP token stakers.
 
 ## Contents
 
@@ -34,13 +34,13 @@ Locked tokens can be of any denomination, including LP tokens (gamm/pool/x), IBC
 
 The incentive amount is entered by the gauge creator. Rewards for a given pool of locked up tokens are pooled into a gauge until the disbursement time. At the disbursement time, they are distributed pro-rata (proportionally) to members of the pool.
 
-Anyone can create a gauge and add rewards to the gauge. There is no way to withdraw gauge rewards other than distribution. Governance proposals can be raised to match the external incentive tokens with equivalent Osmo incentives (see for example: [proposal 47](https://www.mintscan.io/osmosis/proposals/47)).
+Anyone can create a gauge and add rewards to the gauge. There is no way to withdraw gauge rewards other than distribution. Governance proposals can be raised to match the external incentive tokens with equivalent Moki incentives (see for example: [proposal 47](https://www.mintscan.io/mokita/proposals/47)).
 
 There are two kinds of gauges: **`perpetual`** and **`non-perpetual`**:
 
 - **`Non-perpetual`** gauges distribute their tokens equally per epoch while the gauge is in the active period. These gauges get removed from the active queue after the distribution period finishes
 
-- **`Perpetual gauges`** distribute all their tokens at a single time and only distribute their tokens again once the gauge is refilled (this is mainly used to distribute minted OSMO tokens to LP token stakers). Perpetual gauges persist and will re-disburse tokens when refilled (there is no "active" period)
+- **`Perpetual gauges`** distribute all their tokens at a single time and only distribute their tokens again once the gauge is refilled (this is mainly used to distribute minted MOKI tokens to LP token stakers). Perpetual gauges persist and will re-disburse tokens when refilled (there is no "active" period)
 
 ## State
 
@@ -245,7 +245,7 @@ done at `AfterEpochEnd` hook
 Create a gauge to distribute rewards to users
 
 ```sh
-osmosisd tx incentives create-gauge [lockup_denom] [reward] [flags]
+mokitad tx incentives create-gauge [lockup_denom] [reward] [flags]
 ```
 
 ::: details Example 1
@@ -255,8 +255,8 @@ I want to reward 100 AKT to this pool over 2 days (2 epochs). (50 rewarded on ea
 I want the rewards to start dispersing on 21 December 2021 (1640081402 UNIX time)
 
 ```bash
-osmosisd tx incentives create-gauge gamm/pool/3 10000ibc/1480B8FD20AD5FCAE81EA87584D269547DD4D436843C1D20F15E00EB64743EF4 \
---duration 24h  --start-time 1640081402 --epochs 2 --from WALLET_NAME --chain-id osmosis-1
+mokitad tx incentives create-gauge gamm/pool/3 10000ibc/1480B8FD20AD5FCAE81EA87584D269547DD4D436843C1D20F15E00EB64743EF4 \
+--duration 24h  --start-time 1640081402 --epochs 2 --from WALLET_NAME --chain-id mokita-1
 ```
 
 :::
@@ -267,9 +267,9 @@ I want to make incentives for ATOM (ibc/27394FB092D2ECCD56123C74F36E4C1F926001CE
 I want to reward 1000 JUNO (ibc/46B44899322F3CD854D2D46DEEF881958467CDD4B3B10086DA49296BBED94BED) to ATOM holders perpetually (perpetually meaning I must add more tokens to this gauge myself every epoch). I want the reward to start dispersing immediately.
 
 ```bash
-osmosisd tx incentives create-gauge ibc/27394FB092D2ECCD56123C74F36E4C1F926001CEADA9CA97EA622B25F41E5EB2 \
+mokitad tx incentives create-gauge ibc/27394FB092D2ECCD56123C74F36E4C1F926001CEADA9CA97EA622B25F41E5EB2 \
 1000000000ibc/46B44899322F3CD854D2D46DEEF881958467CDD4B3B10086DA49296BBED94BED --perpetual --duration 168h \
---from WALLET_NAME --chain-id osmosis-1
+--from WALLET_NAME --chain-id mokita-1
 ```
 
 :::
@@ -279,7 +279,7 @@ osmosisd tx incentives create-gauge ibc/27394FB092D2ECCD56123C74F36E4C1F926001CE
 Add coins to a gauge previously created to distribute more rewards to users
 
 ```sh
-osmosisd tx incentives add-to-gauge [gauge_id] [rewards] [flags]
+mokitad tx incentives add-to-gauge [gauge_id] [rewards] [flags]
 ```
 
 ::: details Example
@@ -287,8 +287,8 @@ osmosisd tx incentives add-to-gauge [gauge_id] [rewards] [flags]
 I want to refill the gauge with 500 JUNO to a previously created gauge (gauge ID 1914) after the distribution.
 
 ```bash
-osmosisd tx incentives add-to-gauge 1914 500000000ibc/46B44899322F3CD854D2D46DEEF881958467CDD4B3B10086DA49296BBED94BED \
---from WALLET_NAME --chain-id osmosis-1
+mokitad tx incentives add-to-gauge 1914 500000000ibc/46B44899322F3CD854D2D46DEEF881958467CDD4B3B10086DA49296BBED94BED \
+--from WALLET_NAME --chain-id mokita-1
 ```
 
 :::
@@ -324,13 +324,13 @@ service Query {
 Query active gauges
 
 ```sh
-osmosisd query incentives active-gauges [flags]
+mokitad query incentives active-gauges [flags]
 ```
 
 ::: details Example
 
 ```bash
-osmosisd query incentives active-gauges
+mokitad query incentives active-gauges
 ```
 
 An example output
@@ -373,7 +373,7 @@ pagination:
 Query active gauges per denom
 
 ```sh
-osmosisd query incentives active-gauges-per-denom [denom] [flags]
+mokitad query incentives active-gauges-per-denom [denom] [flags]
 ```
 
 ::: details Example
@@ -381,7 +381,7 @@ osmosisd query incentives active-gauges-per-denom [denom] [flags]
 Query all active gauges distributing incentives to holders of gamm/pool/341
 
 ```bash
-osmosisd query incentives active-gauges-per-denom gamm/pool/341
+mokitad query incentives active-gauges-per-denom gamm/pool/341
 ```
 
 An example output:
@@ -424,13 +424,13 @@ pagination:
 Query coins distributed so far
 
 ```sh
-osmosisd query incentives distributed-coins [flags]
+mokitad query incentives distributed-coins [flags]
 ```
 
 ::: details Example
 
 ```bash
-osmosisd query incentives distributed-coins
+mokitad query incentives distributed-coins
 ```
 
 An example output:
@@ -464,7 +464,7 @@ coins:
 - amount: "79999999178"
   denom: ibc/F3FF7A84A73B62921538642F9797C423D2B4C4ACB3C7FCFFCE7F12AA69909C4B
 - amount: "65873607694598"
-  denom: uosmo
+  denom: umoki
 ```
 
 :::
@@ -474,7 +474,7 @@ coins:
 Query gauge by id
 
 ```sh
-osmosisd query incentives gauge-by-id [id] [flags]
+mokitad query incentives gauge-by-id [id] [flags]
 ```
 
 ::: details Example
@@ -482,14 +482,14 @@ osmosisd query incentives gauge-by-id [id] [flags]
 Query the incentive distribution for gauge ID 1:
 
 ```sh
-osmosisd query incentives gauge-by-id 1
+mokitad query incentives gauge-by-id 1
 ```
 
 ```bash
 gauge:
   coins:
   - amount: "16654747773959"
-    denom: uosmo
+    denom: umoki
   distribute_to:
     denom: gamm/pool/1
     duration: 86400s
@@ -497,7 +497,7 @@ gauge:
     timestamp: "0001-01-01T00:00:00Z"
   distributed_coins:
   - amount: "16589795315655"
-    denom: uosmo
+    denom: umoki
   filled_epochs: "182"
   id: "1"
   is_perpetual: true
@@ -512,7 +512,7 @@ gauge:
 Query available gauges
 
 ```sh
-osmosisd query incentives gauges [flags]
+mokitad query incentives gauges [flags]
 ```
 
 ::: details Example
@@ -520,7 +520,7 @@ osmosisd query incentives gauges [flags]
 Query ALL gauges (by default the limit is 100, so here I will define a much larger number to output all gauges)
 
 ```bash
-osmosisd query incentives gauges --limit 2000
+mokitad query incentives gauges --limit 2000
 ```
 
 An example output:
@@ -528,7 +528,7 @@ An example output:
 ```sh
 - coins:
   - amount: "1924196414964"
-    denom: uosmo
+    denom: umoki
   distribute_to:
     denom: gamm/pool/348
     duration: 604800s
@@ -542,7 +542,7 @@ An example output:
   start_time: "2021-10-04T13:59:02.142175968Z"
 - coins:
   - amount: "641398804181"
-    denom: uosmo
+    denom: umoki
   distribute_to:
     denom: gamm/pool/348
     duration: 1209600s
@@ -573,13 +573,13 @@ Query rewards estimation
 Query coins that is going to be distributed
 
 ```sh
-osmosisd query incentives to-distribute-coins [flags]
+mokitad query incentives to-distribute-coins [flags]
 ```
 
 ::: details Example
 
 ```bash
-osmosisd query incentives to-distribute-coins
+mokitad query incentives to-distribute-coins
 ```
 
 An example output:
@@ -609,7 +609,7 @@ coins:
 - amount: "2533333432253"
   denom: ibc/EA3E1640F9B1532AB129A571203A0B9F789A7F14BB66E350DCBFA18E1A1931F0
 - amount: "366164843847"
-  denom: uosmo
+  denom: umoki
 ```
 
 :::
@@ -619,13 +619,13 @@ coins:
 Query scheduled gauges (gauges whose `start_time` has not yet occurred)
 
 ```sh
-osmosisd query incentives upcoming-gauges [flags]
+mokitad query incentives upcoming-gauges [flags]
 ```
 
 ::: details Example
 
 ```bash
-osmosisd query incentives upcoming-gauges
+mokitad query incentives upcoming-gauges
 ```
 
 Using this command, we will see the gauge we created earlier, among all other upcoming gauges:

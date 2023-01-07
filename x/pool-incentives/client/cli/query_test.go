@@ -6,8 +6,8 @@ import (
 
 	"github.com/stretchr/testify/suite"
 
-	"github.com/osmosis-labs/osmosis/v13/app/apptesting"
-	"github.com/osmosis-labs/osmosis/v13/x/pool-incentives/types"
+	"github.com/petri-labs/mokita/app/apptesting"
+	"github.com/petri-labs/mokita/x/pool-incentives/types"
 )
 
 type QueryTestSuite struct {
@@ -33,37 +33,37 @@ func (s *QueryTestSuite) TestQueriesNeverAlterState() {
 	}{
 		{
 			"Query distribution info",
-			"/osmosis.poolincentives.v1beta1.Query/DistrInfo",
+			"/mokita.poolincentives.v1beta1.Query/DistrInfo",
 			&types.QueryDistrInfoRequest{},
 			&types.QueryDistrInfoResponse{},
 		},
 		{
 			"Query external incentive gauges",
-			"/osmosis.poolincentives.v1beta1.Query/ExternalIncentiveGauges",
+			"/mokita.poolincentives.v1beta1.Query/ExternalIncentiveGauges",
 			&types.QueryExternalIncentiveGaugesRequest{},
 			&types.QueryExternalIncentiveGaugesResponse{},
 		},
 		{
 			"Query all gauge ids",
-			"/osmosis.poolincentives.v1beta1.Query/GaugeIds",
+			"/mokita.poolincentives.v1beta1.Query/GaugeIds",
 			&types.QueryGaugeIdsRequest{PoolId: 1},
 			&types.QueryGaugeIdsResponse{},
 		},
 		{
 			"Query all incentivized pools",
-			"/osmosis.poolincentives.v1beta1.Query/IncentivizedPools",
+			"/mokita.poolincentives.v1beta1.Query/IncentivizedPools",
 			&types.QueryIncentivizedPoolsRequest{},
 			&types.QueryIncentivizedPoolsResponse{},
 		},
 		{
 			"Query lockable durations",
-			"/osmosis.poolincentives.v1beta1.Query/LockableDurations",
+			"/mokita.poolincentives.v1beta1.Query/LockableDurations",
 			&types.QueryLockableDurationsRequest{},
 			&types.QueryLockableDurationsResponse{},
 		},
 		{
 			"Query params",
-			"/osmosis.poolincentives.v1beta1.Query/Params",
+			"/mokita.poolincentives.v1beta1.Query/Params",
 			&types.QueryParamsRequest{},
 			&types.QueryParamsResponse{},
 		},

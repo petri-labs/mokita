@@ -10,7 +10,7 @@ import (
 	stypes "github.com/cosmos/cosmos-sdk/store/types"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 
-	"github.com/osmosis-labs/osmosis/osmoutils/sumtree"
+	"github.com/petri-labs/mokita/mokiutils/sumtree"
 )
 
 type Child struct {

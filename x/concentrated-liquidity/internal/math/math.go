@@ -3,7 +3,7 @@ package math
 import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 
-	"github.com/osmosis-labs/osmosis/osmomath"
+	"github.com/petri-labs/mokita/mokimath"
 )
 
 // liquidity0 takes an amount of asset0 in the pool as well as the sqrtpCur and the nextPrice
@@ -17,9 +17,9 @@ func Liquidity0(amount sdk.Int, sqrtPriceA, sqrtPriceB sdk.Dec) sdk.Dec {
 
 	// We convert to BigDec to avoid precision loss when calculating liquidity. Without doing this,
 	// our liquidity calculations will be off from our theoretical calculations within our tests.
-	amountBigDec := osmomath.BigDecFromSDKDec(amount.ToDec())
-	sqrtPriceABigDec := osmomath.BigDecFromSDKDec(sqrtPriceA)
-	sqrtPriceBBigDec := osmomath.BigDecFromSDKDec(sqrtPriceB)
+	amountBigDec := mokimath.BigDecFromSDKDec(amount.ToDec())
+	sqrtPriceABigDec := mokimath.BigDecFromSDKDec(sqrtPriceA)
+	sqrtPriceBBigDec := mokimath.BigDecFromSDKDec(sqrtPriceB)
 
 	product := sqrtPriceABigDec.Mul(sqrtPriceBBigDec)
 	diff := sqrtPriceBBigDec.Sub(sqrtPriceABigDec)
@@ -37,9 +37,9 @@ func Liquidity1(amount sdk.Int, sqrtPriceA, sqrtPriceB sdk.Dec) sdk.Dec {
 
 	// We convert to BigDec to avoid precision loss when calculating liquidity. Without doing this,
 	// our liquidity calculations will be off from our theoretical calculations within our tests.
-	amountBigDec := osmomath.BigDecFromSDKDec(amount.ToDec())
-	sqrtPriceABigDec := osmomath.BigDecFromSDKDec(sqrtPriceA)
-	sqrtPriceBBigDec := osmomath.BigDecFromSDKDec(sqrtPriceB)
+	amountBigDec := mokimath.BigDecFromSDKDec(amount.ToDec())
+	sqrtPriceABigDec := mokimath.BigDecFromSDKDec(sqrtPriceA)
+	sqrtPriceBBigDec := mokimath.BigDecFromSDKDec(sqrtPriceB)
 
 	diff := sqrtPriceBBigDec.Sub(sqrtPriceABigDec)
 	return amountBigDec.Quo(diff).SDKDec()
@@ -58,7 +58,7 @@ func CalcAmount0Delta(liq, sqrtPriceA, sqrtPriceB sdk.Dec, roundUp bool) sdk.Dec
 	// if calculating for amountIn, we round up
 	// if calculating for amountOut, we don't round at all
 	// this is to prevent removing more from the pool than expected due to rounding
-	// example: we calculate 1000000.9999999 uusdc (~$1) amountIn and 2000000.999999 uosmo amountOut
+	// example: we calculate 1000000.9999999 uusdc (~$1) amountIn and 2000000.999999 umoki amountOut
 	// we would want the user to put in 1000001 uusdc rather than 1000000 uusdc to ensure we are charging enough for the amount they are removing
 	// additionally, without rounding, there exists cases where the swapState.amountSpecifiedRemaining.GT(sdk.ZeroDec()) for loop within
 	// the CalcOut/In functions never actually reach zero due to dust that would have never gotten counted towards the amount (numbers after the 10^6 place)
@@ -80,7 +80,7 @@ func CalcAmount1Delta(liq, sqrtPriceA, sqrtPriceB sdk.Dec, roundUp bool) sdk.Dec
 	// if calculating for amountIn, we round up
 	// if calculating for amountOut, we don't round at all
 	// this is to prevent removing more from the pool than expected due to rounding
-	// example: we calculate 1000000.9999999 uusdc (~$1) amountIn and 2000000.999999 uosmo amountOut
+	// example: we calculate 1000000.9999999 uusdc (~$1) amountIn and 2000000.999999 umoki amountOut
 	// we would want the used to put in 1000001 uusdc rather than 1000000 uusdc to ensure we are charging enough for the amount they are removing
 	// additionally, without rounding, there exists cases where the swapState.amountSpecifiedRemaining.GT(sdk.ZeroDec()) for loop within
 	// the CalcOut/In functions never actually reach zero due to dust that would have never gotten counted towards the amount (numbers after the 10^6 place)

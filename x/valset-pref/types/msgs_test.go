@@ -6,9 +6,9 @@ import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/stretchr/testify/require"
 
-	"github.com/osmosis-labs/osmosis/v13/app/apptesting"
-	appParams "github.com/osmosis-labs/osmosis/v13/app/params"
-	"github.com/osmosis-labs/osmosis/v13/x/valset-pref/types"
+	"github.com/petri-labs/mokita/app/apptesting"
+	appParams "github.com/petri-labs/mokita/app/params"
+	"github.com/petri-labs/mokita/x/valset-pref/types"
 )
 
 func TestMsgSetValidatorSetPreference(t *testing.T) {
@@ -26,15 +26,15 @@ func TestMsgSetValidatorSetPreference(t *testing.T) {
 				Delegator: addr1,
 				Preferences: []types.ValidatorPreference{
 					{
-						ValOperAddress: "osmovaloper1x2cfenmflhj3dwm2ph6nkgqr3nppkg86fxaymg",
+						ValOperAddress: "mokivaloper1x2cfenmflhj3dwm2ph6nkgqr3nppkg86fxaymg",
 						Weight:         sdk.NewDecWithPrec(322, 3),
 					},
 					{
-						ValOperAddress: "osmovaloper1jcr68jghzm24zwe78zuhz7xahua8429erxk7vm",
+						ValOperAddress: "mokivaloper1jcr68jghzm24zwe78zuhz7xahua8429erxk7vm",
 						Weight:         sdk.NewDecWithPrec(332, 3),
 					},
 					{
-						ValOperAddress: "osmovaloper1gqsr38e4zteekwr6kq5se5jpadafqmcfyz8jds",
+						ValOperAddress: "mokivaloper1gqsr38e4zteekwr6kq5se5jpadafqmcfyz8jds",
 						Weight:         sdk.NewDecWithPrec(348, 3),
 					},
 				},
@@ -47,15 +47,15 @@ func TestMsgSetValidatorSetPreference(t *testing.T) {
 				Delegator: addr1,
 				Preferences: []types.ValidatorPreference{
 					{
-						ValOperAddress: "osmovaloper1x2cfenmflhj3dwm2ph6nkgqr3nppkg86fxaymg",
+						ValOperAddress: "mokivaloper1x2cfenmflhj3dwm2ph6nkgqr3nppkg86fxaymg",
 						Weight:         sdk.NewDecWithPrec(6, 1),
 					},
 					{
-						ValOperAddress: "osmovaloper1x2cfenmflhj3dwm2ph6nkgqr3nppkg86fxaymg",
+						ValOperAddress: "mokivaloper1x2cfenmflhj3dwm2ph6nkgqr3nppkg86fxaymg",
 						Weight:         sdk.NewDecWithPrec(4, 1),
 					},
 					{
-						ValOperAddress: "osmovaloper1jcr68jghzm24zwe78zuhz7xahua8429erxk7vm",
+						ValOperAddress: "mokivaloper1jcr68jghzm24zwe78zuhz7xahua8429erxk7vm",
 						Weight:         sdk.NewDecWithPrec(2, 1),
 					},
 				},
@@ -68,7 +68,7 @@ func TestMsgSetValidatorSetPreference(t *testing.T) {
 				Delegator: invalidAddr,
 				Preferences: []types.ValidatorPreference{
 					{
-						ValOperAddress: "osmovaloper1x2cfenmflhj3dwm2ph6nkgqr3nppkg86fxaymg",
+						ValOperAddress: "mokivaloper1x2cfenmflhj3dwm2ph6nkgqr3nppkg86fxaymg",
 						Weight:         sdk.NewDec(1),
 					},
 				},
@@ -81,15 +81,15 @@ func TestMsgSetValidatorSetPreference(t *testing.T) {
 				Delegator: addr1,
 				Preferences: []types.ValidatorPreference{
 					{
-						ValOperAddress: "osmovaloper1x2cfenmflhj3dwm2ph6nkgqr3nppkg86fxay", // invalid address
+						ValOperAddress: "mokivaloper1x2cfenmflhj3dwm2ph6nkgqr3nppkg86fxay", // invalid address
 						Weight:         sdk.NewDecWithPrec(2, 1),
 					},
 					{
-						ValOperAddress: "osmovaloper1jcr68jghzm24zwe78zuhz7xahua8429erxk7vm",
+						ValOperAddress: "mokivaloper1jcr68jghzm24zwe78zuhz7xahua8429erxk7vm",
 						Weight:         sdk.NewDecWithPrec(2, 1),
 					},
 					{
-						ValOperAddress: "osmovaloper1x2cfenmflhj3dwm2ph6nkgqr3nppkg86fxaymg",
+						ValOperAddress: "mokivaloper1x2cfenmflhj3dwm2ph6nkgqr3nppkg86fxaymg",
 						Weight:         sdk.NewDecWithPrec(6, 1),
 					},
 				},
@@ -102,15 +102,15 @@ func TestMsgSetValidatorSetPreference(t *testing.T) {
 				Delegator: addr1,
 				Preferences: []types.ValidatorPreference{
 					{
-						ValOperAddress: "osmovaloper1x2cfenmflhj3dwm2ph6nkgqr3nppkg86fxaymg",
+						ValOperAddress: "mokivaloper1x2cfenmflhj3dwm2ph6nkgqr3nppkg86fxaymg",
 						Weight:         sdk.NewDecWithPrec(5, 1),
 					},
 					{
-						ValOperAddress: "osmovaloper1jcr68jghzm24zwe78zuhz7xahua8429erxk7vm",
+						ValOperAddress: "mokivaloper1jcr68jghzm24zwe78zuhz7xahua8429erxk7vm",
 						Weight:         sdk.NewDecWithPrec(3, 1),
 					},
 					{
-						ValOperAddress: "osmovaloper1gqsr38e4zteekwr6kq5se5jpadafqmcfyz8jds",
+						ValOperAddress: "mokivaloper1gqsr38e4zteekwr6kq5se5jpadafqmcfyz8jds",
 						Weight:         sdk.NewDecWithPrec(3, 1),
 					},
 				},
@@ -123,15 +123,15 @@ func TestMsgSetValidatorSetPreference(t *testing.T) {
 				Delegator: addr1,
 				Preferences: []types.ValidatorPreference{
 					{
-						ValOperAddress: "osmovaloper1x2cfenmflhj3dwm2ph6nkgqr3nppkg86fxaymg",
+						ValOperAddress: "mokivaloper1x2cfenmflhj3dwm2ph6nkgqr3nppkg86fxaymg",
 						Weight:         sdk.NewDecWithPrec(2, 1),
 					},
 					{
-						ValOperAddress: "osmovaloper1jcr68jghzm24zwe78zuhz7xahua8429erxk7vm",
+						ValOperAddress: "mokivaloper1jcr68jghzm24zwe78zuhz7xahua8429erxk7vm",
 						Weight:         sdk.NewDecWithPrec(2, 1),
 					},
 					{
-						ValOperAddress: "osmovaloper1gqsr38e4zteekwr6kq5se5jpadafqmcfyz8jds",
+						ValOperAddress: "mokivaloper1gqsr38e4zteekwr6kq5se5jpadafqmcfyz8jds",
 						Weight:         sdk.NewDecWithPrec(2, 1),
 					},
 				},

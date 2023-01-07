@@ -4,15 +4,15 @@ import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	authtypes "github.com/cosmos/cosmos-sdk/x/auth/types"
 
-	"github.com/osmosis-labs/osmosis/osmoutils/osmoassert"
-	"github.com/osmosis-labs/osmosis/v13/x/mint/keeper"
-	"github.com/osmosis-labs/osmosis/v13/x/mint/types"
+	"github.com/petri-labs/mokita/mokiutils/mokiassert"
+	"github.com/petri-labs/mokita/x/mint/keeper"
+	"github.com/petri-labs/mokita/x/mint/types"
 )
 
 var customGenesis = types.NewGenesisState(
 	types.NewMinter(sdk.ZeroDec()),
 	types.NewParams(
-		"uosmo",                  // denom
+		"umoki",                  // denom
 		sdk.NewDec(200),          // epoch provisions
 		"year",                   // epoch identifier
 		sdk.NewDecWithPrec(5, 1), // reduction factor
@@ -25,11 +25,11 @@ var customGenesis = types.NewGenesisState(
 		},
 		[]types.WeightedAddress{
 			{
-				Address: "osmo14kjcwdwcqsujkdt8n5qwpd8x8ty2rys5rjrdjj",
+				Address: "moki14kjcwdwcqsujkdt8n5qwpd8x8ty2rys5rjrdjj",
 				Weight:  sdk.NewDecWithPrec(6, 1),
 			},
 			{
-				Address: "osmo1gw445ta0aqn26suz2rg3tkqfpxnq2hs224d7gq",
+				Address: "moki1gw445ta0aqn26suz2rg3tkqfpxnq2hs224d7gq",
 				Weight:  sdk.NewDecWithPrec(4, 1),
 			},
 		},
@@ -75,7 +75,7 @@ func (suite *KeeperTestSuite) TestMintInitGenesis() {
 		},
 		"custom genesis": {
 			mintGenesis: customGenesis,
-			mintDenom:   "uosmo",
+			mintDenom:   "umoki",
 
 			expectedEpochProvisions:             sdk.NewDec(200),
 			expectedSupplyOffsetDelta:           sdk.NewInt(keeper.DeveloperVestingAmount).Neg(),
@@ -105,7 +105,7 @@ func (suite *KeeperTestSuite) TestMintInitGenesis() {
 			originalVestingCoins := bankKeeper.GetBalance(ctx, developerAccount, tc.mintDenom)
 
 			// Test.
-			osmoassert.ConditionalPanic(suite.T(), tc.expectPanic, func() { mintKeeper.InitGenesis(ctx, tc.mintGenesis) })
+			mokiassert.ConditionalPanic(suite.T(), tc.expectPanic, func() { mintKeeper.InitGenesis(ctx, tc.mintGenesis) })
 			if tc.expectPanic {
 				return
 			}

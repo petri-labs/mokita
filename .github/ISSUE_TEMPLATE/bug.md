@@ -1,6 +1,6 @@
 ---
 name: Report a bug
-about: Something with Osmosis is not working as expected
+about: Something with Mokisis is not working as expected
 title: ''
 labels: 'type:bug'
 assignees: ''
@@ -8,7 +8,7 @@ assignees: ''
 
 #### System information
 
-Osmosis version: `Osmosis version`
+Mokisis version: `Mokisis version`
 OS & Version: Windows/Linux/OSX
 Commit hash: 
 

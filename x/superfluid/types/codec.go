@@ -10,14 +10,14 @@ import (
 )
 
 func RegisterCodec(cdc *codec.LegacyAmino) {
-	cdc.RegisterConcrete(&MsgSuperfluidDelegate{}, "osmosis/superfluid-delegate", nil)
-	cdc.RegisterConcrete(&MsgSuperfluidUndelegate{}, "osmosis/superfluid-undelegate", nil)
-	cdc.RegisterConcrete(&MsgLockAndSuperfluidDelegate{}, "osmosis/lock-and-superfluid-delegate", nil)
-	cdc.RegisterConcrete(&MsgSuperfluidUnbondLock{}, "osmosis/superfluid-unbond-lock", nil)
-	cdc.RegisterConcrete(&SetSuperfluidAssetsProposal{}, "osmosis/set-superfluid-assets-proposal", nil)
-	cdc.RegisterConcrete(&UpdateUnpoolWhiteListProposal{}, "osmosis/update-unpool-whitelist", nil)
-	cdc.RegisterConcrete(&RemoveSuperfluidAssetsProposal{}, "osmosis/del-superfluid-assets-proposal", nil)
-	cdc.RegisterConcrete(&MsgUnPoolWhitelistedPool{}, "osmosis/unpool-whitelisted-pool", nil)
+	cdc.RegisterConcrete(&MsgSuperfluidDelegate{}, "mokita/superfluid-delegate", nil)
+	cdc.RegisterConcrete(&MsgSuperfluidUndelegate{}, "mokita/superfluid-undelegate", nil)
+	cdc.RegisterConcrete(&MsgLockAndSuperfluidDelegate{}, "mokita/lock-and-superfluid-delegate", nil)
+	cdc.RegisterConcrete(&MsgSuperfluidUnbondLock{}, "mokita/superfluid-unbond-lock", nil)
+	cdc.RegisterConcrete(&SetSuperfluidAssetsProposal{}, "mokita/set-superfluid-assets-proposal", nil)
+	cdc.RegisterConcrete(&UpdateUnpoolWhiteListProposal{}, "mokita/update-unpool-whitelist", nil)
+	cdc.RegisterConcrete(&RemoveSuperfluidAssetsProposal{}, "mokita/del-superfluid-assets-proposal", nil)
+	cdc.RegisterConcrete(&MsgUnPoolWhitelistedPool{}, "mokita/unpool-whitelisted-pool", nil)
 }
 
 func RegisterInterfaces(registry cdctypes.InterfaceRegistry) {

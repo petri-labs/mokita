@@ -5,24 +5,24 @@ import (
 	govkeeper "github.com/cosmos/cosmos-sdk/x/gov/keeper"
 	stakingkeeper "github.com/cosmos/cosmos-sdk/x/staking/keeper"
 
-	"github.com/osmosis-labs/osmosis/v13/app/keepers"
+	"github.com/petri-labs/mokita/app/keepers"
 )
 
-// RunForkLogic executes height-gated on-chain fork logic for the Osmosis v3
+// RunForkLogic executes height-gated on-chain fork logic for the Mokisis v3
 // upgrade.
 func RunForkLogic(ctx sdk.Context, keepers *keepers.AppKeepers) {
-	ctx.Logger().Info("Applying Osmosis v3 upgrade." +
+	ctx.Logger().Info("Applying Mokisis v3 upgrade." +
 		" Fixing governance deposit so proposals can be voted upon," +
 		" and fixing validator min commission rate.")
 	FixMinDepositDenom(ctx, keepers.GovKeeper)
 	FixMinCommisionRate(ctx, keepers.StakingKeeper)
 }
 
-// Fixes an error where minimum deposit was set to "500 osmo". This denom does
+// Fixes an error where minimum deposit was set to "500 moki". This denom does
 // not exist, which makes it impossible for a proposal to go to a vote.
 func FixMinDepositDenom(ctx sdk.Context, gov *govkeeper.Keeper) {
 	params := gov.GetDepositParams(ctx)
-	params.MinDeposit = sdk.NewCoins(sdk.NewCoin("uosmo", sdk.NewInt(500000000)))
+	params.MinDeposit = sdk.NewCoins(sdk.NewCoin("umoki", sdk.NewInt(500000000)))
 	gov.SetDepositParams(ctx, params)
 }
 

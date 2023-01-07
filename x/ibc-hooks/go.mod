@@ -1,4 +1,4 @@
-module github.com/osmosis-labs/osmosis/x/ibc-hooks
+module github.com/petri-labs/mokita/x/ibc-hooks
 
 go 1.18
 
@@ -8,7 +8,7 @@ require (
 	github.com/cosmos/ibc-go/v4 v4.2.0
 	github.com/gorilla/mux v1.8.0
 	github.com/grpc-ecosystem/grpc-gateway v1.16.0
-	github.com/osmosis-labs/osmosis/osmoutils v0.0.0-20230105184425-1e6fcd979d99
+	github.com/petri-labs/mokita/mokiutils v0.0.0-20230105184425-1e6fcd979d99
 	github.com/spf13/cobra v1.6.1
 	github.com/tendermint/tendermint v0.34.24
 )
@@ -133,13 +133,13 @@ require (
 )
 
 replace (
-	// osmosis-patched wasmd
-	github.com/CosmWasm/wasmd => github.com/osmosis-labs/wasmd v0.29.2-0.20221222131554-7c8ea36a6e30
+	// mokita-patched wasmd
+	github.com/CosmWasm/wasmd => github.com/mokita-labs/wasmd v0.29.2-0.20221222131554-7c8ea36a6e30
 	// dragonberry
 	github.com/confio/ics23/go => github.com/cosmos/cosmos-sdk/ics23/go v0.8.0
-	// Our cosmos-sdk branch is:  https://github.com/osmosis-labs/cosmos-sdk, current branch: v13.x. Direct commit link: https://github.com/osmosis-labs/cosmos-sdk/commit/8757a61551aa1ea993c85a523e18094ab555b1d7
-	// tag: https://github.com/osmosis-labs/cosmos-sdk/releases/tag/sdk-v13.0.0-rc2
-	github.com/cosmos/cosmos-sdk => github.com/osmosis-labs/cosmos-sdk v0.45.1-0.20221118211718-545aed73e94e
+	// Our cosmos-sdk branch is:  https://github.com/mokita-labs/cosmos-sdk, current branch: v13.x. Direct commit link: https://github.com/mokita-labs/cosmos-sdk/commit/8757a61551aa1ea993c85a523e18094ab555b1d7
+	// tag: https://github.com/mokita-labs/cosmos-sdk/releases/tag/sdk-v13.0.0-rc2
+	github.com/cosmos/cosmos-sdk => github.com/mokita-labs/cosmos-sdk v0.45.1-0.20221118211718-545aed73e94e
 	// use cosmos-compatible protobufs
 	github.com/gogo/protobuf => github.com/regen-network/protobuf v1.3.3-alpha.regen.1
 )

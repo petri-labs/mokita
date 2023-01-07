@@ -59,8 +59,8 @@ to the fee collector at Begin Block, the `pool incentives` module takes
 the token which matches the 'minted denom' from the fee collector.
 Tokens are taken according to the 'allocationRatio', and are distributed
 to each `DistrRecord` of the DistrInfo. For example, if the fee
-collector holds 1000uatom and 2000 uosmo at Begin Block, and Params'
-mintedDenom is set to uosmo, and AllocationRatio is set to 0.1, 200uosmo
+collector holds 1000uatom and 2000 umoki at Begin Block, and Params'
+mintedDenom is set to umoki, and AllocationRatio is set to 0.1, 200umoki
 will be taken from the fee collector and distributed to the
 `DistrRecord`s.
 
@@ -100,7 +100,7 @@ type UpdatePoolIncentivesProposal struct {
 `DistrRecord`s.
 
 ```shell
-osmosisd tx gov submit-proposal update-pool-incentives [gaugeIds] [weights]
+mokitad tx gov submit-proposal update-pool-incentives [gaugeIds] [weights]
 ```
 
 Proposals can be proposed in using the CLI command format above.\
@@ -108,7 +108,7 @@ For example, to designate 100 weight to gauge id 2 and 200 weight to
 gauge id 3, the following command can be used.
 
 ```shell
-osmosisd tx gov submit-proposal update-pool-incentives 2,3 100,200
+mokitad tx gov submit-proposal update-pool-incentives 2,3 100,200
 ```
 
 ## Transactions
@@ -116,7 +116,7 @@ osmosisd tx gov submit-proposal update-pool-incentives 2,3 100,200
 ### replace-pool-incentives 
 
 ```sh
-osmosisd tx poolincentives replace-pool-incentives [gaugeIds] [weights] [flags]
+mokitad tx poolincentives replace-pool-incentives [gaugeIds] [weights] [flags]
 ```
 
 ::: details Example 
@@ -124,7 +124,7 @@ osmosisd tx poolincentives replace-pool-incentives [gaugeIds] [weights] [flags]
 Fully replace records for pool incentives:
 
 ```bash
-osmosisd tx poolincentives replace-pool-incentives proposal.json --from --chain-id
+mokitad tx poolincentives replace-pool-incentives proposal.json --from --chain-id
 ```
 
 The proposal.json would look as follows:
@@ -158,7 +158,7 @@ The proposal.json would look as follows:
 Update the weight of specified pool gauges in regards to their share of incentives (by creating a proposal)
 
 ```sh
-osmosisd tx poolincentives update-pool-incentives [gaugeIds] [weights] [flags] --from --chain-id
+mokitad tx poolincentives update-pool-incentives [gaugeIds] [weights] [flags] --from --chain-id
 ```
 
 ::: details Example
@@ -166,7 +166,7 @@ osmosisd tx poolincentives update-pool-incentives [gaugeIds] [weights] [flags] -
 Update the pool incentives for `gauge_id` 0 and 1:
 
 ```bash
-osmosisd tx gov submit-proposal update-pool-incentives proposal.json --from WALLET_NAME --chain-id CHAIN_ID
+mokitad tx gov submit-proposal update-pool-incentives proposal.json --from WALLET_NAME --chain-id CHAIN_ID
 ```
 
 The proposal.json would look as follows:
@@ -197,13 +197,13 @@ The proposal.json would look as follows:
 Query distribution info for all pool gauges
 
 ```sh
-osmosisd query poolincentives distr-info
+mokitad query poolincentives distr-info
 ```
 
 ::: details Example
 
 ```bash
-osmosisd query poolincentives distr-info
+mokitad query poolincentives distr-info
 ```
 
 An example output:
@@ -226,16 +226,16 @@ An example output:
 
 ### external-incentivized-gauges 
 
-Query externally incentivized gauges (gauges distributing rewards on top of the normal OSMO rewards)
+Query externally incentivized gauges (gauges distributing rewards on top of the normal MOKI rewards)
 
 ```sh
-osmosisd query pool-incentives external-incentivized-gauges
+mokitad query pool-incentives external-incentivized-gauges
 ```
 
 ::: details Example
 
 ```bash
-osmosisd query pool-incentives external-incentivized-gauges
+mokitad query pool-incentives external-incentivized-gauges
 ```
 
 An example output:
@@ -283,7 +283,7 @@ An example output:
 Query the gauge ids (by duration) by pool id
 
 ```sh
-osmosisd query poolincentives gauge-ids [pool-id] [flags]
+mokitad query poolincentives gauge-ids [pool-id] [flags]
 ```
 
 ::: details Example
@@ -291,7 +291,7 @@ osmosisd query poolincentives gauge-ids [pool-id] [flags]
 Find out what the gauge IDs are for pool 1:
 
 ```bash
-osmosisd query poolincentives gauge-ids 1
+mokitad query poolincentives gauge-ids 1
 ```
 
 An example output:
@@ -306,7 +306,7 @@ gauge_ids_with_duration:
   gauge_id: "3"
 ```
 
-In this example, we see that gauge IDs 1,2, and 3 are for the one day, one week, and two week lockup periods respectively for the OSMO/ATOM pool.
+In this example, we see that gauge IDs 1,2, and 3 are for the one day, one week, and two week lockup periods respectively for the MOKI/ATOM pool.
 :::
 
 ### incentivized-pools           
@@ -314,13 +314,13 @@ In this example, we see that gauge IDs 1,2, and 3 are for the one day, one week,
 Query all incentivized pools with their respective gauge IDs and lockup durations
 
 ```sh
-osmosisd query poolincentives incentivized-pools [flags]
+mokitad query poolincentives incentivized-pools [flags]
 ```
 
 ::: details Example
 
 ```bash
-osmosisd query poolincentives incentivized-pools
+mokitad query poolincentives incentivized-pools
 ```
 
 An example output:
@@ -345,13 +345,13 @@ An example output:
 Query incentivized lockup durations
 
 ```sh
-osmosisd query poolincentives lockable-durations [flags]
+mokitad query poolincentives lockable-durations [flags]
 ```
 
 ::: details Example
 
 ```bash
-osmosisd query poolincentives lockable-durations
+mokitad query poolincentives lockable-durations
 ```
 
 An example output:
@@ -370,20 +370,20 @@ lockable_durations:
 Query pool-incentives module parameters
 
 ```sh
-osmosisd query poolincentives params [flags]
+mokitad query poolincentives params [flags]
 ```
 
 ::: details Example
 
 ```bash
-osmosisd query poolincentives params
+mokitad query poolincentives params
 ```
 
 An example output:
 
 ```bash
 params:
-  minted_denom: uosmo
+  minted_denom: umoki
 ```
 
 :::

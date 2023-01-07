@@ -1,18 +1,18 @@
 # Contributing
 
-The following information provides a set of guidelines for contributing to the Osmosis chain dev repo. Use your best judgment, and, if you see room for improvement, please propose changes to this document.
+The following information provides a set of guidelines for contributing to the Mokisis chain dev repo. Use your best judgment, and, if you see room for improvement, please propose changes to this document.
 
-The contributing guide for Osmosis explains the branching structure, how to use the SDK fork, how to make / test updates to SDK branches and how to create release notes.
+The contributing guide for Mokisis explains the branching structure, how to use the SDK fork, how to make / test updates to SDK branches and how to create release notes.
 
-Contributions come in the form of writing documentation, raising issues / PRs, and any other actions that help develop the Osmosis protocol documentation.
+Contributions come in the form of writing documentation, raising issues / PRs, and any other actions that help develop the Mokisis protocol documentation.
 
 ## First steps
 
-The first step is to find an issue you want to fix. To identify issues we think are good for first-time contributors, we add the **good first issue** label. [You can see a list of issues to contribute here](https://github.com/osmosis-labs/osmosis/contribute).
+The first step is to find an issue you want to fix. To identify issues we think are good for first-time contributors, we add the **good first issue** label. [You can see a list of issues to contribute here](https://github.com/petri-labs/mokita/contribute).
 
-We recommend setting up your IDE as per our [recommended IDE setup](https://docs.osmosis.zone/developing/osmosis-core/ide-guide.html) before proceeding.
+We recommend setting up your IDE as per our [recommended IDE setup](https://docs.mokita.zone/developing/mokita-core/ide-guide.html) before proceeding.
 
-If you have a feature request, please use the [feature-request repo](https://github.com/osmosis-labs/feature-requests). We also welcome you to [make an issue](https://github.com/osmosis-labs/osmosis/issues/new/choose) for anything of substance, or posting an issue if you want to work on it.
+If you have a feature request, please use the [feature-request repo](https://github.com/mokita-labs/feature-requests). We also welcome you to [make an issue](https://github.com/petri-labs/mokita/issues/new/choose) for anything of substance, or posting an issue if you want to work on it.
 
 Once you find an existing issue that you want to work on or if you have a new issue to create, continue below.
 
@@ -20,7 +20,7 @@ Once you find an existing issue that you want to work on or if you have a new is
 
 To contribute a change proposal, use the following workflow:
 
-1. [Fork the repository](https://github.com/osmosis-labs/osmosis).
+1. [Fork the repository](https://github.com/petri-labs/mokita).
 2. [Add an upstream](https://docs.github.com/en/github/collaborating-with-pull-requests/working-with-forks/syncing-a-fork) so that you can update your fork.
 3. Clone your fork to your computer.
 4. Create a branch and name it appropriately.
@@ -55,7 +55,7 @@ To contribute a change proposal, use the following workflow:
     #e.g. git push my_awesome_new_remote_repo
     ```
 
-    3. Create a PR on the Osmosis repository. There should be a PR template to help you do so.
+    3. Create a PR on the Mokisis repository. There should be a PR template to help you do so.
     4. Wait for your changes to be reviewed. If you are a maintainer, you can assign your PR to one or more reviewers. If you aren't a maintainer, one of the maintainers will assign a reviewer.
     5. After you receive feedback from a reviewer, make the requested changes, commit them to your branch, and push them to your remote fork again.
     6. Once approval is given, feel free to squash & merge!
@@ -64,9 +64,9 @@ To contribute a change proposal, use the following workflow:
 
 We use table-driven tests because they allow us to test similar logic on many different cases in a way that is easy to both implement and understand. [This article](https://dave.cheney.net/2019/05/07/prefer-table-driven-tests) does a fantastic job explaining the motivation and structure of table-driven testing.
 
-Making table-driven tests in an environment built on the Cosmos SDK has some quirks to it, but overall the structure should be quite similar to what is laid out in the article linked above.
+Making table-driven tests in an environment built on the Cmokis SDK has some quirks to it, but overall the structure should be quite similar to what is laid out in the article linked above.
 
-We'll lay out three examples below (one that uses our format for messages, one that applies to keeper methods, and one that applies to our GAMM module), each of which will hopefully be simple enough to copy-paste into a test file and use as a starting point for your test-writing in the Osmosis Core repo.
+We'll lay out three examples below (one that uses our format for messages, one that applies to keeper methods, and one that applies to our GAMM module), each of which will hopefully be simple enough to copy-paste into a test file and use as a starting point for your test-writing in the Mokisis Core repo.
 
 ### Generating unit tests using our Gotest template
 
@@ -74,9 +74,9 @@ To simplify (and speed up) the process of writing unit tests that fit our standa
 
 #### 1. Setup
 
-Note: this section assumes you already have the Go plugin for Vscode installed. Please refer to our [IDE setup docs](https://docs.osmosis.zone/developing/osmosis-core/ide-guide.html) if you haven't done any IDE setup yet.
+Note: this section assumes you already have the Go plugin for Vscode installed. Please refer to our [IDE setup docs](https://docs.mokita.zone/developing/mokita-core/ide-guide.html) if you haven't done any IDE setup yet.
 
-Copy the `templates` folder into your `.vscode` folder from our main repo [here](https://github.com/osmosis-labs/osmosis/tree/main/.vscode). This folder has our custom templates for generating tests that fit our testing standards as accurately as possible.
+Copy the `templates` folder into your `.vscode` folder from our main repo [here](https://github.com/petri-labs/mokita/tree/main/.vscode). This folder has our custom templates for generating tests that fit our testing standards as accurately as possible.
 
 Then, go to your `settings.json` file in your `.vscode` folder and add the following to it:
 
@@ -87,7 +87,7 @@ Then, go to your `settings.json` file in your `.vscode` folder and add the follo
     ],
 ```
 
-where `"[ABSOLUTE PATH TO TEMPLATES FOLDER]"` should look something like: `"User/ExampleUser/osmosis/.vscode/templates"`
+where `"[ABSOLUTE PATH TO TEMPLATES FOLDER]"` should look something like: `"User/ExampleUser/mokita/.vscode/templates"`
 
 #### 2. Generating a unit test
 
@@ -189,7 +189,7 @@ func(suite *KeeperTestSuite) TestMintExportGenesis() {
 
 ### Example #3: [Gamm-Related Test] 
 
-Since the GAMM module is core to the Osmosis repo, it might be useful to have a good example of a well-structured GAMM-specific test. This example covers a simple getter function and validates the specific error messages around the function (as opposed to merely the presence of an error):
+Since the GAMM module is core to the Mokisis repo, it might be useful to have a good example of a well-structured GAMM-specific test. This example covers a simple getter function and validates the specific error messages around the function (as opposed to merely the presence of an error):
 
 ```go
 func TestGetPoolAssetsByDenom(t *testing.T) {
@@ -202,13 +202,13 @@ func TestGetPoolAssetsByDenom(t *testing.T) {
         "one pool asset": {
             poolAssets: []balancer.PoolAsset {
                 {
-                    Token:  sdk.NewInt64Coin("uosmo", 1e12),
+                    Token:  sdk.NewInt64Coin("umoki", 1e12),
                     Weight: sdk.NewInt(100),
                 },
             },
             expectedPoolAssetsByDenom: map[string]balancer.PoolAsset {
-                "uosmo": {
-                    Token:  sdk.NewInt64Coin("uosmo", 1e12),
+                "umoki": {
+                    Token:  sdk.NewInt64Coin("umoki", 1e12),
                     Weight: sdk.NewInt(100),
                 },
             },
@@ -217,14 +217,14 @@ func TestGetPoolAssetsByDenom(t *testing.T) {
         "duplicate pool assets": {
             poolAssets: []balancer.PoolAsset {
                 {
-                    Token:  sdk.NewInt64Coin("uosmo", 1e12),
+                    Token:  sdk.NewInt64Coin("umoki", 1e12),
                     Weight: sdk.NewInt(100),
                 }, {
-                    Token:  sdk.NewInt64Coin("uosmo", 123),
+                    Token:  sdk.NewInt64Coin("umoki", 123),
                     Weight: sdk.NewInt(400),
                 },
             },
-            err: fmt.Errorf(balancer.ErrMsgFormatRepeatingPoolAssetsNotAllowed, "uosmo"),
+            err: fmt.Errorf(balancer.ErrMsgFormatRepeatingPoolAssetsNotAllowed, "umoki"),
         },
     }
 
@@ -246,15 +246,15 @@ func TestGetPoolAssetsByDenom(t *testing.T) {
 
 ## Debug testing e2e locally
 
-The e2e package defines an integration testing suite used for full end-to-end testing functionality. This package is decoupled from depending on the Osmosis codebase. It initializes the chains for testing via Docker files. 
+The e2e package defines an integration testing suite used for full end-to-end testing functionality. This package is decoupled from depending on the Mokisis codebase. It initializes the chains for testing via Docker files. 
 
-As a result, the test suite may provide the desired Osmosis version to Docker containers during the initialization. This design allows for the opportunity of testing chain upgrades in the future by providing an older Osmosis version to the container, performing the chain upgrade, and running the latest test suite. 
+As a result, the test suite may provide the desired Mokisis version to Docker containers during the initialization. This design allows for the opportunity of testing chain upgrades in the future by providing an older Mokisis version to the container, performing the chain upgrade, and running the latest test suite. 
 
 The file `e2e_setup_test.go` defines the testing suite and contains the core bootstrapping logic that creates a testing environment via Docker containers. A testing network is created dynamically by providing the desirable number of validator configurations.
 
 The file `e2e_test.go` contains the actual end-to-end integration tests that utilize the testing suite.
 
-Additionally, there is an ability to disable certain components of the e2e suite. This can be done by setting the environment variables. See the [E2E test docs](https://github.com/osmosis-labs/osmosis/blob/main/tests/e2e/README.md)  or more details.
+Additionally, there is an ability to disable certain components of the e2e suite. This can be done by setting the environment variables. See the [E2E test docs](https://github.com/petri-labs/mokita/blob/main/tests/e2e/README.md)  or more details.
 
 To get started:
 
@@ -276,19 +276,19 @@ Additionally, Docker networks do not get auto-removed. Therefore, you can manual
 
 Vendor is a folder that go automatically makes if you run go mod vendor, which contains the source code for all of your dependencies. Its often helpful for local debugging. In order to update it...
 
-Commit & push to the Cosmos-SDK fork in a new branch (see above steps for more details), and then you can grab the commit hash to do:
+Commit & push to the Cmokis-SDK fork in a new branch (see above steps for more details), and then you can grab the commit hash to do:
 
 ```sh
-go get github.com/osmosis-labs/cosmos-sdk@{my commit hash}
+go get github.com/mokita-labs/cosmos-sdk@{my commit hash}
 ```
 
 You get something like:
 
 ```sh
-go get: github.com/osmosis-labs/cosmos-sdk@v0.33.2 updating to
-github.com/osmosis-labs/cosmos-sdk@v0.42.10-0.20210829064313-2c87644925da: parsing go.mod:
+go get: github.com/mokita-labs/cosmos-sdk@v0.33.2 updating to
+github.com/mokita-labs/cosmos-sdk@v0.42.10-0.20210829064313-2c87644925da: parsing go.mod:
 module declares its path as: github.com/cosmos/cosmos-sdk
-but was required as: github.com/osmosis-labs/cosmos-sdk
+but was required as: github.com/mokita-labs/cosmos-sdk
 ```
 
 Then you can copy paste the `v0.42.10-0.20210829064313-2c87644925da` part and replace the corresponding section of go.mod
@@ -317,7 +317,7 @@ For v6.x, and v4.x, most PRs to them should go to main and get a "backport" labe
 
 ### How to build proto files. (rm -rf vendor/ && make build-reproducible once docker is installed)
 
-You can do rm -rf vendor and make build-reproducible to redownload all dependencies - this should pull the latest docker image of Osmosis. You should also make sure to do make proto-all to auto-generate your protobuf files. Makes ure you have docker installed.
+You can do rm -rf vendor and make build-reproducible to redownload all dependencies - this should pull the latest docker image of Mokisis. You should also make sure to do make proto-all to auto-generate your protobuf files. Makes ure you have docker installed.
 
 If you get something like `W0503 22:16:30.068560 158 services.go:38] No HttpRule found for method: Msg.CreateBalancerPool` feel free to ignore that.
 
@@ -327,9 +327,9 @@ You can also feel free to do `make format` if you're getting errors related to `
 
 There are several steps that go into a major release
 
-- The GitHub release is created via this [GitHub workflow](https://github.com/osmosis-labs/osmosis/blob/main/.github/workflows/release.yml). The workflow is manually triggered from the [osmosis-ci repository](https://github.com/osmosis-labs/osmosis-ci). The workflow uses the `make build-reproducible` command to create the `osmosisd` binaries using the default [Makefile](https://github.com/osmosis-labs/osmosis/blob/main/Makefile#L99).
+- The GitHub release is created via this [GitHub workflow](https://github.com/petri-labs/mokita/blob/main/.github/workflows/release.yml). The workflow is manually triggered from the [mokita-ci repository](https://github.com/petri-labs/mokita-ci). The workflow uses the `make build-reproducible` command to create the `mokitad` binaries using the default [Makefile](https://github.com/petri-labs/mokita/blob/main/Makefile#L99).
 
-- Make a PR to main, with a cosmovisor config, generated in tandem with the binaries from tool.
+- Make a PR to main, with a cmokivisor config, generated in tandem with the binaries from tool.
   - Should be its own PR, as it may get denied for Fork upgrades.
 
 - Make a PR to main to update the import paths and go.mod for the new major release
@@ -339,7 +339,7 @@ There are several steps that go into a major release
 - Do a PR if that commit has conflicts
 
 - (Eventually) Make a PR that adds a version handler for the next upgrade
-  - [Add v10 upgrade boilerplate #1649](https://github.com/osmosis-labs/osmosis/pull/1649/files)
+  - [Add v10 upgrade boilerplate #1649](https://github.com/petri-labs/mokita/pull/1649/files)
 
 - Update chain JSON schema's recommended versions in `chain.schema.json` located in the root directory.
 
@@ -406,9 +406,9 @@ To avoid these problems, let's now examine how these hashes work.
 ##### App Hash
 
 An app hash is a hash of hashes of every store's Merkle root that is returned by
-ABCI's `Commit()` from Cosmos-SDK to Tendermint.
+ABCI's `Commit()` from Cmokis-SDK to Tendermint.
 
-Cosmos-SDK [takes an app hash of the application state][4], and propagates
+Cmokis-SDK [takes an app hash of the application state][4], and propagates
 it to Tendermint which, in turn, compares it to the app hash of the
 rest of the network.
 
@@ -446,7 +446,7 @@ This is an error code that is returned by the transaction flow. In the case of
 success, it is `0`. On a general error, it is `1`. Additionally, each module
 defines its custom error codes. For example, `x/mint` currently has the
 following:
-<https://github.com/osmosis-labs/osmosis/blob/8ef2f1845d9c7dd3f422d3f1953e36e5cf112e73/x/mint/types/errors.go#L8-L10>
+<https://github.com/petri-labs/mokita/blob/8ef2f1845d9c7dd3f422d3f1953e36e5cf112e73/x/mint/types/errors.go#L8-L10>
 
 As a result, it is important to avoid changing custom error codes or change
 the semantics of what is valid logic in thransaction flows.
@@ -594,10 +594,10 @@ At the moment, we're looking for a tool that lets us statically figure out every
 We test in testnet & e2e testnet behaviors about every message that has changed
 
 We communicate with various integrators if they'd like release-blocking QA testing for major releases
-    * Chainapsis has communicated wanting a series of osmosis-frontend functionalities to be checked for correctness on a testnet as a release blocking item
+    * Chainapsis has communicated wanting a series of mokita-frontend functionalities to be checked for correctness on a testnet as a release blocking item
 
 [1]:https://github.com/cosmos/cosmos-sdk/blob/d11196aad04e57812dbc5ac6248d35375e6603af/baseapp/abci.go#L293-L303
 [2]:https://github.com/tendermint/tendermint/blob/9f76e8da150414ce73eed2c4f248947b657c7587/proto/tendermint/types/types.proto#L70-L77
 [3]:https://github.com/tendermint/tendermint/blob/main/types/results.go#L47-L54
-[4]:https://github.com/osmosis-labs/cosmos-sdk/blob/5c9a51c277d067e0ec5cf48df30a85fae95bcd14/store/rootmulti/store.go#L430
-[5]:https://github.com/osmosis-labs/cosmos-sdk/blob/5c9a51c277d067e0ec5cf48df30a85fae95bcd14/store/types/commit_info.go#L40
+[4]:https://github.com/mokita-labs/cosmos-sdk/blob/5c9a51c277d067e0ec5cf48df30a85fae95bcd14/store/rootmulti/store.go#L430
+[5]:https://github.com/mokita-labs/cosmos-sdk/blob/5c9a51c277d067e0ec5cf48df30a85fae95bcd14/store/types/commit_info.go#L40

@@ -6,10 +6,10 @@ import (
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 
-	"github.com/osmosis-labs/osmosis/osmoutils/osmoassert"
-	"github.com/osmosis-labs/osmosis/v13/x/gamm/pool-models/balancer"
-	balancertypes "github.com/osmosis-labs/osmosis/v13/x/gamm/pool-models/balancer"
-	"github.com/osmosis-labs/osmosis/v13/x/gamm/types"
+	"github.com/petri-labs/mokita/mokiutils/mokiassert"
+	"github.com/petri-labs/mokita/x/gamm/pool-models/balancer"
+	balancertypes "github.com/petri-labs/mokita/x/gamm/pool-models/balancer"
+	"github.com/petri-labs/mokita/x/gamm/types"
 )
 
 var (
@@ -32,7 +32,7 @@ var (
 	}
 	defaultPoolAssets           = []balancertypes.PoolAsset{defaultFooAsset, defaultBarAsset}
 	defaultAcctFunds  sdk.Coins = sdk.NewCoins(
-		sdk.NewCoin("uosmo", sdk.NewInt(10000000000)),
+		sdk.NewCoin("umoki", sdk.NewInt(10000000000)),
 		sdk.NewCoin("foo", sdk.NewInt(10000000)),
 		sdk.NewCoin("bar", sdk.NewInt(10000000)),
 		sdk.NewCoin("baz", sdk.NewInt(10000000)),
@@ -261,7 +261,7 @@ func (suite *KeeperTestSuite) TestSpotPriceOverflow() {
 			suite.Require().NoError(err)
 			var poolSpotPrice sdk.Dec
 			var poolErr error
-			osmoassert.ConditionalPanic(suite.T(), tc.panics, func() {
+			mokiassert.ConditionalPanic(suite.T(), tc.panics, func() {
 				poolSpotPrice, poolErr = pool.SpotPrice(suite.Ctx, tc.baseAssetDenom, tc.quoteAssetDenom)
 			})
 			keeperSpotPrice, keeperErr := suite.App.GAMMKeeper.CalculateSpotPrice(suite.Ctx, poolId, tc.quoteAssetDenom, tc.baseAssetDenom)
@@ -685,7 +685,7 @@ func (suite *KeeperTestSuite) TestJoinSwapExactAmountInConsistency() {
 		// TODO: Uncomment or remove this following test case once the referenced
 		// issue is resolved.
 		//
-		// Ref: https://github.com/osmosis-labs/osmosis/issues/1196
+		// Ref: https://github.com/petri-labs/mokita/issues/1196
 		// {
 		// 	name:              "single coin with positive swap fee and zero exit fee",
 		// 	poolSwapFee:       sdk.NewDecWithPrec(1, 2),

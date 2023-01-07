@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"strings"
 
-	gammtypes "github.com/osmosis-labs/osmosis/v13/x/gamm/types"
+	gammtypes "github.com/petri-labs/mokita/x/gamm/types"
 
 	govtypes "github.com/cosmos/cosmos-sdk/x/gov/types"
 )
@@ -17,11 +17,11 @@ const (
 
 func init() {
 	govtypes.RegisterProposalType(ProposalTypeSetSuperfluidAssets)
-	govtypes.RegisterProposalTypeCodec(&SetSuperfluidAssetsProposal{}, "osmosis/SetSuperfluidAssetsProposal")
+	govtypes.RegisterProposalTypeCodec(&SetSuperfluidAssetsProposal{}, "mokita/SetSuperfluidAssetsProposal")
 	govtypes.RegisterProposalType(ProposalTypeRemoveSuperfluidAssets)
-	govtypes.RegisterProposalTypeCodec(&RemoveSuperfluidAssetsProposal{}, "osmosis/RemoveSuperfluidAssetsProposal")
+	govtypes.RegisterProposalTypeCodec(&RemoveSuperfluidAssetsProposal{}, "mokita/RemoveSuperfluidAssetsProposal")
 	govtypes.RegisterProposalType(ProposalTypeUpdateUnpoolWhitelist)
-	govtypes.RegisterProposalTypeCodec(&UpdateUnpoolWhiteListProposal{}, "osmosis/UpdateUnpoolWhiteListProposal")
+	govtypes.RegisterProposalTypeCodec(&UpdateUnpoolWhiteListProposal{}, "mokita/UpdateUnpoolWhiteListProposal")
 }
 
 var (

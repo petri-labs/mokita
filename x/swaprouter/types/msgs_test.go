@@ -7,10 +7,10 @@ import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/stretchr/testify/require"
 
-	"github.com/osmosis-labs/osmosis/v13/x/swaprouter/types"
+	"github.com/petri-labs/mokita/x/swaprouter/types"
 
-	"github.com/osmosis-labs/osmosis/v13/app/apptesting"
-	appParams "github.com/osmosis-labs/osmosis/v13/app/params"
+	"github.com/petri-labs/mokita/app/apptesting"
+	appParams "github.com/petri-labs/mokita/app/params"
 )
 
 func TestMsgSwapExactAmountIn(t *testing.T) {

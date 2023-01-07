@@ -9,18 +9,18 @@ import (
 	"github.com/stretchr/testify/require"
 	tmproto "github.com/tendermint/tendermint/proto/tendermint/types"
 
-	pool_incentives "github.com/osmosis-labs/osmosis/v13/x/pool-incentives"
+	pool_incentives "github.com/petri-labs/mokita/x/pool-incentives"
 
-	simapp "github.com/osmosis-labs/osmosis/v13/app"
+	simapp "github.com/petri-labs/mokita/app"
 
-	"github.com/osmosis-labs/osmosis/v13/x/pool-incentives/types"
+	"github.com/petri-labs/mokita/x/pool-incentives/types"
 )
 
 var (
 	now         = time.Now().UTC()
 	testGenesis = types.GenesisState{
 		Params: types.Params{
-			MintedDenom: "uosmo",
+			MintedDenom: "umoki",
 		},
 		LockableDurations: []time.Duration{
 			time.Second,

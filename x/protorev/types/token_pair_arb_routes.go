@@ -30,9 +30,9 @@ func (tp *TokenPairArbRoutes) Validate() error {
 			return fmt.Errorf("there must be exactly 3 trades in a route")
 		}
 
-		// In denoms must match either osmo or atom
-		if route.Trades[0].TokenIn != AtomDenomination && route.Trades[0].TokenIn != OsmosisDenomination {
-			return fmt.Errorf("the first trade must have either osmo or atom as the in denom")
+		// In denoms must match either moki or atom
+		if route.Trades[0].TokenIn != AtomDenomination && route.Trades[0].TokenIn != MokisisDenomination {
+			return fmt.Errorf("the first trade must have either moki or atom as the in denom")
 		}
 
 		// Out and in denoms must match

@@ -6,9 +6,9 @@ import (
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 
-	"github.com/osmosis-labs/osmosis/v13/x/concentrated-liquidity/internal/math"
-	"github.com/osmosis-labs/osmosis/v13/x/concentrated-liquidity/types"
-	gammtypes "github.com/osmosis-labs/osmosis/v13/x/gamm/types"
+	"github.com/petri-labs/mokita/x/concentrated-liquidity/internal/math"
+	"github.com/petri-labs/mokita/x/concentrated-liquidity/types"
+	gammtypes "github.com/petri-labs/mokita/x/gamm/types"
 )
 
 var (

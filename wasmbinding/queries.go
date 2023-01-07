@@ -5,8 +5,8 @@ import (
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 
-	"github.com/osmosis-labs/osmosis/v13/wasmbinding/bindings"
-	tokenfactorykeeper "github.com/osmosis-labs/osmosis/v13/x/tokenfactory/keeper"
+	"github.com/petri-labs/mokita/wasmbinding/bindings"
+	tokenfactorykeeper "github.com/petri-labs/mokita/x/tokenfactory/keeper"
 )
 
 type QueryPlugin struct {

@@ -3,31 +3,31 @@
 ## Abstract
 
 Superfluid Staking provides the consensus layer more security with a
-sort of "Proof of Useful Stake". Each person gets an amount of Osmo
+sort of "Proof of Useful Stake". Each person gets an amount of Moki
 representative of the value of their share of liquidity pool tokens
 staked and delegated to validators, resulting in the security guarantee
-of the consensus layer to also be based on GAMM LP shares. The OSMO
+of the consensus layer to also be based on GAMM LP shares. The MOKI
 token is minted and burned in the context of Superfluid Staking.
-Throughout all of this, OSMO's supply is preserved in queries to the
+Throughout all of this, MOKI's supply is preserved in queries to the
 bank module.
 
 ### The process
 
 All of the below methods are found under the [Superfluid
-modules](https://github.com/osmosis-labs/osmosis/tree/main/x/superfluid).
+modules](https://github.com/petri-labs/mokita/tree/main/x/superfluid).
 
 - The `SuperfluidDelegate` method stores your share of bonded
   liquidity pool tokens, with `validateLock` as a verifier for lockup
   time.
-- `GetSuperfluidOsmo` mints OSMO tokens each day for delegation as a
+- `GetSuperfluidMoki` mints MOKI tokens each day for delegation as a
   representative of the value of your pool share. This amount is
   minted because the staking module at the moment requires staked
-  tokens to be in OSMO. This amount is burned each day and re-minted
+  tokens to be in MOKI. This amount is burned each day and re-minted
   to keep the representative amount of the value of your pool share
   accurate. The lockup duration is guaranteed from the underlying
   lockup module.
 - `GetExpectedDelegationAmount` iterates over each (denom, delegate)
-  pair and checks for how much OSMO we have delegated. The difference
+  pair and checks for how much MOKI we have delegated. The difference
   from the current balance to what is expected is burned / minted to
   match with the expected.
 - A `messageServer` method executes the Superfluid delegate message.
@@ -39,7 +39,7 @@ modules](https://github.com/osmosis-labs/osmosis/tree/main/x/superfluid).
   distribution or slashing events, and are responsible for
   establishing the connection between each superfluid staked lock and
   their delegation to the validator. These work by transferring the
-  superfluid OSMO to their respective delegators. Rewards are linearly
+  superfluid MOKI to their respective delegators. Rewards are linearly
   scaled based on how much you have locked for a given (validator,
   denom) pair. Rewards are first moved to the incentive gauges, then
   distributed from the gauges. In this way, we're using the existing
@@ -49,13 +49,13 @@ modules](https://github.com/osmosis-labs/osmosis/tree/main/x/superfluid).
 - Rewards are distributed per epoch, which is currently a day.
   `abci.go` checks whether or not the current block is at the
   beginning of the epoch using `BeginBlock`.
-- Superfluid staking will continue to expand to other Osmosis pools
+- Superfluid staking will continue to expand to other Mokisis pools
   based on governance proposals and vote turnouts.
 
 ### Example
 
-If Alice has 500 GAMM tokens bonded to the ATOM \<\> OSMO, she will have
-the equivalent value of OSMO minted, delegated to her chosen staker, and
+If Alice has 500 GAMM tokens bonded to the ATOM \<\> MOKI, she will have
+the equivalent value of MOKI minted, delegated to her chosen staker, and
 burned for her each day with Superfluid staking. On the user side, all
 she has to know is who she wants to delegate her tokens to. In order to
 switch delegation, she has to unbond her tokens from the pool first and
@@ -63,20 +63,20 @@ then redeposit. Bob, who has a share of the same liquidity pool before
 Superfluid Staking went live, also has to re-deposit into the pool for
 the above process to kickstart.
 
-### Why mint Osmo? How is this method safe and accurate?
+### Why mint Moki? How is this method safe and accurate?
 
-Superfluid staking requires the minting of OSMO because in order to
-stake on the Osmosis chain, OSMO tokens are required as the chosen
-collateral. Synthetic Osmo is minted here as a representative of the
+Superfluid staking requires the minting of MOKI because in order to
+stake on the Mokisis chain, MOKI tokens are required as the chosen
+collateral. Synthetic Moki is minted here as a representative of the
 value of each superfluid staker's liquidity pool tokens.
 
 The pool tokens are acquired by the user from normally staking in a
-liquidity pool. They get minted an amount of OSMO equivalent to the
+liquidity pool. They get minted an amount of MOKI equivalent to the
 value of their GAMM pool tokens. This method is accurate because
-querying the value OSMO every day allows for burning and minting
-according to the difference in value of OSMO relative to the expected
+querying the value MOKI every day allows for burning and minting
+according to the difference in value of MOKI relative to the expected
 delegation amount (as seen with
-[GetExpectedDelegationAmount](https://github.com/osmosis-labs/osmosis/blob/main/x/superfluid/keeper/stake.go)).
+[GetExpectedDelegationAmount](https://github.com/petri-labs/mokita/blob/main/x/superfluid/keeper/stake.go)).
 It's like having a price oracle for fairly calculating the amount the
 user has superfluidly staked.
 
@@ -86,26 +86,26 @@ representative price of the GAMM token shares. The superfluid module has
 "hooks" messages to refresh delegation amounts
 (`RefreshIntermediaryDelegationAmounts`) and to increase delegation on
 lockup (`IncreaseSuperfluidDelegation`). Then, we see whether or not the
-superfluid OSMO currently delegated is worth more or less than this
-expected delegation amount amount. If the OSMO is worth more, we do
-instant undelegations and immediately burn the OSMO. If less, we mint
-OSMO and update the amount delegated. A simplified diagram of this whole
+superfluid MOKI currently delegated is worth more or less than this
+expected delegation amount amount. If the MOKI is worth more, we do
+instant undelegations and immediately burn the MOKI. If less, we mint
+MOKI and update the amount delegated. A simplified diagram of this whole
 process is found below:
 
 <br/>
 
 <p style="text-align:center;">
 
-<img src="https://raw.githubusercontent.com/osmosis-labs/osmosis/main/x/superfluid/superfluiddiagram.png" height="300"/>
+<img src="https://raw.githubusercontent.com/petri-labs/mokita/main/x/superfluid/superfluiddiagram.png" height="300"/>
 
 </p>
 
 </br>
 
 This minting is safe because we strict constrain the permissions of Bank
-(the module that burns and mints OSMO) to do what it's designed to do.
-The authority is mediated through `mintOsmoTokensAndDelegate` and
-`forceUndelegateAndBurnOsmoTokens` keeper methods called by the
+(the module that burns and mints MOKI) to do what it's designed to do.
+The authority is mediated through `mintMokiTokensAndDelegate` and
+`forceUndelegateAndBurnMokiTokens` keeper methods called by the
 `SuperfluidDelegate` and `SuperfluidUndelegate` message handlers for the
 tokens. The hooks above that increase delegation and refresh delegation
 amounts also call this keeper method.
@@ -113,7 +113,7 @@ amounts also call this keeper method.
 The delegation is then verified to not already be associated with an
 intermediary account (to prevent double-staking), and is always
 delegated or withdrawn taking into account various multipliers for
-synthetic OSMO value (its worth with respect to the liquidity pool, and
+synthetic MOKI value (its worth with respect to the liquidity pool, and
 a risk modifier) to prevent mint inaccuracies. Before minting, we also
 check that the message sender is the owner of the locked funds; that the
 lock is not unlocking; is locked for at least the unbonding period, and
@@ -138,19 +138,19 @@ pool tokens in exchange. These GAMM pool tokens represent a share of the
 total liquidity pool, and allows you to get transaction fees or
 participate in external incentive gauge token distributions. When
 bonding, on top of the regular bonding transaction there will also be a
-selection of validators. As stated above, OSMO is also minted and burned
+selection of validators. As stated above, MOKI is also minted and burned
 each day and superfluidly staked to whoever you have chosen to be your
 validator. You gain additional APR as a reward for bolstering the
-Osmosis chain's consensus integrity by delegating.
+Mokisis chain's consensus integrity by delegating.
 
 ### Unbonding
 
 When unbonding, superfluid tokens get un-delegated. After making sure
 that the unbond message sender is the owner of their corresponding
 locked funds, the existing synthetic lockup is deleted and replaced with
-a new synthetic lockup for unbonding purposes. The undelegated OSMO is
+a new synthetic lockup for unbonding purposes. The undelegated MOKI is
 then instantly withdrawn from the intermediate account and validator
-using the InstantUndelegate function. The OSMO that was originally used
+using the InstantUndelegate function. The MOKI that was originally used
 for representing your LP shares are burnt. Moves the tracker for
 unbonding, allows the underlying lock to start unlocking if desired
 
@@ -170,7 +170,7 @@ Intermediary Accounts establishes the connections between the superfluid
 staked locks and delegations to the validator. Intermediary accounts
 exists for every denom + validator combination, so that it would group
 locks with the same denom + validator selection. Superfluid staking a
-lock would mint equivalent amount of OSMO of the lock and send it to the
+lock would mint equivalent amount of MOKI of the lock and send it to the
 intermediary account and the intermediarry accounts would be delegating
 to the specified validator.
 
@@ -183,7 +183,7 @@ that an Intermediary Account is dedicated to.
 
 ### Superfluid Asset
 
-A superfluid asset is a alternative asset (non-OSMO) that is allowed by
+A superfluid asset is a alternative asset (non-MOKI) that is allowed by
 governance to be used for staking.
 
 It can only be updated by governance proposals. We validate at proposal
@@ -204,22 +204,22 @@ at the end of the epoch.
 
 At the moment, one lock can only be fully bonded to one validator.
 
-### Osmo Equivalent Multipliers
+### Moki Equivalent Multipliers
 
-The Osmo Equivalent Multiplier for an asset is the multiplier it has for
-its value relative to OSMO.
+The Moki Equivalent Multiplier for an asset is the multiplier it has for
+its value relative to MOKI.
 
 Different types of assets can have different functions for calculating
 their multiplier. We currently support two asset types.
 
 1. Native Token
 
-The multiplier for OSMO is alway 1.
+The multiplier for MOKI is alway 1.
 
 2. Gamm LP Shares
 
 Currently we use the spot price for an asset based on a designated
-osmo-basepair pool of an asset. The multiplier is set once per epoch, at
+moki-basepair pool of an asset. The multiplier is set once per epoch, at
 the beginning of the epoch. In the future, we will switch this out to
 use a TWAP instead.
 
@@ -238,7 +238,7 @@ categories.
 ### Superfluid Delegate
 
 Owners of superfluid asset locks can submit `MsgSuperfluidDelegate`
-transactions to delegate the Osmo in their locks to a selected
+transactions to delegate the Moki in their locks to a selected
 validator.
 
 ```{.go}
@@ -263,12 +263,12 @@ type MsgSuperfluidDelegate struct {
   - Create it + a new gauge for the synthetic denom, if it does not
     yet exist.
 - Create a SyntheticLockup.
-- Calculate `Osmo` to delegate on behalf of this `lock`, as
-  `Osmo Equivalent Multiplier` \* `# LP Shares` \*
+- Calculate `Moki` to delegate on behalf of this `lock`, as
+  `Moki Equivalent Multiplier` \* `# LP Shares` \*
   `Risk Adjustment Factor`
-  - If this amount is less than 0.000001 `Osmo` (`1 uosmo`) reject
-    the transaction, as it would be delegating `0 uosmo`
-- Mint `Osmo` to match this amount and send to `IntermediaryAccount`
+  - If this amount is less than 0.000001 `Moki` (`1 umoki`) reject
+    the transaction, as it would be delegating `0 umoki`
+- Mint `Moki` to match this amount and send to `IntermediaryAccount`
 - Create a delegation from `IntermediaryAccount` to `Validator`
 - Create a new perpetual `Gauge` for distributing staking payouts to
   locks of a synethic asset based on this `Validator` / `Denom` pair.
@@ -292,14 +292,14 @@ type MsgSuperfluidUndelegate struct {
 - Delete the `SyntheticLockup` associated to this `lockID` + `ValAddr`
   pair
 - Create a new `SyntheticLockup` which is unbonding
-- Calculate the amount of `Osmo` delegated on behalf of this `lock` as
-  `Osmo Equivalent Multipler` \* `# LP Shares` \*
+- Calculate the amount of `Moki` delegated on behalf of this `lock` as
+  `Moki Equivalent Multipler` \* `# LP Shares` \*
   `Risk Adjustment Factor`
-  - If this amount is less than 0.000001 `Osmo`, there is no
-    delegated `Osmo` to undelegate and burn
+  - If this amount is less than 0.000001 `Moki`, there is no
+    delegated `Moki` to undelegate and burn
 - Use `InstantUndelegate` to instantly remove delegation from
   `IntermediaryAccount` to `Validator`
-- Immediately burn undelegated `Osmo`
+- Immediately burn undelegated `Moki`
 - Delete the connection between `lockID` and `IntermediaryAccount`
 
 ### Lock and Superfluid Delegate
@@ -356,7 +356,7 @@ Overall Epoch sequence
 - Epoch N ends, during AfterEpochEnd:
   - Distribute gauge rewards for all non-superfluid gauges
   - Mint new tokens
-    - Issue new Osmo, and send to various modules (distribution,
+    - Issue new Moki, and send to various modules (distribution,
       incentives, etc.)
     - 25% currently goes to `x/distribution` which funds `Staking`
       and `Superfluid` rewards
@@ -371,21 +371,21 @@ Overall Epoch sequence
     into gauges.
   - Distribute Superfluid staking rewards from gauges to bonded
     Synthetic Lock owners
-  - Update `Osmo Equivalent Multiplier` value for each LP token
+  - Update `Moki Equivalent Multiplier` value for each LP token
     - (Currently spot price at epoch)
   - Refresh delegation amounts for all `Intermediary Accounts`
     - Calculate the expected delegation for this account as
-      `Osmo Equivalent Multipler` _`# LP Shares`_
+      `Moki Equivalent Multipler` _`# LP Shares`_
       `Risk adjustment`
-      - If this is less than 0.000001 `Osmo` it will be rounded
+      - If this is less than 0.000001 `Moki` it will be rounded
         to 0
     - Lookup current delegation amount for `Intermediary Account`
       - If there is no delegation, treat the current delegation
         as 0
     - If expected amount \> current delegation:
-      - Mint new `Osmo` and `Delegate` to `Validator`
+      - Mint new `Moki` and `Delegate` to `Validator`
     - If expected amount \< current delegation:
-      - Use `InstantUndelegate` and burn the received `Osmo`
+      - Use `InstantUndelegate` and burn the received `Moki`
 
 ## Staking power updates
 
@@ -421,7 +421,7 @@ receives from other modules.
 On AfterEpochEnd, we iterate through all existing intermediary accounts
 and withdraw delegation rewards they have received. Then we send the
 collective rewards to the perpetual gauge corresponding to the
-intermediary account. Then we update OSMO backing per share for the
+intermediary account. Then we update MOKI backing per share for the
 specific pool. After the update, iteration through all intermediate
 accounts happen, undelegating and bonding existing delegations for all
 superfluid staking and use the updated spot price at epoch time to mint
@@ -613,9 +613,9 @@ currently contains:
 
 - `MinimumRiskFactor` which is an sdk.Dec that represents the discount
   to apply to all superfluid staked modules when calcultating their
-  staking power. For example, if a specific denom has an OSMO
-  equivalent value of 100 OSMO, but the the `MinimumRiskFactor` param
-  is 0.05, then the denom will only get 95 OSMO worth of staking power
+  staking power. For example, if a specific denom has an MOKI
+  equivalent value of 100 MOKI, but the the `MinimumRiskFactor` param
+  is 0.05, then the denom will only get 95 MOKI worth of staking power
   when staked.
 
 ### AssetType
@@ -638,7 +638,7 @@ enum SuperfluidAssetType {
 The AssetType query returns what type of superfluid asset a denom is.
 AssetTypes are meant for when we support more types of assets for
 superfluid staking than just LP shares. Each AssetType has a different
-algorithm used to get its "Osmo equivalent value".
+algorithm used to get its "Moki equivalent value".
 
 We represent different types of superfluid assets as different enums.
 Currently, only enum `1` is actually used. Enum value `0` is reserved
@@ -679,10 +679,10 @@ message AssetMultiplierRequest {
 };
 
 message AssetMultiplierResponse {
-  OsmoEquivalentMultiplierRecord osmo_equivalent_multiplier = 1;
+  MokiEquivalentMultiplierRecord moki_equivalent_multiplier = 1;
 };
 
-message OsmoEquivalentMultiplierRecord {
+message MokiEquivalentMultiplierRecord {
   int64 epoch_number = 1;
   string denom = 2;
   string multiplier = 3;
@@ -690,17 +690,17 @@ message OsmoEquivalentMultiplierRecord {
 ```
 
 This query allows you to find the multiplier factor on a specific denom.
-The Osmo-Equivalent-Multiplier Record for epoch N refers to the osmo
+The Moki-Equivalent-Multiplier Record for epoch N refers to the moki
 worth we treat a denom as having, for all of epoch N. For now, this is
 the spot price at the last epoch boundary, and this is reset every
 epoch. We currently don't store historical multipliers, so the epoch
 parameter is kind of meaningless for now.
 
 To calculate the staking power of the denom, one needs to multiply the
-amount of the denom with `OsmoEquivalentMultipler` from this query with
+amount of the denom with `MokiEquivalentMultipler` from this query with
 the `MinimumRiskFactor` from the Params query endpoint.
 
-`staking_power = amount * OsmoEquivalentMultipler * MinimumRiskFactor`
+`staking_power = amount * MokiEquivalentMultipler * MinimumRiskFactor`
 
 ### ConnectedIntermediaryAccount
 
@@ -908,16 +908,16 @@ already safely handled by the Superfluid refreshing logic.
 
 The refreshing logic checks the total amount of tokens in locks to this
 denom (Reading from the lockup accumulation store), calculates how many
-osmo thats worth at the epochs new osmo worth for that asset, and then
+moki thats worth at the epochs new moki worth for that asset, and then
 uses that. Thus this safely handles this edge case, as it uses the new
 'live' lockup amount.
 
 ## Minting
 
-Superfluid module has the ability to arbitrarily mint and burn Osmo
+Superfluid module has the ability to arbitrarily mint and burn Moki
 through the `bank` module. This is potentially dangerous so we strictly
 constrain it's ability to do so. This authority is mediated through the
-`mintOsmoTokensAndDelegate` and `forceUndelegateAndBurnOsmoTokens`
+`mintMokiTokensAndDelegate` and `forceUndelegateAndBurnMokiTokens`
 keeper methods, which are in turn called by message handlers
 (`SuperfluidDelegate` and `SuperfluidUndelegate`) as well as by hooks on
 Epoch (`RefreshIntermediaryDelegationAmounts`) and Lockup
@@ -926,11 +926,11 @@ Epoch (`RefreshIntermediaryDelegationAmounts`) and Lockup
 ### Invariant
 
 Each of these mechanisms maintains a local invariant between the amount
-of Osmo minted and delegated by the `IntermediaryAccount`, and the
+of Moki minted and delegated by the `IntermediaryAccount`, and the
 quantity of the underlying asset held by locks associated to the
-account, modified by `OsmoEquivalentMultiplier` and `RiskAdjustment` for
+account, modified by `MokiEquivalentMultiplier` and `RiskAdjustment` for
 the underlying asset. Namely that total minted/delegated =
-`GetTotalSyntheticAssetsLocked` \* `GetOsmoEquivalentMultiplier` \*
+`GetTotalSyntheticAssetsLocked` \* `GetMokiEquivalentMultiplier` \*
 `GetRiskAdjustment`
 
 This can be equivalently expressed as `GetExpectedDelegationAmount`
@@ -942,25 +942,25 @@ being equal to the actual delegation amount.
 
 In a `SuperfluidDelegate` transaction, we first verify that this lock is
 not already associated to an `IntermediaryAccount`, and then use
-`mintOsmoTokenAndDelegate` to properly balance the resulting change in
+`mintMokiTokenAndDelegate` to properly balance the resulting change in
 `GetExpectedDelegationAmount` from the increase in
 `GetTotalSyntheticAssetsLocked`. i.e. we mint and delegate:
-`GetOsmoEquivalentMultiplier` \* `GetRiskAdjustment` \*
-`lock.Coins.Amount` new Osmo tokens.
+`GetMokiEquivalentMultiplier` \* `GetRiskAdjustment` \*
+`lock.Coins.Amount` new Moki tokens.
 
 ### SuperfluidUndelegate
 
 When a user submits a transaction to unlock their asset the invariant is
-maintained by using `forceUndelegateAndBurnOsmoTokens` to remove an
-amount of Osmo equal to `lockedCoin.Amount` \*
-`GetOsmoEquivalentMultiplier` \* `GetRiskAdjustment`.
+maintained by using `forceUndelegateAndBurnMokiTokens` to remove an
+amount of Moki equal to `lockedCoin.Amount` \*
+`GetMokiEquivalentMultiplier` \* `GetRiskAdjustment`.
 
 ## Superfluid Hooks
 
 ### RefreshIntermediaryDelegationAmounts (AfterEpochEnd Hook)
 
 In the `RefreshIntermediaryDelegationAmounts` method, calls are made to
-`mintOsmoTokensAndDelegate` or `forceUndelegateAndBurnOsmoTokens` to
+`mintMokiTokensAndDelegate` or `forceUndelegateAndBurnMokiTokens` to
 adjust the real delegation up or down to match
 `GetExpectedDelegationAmount`.
 
@@ -968,8 +968,8 @@ adjust the real delegation up or down to match
 
 This is called as a result of a user adding more assets to a lock that
 has already been associated to an `IntermediaryAccount`. The invariant
-is maintained by using `mintOsmoTokenAndDelegate` to match the amount of
-new asset locked \* `GetOsmoEquivalentMultiplier` \* `GetRiskAdjustment`
+is maintained by using `mintMokiTokenAndDelegate` to match the amount of
+new asset locked \* `GetMokiEquivalentMultiplier` \* `GetRiskAdjustment`
 for the underlying asset.
 
 ### SlashLockupsForValidatorSlash (BeforeValidatorSlashed Hook)

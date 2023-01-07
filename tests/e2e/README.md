@@ -6,11 +6,11 @@
 
 The `e2e` package defines an integration testing suite used for full
 end-to-end testing functionality. This package is decoupled from
-depending on the Osmosis codebase. It initializes the chains for testing
+depending on the Mokisis codebase. It initializes the chains for testing
 via Docker files. As a result, the test suite may provide the desired
-Osmosis version to Docker containers during the initialization. This
+Mokisis version to Docker containers during the initialization. This
 design allows for the opportunity of testing chain upgrades in the
-future by providing an older Osmosis version to the container,
+future by providing an older Mokisis version to the container,
 performing the chain upgrade, and running the latest test suite. When
 testing a normal upgrade, the e2e test suite submits an upgrade proposal at
 an upgrade height, ensures the upgrade happens at the desired height, and
@@ -45,7 +45,7 @@ Conceptually, we can split the e2e setup into 2 parts:
     by calling `chain.Init(...)` method in the `configurer/current.go`.
 
     If with the upgrade, the same `chain.Init(...)` function is run inside a Docker container
-    of the previous Osmosis version, inside `configurer/upgrade.go`. This is
+    of the previous Mokisis version, inside `configurer/upgrade.go`. This is
     needed to initialize chain configs and the genesis of the previous version that
     we are upgrading from.
 
@@ -77,16 +77,16 @@ Conceptually, we can split the e2e setup into 2 parts:
     are as follows:
     
     - If only `isIBCEnabled`, we want to have 2 chains initialized at the
-    current branch version of Osmosis codebase
+    current branch version of Mokisis codebase
 
     - If only `isUpgradeEnabled`, that's invalid (we can decouple upgrade
      testing from IBC in a future PR)
 
     - If both `isIBCEnabled` and `isUpgradeEnabled`, we want 2 chain
-    with IBC initialized at the previous Osmosis version
+    with IBC initialized at the previous Mokisis version
 
     - If none are true, we only need one chain at the current branch version
-    of the Osmosis code
+    of the Mokisis code
 
 2. Setting up e2e components
 
@@ -98,25 +98,25 @@ Conceptually, we can split the e2e setup into 2 parts:
     - IBC testing
         - 2 chains are created connected by Hermes relayer
         - Upgrade Testing
-        - 2 chains of the older Osmosis version are created, and
+        - 2 chains of the older Mokisis version are created, and
         connected by Hermes relayer
     - Upgrade testing
         - CLI commands are run to create an upgrade proposal and approve it
         - Old version containers are stopped and the upgrade binary is added
-        - Current branch Osmosis version is spun up to continue with testing
+        - Current branch Mokisis version is spun up to continue with testing
     - State Sync Testing (WIP)
         - An additional full node is created after a chain has started.
         - This node is meant to state sync with the rest of the system.
 
     This is done in `configurer/setup_runner.go` via function decorator design pattern
     where we chain the desired setup components during configurer creation.
-    [Example](https://github.com/osmosis-labs/osmosis/blob/c5d5c9f0c6b5c7fdf9688057eb78ec793f6dd580/tests/e2e/configurer/configurer.go#L166)
+    [Example](https://github.com/petri-labs/mokita/blob/c5d5c9f0c6b5c7fdf9688057eb78ec793f6dd580/tests/e2e/configurer/configurer.go#L166)
 
 ## `initialization` Package
 
 The `initialization` package introduces the logic necessary for initializing a
 chain by creating a genesis file and all required configuration files
-such as the `app.toml`. This package directly depends on the Osmosis
+such as the `app.toml`. This package directly depends on the Mokisis
 codebase.
 
 ## `upgrade` Package
@@ -125,7 +125,7 @@ The `upgrade` package starts chain initialization. In addition, there is
 a Dockerfile `init-e2e.Dockerfile`. When executed, its container
 produces all files necessary for starting up a new chain. These
 resulting files can be mounted on a volume and propagated to our
-production osmosis container to start the `osmosisd` service.
+production mokita container to start the `mokitad` service.
 
 The decoupling between chain initialization and start-up allows to
 minimize the differences between our test suite and the production
@@ -144,7 +144,7 @@ in the `chain` package.
 
 Please refer to `tests/e2e/initialization/README.md`
 
-### To build the debug Osmosis image
+### To build the debug Mokisis image
 
 ```sh
     make docker-build-e2e-debug
@@ -155,23 +155,23 @@ Some tests take a long time to run. Sometimes, we would like to disable them
 locally or in CI. The following are the environment variables to disable
 certain components of e2e testing.
 
-- `OSMOSIS_E2E_SKIP_UPGRADE` - when true, skips the upgrade tests.
-If OSMOSIS_E2E_SKIP_IBC is true, this must also be set to true because upgrade
+- `MOKISIS_E2E_SKIP_UPGRADE` - when true, skips the upgrade tests.
+If MOKISIS_E2E_SKIP_IBC is true, this must also be set to true because upgrade
 tests require IBC logic.
 
-- `OSMOSIS_E2E_SKIP_IBC` - when true, skips the IBC tests tests.
+- `MOKISIS_E2E_SKIP_IBC` - when true, skips the IBC tests tests.
 
-- `OSMOSIS_E2E_SKIP_STATE_SYNC` - when true, skips the state sync tests.
+- `MOKISIS_E2E_SKIP_STATE_SYNC` - when true, skips the state sync tests.
 
-- `OSMOSIS_E2E_SKIP_CLEANUP` - when true, avoids cleaning up the e2e Docker
+- `MOKISIS_E2E_SKIP_CLEANUP` - when true, avoids cleaning up the e2e Docker
 containers.
 
-- `OSMOSIS_E2E_FORK_HEIGHT` - when the above "IS_FORK" env variable is set to true, this is the string
+- `MOKISIS_E2E_FORK_HEIGHT` - when the above "IS_FORK" env variable is set to true, this is the string
 of the height in which the network should fork. This should match the ForkHeight set in constants.go
 
-- `OSMOSIS_E2E_UPGRADE_VERSION` - string of what version will be upgraded to (for example, "v10")
+- `MOKISIS_E2E_UPGRADE_VERSION` - string of what version will be upgraded to (for example, "v10")
 
-- `OSMOSIS_E2E_DEBUG_LOG` - when true, prints debug logs from executing CLI commands
+- `MOKISIS_E2E_DEBUG_LOG` - when true, prints debug logs from executing CLI commands
 via Docker containers. Set to trus in CI by default.
 
 #### VS Code Debug Configuration
@@ -194,13 +194,13 @@ This debug configuration helps to run e2e tests locally and skip the desired tes
     ],
     "buildFlags": "-tags e2e",
     "env": {
-        "OSMOSIS_E2E_SKIP_IBC": "true",
-        "OSMOSIS_E2E_SKIP_UPGRADE": "true",
-        "OSMOSIS_E2E_SKIP_CLEANUP": "true",
-        "OSMOSIS_E2E_SKIP_STATE_SYNC": "true",
-        "OSMOSIS_E2E_UPGRADE_VERSION": "v10",
-        "OSMOSIS_E2E_DEBUG_LOG": "true",
-        "OSMOSIS_E2E_FORK_HEIGHT": "4713065" # this is v10 fork height.
+        "MOKISIS_E2E_SKIP_IBC": "true",
+        "MOKISIS_E2E_SKIP_UPGRADE": "true",
+        "MOKISIS_E2E_SKIP_CLEANUP": "true",
+        "MOKISIS_E2E_SKIP_STATE_SYNC": "true",
+        "MOKISIS_E2E_UPGRADE_VERSION": "v10",
+        "MOKISIS_E2E_DEBUG_LOG": "true",
+        "MOKISIS_E2E_FORK_HEIGHT": "4713065" # this is v10 fork height.
     }
 }
 ```

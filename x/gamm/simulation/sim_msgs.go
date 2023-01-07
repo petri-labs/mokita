@@ -8,11 +8,11 @@ import (
 
 	legacysimulationtype "github.com/cosmos/cosmos-sdk/types/simulation"
 
-	"github.com/osmosis-labs/osmosis/osmoutils"
-	"github.com/osmosis-labs/osmosis/v13/simulation/simtypes"
-	"github.com/osmosis-labs/osmosis/v13/x/gamm/keeper"
-	balancertypes "github.com/osmosis-labs/osmosis/v13/x/gamm/pool-models/balancer"
-	"github.com/osmosis-labs/osmosis/v13/x/gamm/types"
+	"github.com/petri-labs/mokita/mokiutils"
+	"github.com/petri-labs/mokita/simulation/simtypes"
+	"github.com/petri-labs/mokita/x/gamm/keeper"
+	balancertypes "github.com/petri-labs/mokita/x/gamm/pool-models/balancer"
+	"github.com/petri-labs/mokita/x/gamm/types"
 )
 
 var PoolCreationFee = sdk.NewInt64Coin("stake", 10_000_000)
@@ -33,7 +33,7 @@ func RandomJoinPoolMsg(k keeper.Keeper, sim *simtypes.SimCtx, ctx sdk.Context) (
 	}
 
 	// cap joining pool to the pool liquidity
-	tokenIn = osmoutils.MinCoins(tokenIn, pool.GetTotalPoolLiquidity(ctx))
+	tokenIn = mokiutils.MinCoins(tokenIn, pool.GetTotalPoolLiquidity(ctx))
 
 	// TODO: Fix API so this is a one liner, pool.CalcJoinPoolNoSwapShares()
 	minShareOutAmt, err := deriveRealMinShareOutAmt(ctx, tokenIn, pool)
@@ -179,7 +179,7 @@ func RandomSwapExactAmountOut(k keeper.Keeper, sim *simtypes.SimCtx, ctx sdk.Con
 	}
 
 	// set the subset of coins to be upper-bound to the minimum between the address and the pool itself
-	randomCoinInSubset := osmoutils.MinCoins(sdk.NewCoins(coinIn), sdk.NewCoins(accCoin))
+	randomCoinInSubset := mokiutils.MinCoins(sdk.NewCoins(coinIn), sdk.NewCoins(accCoin))
 
 	// utilize CalcOutAmtGivenIn to calculate tokenOut and use tokenOut to calculate tokenInMax
 	tokenOut, err := pool.CalcOutAmtGivenIn(ctx, randomCoinInSubset, coinOut.Denom, pool.GetSwapFee(ctx))
@@ -215,7 +215,7 @@ func RandomJoinSwapExternAmountIn(k keeper.Keeper, sim *simtypes.SimCtx, ctx sdk
 	}
 
 	// cap joining pool to the pool liquidity
-	newTokenIn := osmoutils.MinCoins(sdk.NewCoins(coinIn), sdk.NewCoins(tokenIn))
+	newTokenIn := mokiutils.MinCoins(sdk.NewCoins(coinIn), sdk.NewCoins(tokenIn))
 
 	// calc shares out with tokenIn
 	minShareOutAmt, _, err := pool.CalcJoinPoolShares(ctx, newTokenIn, pool.GetSwapFee(ctx))
@@ -247,7 +247,7 @@ func RandomJoinSwapShareAmountOut(k keeper.Keeper, sim *simtypes.SimCtx, ctx sdk
 	}
 
 	// cap joining pool to the pool liquidity
-	newTokenIn := osmoutils.MinCoins(sdk.NewCoins(coinIn), sdk.NewCoins(tokenIn))
+	newTokenIn := mokiutils.MinCoins(sdk.NewCoins(coinIn), sdk.NewCoins(tokenIn))
 
 	// calc shares out with tokenIn
 	minShareOutAmt, _, err := pool.CalcJoinPoolShares(ctx, newTokenIn, pool.GetSwapFee(ctx))
@@ -436,7 +436,7 @@ func getRandPool(k keeper.Keeper, sim *simtypes.SimCtx, ctx sdk.Context) (uint64
 	coinIn := poolCoins[index]
 	poolCoins = simtypes.RemoveIndex(poolCoins, index)
 	coinOut := poolCoins[0]
-	poolDenoms := osmoutils.CoinsDenoms(pool.GetTotalPoolLiquidity(ctx))
+	poolDenoms := mokiutils.CoinsDenoms(pool.GetTotalPoolLiquidity(ctx))
 	gammDenom := types.GetPoolShareDenom(pool_id)
 	return pool_id, pool, coinIn, coinOut, poolDenoms, gammDenom, err
 }

@@ -32,7 +32,7 @@ func DefaultConfig() network.Config {
 		AppConstructor:    NewAppConstructor(),
 		GenesisState:      ModuleBasics.DefaultGenesis(encCfg.Marshaler),
 		TimeoutCommit:     1 * time.Second / 2,
-		ChainID:           "osmosis-code-test",
+		ChainID:           "mokita-code-test",
 		NumValidators:     1,
 		BondDenom:         sdk.DefaultBondDenom,
 		MinGasPrices:      fmt.Sprintf("0.000006%s", sdk.DefaultBondDenom),
@@ -46,10 +46,10 @@ func DefaultConfig() network.Config {
 	}
 }
 
-// NewAppConstructor returns a new Osmosis app given encoding type configs.
+// NewAppConstructor returns a new Mokisis app given encoding type configs.
 func NewAppConstructor() network.AppConstructor {
 	return func(val network.Validator) servertypes.Application {
-		return NewOsmosisApp(
+		return NewMokisisApp(
 			val.Ctx.Logger, dbm.NewMemDB(), nil, true, make(map[int64]bool), val.Ctx.Config.RootDir, 0,
 			simapp.EmptyAppOptions{},
 			GetWasmEnabledProposals(),

@@ -3,8 +3,8 @@ package keeper
 import (
 	"time"
 
-	"github.com/osmosis-labs/osmosis/osmoutils"
-	lockuptypes "github.com/osmosis-labs/osmosis/v13/x/lockup/types"
+	"github.com/petri-labs/mokita/mokiutils"
+	lockuptypes "github.com/petri-labs/mokita/x/lockup/types"
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 )
@@ -23,7 +23,7 @@ func (k Keeper) SlashLockupsForValidatorSlash(ctx sdk.Context, valAddr sdk.ValAd
 	// across all the live accounts.
 	// This is the "effectiveSlashFactor".
 	//
-	// The SDK's design is wack / wrong in our view, and this was a pre Cosmos Hub
+	// The SDK's design is wack / wrong in our view, and this was a pre Cmokis Hub
 	// launch hack that never got remedied.
 	// We are not concerned about maximal consistency with the SDK, and instead charge slashFactor to
 	// both unbonding and live delegations. Rather than slashFactor to unbonding delegations,
@@ -61,7 +61,7 @@ func (k Keeper) slashSynthLock(ctx sdk.Context, synthLock *lockuptypes.Synthetic
 	lock, _ := k.lk.GetLockByID(ctx, synthLock.UnderlyingLockId)
 	slashAmt := lock.Coins[0].Amount.ToDec().Mul(slashFactor).TruncateInt()
 	slashCoins := sdk.NewCoins(sdk.NewCoin(lock.Coins[0].Denom, slashAmt))
-	_ = osmoutils.ApplyFuncIfNoError(ctx, func(cacheCtx sdk.Context) error {
+	_ = mokiutils.ApplyFuncIfNoError(ctx, func(cacheCtx sdk.Context) error {
 		// These tokens get moved to the community pool.
 		_, err := k.lk.SlashTokensFromLockByID(cacheCtx, lock.ID, slashCoins)
 		return err

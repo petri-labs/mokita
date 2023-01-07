@@ -7,11 +7,11 @@ import (
 	"github.com/gogo/protobuf/proto"
 	"github.com/stretchr/testify/suite"
 
-	"github.com/osmosis-labs/osmosis/osmoutils"
-	"github.com/osmosis-labs/osmosis/v13/app"
-	"github.com/osmosis-labs/osmosis/v13/x/swaprouter/client/cli"
-	swaprouterqueryproto "github.com/osmosis-labs/osmosis/v13/x/swaprouter/client/queryproto"
-	swaproutertestutil "github.com/osmosis-labs/osmosis/v13/x/swaprouter/client/testutil"
+	"github.com/petri-labs/mokita/mokiutils"
+	"github.com/petri-labs/mokita/app"
+	"github.com/petri-labs/mokita/x/swaprouter/client/cli"
+	swaprouterqueryproto "github.com/petri-labs/mokita/x/swaprouter/client/queryproto"
+	swaproutertestutil "github.com/petri-labs/mokita/x/swaprouter/client/testutil"
 
 	"github.com/cosmos/cosmos-sdk/client/flags"
 	"github.com/cosmos/cosmos-sdk/crypto/hd"
@@ -82,7 +82,7 @@ func (s IntegrationTestSuite) TestNewSwapExactAmountOutCmd() {
 		newAddr,
 		sdk.NewCoins(sdk.NewInt64Coin(s.cfg.BondDenom, 20000), sdk.NewInt64Coin("node0token", 20000)), fmt.Sprintf("--%s=true", flags.FlagSkipConfirmation),
 		fmt.Sprintf("--%s=%s", flags.FlagBroadcastMode, flags.BroadcastBlock),
-		osmoutils.DefaultFeeString(s.cfg),
+		mokiutils.DefaultFeeString(s.cfg),
 	)
 	s.Require().NoError(err)
 
@@ -95,7 +95,7 @@ func (s IntegrationTestSuite) TestNewSwapExactAmountOutCmd() {
 		expectedCode uint32
 	}{
 		{
-			"swap exact amount out", // osmosisd tx swaprouter swap-exact-amount-out 10stake 20 --swap-route-pool-ids=1 --swap-route-denoms=node0token --from=validator --keyring-backend=test --chain-id=testing --yes
+			"swap exact amount out", // mokitad tx swaprouter swap-exact-amount-out 10stake 20 --swap-route-pool-ids=1 --swap-route-denoms=node0token --from=validator --keyring-backend=test --chain-id=testing --yes
 			[]string{
 				"10stake", "20",
 				fmt.Sprintf("--%s=%d", cli.FlagSwapRoutePoolIds, 1),
@@ -140,7 +140,7 @@ func (s IntegrationTestSuite) TestNewSwapExactAmountOutCmd() {
 // 		expectErr bool
 // 	}{
 // 		{
-// 			"query pool estimate swap exact amount in", // osmosisd query gamm estimate-swap-exact-amount-in 1 cosmos1n8skk06h3kyh550ad9qketlfhc2l5dsdevd3hq 10.0stake --swap-route-pool-ids=1 --swap-route-denoms=node0token
+// 			"query pool estimate swap exact amount in", // mokitad query gamm estimate-swap-exact-amount-in 1 cosmos1n8skk06h3kyh550ad9qketlfhc2l5dsdevd3hq 10.0stake --swap-route-pool-ids=1 --swap-route-denoms=node0token
 // 			[]string{
 // 				"1",
 // 				"cosmos1n8skk06h3kyh550ad9qketlfhc2l5dsdevd3hq",
@@ -181,7 +181,7 @@ func (s IntegrationTestSuite) TestNewSwapExactAmountOutCmd() {
 // 		expectErr bool
 // 	}{
 // 		{
-// 			"query pool estimate swap exact amount in", // osmosisd query gamm estimate-swap-exact-amount-in 1 cosmos1n8skk06h3kyh550ad9qketlfhc2l5dsdevd3hq 10.0stake --swap-route-pool-ids=1 --swap-route-denoms=node0token
+// 			"query pool estimate swap exact amount in", // mokitad query gamm estimate-swap-exact-amount-in 1 cosmos1n8skk06h3kyh550ad9qketlfhc2l5dsdevd3hq 10.0stake --swap-route-pool-ids=1 --swap-route-denoms=node0token
 // 			[]string{
 // 				"1",
 // 				val.Address.String(),
@@ -228,7 +228,7 @@ func (s IntegrationTestSuite) TestNewSwapExactAmountInCmd() {
 		newAddr,
 		sdk.NewCoins(sdk.NewInt64Coin(s.cfg.BondDenom, 20000), sdk.NewInt64Coin("node0token", 20000)), fmt.Sprintf("--%s=true", flags.FlagSkipConfirmation),
 		fmt.Sprintf("--%s=%s", flags.FlagBroadcastMode, flags.BroadcastBlock),
-		osmoutils.DefaultFeeString(s.cfg),
+		mokiutils.DefaultFeeString(s.cfg),
 	)
 	s.Require().NoError(err)
 
@@ -241,7 +241,7 @@ func (s IntegrationTestSuite) TestNewSwapExactAmountInCmd() {
 		expectedCode uint32
 	}{
 		{
-			"swap exact amount in", // osmosisd tx swaprouter swap-exact-amount-in 10stake 3 --swap-route-pool-ids=1 --swap-route-denoms=node0token --from=validator --keyring-backend=test --chain-id=testing --yes
+			"swap exact amount in", // mokitad tx swaprouter swap-exact-amount-in 10stake 3 --swap-route-pool-ids=1 --swap-route-denoms=node0token --from=validator --keyring-backend=test --chain-id=testing --yes
 			[]string{
 				"10stake", "3",
 				fmt.Sprintf("--%s=%d", cli.FlagSwapRoutePoolIds, 1),
@@ -298,7 +298,7 @@ func (s *IntegrationTestSuite) TestGetCmdNumPools() {
 		tc := tc
 
 		s.Run(tc.name, func() {
-			cmd := cli.GetCmdNumPools() // osmosisd query swaprouter num-pools
+			cmd := cli.GetCmdNumPools() // mokitad query swaprouter num-pools
 			clientCtx := val.ClientCtx
 
 			out, err := clitestutil.ExecTestCLICmd(clientCtx, cmd, tc.args)
@@ -330,7 +330,7 @@ func (s *IntegrationTestSuite) TestNewCreatePoolCmd() {
 		newAddr,
 		sdk.NewCoins(sdk.NewInt64Coin(s.cfg.BondDenom, 200000000), sdk.NewInt64Coin("node0token", 20000)), fmt.Sprintf("--%s=true", flags.FlagSkipConfirmation),
 		fmt.Sprintf("--%s=%s", flags.FlagBroadcastMode, flags.BroadcastBlock),
-		osmoutils.DefaultFeeString(s.cfg),
+		mokiutils.DefaultFeeString(s.cfg),
 	)
 	s.Require().NoError(err)
 
@@ -397,7 +397,7 @@ func (s *IntegrationTestSuite) TestNewCreatePoolCmd() {
 			  "%s": "100node0token,100stake",
 			  "%s": "0.001",
 			  "%s": "0.001",
-			  "%s": "osmo1fqlr98d45v5ysqgp6h56kpujcj4cvsjnjq9nck"
+			  "%s": "moki1fqlr98d45v5ysqgp6h56kpujcj4cvsjnjq9nck"
 			}
 			`, cli.PoolFileWeights, cli.PoolFileInitialDeposit, cli.PoolFileSwapFee, cli.PoolFileExitFee, cli.PoolFileFutureGovernor),
 			false, &sdk.TxResponse{}, 0,
@@ -578,7 +578,7 @@ func (s *IntegrationTestSuite) TestNewCreatePoolCmd() {
 				// common args
 				fmt.Sprintf("--%s=true", flags.FlagSkipConfirmation),
 				fmt.Sprintf("--%s=%s", flags.FlagBroadcastMode, flags.BroadcastBlock),
-				osmoutils.DefaultFeeString(s.cfg),
+				mokiutils.DefaultFeeString(s.cfg),
 				fmt.Sprintf("--%s=%s", flags.FlagGas, fmt.Sprint(400000)),
 			}
 

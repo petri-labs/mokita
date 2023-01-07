@@ -10,7 +10,7 @@ import (
 	"strings"
 
 	vestingtypes "github.com/cosmos/cosmos-sdk/x/auth/vesting/types"
-	"github.com/osmosis-labs/osmosis/osmoutils"
+	"github.com/petri-labs/mokita/mokiutils"
 
 	"github.com/CosmWasm/wasmd/x/wasm"
 	"github.com/gorilla/mux"
@@ -43,24 +43,24 @@ import (
 	"github.com/cosmos/cosmos-sdk/x/crisis"
 	upgradetypes "github.com/cosmos/cosmos-sdk/x/upgrade/types"
 
-	"github.com/osmosis-labs/osmosis/v13/app/keepers"
-	"github.com/osmosis-labs/osmosis/v13/app/upgrades"
-	v10 "github.com/osmosis-labs/osmosis/v13/app/upgrades/v10"
-	v11 "github.com/osmosis-labs/osmosis/v13/app/upgrades/v11"
-	v12 "github.com/osmosis-labs/osmosis/v13/app/upgrades/v12"
-	v13 "github.com/osmosis-labs/osmosis/v13/app/upgrades/v13"
-	v14 "github.com/osmosis-labs/osmosis/v13/app/upgrades/v14"
-	v3 "github.com/osmosis-labs/osmosis/v13/app/upgrades/v3"
-	v4 "github.com/osmosis-labs/osmosis/v13/app/upgrades/v4"
-	v5 "github.com/osmosis-labs/osmosis/v13/app/upgrades/v5"
-	v6 "github.com/osmosis-labs/osmosis/v13/app/upgrades/v6"
-	v7 "github.com/osmosis-labs/osmosis/v13/app/upgrades/v7"
-	v8 "github.com/osmosis-labs/osmosis/v13/app/upgrades/v8"
-	v9 "github.com/osmosis-labs/osmosis/v13/app/upgrades/v9"
-	_ "github.com/osmosis-labs/osmosis/v13/client/docs/statik"
+	"github.com/petri-labs/mokita/app/keepers"
+	"github.com/petri-labs/mokita/app/upgrades"
+	v10 "github.com/petri-labs/mokita/app/upgrades/v10"
+	v11 "github.com/petri-labs/mokita/app/upgrades/v11"
+	v12 "github.com/petri-labs/mokita/app/upgrades/v12"
+	v13 "github.com/petri-labs/mokita/app/upgrades/v13"
+	v14 "github.com/petri-labs/mokita/app/upgrades/v14"
+	v3 "github.com/petri-labs/mokita/app/upgrades/v3"
+	v4 "github.com/petri-labs/mokita/app/upgrades/v4"
+	v5 "github.com/petri-labs/mokita/app/upgrades/v5"
+	v6 "github.com/petri-labs/mokita/app/upgrades/v6"
+	v7 "github.com/petri-labs/mokita/app/upgrades/v7"
+	v8 "github.com/petri-labs/mokita/app/upgrades/v8"
+	v9 "github.com/petri-labs/mokita/app/upgrades/v9"
+	_ "github.com/petri-labs/mokita/client/docs/statik"
 )
 
-const appName = "OsmosisApp"
+const appName = "MokisisApp"
 
 var (
 	// DefaultNodeHome default home directories for the application daemon
@@ -93,7 +93,7 @@ var (
 	// EmptyWasmOpts defines a type alias for a list of wasm options.
 	EmptyWasmOpts []wasm.Option
 
-	// _ sdksimapp.App = (*OsmosisApp)(nil)
+	// _ sdksimapp.App = (*MokisisApp)(nil)
 
 	Upgrades = []upgrades.Upgrade{v4.Upgrade, v5.Upgrade, v7.Upgrade, v9.Upgrade, v11.Upgrade, v12.Upgrade, v13.Upgrade, v14.Upgrade}
 	Forks    = []upgrades.Fork{v3.Fork, v6.Fork, v8.Fork, v10.Fork}
@@ -121,10 +121,10 @@ func GetWasmEnabledProposals() []wasm.ProposalType {
 	return proposals
 }
 
-// OsmosisApp extends an ABCI application, but with most of its parameters exported.
+// MokisisApp extends an ABCI application, but with most of its parameters exported.
 // They are exported for convenience in creating helper functions, as object
 // capabilities aren't needed for testing.
-type OsmosisApp struct {
+type MokisisApp struct {
 	*baseapp.BaseApp
 	keepers.AppKeepers
 
@@ -137,28 +137,28 @@ type OsmosisApp struct {
 	configurator module.Configurator
 }
 
-// init sets DefaultNodeHome to default osmosisd install location.
+// init sets DefaultNodeHome to default mokitad install location.
 func init() {
 	userHomeDir, err := os.UserHomeDir()
 	if err != nil {
 		panic(err)
 	}
 
-	DefaultNodeHome = filepath.Join(userHomeDir, ".osmosisd")
+	DefaultNodeHome = filepath.Join(userHomeDir, ".mokitad")
 }
 
-// initReusablePackageInjections injects data available within osmosis into the reusable packages.
+// initReusablePackageInjections injects data available within mokita into the reusable packages.
 // This is done to ensure they can be built without depending on at compilation time and thus imported by other chains
 // This should always be called before any other function to avoid inconsistent data
 func initReusablePackageInjections() {
-	// Inject ClawbackVestingAccount account type into osmoutils
-	osmoutils.OsmoUtilsExtraAccountTypes = map[reflect.Type]struct{}{
+	// Inject ClawbackVestingAccount account type into mokiutils
+	mokiutils.MokiUtilsExtraAccountTypes = map[reflect.Type]struct{}{
 		reflect.TypeOf(&vestingtypes.ClawbackVestingAccount{}): {},
 	}
 }
 
-// NewOsmosisApp returns a reference to an initialized Osmosis.
-func NewOsmosisApp(
+// NewMokisisApp returns a reference to an initialized Mokisis.
+func NewMokisisApp(
 	logger log.Logger,
 	db dbm.DB,
 	traceStore io.Writer,
@@ -170,7 +170,7 @@ func NewOsmosisApp(
 	wasmEnabledProposals []wasm.ProposalType,
 	wasmOpts []wasm.Option,
 	baseAppOptions ...func(*baseapp.BaseApp),
-) *OsmosisApp {
+) *MokisisApp {
 	initReusablePackageInjections() // This should run before anything else to make sure the variables are properly initialized
 	encodingConfig := GetEncodingConfig()
 	appCodec := encodingConfig.Marshaler
@@ -182,7 +182,7 @@ func NewOsmosisApp(
 	bApp.SetVersion(version.Version)
 	bApp.SetInterfaceRegistry(interfaceRegistry)
 
-	app := &OsmosisApp{
+	app := &MokisisApp{
 		AppKeepers:        keepers.AppKeepers{},
 		BaseApp:           bApp,
 		cdc:               cdc,
@@ -322,26 +322,26 @@ func MakeCodecs() (codec.Codec, *codec.LegacyAmino) {
 	return config.Marshaler, config.Amino
 }
 
-func (app *OsmosisApp) GetBaseApp() *baseapp.BaseApp {
+func (app *MokisisApp) GetBaseApp() *baseapp.BaseApp {
 	return app.BaseApp
 }
 
 // Name returns the name of the App.
-func (app *OsmosisApp) Name() string { return app.BaseApp.Name() }
+func (app *MokisisApp) Name() string { return app.BaseApp.Name() }
 
 // BeginBlocker application updates every begin block.
-func (app *OsmosisApp) BeginBlocker(ctx sdk.Context, req abci.RequestBeginBlock) abci.ResponseBeginBlock {
+func (app *MokisisApp) BeginBlocker(ctx sdk.Context, req abci.RequestBeginBlock) abci.ResponseBeginBlock {
 	BeginBlockForks(ctx, app)
 	return app.mm.BeginBlock(ctx, req)
 }
 
 // EndBlocker application updates every end block.
-func (app *OsmosisApp) EndBlocker(ctx sdk.Context, req abci.RequestEndBlock) abci.ResponseEndBlock {
+func (app *MokisisApp) EndBlocker(ctx sdk.Context, req abci.RequestEndBlock) abci.ResponseEndBlock {
 	return app.mm.EndBlock(ctx, req)
 }
 
 // InitChainer application update at chain initialization.
-func (app *OsmosisApp) InitChainer(ctx sdk.Context, req abci.RequestInitChain) abci.ResponseInitChain {
+func (app *MokisisApp) InitChainer(ctx sdk.Context, req abci.RequestInitChain) abci.ResponseInitChain {
 	var genesisState GenesisState
 	if err := tmjson.Unmarshal(req.AppStateBytes, &genesisState); err != nil {
 		panic(err)
@@ -353,7 +353,7 @@ func (app *OsmosisApp) InitChainer(ctx sdk.Context, req abci.RequestInitChain) a
 }
 
 // LoadHeight loads a particular height.
-func (app *OsmosisApp) LoadHeight(height int64) error {
+func (app *MokisisApp) LoadHeight(height int64) error {
 	return app.LoadVersion(height)
 }
 
@@ -361,30 +361,30 @@ func (app *OsmosisApp) LoadHeight(height int64) error {
 //
 // NOTE: This is solely to be used for testing purposes as it may be desirable
 // for modules to register their own custom testing types.
-func (app *OsmosisApp) LegacyAmino() *codec.LegacyAmino {
+func (app *MokisisApp) LegacyAmino() *codec.LegacyAmino {
 	return app.cdc
 }
 
-// AppCodec returns Osmosis' app codec.
+// AppCodec returns Mokisis' app codec.
 //
 // NOTE: This is solely to be used for testing purposes as it may be desirable
 // for modules to register their own custom testing types.
-func (app *OsmosisApp) AppCodec() codec.Codec {
+func (app *MokisisApp) AppCodec() codec.Codec {
 	return app.appCodec
 }
 
-// InterfaceRegistry returns Osmosis' InterfaceRegistry.
-func (app *OsmosisApp) InterfaceRegistry() types.InterfaceRegistry {
+// InterfaceRegistry returns Mokisis' InterfaceRegistry.
+func (app *MokisisApp) InterfaceRegistry() types.InterfaceRegistry {
 	return app.interfaceRegistry
 }
 
-func (app *OsmosisApp) ModuleManager() module.Manager {
+func (app *MokisisApp) ModuleManager() module.Manager {
 	return *app.mm
 }
 
 // RegisterAPIRoutes registers all application module routes with the provided
 // API server.
-func (app *OsmosisApp) RegisterAPIRoutes(apiSvr *api.Server, apiConfig config.APIConfig) {
+func (app *MokisisApp) RegisterAPIRoutes(apiSvr *api.Server, apiConfig config.APIConfig) {
 	clientCtx := apiSvr.ClientCtx
 	rpc.RegisterRoutes(clientCtx, apiSvr.Router)
 	// Register legacy tx routes.
@@ -405,18 +405,18 @@ func (app *OsmosisApp) RegisterAPIRoutes(apiSvr *api.Server, apiConfig config.AP
 }
 
 // RegisterTxService implements the Application.RegisterTxService method.
-func (app *OsmosisApp) RegisterTxService(clientCtx client.Context) {
+func (app *MokisisApp) RegisterTxService(clientCtx client.Context) {
 	authtx.RegisterTxService(app.BaseApp.GRPCQueryRouter(), clientCtx, app.BaseApp.Simulate, app.interfaceRegistry)
 }
 
 // RegisterTendermintService implements the Application.RegisterTendermintService
 // method.
-func (app *OsmosisApp) RegisterTendermintService(clientCtx client.Context) {
+func (app *MokisisApp) RegisterTendermintService(clientCtx client.Context) {
 	tmservice.RegisterTendermintService(app.BaseApp.GRPCQueryRouter(), clientCtx, app.interfaceRegistry)
 }
 
 // configure store loader that checks if version == upgradeHeight and applies store upgrades
-func (app *OsmosisApp) setupUpgradeStoreLoaders() {
+func (app *MokisisApp) setupUpgradeStoreLoaders() {
 	upgradeInfo, err := app.UpgradeKeeper.ReadUpgradeInfoFromDisk()
 	if err != nil {
 		panic(fmt.Sprintf("failed to read upgrade info from disk %s", err))
@@ -433,7 +433,7 @@ func (app *OsmosisApp) setupUpgradeStoreLoaders() {
 	}
 }
 
-func (app *OsmosisApp) setupUpgradeHandlers() {
+func (app *MokisisApp) setupUpgradeHandlers() {
 	for _, upgrade := range Upgrades {
 		app.UpgradeKeeper.SetUpgradeHandler(
 			upgrade.UpgradeName,

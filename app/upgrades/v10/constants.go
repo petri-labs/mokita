@@ -1,7 +1,7 @@
 package v10
 
 import (
-	"github.com/osmosis-labs/osmosis/v13/app/upgrades"
+	"github.com/petri-labs/mokita/app/upgrades"
 )
 
 // Last executed block on the v9 code was 4713064.
@@ -9,7 +9,7 @@ import (
 // for 4713065.
 const ForkHeight = 4713065
 
-// UpgradeName defines the on-chain upgrade name for the Osmosis v9-fork for recovery.
+// UpgradeName defines the on-chain upgrade name for the Mokisis v9-fork for recovery.
 // This is not called v10, due to this bug that would require a state migration to fix:
 const UpgradeName = "v10"
 

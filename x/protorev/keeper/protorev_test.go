@@ -1,6 +1,6 @@
 package keeper_test
 
-import "github.com/osmosis-labs/osmosis/v13/x/protorev/types"
+import "github.com/petri-labs/mokita/x/protorev/types"
 
 // TestGetAtomPool tests the GetAtomPool function.
 func (suite *KeeperTestSuite) TestGetAtomPool() {
@@ -62,15 +62,15 @@ func (suite *KeeperTestSuite) TestDeleteAllAtomPools() {
 
 	// Iterate through all of the pools and check if any paired with Atom exist
 	for _, pool := range suite.pools {
-		if otherDenom, match := types.CheckOsmoAtomDenomMatch(pool.Asset1, pool.Asset2, types.AtomDenomination); match {
+		if otherDenom, match := types.CheckMokiAtomDenomMatch(pool.Asset1, pool.Asset2, types.AtomDenomination); match {
 			_, err := suite.App.AppKeepers.ProtoRevKeeper.GetAtomPool(suite.Ctx, otherDenom)
 			suite.Require().Error(err)
 		}
 	}
 }
 
-// TestGetOsmoPool tests the GetOsmoPool function.
-func (suite *KeeperTestSuite) TestGetOsmoPool() {
+// TestGetMokiPool tests the GetMokiPool function.
+func (suite *KeeperTestSuite) TestGetMokiPool() {
 	cases := []struct {
 		description  string
 		denom        string
@@ -78,13 +78,13 @@ func (suite *KeeperTestSuite) TestGetOsmoPool() {
 		exists       bool
 	}{
 		{
-			description:  "Osmo pool exists for denom Akash",
+			description:  "Moki pool exists for denom Akash",
 			denom:        "akash",
 			expectedPool: 7,
 			exists:       true,
 		},
 		{
-			description:  "Osmo pool exists for denom juno",
+			description:  "Moki pool exists for denom juno",
 			denom:        "juno",
 			expectedPool: 8,
 			exists:       true,
@@ -99,7 +99,7 @@ func (suite *KeeperTestSuite) TestGetOsmoPool() {
 
 	for _, tc := range cases {
 		suite.Run(tc.description, func() {
-			pool, err := suite.App.ProtoRevKeeper.GetOsmoPool(suite.Ctx, tc.denom)
+			pool, err := suite.App.ProtoRevKeeper.GetMokiPool(suite.Ctx, tc.denom)
 
 			if tc.exists {
 				suite.Require().NoError(err)
@@ -112,14 +112,14 @@ func (suite *KeeperTestSuite) TestGetOsmoPool() {
 
 }
 
-// TestDeleteAllOsmoPools tests the DeleteAllOsmoPools function.
-func (suite *KeeperTestSuite) TestDeleteAllOsmoPools() {
-	suite.App.AppKeepers.ProtoRevKeeper.DeleteAllOsmoPools(suite.Ctx)
+// TestDeleteAllMokiPools tests the DeleteAllMokiPools function.
+func (suite *KeeperTestSuite) TestDeleteAllMokiPools() {
+	suite.App.AppKeepers.ProtoRevKeeper.DeleteAllMokiPools(suite.Ctx)
 
-	// Iterate through all of the pools and check if any paired with Osmo exist
+	// Iterate through all of the pools and check if any paired with Moki exist
 	for _, pool := range suite.pools {
-		if otherDenom, match := types.CheckOsmoAtomDenomMatch(pool.Asset1, pool.Asset2, types.OsmosisDenomination); match {
-			_, err := suite.App.AppKeepers.ProtoRevKeeper.GetOsmoPool(suite.Ctx, otherDenom)
+		if otherDenom, match := types.CheckMokiAtomDenomMatch(pool.Asset1, pool.Asset2, types.MokisisDenomination); match {
+			_, err := suite.App.AppKeepers.ProtoRevKeeper.GetMokiPool(suite.Ctx, otherDenom)
 			suite.Require().Error(err)
 		}
 	}
@@ -136,7 +136,7 @@ func (suite *KeeperTestSuite) TestGetTokenPairArbRoutes() {
 	}
 
 	// Testing to see if we will not find a route that does not exist
-	_, err := suite.App.ProtoRevKeeper.GetTokenPairArbRoutes(suite.Ctx, "osmo", "abc")
+	_, err := suite.App.ProtoRevKeeper.GetTokenPairArbRoutes(suite.Ctx, "moki", "abc")
 	suite.Require().Error(err)
 }
 

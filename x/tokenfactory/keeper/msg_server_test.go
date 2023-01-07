@@ -3,7 +3,7 @@ package keeper_test
 import (
 	"fmt"
 
-	"github.com/osmosis-labs/osmosis/v13/x/tokenfactory/types"
+	"github.com/petri-labs/mokita/x/tokenfactory/types"
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	banktypes "github.com/cosmos/cosmos-sdk/x/bank/types"
@@ -25,7 +25,7 @@ func (suite *KeeperTestSuite) TestMintDenomMsg() {
 		{
 			desc:      "denom does not exist",
 			amount:    10,
-			mintDenom: "factory/osmo1t7egva48prqmzl59x5ngv4zx0dtrwewc9m7z44/evmos",
+			mintDenom: "factory/moki1t7egva48prqmzl59x5ngv4zx0dtrwewc9m7z44/evmos",
 			admin:     suite.TestAccs[0].String(),
 			valid:     false,
 		},
@@ -66,7 +66,7 @@ func (suite *KeeperTestSuite) TestBurnDenomMsg() {
 	}{
 		{
 			desc:      "denom does not exist",
-			burnDenom: "factory/osmo1t7egva48prqmzl59x5ngv4zx0dtrwewc9m7z44/evmos",
+			burnDenom: "factory/moki1t7egva48prqmzl59x5ngv4zx0dtrwewc9m7z44/evmos",
 			admin:     suite.TestAccs[0].String(),
 			valid:     false,
 		},
@@ -91,7 +91,7 @@ func (suite *KeeperTestSuite) TestBurnDenomMsg() {
 
 // TestCreateDenomMsg tests TypeMsgCreateDenom message is emitted on a successful denom creation
 func (suite *KeeperTestSuite) TestCreateDenomMsg() {
-	defaultDenomCreationFee := types.Params{DenomCreationFee: sdk.NewCoins(sdk.NewCoin("uosmo", sdk.NewInt(50000000)))}
+	defaultDenomCreationFee := types.Params{DenomCreationFee: sdk.NewCoins(sdk.NewCoin("umoki", sdk.NewInt(50000000)))}
 	for _, tc := range []struct {
 		desc                  string
 		denomCreationFee      types.Params
@@ -201,14 +201,14 @@ func (suite *KeeperTestSuite) TestSetDenomMetaDataMsg() {
 						Exponent: 0,
 					},
 					{
-						Denom:    "uosmo",
+						Denom:    "umoki",
 						Exponent: 6,
 					},
 				},
 				Base:    suite.defaultDenom,
-				Display: "uosmo",
-				Name:    "OSMO",
-				Symbol:  "OSMO",
+				Display: "umoki",
+				Name:    "MOKI",
+				Symbol:  "MOKI",
 			}),
 			expectedPass:          true,
 			expectedMessageEvents: 1,
@@ -223,14 +223,14 @@ func (suite *KeeperTestSuite) TestSetDenomMetaDataMsg() {
 						Exponent: 0,
 					},
 					{
-						Denom:    "uosmo",
+						Denom:    "umoki",
 						Exponent: 6,
 					},
 				},
 				Base:    fmt.Sprintf("factory/%s/litecoin", suite.TestAccs[0].String()),
-				Display: "uosmo",
-				Name:    "OSMO",
-				Symbol:  "OSMO",
+				Display: "umoki",
+				Name:    "MOKI",
+				Symbol:  "MOKI",
 			}),
 			expectedPass: false,
 		},

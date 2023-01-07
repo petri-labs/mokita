@@ -7,9 +7,9 @@ import (
 	"github.com/cosmos/cosmos-sdk/testutil/testdata"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 
-	gammtypes "github.com/osmosis-labs/osmosis/v13/x/gamm/types"
-	swaproutertypes "github.com/osmosis-labs/osmosis/v13/x/swaprouter/types"
-	"github.com/osmosis-labs/osmosis/v13/x/txfees/types"
+	gammtypes "github.com/petri-labs/mokita/x/gamm/types"
+	swaproutertypes "github.com/petri-labs/mokita/x/swaprouter/types"
+	"github.com/petri-labs/mokita/x/txfees/types"
 )
 
 var defaultPooledAssetAmount = int64(500)
@@ -48,7 +48,7 @@ func (suite *KeeperTestSuite) TestTxFeesAfterEpochEnd() {
 		expectPass bool
 	}{
 		{
-			name:      "One non-osmo fee token (uion): TxFees AfterEpochEnd",
+			name:      "One non-moki fee token (uion): TxFees AfterEpochEnd",
 			coins:     sdk.Coins{sdk.NewInt64Coin(uion, 10)},
 			baseDenom: baseDenom,
 			denoms:    []string{uion},
@@ -56,7 +56,7 @@ func (suite *KeeperTestSuite) TestTxFeesAfterEpochEnd() {
 			swapFee:   sdk.MustNewDecFromStr("0"),
 		},
 		{
-			name:      "Multiple non-osmo fee token: TxFees AfterEpochEnd",
+			name:      "Multiple non-moki fee token: TxFees AfterEpochEnd",
 			coins:     sdk.Coins{sdk.NewInt64Coin(atom, 20), sdk.NewInt64Coin(ust, 30)},
 			baseDenom: baseDenom,
 			denoms:    []string{atom, ust},
@@ -72,7 +72,7 @@ func (suite *KeeperTestSuite) TestTxFeesAfterEpochEnd() {
 
 		suite.Run(tc.name, func() {
 			for i, coin := range tc.coins {
-				// Get the output amount in osmo denom
+				// Get the output amount in moki denom
 				pool, ok := tc.poolTypes[i].(gammtypes.CFMMPoolI)
 				suite.Require().True(ok)
 
@@ -96,7 +96,7 @@ func (suite *KeeperTestSuite) TestTxFeesAfterEpochEnd() {
 			moduleAddrNonNativeFee := suite.App.AccountKeeper.GetModuleAddress(types.NonNativeFeeCollectorName)
 			suite.Equal(suite.App.BankKeeper.GetAllBalances(suite.Ctx, moduleAddrNonNativeFee), tc.coins)
 
-			// End of epoch, so all the non-osmo fee amount should be swapped to osmo and transfer to fee module account
+			// End of epoch, so all the non-moki fee amount should be swapped to moki and transfer to fee module account
 			params := suite.App.IncentivesKeeper.GetParams(suite.Ctx)
 			futureCtx := suite.Ctx.WithBlockTime(time.Now().Add(time.Minute))
 			suite.App.TxFeesKeeper.AfterEpochEnd(futureCtx, params.DistrEpochIdentifier, int64(1))
@@ -105,9 +105,9 @@ func (suite *KeeperTestSuite) TestTxFeesAfterEpochEnd() {
 			moduleAddrFee := suite.App.AccountKeeper.GetModuleAddress(types.FeeCollectorName)
 			moduleBaseDenomBalance := suite.App.BankKeeper.GetBalance(suite.Ctx, moduleAddrFee, tc.baseDenom)
 
-			// non-osmos module account should be empty as all the funds should be transferred to osmo module
+			// non-mokis module account should be empty as all the funds should be transferred to moki module
 			suite.Empty(suite.App.BankKeeper.GetAllBalances(suite.Ctx, moduleAddrNonNativeFee))
-			// check that the total osmo amount has been transferred to module account
+			// check that the total moki amount has been transferred to module account
 			suite.Equal(moduleBaseDenomBalance.Amount, finalOutputAmount)
 		})
 	}

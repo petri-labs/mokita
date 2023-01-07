@@ -6,11 +6,11 @@ import (
 
 	"github.com/tendermint/tendermint/libs/log"
 
-	"github.com/osmosis-labs/osmosis/osmoutils"
-	gammtypes "github.com/osmosis-labs/osmosis/v13/x/gamm/types"
-	incentivestypes "github.com/osmosis-labs/osmosis/v13/x/incentives/types"
-	lockuptypes "github.com/osmosis-labs/osmosis/v13/x/lockup/types"
-	"github.com/osmosis-labs/osmosis/v13/x/pool-incentives/types"
+	"github.com/petri-labs/mokita/mokiutils"
+	gammtypes "github.com/petri-labs/mokita/x/gamm/types"
+	incentivestypes "github.com/petri-labs/mokita/x/incentives/types"
+	lockuptypes "github.com/petri-labs/mokita/x/lockup/types"
+	"github.com/petri-labs/mokita/x/pool-incentives/types"
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
@@ -122,13 +122,13 @@ func (k Keeper) GetPoolIdFromGaugeId(ctx sdk.Context, gaugeId uint64, lockableDu
 func (k Keeper) SetLockableDurations(ctx sdk.Context, lockableDurations []time.Duration) {
 	store := ctx.KVStore(k.storeKey)
 	info := types.LockableDurationsInfo{LockableDurations: lockableDurations}
-	osmoutils.MustSet(store, types.LockableDurationsKey, &info)
+	mokiutils.MustSet(store, types.LockableDurationsKey, &info)
 }
 
 func (k Keeper) GetLockableDurations(ctx sdk.Context) []time.Duration {
 	store := ctx.KVStore(k.storeKey)
 	info := types.LockableDurationsInfo{}
-	osmoutils.MustGet(store, types.LockableDurationsKey, &info)
+	mokiutils.MustGet(store, types.LockableDurationsKey, &info)
 	return info.LockableDurations
 }
 

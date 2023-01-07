@@ -3,21 +3,21 @@ package cli
 import (
 	"github.com/spf13/cobra"
 
-	"github.com/osmosis-labs/osmosis/osmoutils/osmocli"
-	"github.com/osmosis-labs/osmosis/v13/x/epochs/types"
+	"github.com/petri-labs/mokita/mokiutils/mokicli"
+	"github.com/petri-labs/mokita/x/epochs/types"
 )
 
 // GetQueryCmd returns the cli query commands for this module.
 func GetQueryCmd() *cobra.Command {
-	cmd := osmocli.QueryIndexCmd(types.ModuleName)
-	osmocli.AddQueryCmd(cmd, types.NewQueryClient, GetCmdEpochInfos)
-	osmocli.AddQueryCmd(cmd, types.NewQueryClient, GetCmdCurrentEpoch)
+	cmd := mokicli.QueryIndexCmd(types.ModuleName)
+	mokicli.AddQueryCmd(cmd, types.NewQueryClient, GetCmdEpochInfos)
+	mokicli.AddQueryCmd(cmd, types.NewQueryClient, GetCmdCurrentEpoch)
 
 	return cmd
 }
 
-func GetCmdEpochInfos() (*osmocli.QueryDescriptor, *types.QueryEpochsInfoRequest) {
-	return &osmocli.QueryDescriptor{
+func GetCmdEpochInfos() (*mokicli.QueryDescriptor, *types.QueryEpochsInfoRequest) {
+	return &mokicli.QueryDescriptor{
 		Use:   "epoch-infos",
 		Short: "Query running epoch infos.",
 		Long: `{{.Short}}{{.ExampleHeader}}
@@ -25,8 +25,8 @@ func GetCmdEpochInfos() (*osmocli.QueryDescriptor, *types.QueryEpochsInfoRequest
 		QueryFnName: "EpochInfos"}, &types.QueryEpochsInfoRequest{}
 }
 
-func GetCmdCurrentEpoch() (*osmocli.QueryDescriptor, *types.QueryCurrentEpochRequest) {
-	return &osmocli.QueryDescriptor{
+func GetCmdCurrentEpoch() (*mokicli.QueryDescriptor, *types.QueryCurrentEpochRequest) {
+	return &mokicli.QueryDescriptor{
 		Use:   "current-epoch",
 		Short: "Query current epoch by specified identifier.",
 		Long: `{{.Short}}{{.ExampleHeader}}

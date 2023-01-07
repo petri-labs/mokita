@@ -6,7 +6,7 @@ import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	stakingtypes "github.com/cosmos/cosmos-sdk/x/staking/types"
 
-	"github.com/osmosis-labs/osmosis/v13/x/superfluid/types"
+	"github.com/petri-labs/mokita/x/superfluid/types"
 )
 
 func (suite *KeeperTestSuite) TestGRPCParams() {
@@ -41,11 +41,11 @@ func (suite *KeeperTestSuite) TestTotalDelegationByValidatorForAsset() {
 		suite.Require().Equal(len(valAddrs), len(res.Assets))
 
 		for _, result := range res.Assets {
-			// check osmo equivalent is correct
-			actual_response_osmo := result.OsmoEquivalent
-			needed_response_osmo := suite.App.SuperfluidKeeper.GetSuperfluidOSMOTokens(ctx, denom, sdk.NewInt(delegation_amount))
+			// check moki equivalent is correct
+			actual_response_moki := result.MokiEquivalent
+			needed_response_moki := suite.App.SuperfluidKeeper.GetSuperfluidMOKITokens(ctx, denom, sdk.NewInt(delegation_amount))
 
-			suite.Require().Equal(actual_response_osmo, needed_response_osmo)
+			suite.Require().Equal(actual_response_moki, needed_response_moki)
 
 			// check sfs'd asset amount correct
 			actual_response_asset := result.AmountSfsd
@@ -126,8 +126,8 @@ func (suite *KeeperTestSuite) TestGRPCQuerySuperfluidDelegations() {
 			DelegatorAddress: delegator.String(),
 		})
 
-		multiplier0 := suite.querier.Keeper.GetOsmoEquivalentMultiplier(suite.Ctx, denoms[0])
-		multiplier1 := suite.querier.Keeper.GetOsmoEquivalentMultiplier(suite.Ctx, denoms[1])
+		multiplier0 := suite.querier.Keeper.GetMokiEquivalentMultiplier(suite.Ctx, denoms[0])
+		multiplier1 := suite.querier.Keeper.GetMokiEquivalentMultiplier(suite.Ctx, denoms[1])
 		minRiskFactor := suite.querier.Keeper.GetParams(suite.Ctx).MinimumRiskFactor
 
 		expectAmount0 := multiplier0.Mul(sdk.NewDec(1000000)).Sub(multiplier0.Mul(sdk.NewDec(1000000)).Mul(minRiskFactor))
@@ -139,8 +139,8 @@ func (suite *KeeperTestSuite) TestGRPCQuerySuperfluidDelegations() {
 			sdk.NewInt64Coin(denoms[0], 1000000),
 			sdk.NewInt64Coin(denoms[1], 1000000),
 		)))
-		suite.Require().True(res.SuperfluidDelegationRecords[0].EquivalentStakedAmount.IsEqual(sdk.NewCoin("uosmo", expectAmount0.RoundInt())))
-		suite.Require().True(res.SuperfluidDelegationRecords[1].EquivalentStakedAmount.IsEqual(sdk.NewCoin("uosmo", expectAmount1.RoundInt())))
+		suite.Require().True(res.SuperfluidDelegationRecords[0].EquivalentStakedAmount.IsEqual(sdk.NewCoin("umoki", expectAmount0.RoundInt())))
+		suite.Require().True(res.SuperfluidDelegationRecords[1].EquivalentStakedAmount.IsEqual(sdk.NewCoin("umoki", expectAmount1.RoundInt())))
 	}
 
 	// for each validator denom pair, make sure they have 1 delegations
@@ -275,8 +275,8 @@ func (suite *KeeperTestSuite) TestGRPCQueryTotalDelegationByDelegator() {
 	suite.App.StakingKeeper.SetDelegation(suite.Ctx, bond1to0)
 	suite.App.StakingKeeper.SetDelegation(suite.Ctx, bond1to1)
 
-	multiplier0 := suite.querier.Keeper.GetOsmoEquivalentMultiplier(suite.Ctx, denoms[0])
-	multiplier1 := suite.querier.Keeper.GetOsmoEquivalentMultiplier(suite.Ctx, denoms[1])
+	multiplier0 := suite.querier.Keeper.GetMokiEquivalentMultiplier(suite.Ctx, denoms[0])
+	multiplier1 := suite.querier.Keeper.GetMokiEquivalentMultiplier(suite.Ctx, denoms[1])
 	minRiskFactor := suite.querier.Keeper.GetParams(suite.Ctx).MinimumRiskFactor
 
 	expectAmount0 := multiplier0.Mul(sdk.NewDec(1000000)).Sub(multiplier0.Mul(sdk.NewDec(1000000)).Mul(minRiskFactor))
@@ -297,11 +297,11 @@ func (suite *KeeperTestSuite) TestGRPCQueryTotalDelegationByDelegator() {
 		suite.Require().True(res.TotalDelegatedCoins.IsEqual(sdk.NewCoins(
 			sdk.NewInt64Coin(denoms[0], 1000000),
 			sdk.NewInt64Coin(denoms[1], 1000000),
-			sdk.NewInt64Coin("uosmo", 18000000),
+			sdk.NewInt64Coin("umoki", 18000000),
 		)))
 
-		total_osmo_equivalent := sdk.NewCoin("uosmo", expectAmount0.RoundInt().Add(expectAmount1.RoundInt()).Add(sdk.NewInt(18000000)))
+		total_moki_equivalent := sdk.NewCoin("umoki", expectAmount0.RoundInt().Add(expectAmount1.RoundInt()).Add(sdk.NewInt(18000000)))
 
-		suite.Require().True(res.TotalEquivalentStakedAmount.IsEqual(total_osmo_equivalent))
+		suite.Require().True(res.TotalEquivalentStakedAmount.IsEqual(total_moki_equivalent))
 	}
 }

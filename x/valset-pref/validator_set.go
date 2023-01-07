@@ -7,8 +7,8 @@ import (
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	stakingtypes "github.com/cosmos/cosmos-sdk/x/staking/types"
-	"github.com/osmosis-labs/osmosis/osmomath"
-	"github.com/osmosis-labs/osmosis/v13/x/valset-pref/types"
+	"github.com/petri-labs/mokita/mokimath"
+	"github.com/petri-labs/mokita/x/valset-pref/types"
 )
 
 type valSet struct {
@@ -38,8 +38,8 @@ func (k Keeper) SetValidatorSetPreference(ctx sdk.Context, delegator string, pre
 }
 
 // DelegateToValidatorSet delegates to a delegators existing validator-set.
-// For ex: delegate 10osmo with validator-set {ValA -> 0.5, ValB -> 0.3, ValC -> 0.2}
-// our delegate logic would attempt to delegate 5osmo to A , 2osmo to B, 3osmo to C
+// For ex: delegate 10moki with validator-set {ValA -> 0.5, ValB -> 0.3, ValC -> 0.2}
+// our delegate logic would attempt to delegate 5moki to A , 2moki to B, 3moki to C
 func (k Keeper) DelegateToValidatorSet(ctx sdk.Context, delegatorAddr string, coin sdk.Coin) error {
 	// get the existing validator set preference from store
 	existingSet, found := k.GetValidatorSetPreference(ctx, delegatorAddr)
@@ -75,8 +75,8 @@ func (k Keeper) DelegateToValidatorSet(ctx sdk.Context, delegatorAddr string, co
 
 // UndelegateFromValidatorSet undelegates {coin} amount from the validator set.
 // For ex: userA has staked 10tokens with weight {Val->0.5, ValB->0.3, ValC->0.2}
-// undelegate 6osmo with validator-set {ValA -> 0.5, ValB -> 0.3, ValC -> 0.2}
-// our undelegate logic would attempt to undelegate 3osmo from A , 1.8osmo from B, 1.2osmo from C
+// undelegate 6moki with validator-set {ValA -> 0.5, ValB -> 0.3, ValC -> 0.2}
+// our undelegate logic would attempt to undelegate 3moki from A , 1.8moki from B, 1.2moki from C
 func (k Keeper) UndelegateFromValidatorSet(ctx sdk.Context, delegatorAddr string, coin sdk.Coin) error {
 	// get the existing validator set preference
 	existingSet, found := k.GetValidatorSetPreference(ctx, delegatorAddr)
@@ -307,7 +307,7 @@ func (k Keeper) IsPreferenceValid(ctx sdk.Context, preferences []types.Validator
 	var weightsRoundedValPrefList []types.ValidatorPreference
 	for _, val := range preferences {
 		// round up weights
-		valWeightStr := osmomath.SigFigRound(val.Weight, sdk.NewDec(10).Power(2).TruncateInt())
+		valWeightStr := mokimath.SigFigRound(val.Weight, sdk.NewDec(10).Power(2).TruncateInt())
 
 		_, _, err := k.GetValidatorInfo(ctx, val.ValOperAddress)
 		if err != nil {

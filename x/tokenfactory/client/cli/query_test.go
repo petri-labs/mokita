@@ -8,8 +8,8 @@ import (
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 
-	"github.com/osmosis-labs/osmosis/v13/app/apptesting"
-	"github.com/osmosis-labs/osmosis/v13/x/tokenfactory/types"
+	"github.com/petri-labs/mokita/app/apptesting"
+	"github.com/petri-labs/mokita/x/tokenfactory/types"
 )
 
 type QueryTestSuite struct {
@@ -40,19 +40,19 @@ func (s *QueryTestSuite) TestQueriesNeverAlterState() {
 	}{
 		{
 			"Query denom authority metadata",
-			"/osmosis.tokenfactory.v1beta1.Query/DenomAuthorityMetadata",
+			"/mokita.tokenfactory.v1beta1.Query/DenomAuthorityMetadata",
 			&types.QueryDenomAuthorityMetadataRequest{Denom: "tokenfactory"},
 			&types.QueryDenomAuthorityMetadataResponse{},
 		},
 		{
 			"Query denoms by creator",
-			"/osmosis.tokenfactory.v1beta1.Query/DenomsFromCreator",
+			"/mokita.tokenfactory.v1beta1.Query/DenomsFromCreator",
 			&types.QueryDenomsFromCreatorRequest{Creator: s.TestAccs[0].String()},
 			&types.QueryDenomsFromCreatorResponse{},
 		},
 		{
 			"Query params",
-			"/osmosis.tokenfactory.v1beta1.Query/Params",
+			"/mokita.tokenfactory.v1beta1.Query/Params",
 			&types.QueryParamsRequest{},
 			&types.QueryParamsResponse{},
 		},

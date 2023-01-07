@@ -11,10 +11,10 @@ import (
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 
-	appparams "github.com/osmosis-labs/osmosis/v13/app/params"
+	appparams "github.com/petri-labs/mokita/app/params"
 
-	lockuptypes "github.com/osmosis-labs/osmosis/v13/x/lockup/types"
-	"github.com/osmosis-labs/osmosis/v13/x/superfluid/types"
+	lockuptypes "github.com/petri-labs/mokita/x/lockup/types"
+	"github.com/petri-labs/mokita/x/superfluid/types"
 )
 
 var _ types.QueryServer = Querier{}
@@ -77,10 +77,10 @@ func (q Querier) AssetMultiplier(goCtx context.Context, req *types.AssetMultipli
 	epochInfo := q.Keeper.ek.GetEpochInfo(ctx, q.Keeper.GetEpochIdentifier(ctx))
 
 	return &types.AssetMultiplierResponse{
-		OsmoEquivalentMultiplier: &types.OsmoEquivalentMultiplierRecord{
+		MokiEquivalentMultiplier: &types.MokiEquivalentMultiplierRecord{
 			EpochNumber: epochInfo.CurrentEpoch,
 			Denom:       req.Denom,
-			Multiplier:  q.Keeper.GetOsmoEquivalentMultiplier(ctx, req.Denom),
+			Multiplier:  q.Keeper.GetMokiEquivalentMultiplier(ctx, req.Denom),
 		},
 	}, nil
 }
@@ -217,9 +217,9 @@ func (q Querier) SuperfluidDelegationsByDelegator(goCtx context.Context, req *ty
 		lockedCoins := sdk.NewCoin(baseDenom, periodLock.GetCoins().AmountOf(baseDenom))
 		valAddr, err := ValidatorAddressFromSyntheticDenom(syntheticLock.SynthDenom)
 
-		// Find how many osmo tokens this delegation is worth at superfluids current risk adjustment
+		// Find how many moki tokens this delegation is worth at superfluids current risk adjustment
 		// and twap of the denom.
-		equivalentAmount := q.Keeper.GetSuperfluidOSMOTokens(ctx, baseDenom, lockedCoins.Amount)
+		equivalentAmount := q.Keeper.GetSuperfluidMOKITokens(ctx, baseDenom, lockedCoins.Amount)
 		coin := sdk.NewCoin(appparams.BaseCoinUnit, equivalentAmount)
 
 		if err != nil {
@@ -384,8 +384,8 @@ func (q Querier) EstimateSuperfluidDelegatedAmountByValidatorDenom(goCtx context
 		return nil, stakingtypes.ErrNoDelegation
 	}
 
-	syntheticOsmoAmt := delegation.Shares.Quo(val.DelegatorShares).MulInt(val.Tokens)
-	baseAmount := q.Keeper.UnriskAdjustOsmoValue(ctx, syntheticOsmoAmt).Quo(q.Keeper.GetOsmoEquivalentMultiplier(ctx, req.Denom)).RoundInt()
+	syntheticMokiAmt := delegation.Shares.Quo(val.DelegatorShares).MulInt(val.Tokens)
+	baseAmount := q.Keeper.UnriskAdjustMokiValue(ctx, syntheticMokiAmt).Quo(q.Keeper.GetMokiEquivalentMultiplier(ctx, req.Denom)).RoundInt()
 
 	return &types.EstimateSuperfluidDelegatedAmountByValidatorDenomResponse{
 		TotalDelegatedCoins: sdk.NewCoins(sdk.NewCoin(req.Denom, baseAmount)),
@@ -416,12 +416,12 @@ func (q Querier) TotalDelegationByValidatorForDenom(goCtx context.Context, req *
 			amount = amount.Add(record.DelegationAmount.Amount)
 		}
 
-		equivalentAmountOSMO := q.Keeper.GetSuperfluidOSMOTokens(ctx, req.Denom, amount)
+		equivalentAmountMOKI := q.Keeper.GetSuperfluidMOKITokens(ctx, req.Denom, amount)
 
 		result := types.Delegations{
 			ValAddr:        valAddr.String(),
 			AmountSfsd:     amount,
-			OsmoEquivalent: equivalentAmountOSMO,
+			MokiEquivalent: equivalentAmountMOKI,
 		}
 
 		delegationsByValidator = append(delegationsByValidator, result)
@@ -432,7 +432,7 @@ func (q Querier) TotalDelegationByValidatorForDenom(goCtx context.Context, req *
 	}, nil
 }
 
-// TotalSuperfluidDelegations returns total amount of osmo delegated via superfluid staking.
+// TotalSuperfluidDelegations returns total amount of moki delegated via superfluid staking.
 func (q Querier) TotalSuperfluidDelegations(goCtx context.Context, _ *types.TotalSuperfluidDelegationsRequest) (*types.TotalSuperfluidDelegationsResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
@@ -455,8 +455,8 @@ func (q Querier) TotalSuperfluidDelegations(goCtx context.Context, _ *types.Tota
 			continue
 		}
 
-		syntheticOsmoAmt := delegation.Shares.Quo(val.DelegatorShares).MulInt(val.Tokens).RoundInt()
-		totalSuperfluidDelegated = totalSuperfluidDelegated.Add(syntheticOsmoAmt)
+		syntheticMokiAmt := delegation.Shares.Quo(val.DelegatorShares).MulInt(val.Tokens).RoundInt()
+		totalSuperfluidDelegated = totalSuperfluidDelegated.Add(syntheticMokiAmt)
 	}
 
 	return &types.TotalSuperfluidDelegationsResponse{

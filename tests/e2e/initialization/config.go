@@ -18,16 +18,16 @@ import (
 	"github.com/gogo/protobuf/proto"
 	tmjson "github.com/tendermint/tendermint/libs/json"
 
-	epochtypes "github.com/osmosis-labs/osmosis/v13/x/epochs/types"
-	gammtypes "github.com/osmosis-labs/osmosis/v13/x/gamm/types"
-	incentivestypes "github.com/osmosis-labs/osmosis/v13/x/incentives/types"
-	minttypes "github.com/osmosis-labs/osmosis/v13/x/mint/types"
-	poolitypes "github.com/osmosis-labs/osmosis/v13/x/pool-incentives/types"
-	swaproutertypes "github.com/osmosis-labs/osmosis/v13/x/swaprouter/types"
-	twaptypes "github.com/osmosis-labs/osmosis/v13/x/twap/types"
-	txfeestypes "github.com/osmosis-labs/osmosis/v13/x/txfees/types"
+	epochtypes "github.com/petri-labs/mokita/x/epochs/types"
+	gammtypes "github.com/petri-labs/mokita/x/gamm/types"
+	incentivestypes "github.com/petri-labs/mokita/x/incentives/types"
+	minttypes "github.com/petri-labs/mokita/x/mint/types"
+	poolitypes "github.com/petri-labs/mokita/x/pool-incentives/types"
+	swaproutertypes "github.com/petri-labs/mokita/x/swaprouter/types"
+	twaptypes "github.com/petri-labs/mokita/x/twap/types"
+	txfeestypes "github.com/petri-labs/mokita/x/txfees/types"
 
-	"github.com/osmosis-labs/osmosis/v13/tests/e2e/util"
+	"github.com/petri-labs/mokita/tests/e2e/util"
 )
 
 // NodeConfig is a confiuration for the node supplied from the test runner
@@ -46,23 +46,23 @@ type NodeConfig struct {
 
 const (
 	// common
-	OsmoDenom           = "uosmo"
+	MokiDenom           = "umoki"
 	IonDenom            = "uion"
 	StakeDenom          = "stake"
-	OsmoIBCDenom        = "ibc/ED07A3391A112B175915CD8FAF43A2DA8E4790EDE12566649D0C2F97716B8518"
+	MokiIBCDenom        = "ibc/ED07A3391A112B175915CD8FAF43A2DA8E4790EDE12566649D0C2F97716B8518"
 	StakeIBCDenom       = "ibc/C053D637CCA2A2BA030E2C5EE1B28A16F71CCB0E45E8BE52766DC1B241B7787"
 	MinGasPrice         = "0.000"
 	IbcSendAmount       = 3300000000
 	ValidatorWalletName = "val"
 	// chainA
-	ChainAID      = "osmo-test-a"
-	OsmoBalanceA  = 200000000000
+	ChainAID      = "moki-test-a"
+	MokiBalanceA  = 200000000000
 	IonBalanceA   = 100000000000
 	StakeBalanceA = 110000000000
 	StakeAmountA  = 100000000000
 	// chainB
-	ChainBID      = "osmo-test-b"
-	OsmoBalanceB  = 500000000000
+	ChainBID      = "moki-test-b"
+	MokiBalanceB  = 500000000000
 	IonBalanceB   = 100000000000
 	StakeBalanceB = 440000000000
 	StakeAmountB  = 400000000000
@@ -73,16 +73,16 @@ const (
 
 var (
 	StakeAmountIntA  = sdk.NewInt(StakeAmountA)
-	StakeAmountCoinA = sdk.NewCoin(OsmoDenom, StakeAmountIntA)
+	StakeAmountCoinA = sdk.NewCoin(MokiDenom, StakeAmountIntA)
 	StakeAmountIntB  = sdk.NewInt(StakeAmountB)
-	StakeAmountCoinB = sdk.NewCoin(OsmoDenom, StakeAmountIntB)
+	StakeAmountCoinB = sdk.NewCoin(MokiDenom, StakeAmountIntB)
 
-	InitBalanceStrA = fmt.Sprintf("%d%s,%d%s,%d%s", OsmoBalanceA, OsmoDenom, StakeBalanceA, StakeDenom, IonBalanceA, IonDenom)
-	InitBalanceStrB = fmt.Sprintf("%d%s,%d%s,%d%s", OsmoBalanceB, OsmoDenom, StakeBalanceB, StakeDenom, IonBalanceB, IonDenom)
-	OsmoToken       = sdk.NewInt64Coin(OsmoDenom, IbcSendAmount)  // 3,300uosmo
+	InitBalanceStrA = fmt.Sprintf("%d%s,%d%s,%d%s", MokiBalanceA, MokiDenom, StakeBalanceA, StakeDenom, IonBalanceA, IonDenom)
+	InitBalanceStrB = fmt.Sprintf("%d%s,%d%s,%d%s", MokiBalanceB, MokiDenom, StakeBalanceB, StakeDenom, IonBalanceB, IonDenom)
+	MokiToken       = sdk.NewInt64Coin(MokiDenom, IbcSendAmount)  // 3,300umoki
 	StakeToken      = sdk.NewInt64Coin(StakeDenom, IbcSendAmount) // 3,300ustake
-	tenOsmo         = sdk.Coins{sdk.NewInt64Coin(OsmoDenom, 10_000_000)}
-	fiftyOsmo       = sdk.Coins{sdk.NewInt64Coin(OsmoDenom, 50_000_000)}
+	tenMoki         = sdk.Coins{sdk.NewInt64Coin(MokiDenom, 10_000_000)}
+	fiftyMoki       = sdk.Coins{sdk.NewInt64Coin(MokiDenom, 50_000_000)}
 )
 
 func addAccount(path, moniker, amountStr string, accAddr sdk.AccAddress, forkHeight int) error {
@@ -301,13 +301,13 @@ func initGenesis(chain *internalChain, votingPeriod, expeditedVotingPeriod time.
 func updateBankGenesis(bankGenState *banktypes.GenesisState) {
 	bankGenState.DenomMetadata = append(bankGenState.DenomMetadata, banktypes.Metadata{
 		Description: "An example stable token",
-		Display:     OsmoDenom,
-		Base:        OsmoDenom,
-		Symbol:      OsmoDenom,
-		Name:        OsmoDenom,
+		Display:     MokiDenom,
+		Base:        MokiDenom,
+		Symbol:      MokiDenom,
+		Name:        MokiDenom,
 		DenomUnits: []*banktypes.DenomUnit{
 			{
-				Denom:    OsmoDenom,
+				Denom:    MokiDenom,
 				Exponent: 0,
 			},
 		},
@@ -316,7 +316,7 @@ func updateBankGenesis(bankGenState *banktypes.GenesisState) {
 
 func updateStakeGenesis(stakeGenState *staketypes.GenesisState) {
 	stakeGenState.Params = staketypes.Params{
-		BondDenom:         OsmoDenom,
+		BondDenom:         MokiDenom,
 		MaxValidators:     100,
 		MaxEntries:        7,
 		HistoricalEntries: 10000,
@@ -332,7 +332,7 @@ func updatePoolIncentiveGenesis(pooliGenState *poolitypes.GenesisState) {
 		time.Second * 240,
 	}
 	pooliGenState.Params = poolitypes.Params{
-		MintedDenom: OsmoDenom,
+		MintedDenom: MokiDenom,
 	}
 }
 
@@ -349,16 +349,16 @@ func updateIncentivesGenesis(incentivesGenState *incentivestypes.GenesisState) {
 }
 
 func updateMintGenesis(mintGenState *minttypes.GenesisState) {
-	mintGenState.Params.MintDenom = OsmoDenom
+	mintGenState.Params.MintDenom = MokiDenom
 	mintGenState.Params.EpochIdentifier = "day"
 }
 
 func updateTxfeesGenesis(txfeesGenState *txfeestypes.GenesisState) {
-	txfeesGenState.Basedenom = OsmoDenom
+	txfeesGenState.Basedenom = MokiDenom
 }
 
 func updateGammGenesis(gammGenState *gammtypes.GenesisState) {
-	gammGenState.Params.PoolCreationFee = tenOsmo
+	gammGenState.Params.PoolCreationFee = tenMoki
 }
 
 func updateSwaprouterGenesis(appGenState map[string]json.RawMessage) func(*swaproutertypes.GenesisState) {
@@ -385,15 +385,15 @@ func updateTWAPGenesis(twapGenState *twaptypes.GenesisState) {
 }
 
 func updateCrisisGenesis(crisisGenState *crisistypes.GenesisState) {
-	crisisGenState.ConstantFee.Denom = OsmoDenom
+	crisisGenState.ConstantFee.Denom = MokiDenom
 }
 
 func updateGovGenesis(votingPeriod, expeditedVotingPeriod time.Duration) func(*govtypes.GenesisState) {
 	return func(govGenState *govtypes.GenesisState) {
 		govGenState.VotingParams.VotingPeriod = votingPeriod
 		govGenState.VotingParams.ExpeditedVotingPeriod = expeditedVotingPeriod
-		govGenState.DepositParams.MinDeposit = tenOsmo
-		govGenState.DepositParams.MinExpeditedDeposit = fiftyOsmo
+		govGenState.DepositParams.MinDeposit = tenMoki
+		govGenState.DepositParams.MinExpeditedDeposit = fiftyMoki
 	}
 }
 

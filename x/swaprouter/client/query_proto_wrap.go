@@ -5,9 +5,9 @@ import (
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 
-	"github.com/osmosis-labs/osmosis/v13/x/swaprouter"
-	"github.com/osmosis-labs/osmosis/v13/x/swaprouter/client/queryproto"
-	"github.com/osmosis-labs/osmosis/v13/x/swaprouter/types"
+	"github.com/petri-labs/mokita/x/swaprouter"
+	"github.com/petri-labs/mokita/x/swaprouter/client/queryproto"
+	"github.com/petri-labs/mokita/x/swaprouter/types"
 )
 
 // This file should evolve to being code gen'd, off of `proto/swaprouter/v1beta/query.yml`

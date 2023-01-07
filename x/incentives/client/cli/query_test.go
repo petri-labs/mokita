@@ -7,8 +7,8 @@ import (
 
 	"github.com/stretchr/testify/suite"
 
-	"github.com/osmosis-labs/osmosis/v13/app/apptesting"
-	"github.com/osmosis-labs/osmosis/v13/x/incentives/types"
+	"github.com/petri-labs/mokita/app/apptesting"
+	"github.com/petri-labs/mokita/x/incentives/types"
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 )
@@ -39,55 +39,55 @@ func (s *QueryTestSuite) TestQueriesNeverAlterState() {
 	}{
 		{
 			"Query active gauges",
-			"/osmosis.incentives.Query/ActiveGauges",
+			"/mokita.incentives.Query/ActiveGauges",
 			&types.ActiveGaugesRequest{},
 			&types.ActiveGaugesResponse{},
 		},
 		{
 			"Query active gauges per denom",
-			"/osmosis.incentives.Query/ActiveGaugesPerDenom",
+			"/mokita.incentives.Query/ActiveGaugesPerDenom",
 			&types.ActiveGaugesPerDenomRequest{Denom: "stake"},
 			&types.ActiveGaugesPerDenomResponse{},
 		},
 		{
 			"Query gauge by id",
-			"/osmosis.incentives.Query/GaugeByID",
+			"/mokita.incentives.Query/GaugeByID",
 			&types.GaugeByIDRequest{Id: 1},
 			&types.GaugeByIDResponse{},
 		},
 		{
 			"Query all gauges",
-			"/osmosis.incentives.Query/Gauges",
+			"/mokita.incentives.Query/Gauges",
 			&types.GaugesRequest{},
 			&types.GaugesResponse{},
 		},
 		{
 			"Query lockable durations",
-			"/osmosis.incentives.Query/LockableDurations",
+			"/mokita.incentives.Query/LockableDurations",
 			&types.QueryLockableDurationsRequest{},
 			&types.QueryLockableDurationsResponse{},
 		},
 		{
 			"Query module to distibute coins",
-			"/osmosis.incentives.Query/ModuleToDistributeCoins",
+			"/mokita.incentives.Query/ModuleToDistributeCoins",
 			&types.ModuleToDistributeCoinsRequest{},
 			&types.ModuleToDistributeCoinsResponse{},
 		},
 		{
 			"Query reward estimate",
-			"/osmosis.incentives.Query/RewardsEst",
+			"/mokita.incentives.Query/RewardsEst",
 			&types.RewardsEstRequest{Owner: s.TestAccs[0].String()},
 			&types.RewardsEstResponse{},
 		},
 		{
 			"Query upcoming gauges",
-			"/osmosis.incentives.Query/UpcomingGauges",
+			"/mokita.incentives.Query/UpcomingGauges",
 			&types.UpcomingGaugesRequest{},
 			&types.UpcomingGaugesResponse{},
 		},
 		{
 			"Query upcoming gauges",
-			"/osmosis.incentives.Query/UpcomingGaugesPerDenom",
+			"/mokita.incentives.Query/UpcomingGaugesPerDenom",
 			&types.UpcomingGaugesPerDenomRequest{Denom: "stake"},
 			&types.UpcomingGaugesPerDenomResponse{},
 		},

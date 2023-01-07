@@ -2,7 +2,7 @@ package bindings
 
 import sdk "github.com/cosmos/cosmos-sdk/types"
 
-type OsmosisMsg struct {
+type MokisisMsg struct {
 	/// Contracts can create denoms, namespaced under the contract's address.
 	/// A contract may create any number of independent sub-denoms.
 	CreateDenom *CreateDenom `json:"create_denom,omitempty"`

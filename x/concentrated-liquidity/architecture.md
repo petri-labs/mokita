@@ -317,7 +317,7 @@ Note the `PoolType` type. This is an enumeration of all supported pool types.
 We proto-generate this enumeration:
 
 ```go
-// proto/osmosis/swaprouter/v1beta1/module_route.proto
+// proto/mokita/swaprouter/v1beta1/module_route.proto
 // generates to x/swaprouter/types/module_route.pb.go
 
 // PoolType is an enumeration of all supported pool types.
@@ -481,7 +481,7 @@ the appropriate `SwapExactAmountIn` method.
 ```go
 // x/swaprouter/router.go RouteExactAmountIn(...)
 
-moduleRouteBytes := osmoutils.MustGet(swaproutertypes.FormatModuleRouteIndex(poolId))
+moduleRouteBytes := mokiutils.MustGet(swaproutertypes.FormatModuleRouteIndex(poolId))
 moduleRoute, _ := swaproutertypes.ModuleRouteFromBytes(moduleRouteBytes)
 
 swapModule := k.routes[moduleRoute.PoolType]

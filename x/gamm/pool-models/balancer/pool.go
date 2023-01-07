@@ -10,9 +10,9 @@ import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 
-	"github.com/osmosis-labs/osmosis/v13/x/gamm/pool-models/internal/cfmm_common"
-	"github.com/osmosis-labs/osmosis/v13/x/gamm/types"
-	swaproutertypes "github.com/osmosis-labs/osmosis/v13/x/swaprouter/types"
+	"github.com/petri-labs/mokita/x/gamm/pool-models/internal/cfmm_common"
+	"github.com/petri-labs/mokita/x/gamm/types"
+	swaproutertypes "github.com/petri-labs/mokita/x/swaprouter/types"
 )
 
 //nolint:deadcode
@@ -615,13 +615,13 @@ func (p *Pool) applySwap(ctx sdk.Context, tokensIn sdk.Coins, tokensOut sdk.Coin
 // we take the ratio of weights and divide this by ratio of supplies
 // this is equivalent to spot_price = (Quote Supply / Quote Weight) / (Base Supply / Base Weight)
 //
-// As an example, assume equal weights. uosmo supply of 2 and uatom supply of 4.
+// As an example, assume equal weights. umoki supply of 2 and uatom supply of 4.
 //
-// Case 1: base = uosmo, quote = uatom -> for one uosmo, get 2 uatom = 4 / 2 = 2
-// In other words, it costs 2 uatom to get one uosmo.
+// Case 1: base = umoki, quote = uatom -> for one umoki, get 2 uatom = 4 / 2 = 2
+// In other words, it costs 2 uatom to get one umoki.
 //
-// Case 2: base = uatom, quote = uosmo -> for one uatom, get 0.5 uosmo = 2 / 4 = 0.5
-// In other words, it costs 0.5 uosmo to get one uatom.
+// Case 2: base = uatom, quote = umoki -> for one uatom, get 0.5 umoki = 2 / 4 = 0.5
+// In other words, it costs 0.5 umoki to get one uatom.
 //
 // panics if the pool in state is incorrect, and has any weight that is 0.
 func (p Pool) SpotPrice(ctx sdk.Context, quoteAsset, baseAsset string) (spotPrice sdk.Dec, err error) {

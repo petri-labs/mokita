@@ -1,12 +1,12 @@
-# osmosis-1 seed list
+# mokita-1 seed list
 
 ## artifact-staking.io
 
-6bcdbcfd5d2c6ba58460f10dbcfde58278212833\@osmosis.artifact-staking.io:26656
+6bcdbcfd5d2c6ba58460f10dbcfde58278212833\@mokita.artifact-staking.io:26656
 
-# osmosis-1 peer list
+# mokita-1 peer list
 
-## Cosmostation
+## Cmokistation
 
 8f67a2fcdd7ade970b1983bf1697111d35dfdd6f\@52.79.199.137:26656
 00c328a33578466c711874ec5ee7ada75951f99a\@35.82.201.64:26656

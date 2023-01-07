@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/osmosis-labs/osmosis/v13/x/lockup/types"
+	"github.com/petri-labs/mokita/x/lockup/types"
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 )
@@ -475,7 +475,7 @@ func (suite *KeeperTestSuite) TestHasLock() {
 			tokenLocked:     sdk.NewInt64Coin("stake", 10),
 			durationLocked:  time.Minute,
 			lockAddr:        addr1,
-			denomToQuery:    "uosmo",
+			denomToQuery:    "umoki",
 			durationToQuery: time.Minute,
 			expectedHas:     false,
 		},
@@ -484,7 +484,7 @@ func (suite *KeeperTestSuite) TestHasLock() {
 			tokenLocked:     sdk.NewInt64Coin("stake", 10),
 			durationLocked:  time.Minute,
 			lockAddr:        addr2,
-			denomToQuery:    "uosmo",
+			denomToQuery:    "umoki",
 			durationToQuery: time.Minute,
 			expectedHas:     false,
 		},

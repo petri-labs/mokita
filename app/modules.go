@@ -11,15 +11,15 @@ import (
 	ibchost "github.com/cosmos/ibc-go/v4/modules/core/24-host"
 	ibckeeper "github.com/cosmos/ibc-go/v4/modules/core/keeper"
 
-	ibchookstypes "github.com/osmosis-labs/osmosis/x/ibc-hooks/types"
+	ibchookstypes "github.com/petri-labs/mokita/x/ibc-hooks/types"
 
 	ica "github.com/cosmos/ibc-go/v4/modules/apps/27-interchain-accounts"
 	icatypes "github.com/cosmos/ibc-go/v4/modules/apps/27-interchain-accounts/types"
 
-	downtimemodule "github.com/osmosis-labs/osmosis/v13/x/downtime-detector/module"
-	downtimetypes "github.com/osmosis-labs/osmosis/v13/x/downtime-detector/types"
+	downtimemodule "github.com/petri-labs/mokita/x/downtime-detector/module"
+	downtimetypes "github.com/petri-labs/mokita/x/downtime-detector/types"
 
-	ibc_hooks "github.com/osmosis-labs/osmosis/x/ibc-hooks"
+	ibc_hooks "github.com/petri-labs/mokita/x/ibc-hooks"
 
 	"github.com/cosmos/cosmos-sdk/types/module"
 	"github.com/cosmos/cosmos-sdk/x/auth"
@@ -51,38 +51,38 @@ import (
 	"github.com/cosmos/cosmos-sdk/x/upgrade"
 	upgradetypes "github.com/cosmos/cosmos-sdk/x/upgrade/types"
 
-	"github.com/osmosis-labs/osmosis/osmoutils/partialord"
-	appparams "github.com/osmosis-labs/osmosis/v13/app/params"
-	_ "github.com/osmosis-labs/osmosis/v13/client/docs/statik"
-	"github.com/osmosis-labs/osmosis/v13/simulation/simtypes"
-	concentratedliquidity "github.com/osmosis-labs/osmosis/v13/x/concentrated-liquidity"
-	concentratedliquiditytypes "github.com/osmosis-labs/osmosis/v13/x/concentrated-liquidity/types"
-	"github.com/osmosis-labs/osmosis/v13/x/epochs"
-	epochstypes "github.com/osmosis-labs/osmosis/v13/x/epochs/types"
-	"github.com/osmosis-labs/osmosis/v13/x/gamm"
-	gammtypes "github.com/osmosis-labs/osmosis/v13/x/gamm/types"
-	"github.com/osmosis-labs/osmosis/v13/x/incentives"
-	incentivestypes "github.com/osmosis-labs/osmosis/v13/x/incentives/types"
-	"github.com/osmosis-labs/osmosis/v13/x/lockup"
-	lockuptypes "github.com/osmosis-labs/osmosis/v13/x/lockup/types"
-	"github.com/osmosis-labs/osmosis/v13/x/mint"
-	minttypes "github.com/osmosis-labs/osmosis/v13/x/mint/types"
-	poolincentives "github.com/osmosis-labs/osmosis/v13/x/pool-incentives"
-	poolincentivestypes "github.com/osmosis-labs/osmosis/v13/x/pool-incentives/types"
-	"github.com/osmosis-labs/osmosis/v13/x/protorev"
-	protorevtypes "github.com/osmosis-labs/osmosis/v13/x/protorev/types"
-	superfluid "github.com/osmosis-labs/osmosis/v13/x/superfluid"
-	superfluidtypes "github.com/osmosis-labs/osmosis/v13/x/superfluid/types"
-	swaprouter "github.com/osmosis-labs/osmosis/v13/x/swaprouter/module"
-	swaproutertypes "github.com/osmosis-labs/osmosis/v13/x/swaprouter/types"
-	"github.com/osmosis-labs/osmosis/v13/x/tokenfactory"
-	tokenfactorytypes "github.com/osmosis-labs/osmosis/v13/x/tokenfactory/types"
-	"github.com/osmosis-labs/osmosis/v13/x/twap/twapmodule"
-	twaptypes "github.com/osmosis-labs/osmosis/v13/x/twap/types"
-	"github.com/osmosis-labs/osmosis/v13/x/txfees"
-	txfeestypes "github.com/osmosis-labs/osmosis/v13/x/txfees/types"
-	valsetpreftypes "github.com/osmosis-labs/osmosis/v13/x/valset-pref/types"
-	valsetprefmodule "github.com/osmosis-labs/osmosis/v13/x/valset-pref/valpref-module"
+	"github.com/petri-labs/mokita/mokiutils/partialord"
+	appparams "github.com/petri-labs/mokita/app/params"
+	_ "github.com/petri-labs/mokita/client/docs/statik"
+	"github.com/petri-labs/mokita/simulation/simtypes"
+	concentratedliquidity "github.com/petri-labs/mokita/x/concentrated-liquidity"
+	concentratedliquiditytypes "github.com/petri-labs/mokita/x/concentrated-liquidity/types"
+	"github.com/petri-labs/mokita/x/epochs"
+	epochstypes "github.com/petri-labs/mokita/x/epochs/types"
+	"github.com/petri-labs/mokita/x/gamm"
+	gammtypes "github.com/petri-labs/mokita/x/gamm/types"
+	"github.com/petri-labs/mokita/x/incentives"
+	incentivestypes "github.com/petri-labs/mokita/x/incentives/types"
+	"github.com/petri-labs/mokita/x/lockup"
+	lockuptypes "github.com/petri-labs/mokita/x/lockup/types"
+	"github.com/petri-labs/mokita/x/mint"
+	minttypes "github.com/petri-labs/mokita/x/mint/types"
+	poolincentives "github.com/petri-labs/mokita/x/pool-incentives"
+	poolincentivestypes "github.com/petri-labs/mokita/x/pool-incentives/types"
+	"github.com/petri-labs/mokita/x/protorev"
+	protorevtypes "github.com/petri-labs/mokita/x/protorev/types"
+	superfluid "github.com/petri-labs/mokita/x/superfluid"
+	superfluidtypes "github.com/petri-labs/mokita/x/superfluid/types"
+	swaprouter "github.com/petri-labs/mokita/x/swaprouter/module"
+	swaproutertypes "github.com/petri-labs/mokita/x/swaprouter/types"
+	"github.com/petri-labs/mokita/x/tokenfactory"
+	tokenfactorytypes "github.com/petri-labs/mokita/x/tokenfactory/types"
+	"github.com/petri-labs/mokita/x/twap/twapmodule"
+	twaptypes "github.com/petri-labs/mokita/x/twap/types"
+	"github.com/petri-labs/mokita/x/txfees"
+	txfeestypes "github.com/petri-labs/mokita/x/txfees/types"
+	valsetpreftypes "github.com/petri-labs/mokita/x/valset-pref/types"
+	valsetprefmodule "github.com/petri-labs/mokita/x/valset-pref/valpref-module"
 )
 
 // moduleAccountPermissions defines module account permissions
@@ -113,7 +113,7 @@ var moduleAccountPermissions = map[string][]string{
 
 // appModules return modules to initialize module manager.
 func appModules(
-	app *OsmosisApp,
+	app *MokisisApp,
 	encodingConfig appparams.EncodingConfig,
 	skipGenesisInvariants bool,
 ) []module.AppModule {
@@ -201,7 +201,7 @@ func OrderEndBlockers(allModuleNames []string) []string {
 	ord.FirstElements(govtypes.ModuleName)
 	ord.LastElements(stakingtypes.ModuleName)
 
-	// only Osmosis modules with endblock code are: twap, crisis, govtypes, staking
+	// only Mokisis modules with endblock code are: twap, crisis, govtypes, staking
 	// we don't care about the relative ordering between them.
 	return ord.TotalOrdering()
 }
@@ -263,27 +263,27 @@ func ModuleAccountAddrs() map[string]bool {
 	return modAccAddrs
 }
 
-func (app *OsmosisApp) GetAccountKeeper() simtypes.AccountKeeper {
+func (app *MokisisApp) GetAccountKeeper() simtypes.AccountKeeper {
 	return app.AppKeepers.AccountKeeper
 }
 
-func (app *OsmosisApp) GetBankKeeper() simtypes.BankKeeper {
+func (app *MokisisApp) GetBankKeeper() simtypes.BankKeeper {
 	return app.AppKeepers.BankKeeper
 }
 
 // Required for ibctesting
-func (app *OsmosisApp) GetStakingKeeper() stakingkeeper.Keeper {
+func (app *MokisisApp) GetStakingKeeper() stakingkeeper.Keeper {
 	return *app.AppKeepers.StakingKeeper // Dereferencing the pointer
 }
 
-func (app *OsmosisApp) GetIBCKeeper() *ibckeeper.Keeper {
+func (app *MokisisApp) GetIBCKeeper() *ibckeeper.Keeper {
 	return app.AppKeepers.IBCKeeper // This is a *ibckeeper.Keeper
 }
 
-func (app *OsmosisApp) GetScopedIBCKeeper() capabilitykeeper.ScopedKeeper {
+func (app *MokisisApp) GetScopedIBCKeeper() capabilitykeeper.ScopedKeeper {
 	return app.AppKeepers.ScopedIBCKeeper
 }
 
-func (app *OsmosisApp) GetTxConfig() client.TxConfig {
+func (app *MokisisApp) GetTxConfig() client.TxConfig {
 	return MakeEncodingConfig().TxConfig
 }

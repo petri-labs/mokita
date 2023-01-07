@@ -11,11 +11,11 @@ import (
 	"github.com/stretchr/testify/require"
 	"github.com/stretchr/testify/suite"
 
-	"github.com/osmosis-labs/osmosis/osmoutils/osmoassert"
-	"github.com/osmosis-labs/osmosis/v13/app/apptesting"
-	v10 "github.com/osmosis-labs/osmosis/v13/app/upgrades/v10"
-	"github.com/osmosis-labs/osmosis/v13/x/gamm/pool-models/balancer"
-	"github.com/osmosis-labs/osmosis/v13/x/gamm/types"
+	"github.com/petri-labs/mokita/mokiutils/mokiassert"
+	"github.com/petri-labs/mokita/app/apptesting"
+	v10 "github.com/petri-labs/mokita/app/upgrades/v10"
+	"github.com/petri-labs/mokita/x/gamm/pool-models/balancer"
+	"github.com/petri-labs/mokita/x/gamm/types"
 )
 
 const (
@@ -31,8 +31,8 @@ const (
 
 var (
 	oneTrillion          = sdk.NewInt(1e12)
-	defaultOsmoPoolAsset = balancer.PoolAsset{
-		Token:  sdk.NewCoin("uosmo", oneTrillion),
+	defaultMokiPoolAsset = balancer.PoolAsset{
+		Token:  sdk.NewCoin("umoki", oneTrillion),
 		Weight: sdk.NewInt(100),
 	}
 	defaultAtomPoolAsset = balancer.PoolAsset{
@@ -40,7 +40,7 @@ var (
 		Weight: sdk.NewInt(100),
 	}
 	oneTrillionEvenPoolAssets = []balancer.PoolAsset{
-		defaultOsmoPoolAsset,
+		defaultMokiPoolAsset,
 		defaultAtomPoolAsset,
 	}
 )
@@ -82,7 +82,7 @@ var calcSingleAssetJoinTestCases = []calcJoinSharesTestCase{
 		name:         "single tokensIn - equal weights with zero swap fee",
 		swapFee:      sdk.MustNewDecFromStr("0"),
 		poolAssets:   oneTrillionEvenPoolAssets,
-		tokensIn:     sdk.NewCoins(sdk.NewInt64Coin("uosmo", 50_000)),
+		tokensIn:     sdk.NewCoins(sdk.NewInt64Coin("umoki", 50_000)),
 		expectShares: sdk.NewInt(2_499_999_968_750),
 	},
 	{
@@ -103,7 +103,7 @@ var calcSingleAssetJoinTestCases = []calcJoinSharesTestCase{
 		name:         "single tokensIn - equal weights with 0.01 swap fee",
 		swapFee:      sdk.MustNewDecFromStr("0.01"),
 		poolAssets:   oneTrillionEvenPoolAssets,
-		tokensIn:     sdk.NewCoins(sdk.NewInt64Coin("uosmo", 50_000)),
+		tokensIn:     sdk.NewCoins(sdk.NewInt64Coin("umoki", 50_000)),
 		expectShares: sdk.NewInt(2_487_500_000_000),
 	},
 	{
@@ -124,7 +124,7 @@ var calcSingleAssetJoinTestCases = []calcJoinSharesTestCase{
 		name:         "single tokensIn - equal weights with 0.99 swap fee",
 		swapFee:      sdk.MustNewDecFromStr("0.99"),
 		poolAssets:   oneTrillionEvenPoolAssets,
-		tokensIn:     sdk.NewCoins(sdk.NewInt64Coin("uosmo", 50_000)),
+		tokensIn:     sdk.NewCoins(sdk.NewInt64Coin("umoki", 50_000)),
 		expectShares: sdk.NewInt(1_262_500_000_000),
 	},
 	{
@@ -137,7 +137,7 @@ var calcSingleAssetJoinTestCases = []calcJoinSharesTestCase{
 		// 	P_supply = initial pool supply = 1e20
 		//	A_t = amount of deposited asset = 50,000
 		//	B_t = existing balance of deposited asset in the pool prior to deposit = 1,000,000,000,000
-		//	W_t = normalized weight of deposited asset in pool = 0.25 (asset A, uosmo, has weight 1/4 of uatom)
+		//	W_t = normalized weight of deposited asset in pool = 0.25 (asset A, umoki, has weight 1/4 of uatom)
 		// 	swapFeeRatio = (1 - (1 - W_t) * swapFee)
 		// Plugging all of this in, we get:
 		// 	Full solution: https://www.wolframalpha.com/input?i=%28100+*+10%5E18+%29*+%28%28+1+%2B+%2850%2C000+*+%281+-+%281+-+0.25%29+*+0.99%29+%2F+1000000000000%29%29%5E0.25+-+1%29
@@ -145,13 +145,13 @@ var calcSingleAssetJoinTestCases = []calcJoinSharesTestCase{
 		name:    "single tokensIn - unequal weights with 0.99 swap fee",
 		swapFee: sdk.MustNewDecFromStr("0.99"),
 		poolAssets: []balancer.PoolAsset{
-			defaultOsmoPoolAsset,
+			defaultMokiPoolAsset,
 			{
 				Token:  sdk.NewInt64Coin("uatom", 1e12),
 				Weight: sdk.NewInt(300),
 			},
 		},
-		tokensIn:     sdk.NewCoins(sdk.NewInt64Coin("uosmo", 50_000)),
+		tokensIn:     sdk.NewCoins(sdk.NewInt64Coin("umoki", 50_000)),
 		expectShares: sdk.NewInt(321_875_000_000),
 	},
 	{
@@ -172,12 +172,12 @@ var calcSingleAssetJoinTestCases = []calcJoinSharesTestCase{
 		swapFee: sdk.ZeroDec(),
 		poolAssets: []balancer.PoolAsset{
 			{
-				Token:  sdk.NewInt64Coin("uosmo", 1e12),
+				Token:  sdk.NewInt64Coin("umoki", 1e12),
 				Weight: sdk.NewInt(500),
 			},
 			defaultAtomPoolAsset,
 		},
-		tokensIn:     sdk.NewCoins(sdk.NewInt64Coin("uosmo", 50_000)),
+		tokensIn:     sdk.NewCoins(sdk.NewInt64Coin("umoki", 50_000)),
 		expectShares: sdk.NewInt(4_166_666_649_306),
 	},
 	{
@@ -198,12 +198,12 @@ var calcSingleAssetJoinTestCases = []calcJoinSharesTestCase{
 		swapFee: sdk.MustNewDecFromStr("0.01"),
 		poolAssets: []balancer.PoolAsset{
 			{
-				Token:  sdk.NewInt64Coin("uosmo", 1e12),
+				Token:  sdk.NewInt64Coin("umoki", 1e12),
 				Weight: sdk.NewInt(500),
 			},
 			defaultAtomPoolAsset,
 		},
-		tokensIn:     sdk.NewCoins(sdk.NewInt64Coin("uosmo", 50_000)),
+		tokensIn:     sdk.NewCoins(sdk.NewInt64Coin("umoki", 50_000)),
 		expectShares: sdk.NewInt(4_159_722_200_000),
 	},
 	{
@@ -224,7 +224,7 @@ var calcSingleAssetJoinTestCases = []calcJoinSharesTestCase{
 		swapFee: sdk.MustNewDecFromStr("0"),
 		poolAssets: []balancer.PoolAsset{
 			{
-				Token:  sdk.NewInt64Coin("uosmo", 1e12),
+				Token:  sdk.NewInt64Coin("umoki", 1e12),
 				Weight: sdk.NewInt(200),
 			},
 			{
@@ -232,7 +232,7 @@ var calcSingleAssetJoinTestCases = []calcJoinSharesTestCase{
 				Weight: sdk.NewInt(1000),
 			},
 		},
-		tokensIn:     sdk.NewCoins(sdk.NewInt64Coin("uosmo", 50_000)),
+		tokensIn:     sdk.NewCoins(sdk.NewInt64Coin("umoki", 50_000)),
 		expectShares: sdk.NewInt(833_333_315_972),
 	},
 	{
@@ -253,7 +253,7 @@ var calcSingleAssetJoinTestCases = []calcJoinSharesTestCase{
 		swapFee: sdk.MustNewDecFromStr("0.02"),
 		poolAssets: []balancer.PoolAsset{
 			{
-				Token:  sdk.NewInt64Coin("uosmo", 1e12),
+				Token:  sdk.NewInt64Coin("umoki", 1e12),
 				Weight: sdk.NewInt(200),
 			},
 			{
@@ -261,7 +261,7 @@ var calcSingleAssetJoinTestCases = []calcJoinSharesTestCase{
 				Weight: sdk.NewInt(1000),
 			},
 		},
-		tokensIn:     sdk.NewCoins(sdk.NewInt64Coin("uosmo", 50_000)),
+		tokensIn:     sdk.NewCoins(sdk.NewInt64Coin("umoki", 50_000)),
 		expectShares: sdk.NewInt(819_444_430_000),
 	},
 	{
@@ -282,7 +282,7 @@ var calcSingleAssetJoinTestCases = []calcJoinSharesTestCase{
 		swapFee: sdk.MustNewDecFromStr("0"),
 		poolAssets: []balancer.PoolAsset{
 			{
-				Token:  sdk.NewInt64Coin("uosmo", 156_736),
+				Token:  sdk.NewInt64Coin("umoki", 156_736),
 				Weight: sdk.NewInt(200),
 			},
 			{
@@ -291,7 +291,7 @@ var calcSingleAssetJoinTestCases = []calcJoinSharesTestCase{
 			},
 		},
 		// 156_736 * 3 / 4 = 117552
-		tokensIn:     sdk.NewCoins(sdk.NewInt64Coin("uosmo", (156_736*3)/4)),
+		tokensIn:     sdk.NewCoins(sdk.NewInt64Coin("umoki", (156_736*3)/4)),
 		expectShares: sdk.NewIntFromUint64(9_775_731_930_496_140_648),
 	},
 	{
@@ -312,7 +312,7 @@ var calcSingleAssetJoinTestCases = []calcJoinSharesTestCase{
 		swapFee: sdk.MustNewDecFromStr("0.02"),
 		poolAssets: []balancer.PoolAsset{
 			{
-				Token:  sdk.NewInt64Coin("uosmo", 156_736),
+				Token:  sdk.NewInt64Coin("umoki", 156_736),
 				Weight: sdk.NewInt(200),
 			},
 			{
@@ -321,7 +321,7 @@ var calcSingleAssetJoinTestCases = []calcJoinSharesTestCase{
 			},
 		},
 		// 156_736 / 4 * 3 = 117552
-		tokensIn:     sdk.NewCoins(sdk.NewInt64Coin("uosmo", 156_736/4*3)),
+		tokensIn:     sdk.NewCoins(sdk.NewInt64Coin("umoki", 156_736/4*3)),
 		expectShares: sdk.NewIntFromUint64(9_644_655_900_000_000_000),
 	},
 	{
@@ -342,7 +342,7 @@ var calcSingleAssetJoinTestCases = []calcJoinSharesTestCase{
 		swapFee: sdk.MustNewDecFromStr("0"),
 		poolAssets: []balancer.PoolAsset{
 			{
-				Token:  sdk.NewInt64Coin("uosmo", 500_000),
+				Token:  sdk.NewInt64Coin("umoki", 500_000),
 				Weight: sdk.NewInt(100),
 			},
 			{
@@ -350,7 +350,7 @@ var calcSingleAssetJoinTestCases = []calcJoinSharesTestCase{
 				Weight: sdk.NewInt(1000),
 			},
 		},
-		tokensIn:     sdk.NewCoins(sdk.NewInt64Coin("uosmo", 499_999)),
+		tokensIn:     sdk.NewCoins(sdk.NewInt64Coin("umoki", 499_999)),
 		expectShares: sdk.NewIntFromUint64(6_504_099_261_800_144_638),
 	},
 	{
@@ -363,7 +363,7 @@ var calcSingleAssetJoinTestCases = []calcJoinSharesTestCase{
 		swapFee: sdk.MustNewDecFromStr("0"),
 		poolAssets: []balancer.PoolAsset{
 			{
-				Token:  sdk.NewInt64Coin("uosmo", 500_000),
+				Token:  sdk.NewInt64Coin("umoki", 500_000),
 				Weight: sdk.NewInt(100),
 			},
 			{
@@ -371,7 +371,7 @@ var calcSingleAssetJoinTestCases = []calcJoinSharesTestCase{
 				Weight: sdk.NewInt(1000),
 			},
 		},
-		tokensIn:     sdk.NewCoins(sdk.NewInt64Coin("uosmo", 500_000)),
+		tokensIn:     sdk.NewCoins(sdk.NewInt64Coin("umoki", 500_000)),
 		expectShares: sdk.NewIntFromUint64(6_504_099_261_800_144_638),
 		expectPanic:  true,
 	},
@@ -390,7 +390,7 @@ var calcSingleAssetJoinTestCases = []calcJoinSharesTestCase{
 		swapFee: sdk.MustNewDecFromStr("0"),
 		poolAssets: []balancer.PoolAsset{
 			{
-				Token:  sdk.NewInt64Coin("uosmo", 1_000_000_000_000),
+				Token:  sdk.NewInt64Coin("umoki", 1_000_000_000_000),
 				Weight: sdk.NewInt(100),
 			},
 			{
@@ -399,7 +399,7 @@ var calcSingleAssetJoinTestCases = []calcJoinSharesTestCase{
 			},
 		},
 		tokensIn: sdk.NewCoins(
-			sdk.NewInt64Coin("uosmo", 1),
+			sdk.NewInt64Coin("umoki", 1),
 		),
 		expectShares: sdk.NewInt(50_000_000),
 	},
@@ -410,7 +410,7 @@ var calcSingleAssetJoinTestCases = []calcJoinSharesTestCase{
 		swapFee: sdk.MustNewDecFromStr("0"),
 		poolAssets: []balancer.PoolAsset{
 			{
-				Token:  sdk.NewInt64Coin("uosmo", 10_000_000_000_000),
+				Token:  sdk.NewInt64Coin("umoki", 10_000_000_000_000),
 				Weight: sdk.NewInt(100),
 			},
 			{
@@ -419,7 +419,7 @@ var calcSingleAssetJoinTestCases = []calcJoinSharesTestCase{
 			},
 		},
 		tokensIn: sdk.NewCoins(
-			sdk.NewInt64Coin("uosmo", 1),
+			sdk.NewInt64Coin("umoki", 1),
 		),
 		expectShares: sdk.NewInt(5_000_000),
 	},
@@ -431,7 +431,7 @@ var multiAssetExactInputTestCases = []calcJoinSharesTestCase{
 		swapFee:    sdk.MustNewDecFromStr("0"),
 		poolAssets: oneTrillionEvenPoolAssets,
 		tokensIn: sdk.NewCoins(
-			sdk.NewInt64Coin("uosmo", 25_000),
+			sdk.NewInt64Coin("umoki", 25_000),
 			sdk.NewInt64Coin("uatom", 25_000),
 		),
 		// Raises liquidity perfectly by 25_000 / 1_000_000_000_000.
@@ -439,7 +439,7 @@ var multiAssetExactInputTestCases = []calcJoinSharesTestCase{
 		// Expected increase = liquidity_increase_ratio * initial number of pool shares = (25_000 / 1e12) * 10**20 = 2500000000000.0 = 2.5 * 10**12
 		expectShares: sdk.NewInt(2.5e12),
 		expectLiq: sdk.NewCoins(
-			sdk.NewInt64Coin("uosmo", 25_000),
+			sdk.NewInt64Coin("umoki", 25_000),
 			sdk.NewInt64Coin("uatom", 25_000),
 		),
 	},
@@ -448,24 +448,24 @@ var multiAssetExactInputTestCases = []calcJoinSharesTestCase{
 		swapFee:    sdk.MustNewDecFromStr("0.001"),
 		poolAssets: oneTrillionEvenPoolAssets,
 		tokensIn: sdk.NewCoins(
-			sdk.NewInt64Coin("uosmo", 25_000),
+			sdk.NewInt64Coin("umoki", 25_000),
 			sdk.NewInt64Coin("uatom", 25_000),
 		),
 		expectShares: sdk.NewInt(2500000000000),
 		expectLiq: sdk.NewCoins(
-			sdk.NewInt64Coin("uosmo", 25_000),
+			sdk.NewInt64Coin("umoki", 25_000),
 			sdk.NewInt64Coin("uatom", 25_000),
 		),
 	},
 	{
 		// This test doubles the liquidity in a fresh pool, so it should generate the base number of LP shares for pool creation as new shares
-		// This is set to 1e20 (or 100 * 10^18) for Osmosis, so we should expect:
+		// This is set to 1e20 (or 100 * 10^18) for Mokisis, so we should expect:
 		// P_issued = 1e20
 		name:    "minimum input with two assets and minimum liquidity",
 		swapFee: sdk.MustNewDecFromStr("0"),
 		poolAssets: []balancer.PoolAsset{
 			{
-				Token:  sdk.NewInt64Coin("uosmo", 1),
+				Token:  sdk.NewInt64Coin("umoki", 1),
 				Weight: sdk.NewInt(100),
 			},
 			{
@@ -474,12 +474,12 @@ var multiAssetExactInputTestCases = []calcJoinSharesTestCase{
 			},
 		},
 		tokensIn: sdk.NewCoins(
-			sdk.NewInt64Coin("uosmo", 1),
+			sdk.NewInt64Coin("umoki", 1),
 			sdk.NewInt64Coin("uatom", 1),
 		),
 		expectShares: sdk.NewInt(1e18).Mul(sdk.NewInt(100)),
 		expectLiq: sdk.NewCoins(
-			sdk.NewInt64Coin("uosmo", 1),
+			sdk.NewInt64Coin("umoki", 1),
 			sdk.NewInt64Coin("uatom", 1),
 		),
 	},
@@ -490,7 +490,7 @@ var multiAssetExactInputTestCases = []calcJoinSharesTestCase{
 		swapFee: sdk.MustNewDecFromStr("0"),
 		poolAssets: []balancer.PoolAsset{
 			{
-				Token:  sdk.NewInt64Coin("uosmo", 1_000_000_000_000),
+				Token:  sdk.NewInt64Coin("umoki", 1_000_000_000_000),
 				Weight: sdk.NewInt(100),
 			},
 			{
@@ -499,12 +499,12 @@ var multiAssetExactInputTestCases = []calcJoinSharesTestCase{
 			},
 		},
 		tokensIn: sdk.NewCoins(
-			sdk.NewInt64Coin("uosmo", 1),
+			sdk.NewInt64Coin("umoki", 1),
 			sdk.NewInt64Coin("uatom", 1),
 		),
 		expectShares: sdk.NewInt(100_000_000),
 		expectLiq: sdk.NewCoins(
-			sdk.NewInt64Coin("uosmo", 1),
+			sdk.NewInt64Coin("umoki", 1),
 			sdk.NewInt64Coin("uatom", 1),
 		),
 	},
@@ -512,8 +512,8 @@ var multiAssetExactInputTestCases = []calcJoinSharesTestCase{
 
 var multiAssetUnevenInputTestCases = []calcJoinSharesTestCase{
 	{
-		// For uosmos and uatom
-		// join pool is first done to the extent where the ratio can be preserved, which is 25,000 uosmo and 25,000 uatom
+		// For umokis and uatom
+		// join pool is first done to the extent where the ratio can be preserved, which is 25,000 umoki and 25,000 uatom
 		// then we perfrom single asset deposit for the remaining 25,000 uatom with the equation below
 		// Expected output from Balancer paper (https://balancer.fi/whitepaper.pdf) using equation (25) on page 10:
 		// P_issued = P_supply * ((1 + (A_t * swapFeeRatio  / B_t))^W_t - 1)
@@ -533,15 +533,15 @@ var multiAssetUnevenInputTestCases = []calcJoinSharesTestCase{
 		swapFee:    sdk.ZeroDec(),
 		poolAssets: oneTrillionEvenPoolAssets,
 		tokensIn: sdk.NewCoins(
-			sdk.NewInt64Coin("uosmo", 25_000),
+			sdk.NewInt64Coin("umoki", 25_000),
 			sdk.NewInt64Coin("uatom", 50_000),
 		),
 
 		expectShares: sdk.NewInt(2.5e12 + 1249999992187),
 	},
 	{
-		// For uosmos and uatom
-		// join pool is first done to the extent where the ratio can be preserved, which is 25,000 uosmo and 25,000 uatom
+		// For umokis and uatom
+		// join pool is first done to the extent where the ratio can be preserved, which is 25,000 umoki and 25,000 uatom
 		// then we perfrom single asset deposit for the remaining 25,000 uatom with the equation below
 		// Expected output from Balancer paper (https://balancer.fi/whitepaper.pdf) using equation (25) on page 10:
 		// P_issued = P_supply * ((1 + (A_t * swapFeeRatio  / B_t))^W_t - 1)
@@ -561,13 +561,13 @@ var multiAssetUnevenInputTestCases = []calcJoinSharesTestCase{
 		swapFee:    sdk.MustNewDecFromStr("0.01"),
 		poolAssets: oneTrillionEvenPoolAssets,
 		tokensIn: sdk.NewCoins(
-			sdk.NewInt64Coin("uosmo", 25_000),
+			sdk.NewInt64Coin("umoki", 25_000),
 			sdk.NewInt64Coin("uatom", 50_000),
 		),
 		expectShares: sdk.NewInt(2.5e12 + 1243750000000),
 	},
 	{
-		// join pool is first done to the extent where the ratio can be preserved, which is 25,000 uosmo and 12,500 uatom.
+		// join pool is first done to the extent where the ratio can be preserved, which is 25,000 umoki and 12,500 uatom.
 		// the minimal total share resulted here would be 1,250,000,000,000 =  2500 / 2,000,000,000,000 * 100,000,000,000,000,000,000
 		// then we perfrom single asset deposit for the remaining 37,500 uatom with the equation below
 		//
@@ -589,13 +589,13 @@ var multiAssetUnevenInputTestCases = []calcJoinSharesTestCase{
 		swapFee: sdk.MustNewDecFromStr("0.03"),
 		poolAssets: []balancer.PoolAsset{
 			{
-				Token:  sdk.NewInt64Coin("uosmo", 2_000_000_000_000),
+				Token:  sdk.NewInt64Coin("umoki", 2_000_000_000_000),
 				Weight: sdk.NewInt(500),
 			},
 			defaultAtomPoolAsset,
 		},
 		tokensIn: sdk.NewCoins(
-			sdk.NewInt64Coin("uosmo", 25_000),
+			sdk.NewInt64Coin("umoki", 25_000),
 			sdk.NewInt64Coin("uatom", 50_000),
 		),
 		expectShares: sdk.NewInt(1250000000000 + 609374990000),
@@ -622,7 +622,7 @@ func (suite *KeeperTestSuite) SetupTest() {
 // This test sets up 2 asset pools, and then checks the spot price on them.
 // It uses the pools spot price method, rather than the Gamm keepers spot price method.
 func (suite *KeeperTestSuite) TestBalancerSpotPrice() {
-	baseDenom := "uosmo"
+	baseDenom := "umoki"
 	quoteDenom := "uion"
 
 	tests := []struct {
@@ -707,7 +707,7 @@ func (suite *KeeperTestSuite) TestBalancerSpotPrice() {
 // This test sets up 2 asset pools, and then checks the spot price on them.
 // It uses the pools spot price method, rather than the Gamm keepers spot price method.
 func (suite *KeeperTestSuite) TestBalancerSpotPriceBounds() {
-	baseDenom := "uosmo"
+	baseDenom := "umoki"
 	quoteDenom := "uion"
 	defaultFutureGovernor = ""
 
@@ -851,7 +851,7 @@ func (suite *KeeperTestSuite) TestCalcJoinPoolShares() {
 			}
 
 			assertPoolStateNotModified(t, pool, func() {
-				osmoassert.ConditionalPanic(t, tc.expectPanic, sut)
+				mokiassert.ConditionalPanic(t, tc.expectPanic, sut)
 			})
 		})
 	}
@@ -890,7 +890,7 @@ func (suite *KeeperTestSuite) TestJoinPool() {
 				}
 			}
 
-			osmoassert.ConditionalPanic(t, tc.expectPanic, sut)
+			mokiassert.ConditionalPanic(t, tc.expectPanic, sut)
 		})
 	}
 }
@@ -909,13 +909,13 @@ func (suite *KeeperTestSuite) TestJoinPoolNoSwap() {
 			swapFee:    sdk.ZeroDec(),
 			poolAssets: oneTrillionEvenPoolAssets,
 			tokensIn: sdk.NewCoins(
-				sdk.NewInt64Coin("uosmo", 25_000),
+				sdk.NewInt64Coin("umoki", 25_000),
 				sdk.NewInt64Coin("uatom", 50_000),
 			),
 
 			expectShares: sdk.NewInt(2.5e12),
 			expectLiq: sdk.NewCoins(
-				sdk.NewInt64Coin("uosmo", 25_000),
+				sdk.NewInt64Coin("umoki", 25_000),
 				sdk.NewInt64Coin("uatom", 25_000),
 			),
 		},
@@ -925,36 +925,36 @@ func (suite *KeeperTestSuite) TestJoinPoolNoSwap() {
 			swapFee:    sdk.MustNewDecFromStr("0.01"),
 			poolAssets: oneTrillionEvenPoolAssets,
 			tokensIn: sdk.NewCoins(
-				sdk.NewInt64Coin("uosmo", 25_000),
+				sdk.NewInt64Coin("umoki", 25_000),
 				sdk.NewInt64Coin("uatom", 50_000),
 			),
 
 			expectShares: sdk.NewInt(2.5e12),
 			expectLiq: sdk.NewCoins(
-				sdk.NewInt64Coin("uosmo", 25_000),
+				sdk.NewInt64Coin("umoki", 25_000),
 				sdk.NewInt64Coin("uatom", 25_000),
 			),
 		},
 		{
 			// Note that the ratio of the assets matter, but their weights don't
 			// We expect a 2:1 ratio in the joined liquidity because there's a 2:1 ration in existing liquidity
-			// Since only the exact ratio portion is successfully joined, we expect 25k uosmo and 12.5k uatom
+			// Since only the exact ratio portion is successfully joined, we expect 25k umoki and 12.5k uatom
 			name:    "Multi-tokens In: unequal amounts, with unequal weights with 0.03 swap fee",
 			swapFee: sdk.MustNewDecFromStr("0.03"),
 			poolAssets: []balancer.PoolAsset{
 				{
-					Token:  sdk.NewInt64Coin("uosmo", 2_000_000_000_000),
+					Token:  sdk.NewInt64Coin("umoki", 2_000_000_000_000),
 					Weight: sdk.NewInt(500),
 				},
 				defaultAtomPoolAsset,
 			},
 			tokensIn: sdk.NewCoins(
-				sdk.NewInt64Coin("uosmo", 25_000),
+				sdk.NewInt64Coin("umoki", 25_000),
 				sdk.NewInt64Coin("uatom", 50_000),
 			),
 			expectShares: sdk.NewInt(1250000000000),
 			expectLiq: sdk.NewCoins(
-				sdk.NewInt64Coin("uosmo", 25_000),
+				sdk.NewInt64Coin("umoki", 25_000),
 				sdk.NewInt64Coin("uatom", 12_500),
 			),
 		},
@@ -985,7 +985,7 @@ func (suite *KeeperTestSuite) TestJoinPoolNoSwap() {
 				}
 			}
 
-			osmoassert.ConditionalPanic(t, tc.expectPanic, sut)
+			mokiassert.ConditionalPanic(t, tc.expectPanic, sut)
 		})
 	}
 }

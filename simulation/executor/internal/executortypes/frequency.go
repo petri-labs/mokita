@@ -1,6 +1,6 @@
 package executortypes
 
-import "github.com/osmosis-labs/osmosis/v13/simulation/simtypes"
+import "github.com/petri-labs/mokita/simulation/simtypes"
 
 func totalFrequency(actions []simtypes.ActionsWithMetadata) int {
 	totalFrequency := 0

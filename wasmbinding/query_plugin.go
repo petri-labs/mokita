@@ -11,7 +11,7 @@ import (
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 	abci "github.com/tendermint/tendermint/abci/types"
 
-	"github.com/osmosis-labs/osmosis/v13/wasmbinding/bindings"
+	"github.com/petri-labs/mokita/wasmbinding/bindings"
 )
 
 // StargateQuerier dispatches whitelisted stargate queries
@@ -47,9 +47,9 @@ func StargateQuerier(queryRouter baseapp.GRPCQueryRouter, cdc codec.Codec) func(
 // CustomQuerier dispatches custom CosmWasm bindings queries.
 func CustomQuerier(qp *QueryPlugin) func(ctx sdk.Context, request json.RawMessage) ([]byte, error) {
 	return func(ctx sdk.Context, request json.RawMessage) ([]byte, error) {
-		var contractQuery bindings.OsmosisQuery
+		var contractQuery bindings.MokisisQuery
 		if err := json.Unmarshal(request, &contractQuery); err != nil {
-			return nil, sdkerrors.Wrap(err, "osmosis query")
+			return nil, sdkerrors.Wrap(err, "mokita query")
 		}
 
 		switch {
@@ -59,7 +59,7 @@ func CustomQuerier(qp *QueryPlugin) func(ctx sdk.Context, request json.RawMessag
 
 			fullDenom, err := GetFullDenom(creator, subdenom)
 			if err != nil {
-				return nil, sdkerrors.Wrap(err, "osmo full denom query")
+				return nil, sdkerrors.Wrap(err, "moki full denom query")
 			}
 
 			res := bindings.FullDenomResponse{
@@ -68,7 +68,7 @@ func CustomQuerier(qp *QueryPlugin) func(ctx sdk.Context, request json.RawMessag
 
 			bz, err := json.Marshal(res)
 			if err != nil {
-				return nil, sdkerrors.Wrap(err, "osmo full denom query response")
+				return nil, sdkerrors.Wrap(err, "moki full denom query response")
 			}
 
 			return bz, nil
@@ -87,7 +87,7 @@ func CustomQuerier(qp *QueryPlugin) func(ctx sdk.Context, request json.RawMessag
 			return bz, nil
 
 		default:
-			return nil, wasmvmtypes.UnsupportedRequest{Kind: "unknown osmosis query variant"}
+			return nil, wasmvmtypes.UnsupportedRequest{Kind: "unknown mokita query variant"}
 		}
 	}
 }

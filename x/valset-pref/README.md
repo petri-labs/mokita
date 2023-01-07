@@ -30,19 +30,19 @@ How does this module work?
 Staking Calculation 
 
 - The user provides an amount to delegate and our `MsgDelegateToValidatorSet` divides the amount based on validator weight distribution.
-  For example: Stake 100osmo with validator-set {ValA -> 0.5, ValB -> 0.3, ValC -> 0.2}
-  our delegate logic will attempt to delegate (100 * 0.5) 50osmo for ValA , (100 * 0.3) 30osmo from ValB and (100 * 0.2) 20osmo from ValC.
+  For example: Stake 100moki with validator-set {ValA -> 0.5, ValB -> 0.3, ValC -> 0.2}
+  our delegate logic will attempt to delegate (100 * 0.5) 50moki for ValA , (100 * 0.3) 30moki from ValB and (100 * 0.2) 20moki from ValC.
 
 UnStaking Calculation 
 
 - The user provides an amount to undelegate and our `MsgUnDelegateToValidatorSet` divides the amount based on validator weight distribution.
 - Here, the user can either undelegate the entire amount or partial amount 
-  - Entire amount unstaking: UnStake 100osmo from validator-set {ValA -> 0.5, ValB -> 0.3, ValC -> 0.2},
-    our undelegate logic will attempt to undelegate 50osmo from ValA , 30osmo from ValB, 20osmo from ValC
-  - Partial amount unstaking: UnStake 27osmo from validator-set {ValA -> 0.5, ValB -> 0.3, ValC -> 0.2}, 
-    our undelegate logic will attempt to undelegate (27 * 0.5) 13.5osmos from ValA, (27 * 0.3), 8.1osmo from ValB, 
-    and (50 * 0.2) 5.4smo from ValC where 13.5osmo + 8.1osmo + 5.4osmo = 27osmo
-  - The user will then have 73osmo remaining with unchanged weights {ValA -> 0.5, ValB -> 0.3, ValC -> 0.2},
+  - Entire amount unstaking: UnStake 100moki from validator-set {ValA -> 0.5, ValB -> 0.3, ValC -> 0.2},
+    our undelegate logic will attempt to undelegate 50moki from ValA , 30moki from ValB, 20moki from ValC
+  - Partial amount unstaking: UnStake 27moki from validator-set {ValA -> 0.5, ValB -> 0.3, ValC -> 0.2}, 
+    our undelegate logic will attempt to undelegate (27 * 0.5) 13.5mokis from ValA, (27 * 0.3), 8.1moki from ValB, 
+    and (50 * 0.2) 5.4smo from ValC where 13.5moki + 8.1moki + 5.4moki = 27moki
+  - The user will then have 73moki remaining with unchanged weights {ValA -> 0.5, ValB -> 0.3, ValC -> 0.2},
 
 ## Messages
 
@@ -156,8 +156,8 @@ The Code Layout is very similar to TWAP module.
 
 ## Redelegate algorithm logic pseudocode
 
-Existing ValSet   20osmos {ValA-> 0.5, ValB-> 0.3, ValC-> 0.2} [ValA-> 10osmo, ValB-> 6osmo, ValC-> 4osmo]
-New ValSet        20osmos {ValD-> 0.2, ValE-> 0.2, ValF-> 0.6} [ValD-> 4osmo, ValE-> 4osmo, ValD-> 12osmo]
+Existing ValSet   20mokis {ValA-> 0.5, ValB-> 0.3, ValC-> 0.2} [ValA-> 10moki, ValB-> 6moki, ValC-> 4moki]
+New ValSet        20mokis {ValD-> 0.2, ValE-> 0.2, ValF-> 0.6} [ValD-> 4moki, ValE-> 4moki, ValD-> 12moki]
 
 - // Rearranging the existingValSet and newValSet to to add extra validator padding
   - existing_valset_updated = [ValA: 10, ValB: 6, ValC: 4, ValD: 0, ValE: 0, ValF: 0]

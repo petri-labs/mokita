@@ -7,8 +7,8 @@ import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/stretchr/testify/require"
 
-	appParams "github.com/osmosis-labs/osmosis/v13/app/params"
-	"github.com/osmosis-labs/osmosis/v13/x/concentrated-liquidity/types"
+	appParams "github.com/petri-labs/mokita/app/params"
+	"github.com/petri-labs/mokita/x/concentrated-liquidity/types"
 )
 
 func TestMsgCreatePosition(t *testing.T) {
@@ -30,7 +30,7 @@ func TestMsgCreatePosition(t *testing.T) {
 				LowerTick:       1,
 				UpperTick:       10,
 				TokenDesired0:   sdk.NewCoin("stake", sdk.OneInt()),
-				TokenDesired1:   sdk.NewCoin("osmo", sdk.OneInt()),
+				TokenDesired1:   sdk.NewCoin("moki", sdk.OneInt()),
 				TokenMinAmount0: sdk.OneInt(),
 				TokenMinAmount1: sdk.OneInt(),
 			},
@@ -44,7 +44,7 @@ func TestMsgCreatePosition(t *testing.T) {
 				LowerTick:       1,
 				UpperTick:       10,
 				TokenDesired0:   sdk.NewCoin("stake", sdk.OneInt()),
-				TokenDesired1:   sdk.NewCoin("osmo", sdk.OneInt()),
+				TokenDesired1:   sdk.NewCoin("moki", sdk.OneInt()),
 				TokenMinAmount0: sdk.OneInt(),
 				TokenMinAmount1: sdk.OneInt(),
 			},
@@ -58,7 +58,7 @@ func TestMsgCreatePosition(t *testing.T) {
 				LowerTick:       10,
 				UpperTick:       1,
 				TokenDesired0:   sdk.NewCoin("stake", sdk.OneInt()),
-				TokenDesired1:   sdk.NewCoin("osmo", sdk.OneInt()),
+				TokenDesired1:   sdk.NewCoin("moki", sdk.OneInt()),
 				TokenMinAmount0: sdk.OneInt(),
 				TokenMinAmount1: sdk.OneInt(),
 			},
@@ -72,7 +72,7 @@ func TestMsgCreatePosition(t *testing.T) {
 				LowerTick:       types.MinTick - 1,
 				UpperTick:       1,
 				TokenDesired0:   sdk.NewCoin("stake", sdk.OneInt()),
-				TokenDesired1:   sdk.NewCoin("osmo", sdk.OneInt()),
+				TokenDesired1:   sdk.NewCoin("moki", sdk.OneInt()),
 				TokenMinAmount0: sdk.OneInt(),
 				TokenMinAmount1: sdk.OneInt(),
 			},
@@ -86,7 +86,7 @@ func TestMsgCreatePosition(t *testing.T) {
 				LowerTick:       1,
 				UpperTick:       types.MaxTick + 1,
 				TokenDesired0:   sdk.NewCoin("stake", sdk.OneInt()),
-				TokenDesired1:   sdk.NewCoin("osmo", sdk.OneInt()),
+				TokenDesired1:   sdk.NewCoin("moki", sdk.OneInt()),
 				TokenMinAmount0: sdk.OneInt(),
 				TokenMinAmount1: sdk.OneInt(),
 			},
@@ -100,7 +100,7 @@ func TestMsgCreatePosition(t *testing.T) {
 				LowerTick:       1,
 				UpperTick:       10,
 				TokenDesired0:   sdk.Coin{Denom: "stake", Amount: sdk.NewInt(-10)},
-				TokenDesired1:   sdk.NewCoin("osmo", sdk.OneInt()),
+				TokenDesired1:   sdk.NewCoin("moki", sdk.OneInt()),
 				TokenMinAmount0: sdk.OneInt(),
 				TokenMinAmount1: sdk.OneInt(),
 			},
@@ -114,7 +114,7 @@ func TestMsgCreatePosition(t *testing.T) {
 				LowerTick:       1,
 				UpperTick:       10,
 				TokenDesired0:   sdk.NewCoin("stake", sdk.OneInt()),
-				TokenDesired1:   sdk.Coin{Denom: "osmo", Amount: sdk.NewInt(-10)},
+				TokenDesired1:   sdk.Coin{Denom: "moki", Amount: sdk.NewInt(-10)},
 				TokenMinAmount0: sdk.OneInt(),
 				TokenMinAmount1: sdk.OneInt(),
 			},
@@ -128,7 +128,7 @@ func TestMsgCreatePosition(t *testing.T) {
 				LowerTick:       1,
 				UpperTick:       10,
 				TokenDesired0:   sdk.NewCoin("stake", sdk.ZeroInt()),
-				TokenDesired1:   sdk.NewCoin("osmo", sdk.ZeroInt()),
+				TokenDesired1:   sdk.NewCoin("moki", sdk.ZeroInt()),
 				TokenMinAmount0: sdk.OneInt(),
 				TokenMinAmount1: sdk.OneInt(),
 			},
@@ -142,7 +142,7 @@ func TestMsgCreatePosition(t *testing.T) {
 				LowerTick:       1,
 				UpperTick:       10,
 				TokenDesired0:   sdk.NewCoin("stake", sdk.OneInt()),
-				TokenDesired1:   sdk.NewCoin("osmo", sdk.OneInt()),
+				TokenDesired1:   sdk.NewCoin("moki", sdk.OneInt()),
 				TokenMinAmount0: sdk.NewInt(-1),
 				TokenMinAmount1: sdk.NewInt(-1),
 			},
@@ -156,7 +156,7 @@ func TestMsgCreatePosition(t *testing.T) {
 				LowerTick:       1,
 				UpperTick:       10,
 				TokenDesired0:   sdk.NewCoin("stake", sdk.OneInt()),
-				TokenDesired1:   sdk.NewCoin("osmo", sdk.OneInt()),
+				TokenDesired1:   sdk.NewCoin("moki", sdk.OneInt()),
 				TokenMinAmount0: sdk.ZeroInt(),
 				TokenMinAmount1: sdk.ZeroInt(),
 			},

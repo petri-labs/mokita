@@ -18,7 +18,7 @@ RUN apk add --no-cache \
     linux-headers
 
 # Download go dependencies
-WORKDIR /osmosis
+WORKDIR /mokita
 COPY go.mod go.sum ./
 RUN --mount=type=cache,target=/root/.cache/go-build \
     --mount=type=cache,target=/root/go/pkg/mod \
@@ -35,22 +35,22 @@ RUN WASMVM_VERSION=$(go list -m github.com/CosmWasm/wasmvm | cut -d ' ' -f 2) &&
 # Copy the remaining files
 COPY . .
 
-# Build osmosisd binary
+# Build mokitad binary
 RUN --mount=type=cache,target=/root/.cache/go-build \
     --mount=type=cache,target=/root/go/pkg/mod \
     GOWORK=off go build \
         -mod=readonly \
         -tags "netgo,ledger,muslc" \
         -ldflags \
-            "-X github.com/cosmos/cosmos-sdk/version.Name="osmosis" \
-            -X github.com/cosmos/cosmos-sdk/version.AppName="osmosisd" \
+            "-X github.com/cosmos/cosmos-sdk/version.Name="mokita" \
+            -X github.com/cosmos/cosmos-sdk/version.AppName="mokitad" \
             -X github.com/cosmos/cosmos-sdk/version.Version=${GIT_VERSION} \
             -X github.com/cosmos/cosmos-sdk/version.Commit=${GIT_COMMIT} \
             -X github.com/cosmos/cosmos-sdk/version.BuildTags='netgo,ledger,muslc' \
             -w -s -linkmode=external -extldflags '-Wl,-z,muldefs -static'" \
         -trimpath \
-        -o /osmosis/build/osmosisd \
-        /osmosis/cmd/osmosisd/main.go
+        -o /mokita/build/mokitad \
+        /mokita/cmd/mokitad/main.go
 
 # --------------------------------------------------------
 # Runner
@@ -58,13 +58,13 @@ RUN --mount=type=cache,target=/root/.cache/go-build \
 
 FROM ${RUNNER_IMAGE}
 
-COPY --from=builder /osmosis/build/osmosisd /bin/osmosisd
+COPY --from=builder /mokita/build/mokitad /bin/mokitad
 
-ENV HOME /osmosis
+ENV HOME /mokita
 WORKDIR $HOME
 
 EXPOSE 26656
 EXPOSE 26657
 EXPOSE 1317
 
-ENTRYPOINT ["osmosisd"]
+ENTRYPOINT ["mokitad"]

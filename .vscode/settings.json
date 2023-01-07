@@ -17,7 +17,7 @@
     }
   },
   "gopls": {
-    "local": "github.com/osmosis-labs/osmosis"
+    "local": "github.com/petri-labs/mokita"
   },
   "files.eol": "\n",
   "[proto3]": {

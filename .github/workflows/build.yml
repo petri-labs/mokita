@@ -1,4 +1,4 @@
-name: Compile Osmosis
+name: Compile Mokisis
 
 # Controls when the action will run.
 #  This workflow runr on pushes to master & every Pull Requests. (Or when manually triggered)
@@ -23,7 +23,7 @@ jobs:
 #        include:
 #          - targetos: windows
 #            arch: amd64
-    name: osmosis ${{ matrix.arch }} for ${{ matrix.targetos }}
+    name: mokita ${{ matrix.arch }} for ${{ matrix.targetos }}
     steps:
       - uses: actions/checkout@v2
       - name: Get git diff
@@ -43,15 +43,15 @@ jobs:
           GOARCH: ${{ matrix.arch }}
         if: env.GIT_DIFF
 
-      - name: Compile osmosis
+      - name: Compile mokita
         run: |
           go mod download
-          cd cmd/osmosisd
+          cd cmd/mokitad
           GOWRK=off go build .
         if: env.GIT_DIFF
 
       - uses: actions/upload-artifact@v2
         with:
-          name: osmosisd ${{ matrix.targetos }} ${{ matrix.arch }}
-          path: cmd/osmosisd/osmosisd
+          name: mokitad ${{ matrix.targetos }} ${{ matrix.arch }}
+          path: cmd/mokitad/mokitad
         if: env.GIT_DIFF

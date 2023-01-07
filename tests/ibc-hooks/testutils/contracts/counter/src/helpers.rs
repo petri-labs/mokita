@@ -2,7 +2,7 @@ use schemars::JsonSchema;
 use serde::{Deserialize, Serialize};
 
 use cosmwasm_std::{
-    to_binary, Addr, Coin, CosmosMsg, CustomQuery, Querier, QuerierWrapper, StdResult, WasmMsg,
+    to_binary, Addr, Coin, CmokisMsg, CustomQuery, Querier, QuerierWrapper, StdResult, WasmMsg,
     WasmQuery,
 };
 
@@ -18,7 +18,7 @@ impl CwTemplateContract {
         self.0.clone()
     }
 
-    pub fn call<T: Into<ExecuteMsg>>(&self, msg: T) -> StdResult<CosmosMsg> {
+    pub fn call<T: Into<ExecuteMsg>>(&self, msg: T) -> StdResult<CmokisMsg> {
         let msg = to_binary(&msg.into())?;
         Ok(WasmMsg::Execute {
             contract_addr: self.addr().into(),

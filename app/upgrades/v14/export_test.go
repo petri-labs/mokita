@@ -3,8 +3,8 @@ package v14
 import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 
-	gammkeeper "github.com/osmosis-labs/osmosis/v13/x/gamm/keeper"
-	swaprouterkeeper "github.com/osmosis-labs/osmosis/v13/x/swaprouter"
+	gammkeeper "github.com/petri-labs/mokita/x/gamm/keeper"
+	swaprouterkeeper "github.com/petri-labs/mokita/x/swaprouter"
 )
 
 func MigrateNextPoolId(ctx sdk.Context, gammKeeper *gammkeeper.Keeper, swaprouterKeeper *swaprouterkeeper.Keeper) {

@@ -7,7 +7,7 @@ import (
 	"github.com/stretchr/testify/suite"
 	"github.com/tendermint/tendermint/crypto/ed25519"
 
-	"github.com/osmosis-labs/osmosis/v13/x/protorev/types"
+	"github.com/petri-labs/mokita/x/protorev/types"
 )
 
 type MsgsTestSuite struct {
@@ -19,14 +19,14 @@ func TestMsgsTestSuite(t *testing.T) {
 }
 
 func (suite *MsgsTestSuite) TestMsgSetHotRoutes() {
-	validArbRoutes := types.CreateSeacherRoutes(3, types.OsmosisDenomination, "ethereum", types.AtomDenomination, types.AtomDenomination)
+	validArbRoutes := types.CreateSeacherRoutes(3, types.MokisisDenomination, "ethereum", types.AtomDenomination, types.AtomDenomination)
 
-	notThreePoolArbRoutes := types.CreateSeacherRoutes(3, types.OsmosisDenomination, "ethereum", types.AtomDenomination, types.AtomDenomination)
+	notThreePoolArbRoutes := types.CreateSeacherRoutes(3, types.MokisisDenomination, "ethereum", types.AtomDenomination, types.AtomDenomination)
 	extraTrade := types.NewTrade(100000, "a", "b")
 	notThreePoolArbRoutes.ArbRoutes = append(notThreePoolArbRoutes.ArbRoutes, &types.Route{[]*types.Trade{&extraTrade}})
 
-	invalidArbDenoms := types.CreateSeacherRoutes(3, types.OsmosisDenomination, "ethereum", "juno", "juno")
-	mismatchedDenoms := types.CreateSeacherRoutes(3, types.OsmosisDenomination, "ethereum", types.AtomDenomination, types.OsmosisDenomination)
+	invalidArbDenoms := types.CreateSeacherRoutes(3, types.MokisisDenomination, "ethereum", "juno", "juno")
+	mismatchedDenoms := types.CreateSeacherRoutes(3, types.MokisisDenomination, "ethereum", types.AtomDenomination, types.MokisisDenomination)
 	cases := []struct {
 		description string
 		admin       string

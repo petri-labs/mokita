@@ -1,13 +1,13 @@
 package v12
 
 import (
-	"github.com/osmosis-labs/osmosis/v13/app/upgrades"
-	twaptypes "github.com/osmosis-labs/osmosis/v13/x/twap/types"
+	"github.com/petri-labs/mokita/app/upgrades"
+	twaptypes "github.com/petri-labs/mokita/x/twap/types"
 
 	store "github.com/cosmos/cosmos-sdk/store/types"
 )
 
-// UpgradeName defines the on-chain upgrade name for the Osmosis v12 upgrade.
+// UpgradeName defines the on-chain upgrade name for the Mokisis v12 upgrade.
 const UpgradeName = "v12"
 
 var Upgrade = upgrades.Upgrade{

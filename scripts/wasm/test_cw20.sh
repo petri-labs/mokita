@@ -4,9 +4,9 @@
 CODE=1
 CHAIN_ID=wasm-2
 
-osmosisd keys add demo --keyring-backend test
-VAL=$(osmosisd keys show -a validator --keyring-backend test)
-DEMO=$(osmosisd keys show -a demo --keyring-backend test)
+mokitad keys add demo --keyring-backend test
+VAL=$(mokitad keys show -a validator --keyring-backend test)
+DEMO=$(mokitad keys show -a demo --keyring-backend test)
 
 # string interpolation in JSON blobs in bash just sucks... I usually use cosmjs for this, but that takes more setup to run.
 INIT=$(cat <<EOF
@@ -22,11 +22,11 @@ INIT=$(cat <<EOF
 EOF
 )
 
-osmosisd tx wasm instantiate $CODE "$INIT" --label "First Coin" --no-admin --from validator \
+mokitad tx wasm instantiate $CODE "$INIT" --label "First Coin" --no-admin --from validator \
     --keyring-backend test --chain-id $CHAIN_ID -y -b block --gas 500000 --gas-prices 0.025stake
 
 # Ideally we could parse the results of above, this will always be the address of the first contract with code id 1
-CONTRACT=osmo14hj2tavq8fpesdwxxcu44rty3hh90vhujrvcmstl4zr3txmfvw9sq2r9g9
+CONTRACT=moki14hj2tavq8fpesdwxxcu44rty3hh90vhujrvcmstl4zr3txmfvw9sq2r9g9
 
 QUERY=$(cat <<EOF
 { "balance": { "address": "$VAL" }}
@@ -39,9 +39,9 @@ EOF
 
 # check initial balance
 echo "Validator Balance:"
-osmosisd query wasm contract-state smart $CONTRACT "$QUERY"
+mokitad query wasm contract-state smart $CONTRACT "$QUERY"
 echo "Demo Balance:"
-osmosisd query wasm contract-state smart $CONTRACT "$QUERY_DEMO"
+mokitad query wasm contract-state smart $CONTRACT "$QUERY_DEMO"
 
 # send some tokens
 TRANSFER=$(cat <<EOF
@@ -53,11 +53,11 @@ TRANSFER=$(cat <<EOF
 }
 EOF
 )
-osmosisd tx wasm execute $CONTRACT "$TRANSFER" --from validator --keyring-backend test \
+mokitad tx wasm execute $CONTRACT "$TRANSFER" --from validator --keyring-backend test \
     --chain-id $CHAIN_ID -y -b block --gas 500000 --gas-prices 0.025stake
 
 # check final balance
 echo "Validator Balance:"
-osmosisd query wasm contract-state smart $CONTRACT "$QUERY"
+mokitad query wasm contract-state smart $CONTRACT "$QUERY"
 echo "Demo Balance:"
-osmosisd query wasm contract-state smart $CONTRACT "$QUERY_DEMO"
+mokitad query wasm contract-state smart $CONTRACT "$QUERY_DEMO"

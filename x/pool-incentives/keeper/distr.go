@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"sort"
 
-	"github.com/osmosis-labs/osmosis/osmoutils"
-	"github.com/osmosis-labs/osmosis/v13/x/pool-incentives/types"
+	"github.com/petri-labs/mokita/mokiutils"
+	"github.com/petri-labs/mokita/x/pool-incentives/types"
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
@@ -70,13 +70,13 @@ func (k Keeper) AllocateAsset(ctx sdk.Context) error {
 func (k Keeper) GetDistrInfo(ctx sdk.Context) types.DistrInfo {
 	store := ctx.KVStore(k.storeKey)
 	distrInfo := types.DistrInfo{}
-	osmoutils.MustGet(store, types.DistrInfoKey, &distrInfo)
+	mokiutils.MustGet(store, types.DistrInfoKey, &distrInfo)
 	return distrInfo
 }
 
 func (k Keeper) SetDistrInfo(ctx sdk.Context, distrInfo types.DistrInfo) {
 	store := ctx.KVStore(k.storeKey)
-	osmoutils.MustSet(store, types.DistrInfoKey, &distrInfo)
+	mokiutils.MustSet(store, types.DistrInfoKey, &distrInfo)
 }
 
 // validateRecords validates a list of records to ensure that:

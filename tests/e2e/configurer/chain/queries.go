@@ -18,10 +18,10 @@ import (
 	"github.com/stretchr/testify/require"
 	tmabcitypes "github.com/tendermint/tendermint/abci/types"
 
-	"github.com/osmosis-labs/osmosis/v13/tests/e2e/util"
-	epochstypes "github.com/osmosis-labs/osmosis/v13/x/epochs/types"
-	superfluidtypes "github.com/osmosis-labs/osmosis/v13/x/superfluid/types"
-	twapqueryproto "github.com/osmosis-labs/osmosis/v13/x/twap/client/queryproto"
+	"github.com/petri-labs/mokita/tests/e2e/util"
+	epochstypes "github.com/petri-labs/mokita/x/epochs/types"
+	superfluidtypes "github.com/petri-labs/mokita/x/superfluid/types"
+	twapqueryproto "github.com/petri-labs/mokita/x/twap/client/queryproto"
 )
 
 func (n *NodeConfig) QueryGRPCGateway(path string, parameters ...string) ([]byte, error) {
@@ -162,7 +162,7 @@ func (n *NodeConfig) QueryIntermediaryAccount(denom string, valAddr string) (int
 }
 
 func (n *NodeConfig) QueryCurrentEpoch(identifier string) int64 {
-	path := "osmosis/epochs/v1beta1/current_epoch"
+	path := "mokita/epochs/v1beta1/current_epoch"
 
 	bz, err := n.QueryGRPCGateway(path, "identifier", identifier)
 	require.NoError(n.t, err)
@@ -174,7 +174,7 @@ func (n *NodeConfig) QueryCurrentEpoch(identifier string) int64 {
 }
 
 func (n *NodeConfig) QueryArithmeticTwapToNow(poolId uint64, baseAsset, quoteAsset string, startTime time.Time) (sdk.Dec, error) {
-	path := "osmosis/twap/v1beta1/ArithmeticTwapToNow"
+	path := "mokita/twap/v1beta1/ArithmeticTwapToNow"
 
 	bz, err := n.QueryGRPCGateway(
 		path,
@@ -194,7 +194,7 @@ func (n *NodeConfig) QueryArithmeticTwapToNow(poolId uint64, baseAsset, quoteAss
 }
 
 func (n *NodeConfig) QueryArithmeticTwap(poolId uint64, baseAsset, quoteAsset string, startTime time.Time, endTime time.Time) (sdk.Dec, error) {
-	path := "osmosis/twap/v1beta1/ArithmeticTwap"
+	path := "mokita/twap/v1beta1/ArithmeticTwap"
 
 	bz, err := n.QueryGRPCGateway(
 		path,
@@ -215,7 +215,7 @@ func (n *NodeConfig) QueryArithmeticTwap(poolId uint64, baseAsset, quoteAsset st
 }
 
 func (n *NodeConfig) QueryGeometricTwapToNow(poolId uint64, baseAsset, quoteAsset string, startTime time.Time) (sdk.Dec, error) {
-	path := "osmosis/twap/v1beta1/GeometricTwapToNow"
+	path := "mokita/twap/v1beta1/GeometricTwapToNow"
 
 	bz, err := n.QueryGRPCGateway(
 		path,
@@ -235,7 +235,7 @@ func (n *NodeConfig) QueryGeometricTwapToNow(poolId uint64, baseAsset, quoteAsse
 }
 
 func (n *NodeConfig) QueryGeometricTwap(poolId uint64, baseAsset, quoteAsset string, startTime time.Time, endTime time.Time) (sdk.Dec, error) {
-	path := "osmosis/twap/v1beta1/GeometricTwap"
+	path := "mokita/twap/v1beta1/GeometricTwap"
 
 	bz, err := n.QueryGRPCGateway(
 		path,

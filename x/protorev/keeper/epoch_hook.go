@@ -3,8 +3,8 @@ package keeper
 import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 
-	epochstypes "github.com/osmosis-labs/osmosis/v13/x/epochs/types"
-	"github.com/osmosis-labs/osmosis/v13/x/protorev/types"
+	epochstypes "github.com/petri-labs/mokita/x/epochs/types"
+	"github.com/petri-labs/mokita/x/protorev/types"
 )
 
 type EpochHooks struct {
@@ -43,17 +43,17 @@ func (h EpochHooks) AfterEpochEnd(ctx sdk.Context, epochIdentifier string, epoch
 func (k Keeper) UpdatePools(ctx sdk.Context) error {
 	// Reset the pools in the store
 	k.DeleteAllAtomPools(ctx)
-	k.DeleteAllOsmoPools(ctx)
+	k.DeleteAllMokiPools(ctx)
 
 	// Get the highest liquidity pools
-	osmoPools, atomPools, err := k.GetHighestLiquidityPools(ctx)
+	mokiPools, atomPools, err := k.GetHighestLiquidityPools(ctx)
 	if err != nil {
 		return err
 	}
 
 	// Update the pools in the store
-	for token, poolInfo := range osmoPools {
-		k.SetOsmoPool(ctx, token, poolInfo.PoolId)
+	for token, poolInfo := range mokiPools {
+		k.SetMokiPool(ctx, token, poolInfo.PoolId)
 	}
 	for token, poolInfo := range atomPools {
 		k.SetAtomPool(ctx, token, poolInfo.PoolId)
@@ -62,8 +62,8 @@ func (k Keeper) UpdatePools(ctx sdk.Context) error {
 	return nil
 }
 
-// GetHighestLiquidityPools returns the highest liquidity pools for pools that have Osmo or Atom
-// and Osmo/Atom
+// GetHighestLiquidityPools returns the highest liquidity pools for pools that have Moki or Atom
+// and Moki/Atom
 func (k Keeper) GetHighestLiquidityPools(ctx sdk.Context) (map[string]LiquidityPoolStruct, map[string]LiquidityPoolStruct, error) {
 	// Get all pools
 	pools, err := k.gammKeeper.GetPoolsAndPoke(ctx)
@@ -71,7 +71,7 @@ func (k Keeper) GetHighestLiquidityPools(ctx sdk.Context) (map[string]LiquidityP
 		return nil, nil, err
 	}
 
-	osmoPools := make(map[string]LiquidityPoolStruct)
+	mokiPools := make(map[string]LiquidityPoolStruct)
 	atomPools := make(map[string]LiquidityPoolStruct)
 
 	// Iterate through all pools and find valid matches
@@ -88,22 +88,22 @@ func (k Keeper) GetHighestLiquidityPools(ctx sdk.Context) (map[string]LiquidityP
 				Liquidity: tokenA.Amount.Mul(tokenB.Amount),
 			}
 
-			// Check if there is a match with osmo
-			if otherDenom, match := types.CheckOsmoAtomDenomMatch(tokenA.Denom, tokenB.Denom, types.OsmosisDenomination); match {
-				k.updateHighestLiquidityPool(otherDenom, osmoPools, newPool)
+			// Check if there is a match with moki
+			if otherDenom, match := types.CheckMokiAtomDenomMatch(tokenA.Denom, tokenB.Denom, types.MokisisDenomination); match {
+				k.updateHighestLiquidityPool(otherDenom, mokiPools, newPool)
 			}
 
 			// Check if there is a match with atom
-			if otherDenom, match := types.CheckOsmoAtomDenomMatch(tokenA.Denom, tokenB.Denom, types.AtomDenomination); match {
+			if otherDenom, match := types.CheckMokiAtomDenomMatch(tokenA.Denom, tokenB.Denom, types.AtomDenomination); match {
 				k.updateHighestLiquidityPool(otherDenom, atomPools, newPool)
 			}
 		}
 	}
 
-	return osmoPools, atomPools, nil
+	return mokiPools, atomPools, nil
 }
 
-// updateHighestLiquidityPool updates the pool with the highest liquidity for either osmo or atom
+// updateHighestLiquidityPool updates the pool with the highest liquidity for either moki or atom
 func (k Keeper) updateHighestLiquidityPool(denom string, pool map[string]LiquidityPoolStruct, newPool LiquidityPoolStruct) {
 	if currPool, ok := pool[denom]; !ok {
 		pool[denom] = newPool

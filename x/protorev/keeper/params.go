@@ -3,7 +3,7 @@ package keeper
 import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 
-	"github.com/osmosis-labs/osmosis/v13/x/protorev/types"
+	"github.com/petri-labs/mokita/x/protorev/types"
 )
 
 // GetParams get all parameters as types.Params

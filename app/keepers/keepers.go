@@ -34,15 +34,15 @@ import (
 	upgradekeeper "github.com/cosmos/cosmos-sdk/x/upgrade/keeper"
 	upgradetypes "github.com/cosmos/cosmos-sdk/x/upgrade/types"
 
-	downtimedetector "github.com/osmosis-labs/osmosis/v13/x/downtime-detector"
-	downtimetypes "github.com/osmosis-labs/osmosis/v13/x/downtime-detector/types"
-	ibcratelimit "github.com/osmosis-labs/osmosis/v13/x/ibc-rate-limit"
-	ibcratelimittypes "github.com/osmosis-labs/osmosis/v13/x/ibc-rate-limit/types"
-	"github.com/osmosis-labs/osmosis/v13/x/swaprouter"
-	swaproutertypes "github.com/osmosis-labs/osmosis/v13/x/swaprouter/types"
-	ibchooks "github.com/osmosis-labs/osmosis/x/ibc-hooks"
-	ibchookskeeper "github.com/osmosis-labs/osmosis/x/ibc-hooks/keeper"
-	ibchookstypes "github.com/osmosis-labs/osmosis/x/ibc-hooks/types"
+	downtimedetector "github.com/petri-labs/mokita/x/downtime-detector"
+	downtimetypes "github.com/petri-labs/mokita/x/downtime-detector/types"
+	ibcratelimit "github.com/petri-labs/mokita/x/ibc-rate-limit"
+	ibcratelimittypes "github.com/petri-labs/mokita/x/ibc-rate-limit/types"
+	"github.com/petri-labs/mokita/x/swaprouter"
+	swaproutertypes "github.com/petri-labs/mokita/x/swaprouter/types"
+	ibchooks "github.com/petri-labs/mokita/x/ibc-hooks"
+	ibchookskeeper "github.com/petri-labs/mokita/x/ibc-hooks/keeper"
+	ibchookstypes "github.com/petri-labs/mokita/x/ibc-hooks/types"
 
 	icahost "github.com/cosmos/ibc-go/v4/modules/apps/27-interchain-accounts/host"
 	icahostkeeper "github.com/cosmos/ibc-go/v4/modules/apps/27-interchain-accounts/host/keeper"
@@ -58,37 +58,37 @@ import (
 	// IBC Transfer: Defines the "transfer" IBC port
 	transfer "github.com/cosmos/ibc-go/v4/modules/apps/transfer"
 
-	_ "github.com/osmosis-labs/osmosis/v13/client/docs/statik"
-	owasm "github.com/osmosis-labs/osmosis/v13/wasmbinding"
-	concentratedliquidity "github.com/osmosis-labs/osmosis/v13/x/concentrated-liquidity"
-	concentratedliquiditytypes "github.com/osmosis-labs/osmosis/v13/x/concentrated-liquidity/types"
-	epochskeeper "github.com/osmosis-labs/osmosis/v13/x/epochs/keeper"
-	epochstypes "github.com/osmosis-labs/osmosis/v13/x/epochs/types"
-	gammkeeper "github.com/osmosis-labs/osmosis/v13/x/gamm/keeper"
-	gammtypes "github.com/osmosis-labs/osmosis/v13/x/gamm/types"
-	incentiveskeeper "github.com/osmosis-labs/osmosis/v13/x/incentives/keeper"
-	incentivestypes "github.com/osmosis-labs/osmosis/v13/x/incentives/types"
-	lockupkeeper "github.com/osmosis-labs/osmosis/v13/x/lockup/keeper"
-	lockuptypes "github.com/osmosis-labs/osmosis/v13/x/lockup/types"
-	mintkeeper "github.com/osmosis-labs/osmosis/v13/x/mint/keeper"
-	minttypes "github.com/osmosis-labs/osmosis/v13/x/mint/types"
-	poolincentives "github.com/osmosis-labs/osmosis/v13/x/pool-incentives"
-	poolincentiveskeeper "github.com/osmosis-labs/osmosis/v13/x/pool-incentives/keeper"
-	poolincentivestypes "github.com/osmosis-labs/osmosis/v13/x/pool-incentives/types"
-	protorevkeeper "github.com/osmosis-labs/osmosis/v13/x/protorev/keeper"
-	protorevtypes "github.com/osmosis-labs/osmosis/v13/x/protorev/types"
-	"github.com/osmosis-labs/osmosis/v13/x/superfluid"
-	superfluidkeeper "github.com/osmosis-labs/osmosis/v13/x/superfluid/keeper"
-	superfluidtypes "github.com/osmosis-labs/osmosis/v13/x/superfluid/types"
-	tokenfactorykeeper "github.com/osmosis-labs/osmosis/v13/x/tokenfactory/keeper"
-	tokenfactorytypes "github.com/osmosis-labs/osmosis/v13/x/tokenfactory/types"
-	"github.com/osmosis-labs/osmosis/v13/x/twap"
-	twaptypes "github.com/osmosis-labs/osmosis/v13/x/twap/types"
-	"github.com/osmosis-labs/osmosis/v13/x/txfees"
-	txfeeskeeper "github.com/osmosis-labs/osmosis/v13/x/txfees/keeper"
-	txfeestypes "github.com/osmosis-labs/osmosis/v13/x/txfees/types"
-	valsetpref "github.com/osmosis-labs/osmosis/v13/x/valset-pref"
-	valsetpreftypes "github.com/osmosis-labs/osmosis/v13/x/valset-pref/types"
+	_ "github.com/petri-labs/mokita/client/docs/statik"
+	owasm "github.com/petri-labs/mokita/wasmbinding"
+	concentratedliquidity "github.com/petri-labs/mokita/x/concentrated-liquidity"
+	concentratedliquiditytypes "github.com/petri-labs/mokita/x/concentrated-liquidity/types"
+	epochskeeper "github.com/petri-labs/mokita/x/epochs/keeper"
+	epochstypes "github.com/petri-labs/mokita/x/epochs/types"
+	gammkeeper "github.com/petri-labs/mokita/x/gamm/keeper"
+	gammtypes "github.com/petri-labs/mokita/x/gamm/types"
+	incentiveskeeper "github.com/petri-labs/mokita/x/incentives/keeper"
+	incentivestypes "github.com/petri-labs/mokita/x/incentives/types"
+	lockupkeeper "github.com/petri-labs/mokita/x/lockup/keeper"
+	lockuptypes "github.com/petri-labs/mokita/x/lockup/types"
+	mintkeeper "github.com/petri-labs/mokita/x/mint/keeper"
+	minttypes "github.com/petri-labs/mokita/x/mint/types"
+	poolincentives "github.com/petri-labs/mokita/x/pool-incentives"
+	poolincentiveskeeper "github.com/petri-labs/mokita/x/pool-incentives/keeper"
+	poolincentivestypes "github.com/petri-labs/mokita/x/pool-incentives/types"
+	protorevkeeper "github.com/petri-labs/mokita/x/protorev/keeper"
+	protorevtypes "github.com/petri-labs/mokita/x/protorev/types"
+	"github.com/petri-labs/mokita/x/superfluid"
+	superfluidkeeper "github.com/petri-labs/mokita/x/superfluid/keeper"
+	superfluidtypes "github.com/petri-labs/mokita/x/superfluid/types"
+	tokenfactorykeeper "github.com/petri-labs/mokita/x/tokenfactory/keeper"
+	tokenfactorytypes "github.com/petri-labs/mokita/x/tokenfactory/types"
+	"github.com/petri-labs/mokita/x/twap"
+	twaptypes "github.com/petri-labs/mokita/x/twap/types"
+	"github.com/petri-labs/mokita/x/txfees"
+	txfeeskeeper "github.com/petri-labs/mokita/x/txfees/keeper"
+	txfeestypes "github.com/petri-labs/mokita/x/txfees/types"
+	valsetpref "github.com/petri-labs/mokita/x/valset-pref"
+	valsetpreftypes "github.com/petri-labs/mokita/x/valset-pref/types"
 )
 
 type AppKeepers struct {
@@ -380,7 +380,7 @@ func (appKeepers *AppKeepers) InitNormalKeepers(
 
 	// The last arguments can contain custom message handlers, and custom query handlers,
 	// if we want to allow any custom callbacks
-	supportedFeatures := "iterator,staking,stargate,osmosis,cosmwasm_1_1"
+	supportedFeatures := "iterator,staking,stargate,mokita,cosmwasm_1_1"
 
 	wasmOpts = append(owasm.RegisterCustomPlugins(appKeepers.BankKeeper, appKeepers.TokenFactoryKeeper), wasmOpts...)
 	wasmOpts = append(owasm.RegisterStargateQueries(*bApp.GRPCQueryRouter(), appCodec), wasmOpts...)
@@ -453,8 +453,8 @@ func (appKeepers *AppKeepers) WireICS20PreWasmKeeper(
 	bApp *baseapp.BaseApp,
 	hooksKeeper *ibchookskeeper.Keeper) {
 	// Setup the ICS4Wrapper used by the hooks middleware
-	osmoPrefix := sdk.GetConfig().GetBech32AccountAddrPrefix()
-	wasmHooks := ibchooks.NewWasmHooks(hooksKeeper, nil, osmoPrefix) // The contract keeper needs to be set later
+	mokiPrefix := sdk.GetConfig().GetBech32AccountAddrPrefix()
+	wasmHooks := ibchooks.NewWasmHooks(hooksKeeper, nil, mokiPrefix) // The contract keeper needs to be set later
 	appKeepers.Ics20WasmHooks = &wasmHooks
 	appKeepers.HooksICS4Wrapper = ibchooks.NewICS4Middleware(
 		appKeepers.IBCKeeper.ChannelKeeper,

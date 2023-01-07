@@ -5,17 +5,17 @@ import (
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 
-	cl "github.com/osmosis-labs/osmosis/v13/x/concentrated-liquidity"
-	clmodel "github.com/osmosis-labs/osmosis/v13/x/concentrated-liquidity/model"
-	"github.com/osmosis-labs/osmosis/v13/x/concentrated-liquidity/types"
-	swaproutertypes "github.com/osmosis-labs/osmosis/v13/x/swaprouter/types"
+	cl "github.com/petri-labs/mokita/x/concentrated-liquidity"
+	clmodel "github.com/petri-labs/mokita/x/concentrated-liquidity/model"
+	"github.com/petri-labs/mokita/x/concentrated-liquidity/types"
+	swaproutertypes "github.com/petri-labs/mokita/x/swaprouter/types"
 )
 
 func (s *KeeperTestSuite) TestOrderInitialPoolDenoms() {
-	denom0, denom1, err := types.OrderInitialPoolDenoms("axel", "osmo")
+	denom0, denom1, err := types.OrderInitialPoolDenoms("axel", "moki")
 	s.Require().NoError(err)
 	s.Require().Equal(denom0, "axel")
-	s.Require().Equal(denom1, "osmo")
+	s.Require().Equal(denom1, "moki")
 
 	denom0, denom1, err = types.OrderInitialPoolDenoms("usdc", "eth")
 	s.Require().NoError(err)

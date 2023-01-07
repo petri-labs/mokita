@@ -13,19 +13,19 @@ import (
 	slashingtypes "github.com/cosmos/cosmos-sdk/x/slashing/types"
 	stakingtypes "github.com/cosmos/cosmos-sdk/x/staking/types"
 
-	downtimequerytypes "github.com/osmosis-labs/osmosis/v13/x/downtime-detector/client/queryproto"
-	epochtypes "github.com/osmosis-labs/osmosis/v13/x/epochs/types"
-	gammtypes "github.com/osmosis-labs/osmosis/v13/x/gamm/types"
-	gammv2types "github.com/osmosis-labs/osmosis/v13/x/gamm/v2types"
-	incentivestypes "github.com/osmosis-labs/osmosis/v13/x/incentives/types"
-	lockuptypes "github.com/osmosis-labs/osmosis/v13/x/lockup/types"
-	minttypes "github.com/osmosis-labs/osmosis/v13/x/mint/types"
-	poolincentivestypes "github.com/osmosis-labs/osmosis/v13/x/pool-incentives/types"
-	superfluidtypes "github.com/osmosis-labs/osmosis/v13/x/superfluid/types"
-	swaprouterqueryproto "github.com/osmosis-labs/osmosis/v13/x/swaprouter/client/queryproto"
-	tokenfactorytypes "github.com/osmosis-labs/osmosis/v13/x/tokenfactory/types"
-	twapquerytypes "github.com/osmosis-labs/osmosis/v13/x/twap/client/queryproto"
-	txfeestypes "github.com/osmosis-labs/osmosis/v13/x/txfees/types"
+	downtimequerytypes "github.com/petri-labs/mokita/x/downtime-detector/client/queryproto"
+	epochtypes "github.com/petri-labs/mokita/x/epochs/types"
+	gammtypes "github.com/petri-labs/mokita/x/gamm/types"
+	gammv2types "github.com/petri-labs/mokita/x/gamm/v2types"
+	incentivestypes "github.com/petri-labs/mokita/x/incentives/types"
+	lockuptypes "github.com/petri-labs/mokita/x/lockup/types"
+	minttypes "github.com/petri-labs/mokita/x/mint/types"
+	poolincentivestypes "github.com/petri-labs/mokita/x/pool-incentives/types"
+	superfluidtypes "github.com/petri-labs/mokita/x/superfluid/types"
+	swaprouterqueryproto "github.com/petri-labs/mokita/x/swaprouter/client/queryproto"
+	tokenfactorytypes "github.com/petri-labs/mokita/x/tokenfactory/types"
+	twapquerytypes "github.com/petri-labs/mokita/x/twap/client/queryproto"
+	txfeestypes "github.com/petri-labs/mokita/x/txfees/types"
 )
 
 // stargateWhitelist keeps whitelist and its deterministic
@@ -68,76 +68,76 @@ func init() {
 	setWhitelistedQuery("/cosmos.staking.v1beta1.Query/Params", &stakingtypes.QueryParamsResponse{})
 	setWhitelistedQuery("/cosmos.staking.v1beta1.Query/Validator", &stakingtypes.QueryValidatorResponse{})
 
-	// osmosis queries
+	// mokita queries
 
 	// epochs
-	setWhitelistedQuery("/osmosis.epochs.v1beta1.Query/EpochInfos", &epochtypes.QueryEpochsInfoResponse{})
-	setWhitelistedQuery("/osmosis.epochs.v1beta1.Query/CurrentEpoch", &epochtypes.QueryCurrentEpochResponse{})
+	setWhitelistedQuery("/mokita.epochs.v1beta1.Query/EpochInfos", &epochtypes.QueryEpochsInfoResponse{})
+	setWhitelistedQuery("/mokita.epochs.v1beta1.Query/CurrentEpoch", &epochtypes.QueryCurrentEpochResponse{})
 
 	// gamm
-	setWhitelistedQuery("/osmosis.gamm.v1beta1.Query/NumPools", &gammtypes.QueryNumPoolsResponse{})
-	setWhitelistedQuery("/osmosis.gamm.v1beta1.Query/TotalLiquidity", &gammtypes.QueryTotalLiquidityResponse{})
-	setWhitelistedQuery("/osmosis.gamm.v1beta1.Query/Pool", &gammtypes.QueryPoolResponse{})
-	setWhitelistedQuery("/osmosis.gamm.v1beta1.Query/PoolParams", &gammtypes.QueryPoolParamsResponse{})
-	setWhitelistedQuery("/osmosis.gamm.v1beta1.Query/TotalPoolLiquidity", &gammtypes.QueryTotalPoolLiquidityResponse{})
-	setWhitelistedQuery("/osmosis.gamm.v1beta1.Query/TotalShares", &gammtypes.QueryTotalSharesResponse{})
-	setWhitelistedQuery("/osmosis.gamm.v1beta1.Query/CalcJoinPoolShares", &gammtypes.QueryCalcJoinPoolSharesResponse{})
-	setWhitelistedQuery("/osmosis.gamm.v1beta1.Query/CalcExitPoolCoinsFromShares", &gammtypes.QueryCalcExitPoolCoinsFromSharesResponse{})
-	setWhitelistedQuery("/osmosis.gamm.v1beta1.Query/CalcJoinPoolNoSwapShares", &gammtypes.QueryCalcJoinPoolNoSwapSharesResponse{})
-	setWhitelistedQuery("/osmosis.gamm.v1beta1.Query/PoolType", &gammtypes.QueryPoolTypeResponse{})
-	setWhitelistedQuery("/osmosis.gamm.v2.Query/SpotPrice", &gammv2types.QuerySpotPriceResponse{})
-	setWhitelistedQuery("/osmosis.gamm.v1beta1.Query/EstimateSwapExactAmountIn", &gammtypes.QuerySwapExactAmountInResponse{})
-	setWhitelistedQuery("/osmosis.gamm.v1beta1.Query/EstimateSwapExactAmountOut", &gammtypes.QuerySwapExactAmountOutResponse{})
+	setWhitelistedQuery("/mokita.gamm.v1beta1.Query/NumPools", &gammtypes.QueryNumPoolsResponse{})
+	setWhitelistedQuery("/mokita.gamm.v1beta1.Query/TotalLiquidity", &gammtypes.QueryTotalLiquidityResponse{})
+	setWhitelistedQuery("/mokita.gamm.v1beta1.Query/Pool", &gammtypes.QueryPoolResponse{})
+	setWhitelistedQuery("/mokita.gamm.v1beta1.Query/PoolParams", &gammtypes.QueryPoolParamsResponse{})
+	setWhitelistedQuery("/mokita.gamm.v1beta1.Query/TotalPoolLiquidity", &gammtypes.QueryTotalPoolLiquidityResponse{})
+	setWhitelistedQuery("/mokita.gamm.v1beta1.Query/TotalShares", &gammtypes.QueryTotalSharesResponse{})
+	setWhitelistedQuery("/mokita.gamm.v1beta1.Query/CalcJoinPoolShares", &gammtypes.QueryCalcJoinPoolSharesResponse{})
+	setWhitelistedQuery("/mokita.gamm.v1beta1.Query/CalcExitPoolCoinsFromShares", &gammtypes.QueryCalcExitPoolCoinsFromSharesResponse{})
+	setWhitelistedQuery("/mokita.gamm.v1beta1.Query/CalcJoinPoolNoSwapShares", &gammtypes.QueryCalcJoinPoolNoSwapSharesResponse{})
+	setWhitelistedQuery("/mokita.gamm.v1beta1.Query/PoolType", &gammtypes.QueryPoolTypeResponse{})
+	setWhitelistedQuery("/mokita.gamm.v2.Query/SpotPrice", &gammv2types.QuerySpotPriceResponse{})
+	setWhitelistedQuery("/mokita.gamm.v1beta1.Query/EstimateSwapExactAmountIn", &gammtypes.QuerySwapExactAmountInResponse{})
+	setWhitelistedQuery("/mokita.gamm.v1beta1.Query/EstimateSwapExactAmountOut", &gammtypes.QuerySwapExactAmountOutResponse{})
 
 	// incentives
-	setWhitelistedQuery("/osmosis.incentives.Query/ModuleToDistributeCoins", &incentivestypes.ModuleToDistributeCoinsResponse{})
-	setWhitelistedQuery("/osmosis.incentives.Query/LockableDurations", &incentivestypes.QueryLockableDurationsResponse{})
+	setWhitelistedQuery("/mokita.incentives.Query/ModuleToDistributeCoins", &incentivestypes.ModuleToDistributeCoinsResponse{})
+	setWhitelistedQuery("/mokita.incentives.Query/LockableDurations", &incentivestypes.QueryLockableDurationsResponse{})
 
 	// lockup
-	setWhitelistedQuery("/osmosis.lockup.Query/ModuleBalance", &lockuptypes.ModuleBalanceResponse{})
-	setWhitelistedQuery("/osmosis.lockup.Query/ModuleLockedAmount", &lockuptypes.ModuleLockedAmountResponse{})
-	setWhitelistedQuery("/osmosis.lockup.Query/AccountUnlockableCoins", &lockuptypes.AccountUnlockableCoinsResponse{})
-	setWhitelistedQuery("/osmosis.lockup.Query/AccountUnlockingCoins", &lockuptypes.AccountUnlockingCoinsResponse{})
-	setWhitelistedQuery("/osmosis.lockup.Query/LockedDenom", &lockuptypes.LockedDenomResponse{})
+	setWhitelistedQuery("/mokita.lockup.Query/ModuleBalance", &lockuptypes.ModuleBalanceResponse{})
+	setWhitelistedQuery("/mokita.lockup.Query/ModuleLockedAmount", &lockuptypes.ModuleLockedAmountResponse{})
+	setWhitelistedQuery("/mokita.lockup.Query/AccountUnlockableCoins", &lockuptypes.AccountUnlockableCoinsResponse{})
+	setWhitelistedQuery("/mokita.lockup.Query/AccountUnlockingCoins", &lockuptypes.AccountUnlockingCoinsResponse{})
+	setWhitelistedQuery("/mokita.lockup.Query/LockedDenom", &lockuptypes.LockedDenomResponse{})
 
 	// mint
-	setWhitelistedQuery("/osmosis.mint.v1beta1.Query/EpochProvisions", &minttypes.QueryEpochProvisionsResponse{})
-	setWhitelistedQuery("/osmosis.mint.v1beta1.Query/Params", &minttypes.QueryParamsResponse{})
+	setWhitelistedQuery("/mokita.mint.v1beta1.Query/EpochProvisions", &minttypes.QueryEpochProvisionsResponse{})
+	setWhitelistedQuery("/mokita.mint.v1beta1.Query/Params", &minttypes.QueryParamsResponse{})
 
 	// pool-incentives
-	setWhitelistedQuery("/osmosis.poolincentives.v1beta1.Query/GaugeIds", &poolincentivestypes.QueryGaugeIdsResponse{})
+	setWhitelistedQuery("/mokita.poolincentives.v1beta1.Query/GaugeIds", &poolincentivestypes.QueryGaugeIdsResponse{})
 
 	// superfluid
-	setWhitelistedQuery("/osmosis.superfluid.Query/Params", &superfluidtypes.QueryParamsResponse{})
-	setWhitelistedQuery("/osmosis.superfluid.Query/AssetType", &superfluidtypes.AssetTypeResponse{})
-	setWhitelistedQuery("/osmosis.superfluid.Query/AllAssets", &superfluidtypes.AllAssetsResponse{})
-	setWhitelistedQuery("/osmosis.superfluid.Query/AssetMultiplier", &superfluidtypes.AssetMultiplierResponse{})
+	setWhitelistedQuery("/mokita.superfluid.Query/Params", &superfluidtypes.QueryParamsResponse{})
+	setWhitelistedQuery("/mokita.superfluid.Query/AssetType", &superfluidtypes.AssetTypeResponse{})
+	setWhitelistedQuery("/mokita.superfluid.Query/AllAssets", &superfluidtypes.AllAssetsResponse{})
+	setWhitelistedQuery("/mokita.superfluid.Query/AssetMultiplier", &superfluidtypes.AssetMultiplierResponse{})
 
 	// swaprouter
-	setWhitelistedQuery("/osmosis.swaprouter.v1beta1.Query/NumPools", &swaprouterqueryproto.NumPoolsResponse{})
-	setWhitelistedQuery("/osmosis.swaprouter.v1beta1.Query/EstimateSwapExactAmountIn", &swaprouterqueryproto.EstimateSwapExactAmountInResponse{})
-	setWhitelistedQuery("/osmosis.swaprouter.v1beta1.Query/EstimateSwapExactAmountOut", &swaprouterqueryproto.EstimateSwapExactAmountOutRequest{})
+	setWhitelistedQuery("/mokita.swaprouter.v1beta1.Query/NumPools", &swaprouterqueryproto.NumPoolsResponse{})
+	setWhitelistedQuery("/mokita.swaprouter.v1beta1.Query/EstimateSwapExactAmountIn", &swaprouterqueryproto.EstimateSwapExactAmountInResponse{})
+	setWhitelistedQuery("/mokita.swaprouter.v1beta1.Query/EstimateSwapExactAmountOut", &swaprouterqueryproto.EstimateSwapExactAmountOutRequest{})
 
 	// txfees
-	setWhitelistedQuery("/osmosis.txfees.v1beta1.Query/FeeTokens", &txfeestypes.QueryFeeTokensResponse{})
-	setWhitelistedQuery("/osmosis.txfees.v1beta1.Query/DenomSpotPrice", &txfeestypes.QueryDenomSpotPriceResponse{})
-	setWhitelistedQuery("/osmosis.txfees.v1beta1.Query/DenomPoolId", &txfeestypes.QueryDenomPoolIdResponse{})
-	setWhitelistedQuery("/osmosis.txfees.v1beta1.Query/BaseDenom", &txfeestypes.QueryBaseDenomResponse{})
+	setWhitelistedQuery("/mokita.txfees.v1beta1.Query/FeeTokens", &txfeestypes.QueryFeeTokensResponse{})
+	setWhitelistedQuery("/mokita.txfees.v1beta1.Query/DenomSpotPrice", &txfeestypes.QueryDenomSpotPriceResponse{})
+	setWhitelistedQuery("/mokita.txfees.v1beta1.Query/DenomPoolId", &txfeestypes.QueryDenomPoolIdResponse{})
+	setWhitelistedQuery("/mokita.txfees.v1beta1.Query/BaseDenom", &txfeestypes.QueryBaseDenomResponse{})
 
 	// tokenfactory
-	setWhitelistedQuery("/osmosis.tokenfactory.v1beta1.Query/params", &tokenfactorytypes.QueryParamsResponse{})
-	setWhitelistedQuery("/osmosis.tokenfactory.v1beta1.Query/DenomAuthorityMetadata", &tokenfactorytypes.QueryDenomAuthorityMetadataResponse{})
+	setWhitelistedQuery("/mokita.tokenfactory.v1beta1.Query/params", &tokenfactorytypes.QueryParamsResponse{})
+	setWhitelistedQuery("/mokita.tokenfactory.v1beta1.Query/DenomAuthorityMetadata", &tokenfactorytypes.QueryDenomAuthorityMetadataResponse{})
 	// Does not include denoms_from_creator, TBD if this is the index we want contracts to use instead of admin
 
 	// twap
-	setWhitelistedQuery("/osmosis.twap.v1beta1.Query/ArithmeticTwap", &twapquerytypes.ArithmeticTwapResponse{})
-	setWhitelistedQuery("/osmosis.twap.v1beta1.Query/ArithmeticTwapToNow", &twapquerytypes.ArithmeticTwapToNowResponse{})
-	setWhitelistedQuery("/osmosis.twap.v1beta1.Query/GeometricTwap", &twapquerytypes.GeometricTwapResponse{})
-	setWhitelistedQuery("/osmosis.twap.v1beta1.Query/GeometricTwapToNow", &twapquerytypes.GeometricTwapToNowResponse{})
-	setWhitelistedQuery("/osmosis.twap.v1beta1.Query/Params", &twapquerytypes.ParamsResponse{})
+	setWhitelistedQuery("/mokita.twap.v1beta1.Query/ArithmeticTwap", &twapquerytypes.ArithmeticTwapResponse{})
+	setWhitelistedQuery("/mokita.twap.v1beta1.Query/ArithmeticTwapToNow", &twapquerytypes.ArithmeticTwapToNowResponse{})
+	setWhitelistedQuery("/mokita.twap.v1beta1.Query/GeometricTwap", &twapquerytypes.GeometricTwapResponse{})
+	setWhitelistedQuery("/mokita.twap.v1beta1.Query/GeometricTwapToNow", &twapquerytypes.GeometricTwapToNowResponse{})
+	setWhitelistedQuery("/mokita.twap.v1beta1.Query/Params", &twapquerytypes.ParamsResponse{})
 
 	// downtime-detector
-	setWhitelistedQuery("/osmosis.downtimedetector.v1beta1.Query/RecoveredSinceDowntimeOfLength", &downtimequerytypes.RecoveredSinceDowntimeOfLengthResponse{})
+	setWhitelistedQuery("/mokita.downtimedetector.v1beta1.Query/RecoveredSinceDowntimeOfLength", &downtimequerytypes.RecoveredSinceDowntimeOfLengthResponse{})
 }
 
 // GetWhitelistedQuery returns the whitelisted query at the provided path.

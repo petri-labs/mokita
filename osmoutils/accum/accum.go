@@ -7,7 +7,7 @@ import (
 	"github.com/cosmos/cosmos-sdk/store"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 
-	"github.com/osmosis-labs/osmosis/osmoutils"
+	"github.com/petri-labs/mokita/mokiutils"
 )
 
 // We keep this object as a way to interface with the methods, even though
@@ -45,7 +45,7 @@ func MakeAccumulator(accumStore store.KVStore, accumName string) error {
 // Gets the current value of the accumulator corresponding to accumName in accumStore
 func GetAccumulator(accumStore store.KVStore, accumName string) (AccumulatorObject, error) {
 	accumContent := AccumulatorContent{}
-	found, err := osmoutils.Get(accumStore, formatAccumPrefixKey(accumName), &accumContent)
+	found, err := mokiutils.Get(accumStore, formatAccumPrefixKey(accumName), &accumContent)
 	if err != nil {
 		return AccumulatorObject{}, err
 	}
@@ -60,7 +60,7 @@ func GetAccumulator(accumStore store.KVStore, accumName string) (AccumulatorObje
 
 func setAccumulator(accum AccumulatorObject, amt sdk.DecCoins) {
 	newAccum := AccumulatorContent{amt}
-	osmoutils.MustSet(accum.store, formatAccumPrefixKey(accum.name), &newAccum)
+	mokiutils.MustSet(accum.store, formatAccumPrefixKey(accum.name), &newAccum)
 }
 
 // UpdateAccumulator updates the accumulator's value by amt.

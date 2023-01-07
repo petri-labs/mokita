@@ -3,9 +3,9 @@ package v8
 import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 
-	"github.com/osmosis-labs/osmosis/osmoutils"
-	poolincentiveskeeper "github.com/osmosis-labs/osmosis/v13/x/pool-incentives/keeper"
-	poolincentivestypes "github.com/osmosis-labs/osmosis/v13/x/pool-incentives/types"
+	"github.com/petri-labs/mokita/mokiutils"
+	poolincentiveskeeper "github.com/petri-labs/mokita/x/pool-incentives/keeper"
+	poolincentivestypes "github.com/petri-labs/mokita/x/pool-incentives/types"
 )
 
 // This file implements logic for accelerated incentive proposals.
@@ -14,12 +14,12 @@ import (
 // executing the equivalent result of the "UpdatePoolIncentives" proposals, inside of this upgrade logic.
 func applyPoolIncentivesUpdate(ctx sdk.Context, poolincentiveskeeper *poolincentiveskeeper.Keeper, records []poolincentivestypes.DistrRecord) {
 	// Notice that the pool incentives update proposal code, just calls UpdateDistrRecords:
-	// https://github.com/osmosis-labs/osmosis/blob/v7.3.0/x/pool-incentives/keeper/gov.go#L13-L15
+	// https://github.com/petri-labs/mokita/blob/v7.3.0/x/pool-incentives/keeper/gov.go#L13-L15
 	// And that p.Records is the field output by the gov queries.
 
 	// If error, undo state update, log, and proceed. We don't want to stop the entire upgrade due to
 	// an unexpected error here.
-	_ = osmoutils.ApplyFuncIfNoError(ctx, func(wrappedCtx sdk.Context) error {
+	_ = mokiutils.ApplyFuncIfNoError(ctx, func(wrappedCtx sdk.Context) error {
 		err := poolincentiveskeeper.UpdateDistrRecords(wrappedCtx, records...)
 		if err != nil {
 			ctx.Logger().Error("Something has happened, prop update did not apply. Continuing to proceed with other components of the upgrade.")
@@ -31,7 +31,7 @@ func applyPoolIncentivesUpdate(ctx sdk.Context, poolincentiveskeeper *poolincent
 // Apply prop 222 change
 func ApplyProp222Change(ctx sdk.Context, poolincentiveskeeper *poolincentiveskeeper.Keeper) {
 	// Pool records obtained right off proposal
-	// osmosisd q gov proposal 222
+	// mokitad q gov proposal 222
 	// records:
 	// - gauge_id: "1718"
 	//   weight: "9138119"
@@ -62,7 +62,7 @@ func ApplyProp222Change(ctx sdk.Context, poolincentiveskeeper *poolincentiveskee
 // Apply prop 223 change
 func ApplyProp223Change(ctx sdk.Context, poolincentiveskeeper *poolincentiveskeeper.Keeper) {
 	// Pool records obtained right off proposal
-	// osmosisd q gov proposal 223
+	// mokitad q gov proposal 223
 	// records:
 	// 	- gauge_id: "1721"
 	//     weight: "2831977"
@@ -94,7 +94,7 @@ func ApplyProp223Change(ctx sdk.Context, poolincentiveskeeper *poolincentiveskee
 // Apply prop 224 change
 func ApplyProp224Change(ctx sdk.Context, poolincentiveskeeper *poolincentiveskeeper.Keeper) {
 	// Pool records obtained right off proposal
-	// osmosisd q gov proposal 224
+	// mokitad q gov proposal 224
 	// records:
 	// - gauge_id: "1724"
 	//   weight: "1881159"

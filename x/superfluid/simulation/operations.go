@@ -3,13 +3,13 @@ package simulation
 import (
 	"math/rand"
 
-	osmosimtypes "github.com/osmosis-labs/osmosis/v13/simulation/simtypes"
+	mokisimtypes "github.com/petri-labs/mokita/simulation/simtypes"
 
 	"github.com/cosmos/cosmos-sdk/baseapp"
 
-	lockuptypes "github.com/osmosis-labs/osmosis/v13/x/lockup/types"
-	"github.com/osmosis-labs/osmosis/v13/x/superfluid/keeper"
-	"github.com/osmosis-labs/osmosis/v13/x/superfluid/types"
+	lockuptypes "github.com/petri-labs/mokita/x/lockup/types"
+	"github.com/petri-labs/mokita/x/superfluid/keeper"
+	"github.com/petri-labs/mokita/x/superfluid/types"
 
 	"github.com/cosmos/cosmos-sdk/codec"
 	simappparams "github.com/cosmos/cosmos-sdk/simapp/params"
@@ -96,7 +96,7 @@ func SimulateMsgSuperfluidDelegate(ak stakingtypes.AccountKeeper, bk stakingtype
 				types.ModuleName, types.TypeMsgSuperfluidDelegate, "Account have no period lock"), nil, nil
 		}
 
-		multiplier := k.GetOsmoEquivalentMultiplier(ctx, lock.Coins[0].Denom)
+		multiplier := k.GetMokiEquivalentMultiplier(ctx, lock.Coins[0].Denom)
 		if multiplier.IsZero() {
 			return simtypes.NoOpMsg(
 				types.ModuleName, types.TypeMsgSuperfluidDelegate, "not able to do superfluid staking if asset Multiplier is zero"), nil, nil
@@ -114,7 +114,7 @@ func SimulateMsgSuperfluidDelegate(ak stakingtypes.AccountKeeper, bk stakingtype
 		}
 
 		txGen := simappparams.MakeTestEncodingConfig().TxConfig
-		return osmosimtypes.GenAndDeliverTxWithRandFees(
+		return mokisimtypes.GenAndDeliverTxWithRandFees(
 			r, app, txGen, &msg, nil, ctx, simAccount, ak, bk, types.ModuleName)
 	}
 }
@@ -140,7 +140,7 @@ func SimulateMsgSuperfluidUndelegate(ak stakingtypes.AccountKeeper, bk stakingty
 		}
 
 		txGen := simappparams.MakeTestEncodingConfig().TxConfig
-		return osmosimtypes.GenAndDeliverTxWithRandFees(
+		return mokisimtypes.GenAndDeliverTxWithRandFees(
 			r, app, txGen, &msg, nil, ctx, simAccount, ak, bk, types.ModuleName)
 	}
 }
@@ -176,7 +176,7 @@ func SimulateMsgSuperfluidUndelegate(ak stakingtypes.AccountKeeper, bk stakingty
 // 		}
 
 // 		txGen := simappparams.MakeTestEncodingConfig().TxConfig
-// 		return osmosimtypes.GenAndDeliverTxWithRandFees(
+// 		return mokisimtypes.GenAndDeliverTxWithRandFees(
 // 			r, app, txGen, &msg, nil, ctx, simAccount, ak, bk, types.ModuleName)
 // 	}
 // }

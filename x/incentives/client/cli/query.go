@@ -8,9 +8,9 @@ import (
 
 	"github.com/spf13/cobra"
 
-	"github.com/osmosis-labs/osmosis/osmoutils/osmocli"
-	"github.com/osmosis-labs/osmosis/v13/x/incentives/types"
-	lockuptypes "github.com/osmosis-labs/osmosis/v13/x/lockup/types"
+	"github.com/petri-labs/mokita/mokiutils/mokicli"
+	"github.com/petri-labs/mokita/x/incentives/types"
+	lockuptypes "github.com/petri-labs/mokita/x/lockup/types"
 
 	"github.com/cosmos/cosmos-sdk/client"
 	"github.com/cosmos/cosmos-sdk/client/flags"
@@ -20,23 +20,23 @@ import (
 // GetQueryCmd returns the query commands for this module.
 func GetQueryCmd() *cobra.Command {
 	// group incentives queries under a subcommand
-	cmd := osmocli.QueryIndexCmd(types.ModuleName)
+	cmd := mokicli.QueryIndexCmd(types.ModuleName)
 	qcGetter := types.NewQueryClient
-	osmocli.AddQueryCmd(cmd, qcGetter, GetCmdGauges)
-	osmocli.AddQueryCmd(cmd, qcGetter, GetCmdToDistributeCoins)
-	osmocli.AddQueryCmd(cmd, qcGetter, GetCmdGaugeByID)
-	osmocli.AddQueryCmd(cmd, qcGetter, GetCmdActiveGauges)
-	osmocli.AddQueryCmd(cmd, qcGetter, GetCmdActiveGaugesPerDenom)
-	osmocli.AddQueryCmd(cmd, qcGetter, GetCmdUpcomingGauges)
-	osmocli.AddQueryCmd(cmd, qcGetter, GetCmdUpcomingGaugesPerDenom)
+	mokicli.AddQueryCmd(cmd, qcGetter, GetCmdGauges)
+	mokicli.AddQueryCmd(cmd, qcGetter, GetCmdToDistributeCoins)
+	mokicli.AddQueryCmd(cmd, qcGetter, GetCmdGaugeByID)
+	mokicli.AddQueryCmd(cmd, qcGetter, GetCmdActiveGauges)
+	mokicli.AddQueryCmd(cmd, qcGetter, GetCmdActiveGaugesPerDenom)
+	mokicli.AddQueryCmd(cmd, qcGetter, GetCmdUpcomingGauges)
+	mokicli.AddQueryCmd(cmd, qcGetter, GetCmdUpcomingGaugesPerDenom)
 	cmd.AddCommand(GetCmdRewardsEst())
 
 	return cmd
 }
 
 // GetCmdGauges returns all available gauges.
-func GetCmdGauges() (*osmocli.QueryDescriptor, *types.GaugesRequest) {
-	return &osmocli.QueryDescriptor{
+func GetCmdGauges() (*mokicli.QueryDescriptor, *types.GaugesRequest) {
+	return &mokicli.QueryDescriptor{
 		Use:   "gauges",
 		Short: "Query all available gauges",
 		Long:  "{{.Short}}",
@@ -44,16 +44,16 @@ func GetCmdGauges() (*osmocli.QueryDescriptor, *types.GaugesRequest) {
 }
 
 // GetCmdToDistributeCoins returns coins that are going to be distributed.
-func GetCmdToDistributeCoins() (*osmocli.QueryDescriptor, *types.ModuleToDistributeCoinsRequest) {
-	return &osmocli.QueryDescriptor{
+func GetCmdToDistributeCoins() (*mokicli.QueryDescriptor, *types.ModuleToDistributeCoinsRequest) {
+	return &mokicli.QueryDescriptor{
 		Use:   "to-distribute-coins",
 		Short: "Query coins that is going to be distributed",
 		Long:  `{{.Short}}`}, &types.ModuleToDistributeCoinsRequest{}
 }
 
 // GetCmdGaugeByID returns a gauge by ID.
-func GetCmdGaugeByID() (*osmocli.QueryDescriptor, *types.GaugeByIDRequest) {
-	return &osmocli.QueryDescriptor{
+func GetCmdGaugeByID() (*mokicli.QueryDescriptor, *types.GaugeByIDRequest) {
+	return &mokicli.QueryDescriptor{
 		Use:   "gauge-by-id [id]",
 		Short: "Query gauge by id.",
 		Long: `{{.Short}}{{.ExampleHeader}}
@@ -62,16 +62,16 @@ func GetCmdGaugeByID() (*osmocli.QueryDescriptor, *types.GaugeByIDRequest) {
 }
 
 // GetCmdActiveGauges returns active gauges.
-func GetCmdActiveGauges() (*osmocli.QueryDescriptor, *types.ActiveGaugesRequest) {
-	return &osmocli.QueryDescriptor{
+func GetCmdActiveGauges() (*mokicli.QueryDescriptor, *types.ActiveGaugesRequest) {
+	return &mokicli.QueryDescriptor{
 		Use:   "active-gauges",
 		Short: "Query active gauges",
 		Long:  `{{.Short}}`}, &types.ActiveGaugesRequest{}
 }
 
 // GetCmdActiveGaugesPerDenom returns active gauges for a specified denom.
-func GetCmdActiveGaugesPerDenom() (*osmocli.QueryDescriptor, *types.ActiveGaugesPerDenomRequest) {
-	return &osmocli.QueryDescriptor{
+func GetCmdActiveGaugesPerDenom() (*mokicli.QueryDescriptor, *types.ActiveGaugesPerDenomRequest) {
+	return &mokicli.QueryDescriptor{
 		Use:   "active-gauges-per-den [den]denom [denom]",
 		Short: "Query active gauges per denom",
 		Long: `{{.Short}}{{.ExampleHeader}}
@@ -79,16 +79,16 @@ func GetCmdActiveGaugesPerDenom() (*osmocli.QueryDescriptor, *types.ActiveGauges
 }
 
 // GetCmdUpcomingGauges returns scheduled gauges.
-func GetCmdUpcomingGauges() (*osmocli.QueryDescriptor, *types.UpcomingGaugesRequest) {
-	return &osmocli.QueryDescriptor{
+func GetCmdUpcomingGauges() (*mokicli.QueryDescriptor, *types.UpcomingGaugesRequest) {
+	return &mokicli.QueryDescriptor{
 		Use:   "upcoming-gauges",
 		Short: "Query upcoming gauges",
 		Long:  `{{.Short}}`}, &types.UpcomingGaugesRequest{}
 }
 
 // GetCmdUpcomingGaugesPerDenom returns scheduled gauges for specified denom..
-func GetCmdUpcomingGaugesPerDenom() (*osmocli.QueryDescriptor, *types.UpcomingGaugesPerDenomRequest) {
-	return &osmocli.QueryDescriptor{
+func GetCmdUpcomingGaugesPerDenom() (*mokicli.QueryDescriptor, *types.UpcomingGaugesPerDenomRequest) {
+	return &mokicli.QueryDescriptor{
 		Use:   "upcoming-gauges-per-denom [denom]",
 		Short: "Query scheduled gauges per denom",
 		Long:  `{{.Short}}`}, &types.UpcomingGaugesPerDenomRequest{}

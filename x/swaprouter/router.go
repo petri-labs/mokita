@@ -5,8 +5,8 @@ import (
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 
-	appparams "github.com/osmosis-labs/osmosis/v13/app/params"
-	"github.com/osmosis-labs/osmosis/v13/x/swaprouter/types"
+	appparams "github.com/petri-labs/mokita/app/params"
+	"github.com/petri-labs/mokita/x/swaprouter/types"
 )
 
 // RouteExactAmountIn defines the input denom and input amount for the first pool,
@@ -33,16 +33,16 @@ func (k Keeper) RouteExactAmountIn(
 	// In this loop, we check if:
 	// - the route is of length 2
 	// - route 1 and route 2 don't trade via the same pool
-	// - route 1 contains uosmo
+	// - route 1 contains umoki
 	// - both route 1 and route 2 are incentivized pools
 	//
 	// If all of the above is true, then we collect the additive and max fee between the
 	// two pools to later calculate the following:
 	// total_swap_fee = total_swap_fee = max(swapfee1, swapfee2)
 	// fee_per_pool = total_swap_fee * ((pool_fee) / (swapfee1 + swapfee2))
-	if k.isOsmoRoutedMultihop(ctx, route, routes[0].TokenOutDenom, tokenIn.Denom) {
+	if k.isMokiRoutedMultihop(ctx, route, routes[0].TokenOutDenom, tokenIn.Denom) {
 		isMultiHopRouted = true
-		routeSwapFee, sumOfSwapFees, err = k.getOsmoRoutedMultihopTotalSwapFee(ctx, route)
+		routeSwapFee, sumOfSwapFees, err = k.getMokiRoutedMultihopTotalSwapFee(ctx, route)
 		if err != nil {
 			return sdk.Int{}, err
 		}
@@ -69,7 +69,7 @@ func (k Keeper) RouteExactAmountIn(
 
 		swapFee := pool.GetSwapFee(ctx)
 
-		// If we determined the route is an osmo multi-hop and both routes are incentivized,
+		// If we determined the route is an moki multi-hop and both routes are incentivized,
 		// we modify the swap fee accordingly.
 		if isMultiHopRouted {
 			swapFee = routeSwapFee.Mul((swapFee.Quo(sumOfSwapFees)))
@@ -135,9 +135,9 @@ func (k Keeper) MultihopEstimateOutGivenExactAmountIn(
 		return sdk.Int{}, err
 	}
 
-	if k.isOsmoRoutedMultihop(ctx, route, routes[0].TokenOutDenom, tokenIn.Denom) {
+	if k.isMokiRoutedMultihop(ctx, route, routes[0].TokenOutDenom, tokenIn.Denom) {
 		isMultiHopRouted = true
-		routeSwapFee, sumOfSwapFees, err = k.getOsmoRoutedMultihopTotalSwapFee(ctx, route)
+		routeSwapFee, sumOfSwapFees, err = k.getMokiRoutedMultihopTotalSwapFee(ctx, route)
 		if err != nil {
 			return sdk.Int{}, err
 		}
@@ -157,7 +157,7 @@ func (k Keeper) MultihopEstimateOutGivenExactAmountIn(
 
 		swapFee := poolI.GetSwapFee(ctx)
 
-		// If we determined the route is an osmo multi-hop and both routes are incentivized,
+		// If we determined the route is an moki multi-hop and both routes are incentivized,
 		// we modify the swap fee accordingly.
 		if isMultiHopRouted {
 			swapFee = routeSwapFee.Mul((swapFee.Quo(sumOfSwapFees)))
@@ -198,25 +198,25 @@ func (k Keeper) RouteExactAmountOut(ctx sdk.Context,
 	// in this loop, we check if:
 	// - the route is of length 2
 	// - route 1 and route 2 don't trade via the same pool
-	// - route 1 contains uosmo
+	// - route 1 contains umoki
 	// - both route 1 and route 2 are incentivized pools
 	// if all of the above is true, then we collect the additive and max fee between the two pools to later calculate the following:
 	// total_swap_fee = total_swap_fee = max(swapfee1, swapfee2)
 	// fee_per_pool = total_swap_fee * ((pool_fee) / (swapfee1 + swapfee2))
-	if k.isOsmoRoutedMultihop(ctx, route, routes[0].TokenInDenom, tokenOut.Denom) {
+	if k.isMokiRoutedMultihop(ctx, route, routes[0].TokenInDenom, tokenOut.Denom) {
 		isMultiHopRouted = true
-		routeSwapFee, sumOfSwapFees, err = k.getOsmoRoutedMultihopTotalSwapFee(ctx, route)
+		routeSwapFee, sumOfSwapFees, err = k.getMokiRoutedMultihopTotalSwapFee(ctx, route)
 		if err != nil {
 			return sdk.Int{}, err
 		}
 	}
 
 	// Determine what the estimated input would be for each pool along the multi-hop route
-	// if we determined the route is an osmo multi-hop and both routes are incentivized,
+	// if we determined the route is an moki multi-hop and both routes are incentivized,
 	// we utilize a separate function that calculates the discounted swap fees
 	var insExpected []sdk.Int
 	if isMultiHopRouted {
-		insExpected, err = k.createOsmoMultihopExpectedSwapOuts(ctx, routes, tokenOut, routeSwapFee, sumOfSwapFees)
+		insExpected, err = k.createMokiMultihopExpectedSwapOuts(ctx, routes, tokenOut, routeSwapFee, sumOfSwapFees)
 	} else {
 		insExpected, err = k.createMultihopExpectedSwapOuts(ctx, routes, tokenOut)
 	}
@@ -284,20 +284,20 @@ func (k Keeper) MultihopEstimateInGivenExactAmountOut(
 		return sdk.Int{}, err
 	}
 
-	if k.isOsmoRoutedMultihop(ctx, route, routes[0].TokenInDenom, tokenOut.Denom) {
+	if k.isMokiRoutedMultihop(ctx, route, routes[0].TokenInDenom, tokenOut.Denom) {
 		isMultiHopRouted = true
-		routeSwapFee, sumOfSwapFees, err = k.getOsmoRoutedMultihopTotalSwapFee(ctx, route)
+		routeSwapFee, sumOfSwapFees, err = k.getMokiRoutedMultihopTotalSwapFee(ctx, route)
 		if err != nil {
 			return sdk.Int{}, err
 		}
 	}
 
 	// Determine what the estimated input would be for each pool along the multi-hop route
-	// if we determined the route is an osmo multi-hop and both routes are incentivized,
+	// if we determined the route is an moki multi-hop and both routes are incentivized,
 	// we utilize a separate function that calculates the discounted swap fees
 	var insExpected []sdk.Int
 	if isMultiHopRouted {
-		insExpected, err = k.createOsmoMultihopExpectedSwapOuts(ctx, routes, tokenOut, routeSwapFee, sumOfSwapFees)
+		insExpected, err = k.createMokiMultihopExpectedSwapOuts(ctx, routes, tokenOut, routeSwapFee, sumOfSwapFees)
 	} else {
 		insExpected, err = k.createMultihopExpectedSwapOuts(ctx, routes, tokenOut)
 	}
@@ -311,7 +311,7 @@ func (k Keeper) MultihopEstimateInGivenExactAmountOut(
 	return insExpected[0], nil
 }
 
-func (k Keeper) isOsmoRoutedMultihop(ctx sdk.Context, route types.MultihopRoute, inDenom, outDenom string) (isRouted bool) {
+func (k Keeper) isMokiRoutedMultihop(ctx sdk.Context, route types.MultihopRoute, inDenom, outDenom string) (isRouted bool) {
 	if route.Length() != 2 {
 		return false
 	}
@@ -333,7 +333,7 @@ func (k Keeper) isOsmoRoutedMultihop(ctx sdk.Context, route types.MultihopRoute,
 	return route0Incentivized && route1Incentivized
 }
 
-func (k Keeper) getOsmoRoutedMultihopTotalSwapFee(ctx sdk.Context, route types.MultihopRoute) (
+func (k Keeper) getMokiRoutedMultihopTotalSwapFee(ctx sdk.Context, route types.MultihopRoute) (
 	totalPathSwapFee sdk.Dec, sumOfSwapFees sdk.Dec, err error,
 ) {
 	additiveSwapFee := sdk.ZeroDec()
@@ -395,8 +395,8 @@ func (k Keeper) createMultihopExpectedSwapOuts(
 	return insExpected, nil
 }
 
-// createOsmoMultihopExpectedSwapOuts does the same as createMultihopExpectedSwapOuts, however discounts the swap fee
-func (k Keeper) createOsmoMultihopExpectedSwapOuts(
+// createMokiMultihopExpectedSwapOuts does the same as createMultihopExpectedSwapOuts, however discounts the swap fee
+func (k Keeper) createMokiMultihopExpectedSwapOuts(
 	ctx sdk.Context,
 	routes []types.SwapAmountOutRoute,
 	tokenOut sdk.Coin,

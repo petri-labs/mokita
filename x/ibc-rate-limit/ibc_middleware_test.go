@@ -15,9 +15,9 @@ import (
 	ibctesting "github.com/cosmos/ibc-go/v4/testing"
 	"github.com/stretchr/testify/suite"
 
-	"github.com/osmosis-labs/osmosis/v13/app/apptesting"
-	osmosisibctesting "github.com/osmosis-labs/osmosis/v13/x/ibc-rate-limit/testutil"
-	"github.com/osmosis-labs/osmosis/v13/x/ibc-rate-limit/types"
+	"github.com/petri-labs/mokita/app/apptesting"
+	mokitaibctesting "github.com/petri-labs/mokita/x/ibc-rate-limit/testutil"
+	"github.com/petri-labs/mokita/x/ibc-rate-limit/types"
 )
 
 type MiddlewareTestSuite struct {
@@ -26,8 +26,8 @@ type MiddlewareTestSuite struct {
 	coordinator *ibctesting.Coordinator
 
 	// testing chains used for convenience and readability
-	chainA *osmosisibctesting.TestChain
-	chainB *osmosisibctesting.TestChain
+	chainA *mokitaibctesting.TestChain
+	chainB *mokitaibctesting.TestChain
 	path   *ibctesting.Path
 }
 
@@ -36,7 +36,7 @@ func TestMiddlewareTestSuite(t *testing.T) {
 	suite.Run(t, new(MiddlewareTestSuite))
 }
 
-func NewTransferPath(chainA, chainB *osmosisibctesting.TestChain) *ibctesting.Path {
+func NewTransferPath(chainA, chainB *mokitaibctesting.TestChain) *ibctesting.Path {
 	path := ibctesting.NewPath(chainA.TestChain, chainB.TestChain)
 	path.EndpointA.ChannelConfig.PortID = ibctesting.TransferPort
 	path.EndpointB.ChannelConfig.PortID = ibctesting.TransferPort
@@ -47,15 +47,15 @@ func NewTransferPath(chainA, chainB *osmosisibctesting.TestChain) *ibctesting.Pa
 
 func (suite *MiddlewareTestSuite) SetupTest() {
 	suite.Setup()
-	ibctesting.DefaultTestingAppInit = osmosisibctesting.SetupTestingApp
+	ibctesting.DefaultTestingAppInit = mokitaibctesting.SetupTestingApp
 	suite.coordinator = ibctesting.NewCoordinator(suite.T(), 2)
-	suite.chainA = &osmosisibctesting.TestChain{
+	suite.chainA = &mokitaibctesting.TestChain{
 		TestChain: suite.coordinator.GetChain(ibctesting.GetChainID(1)),
 	}
 	// Remove epochs to prevent  minting
 	err := suite.chainA.MoveEpochsToTheFuture()
 	suite.Require().NoError(err)
-	suite.chainB = &osmosisibctesting.TestChain{
+	suite.chainB = &mokitaibctesting.TestChain{
 		TestChain: suite.coordinator.GetChain(ibctesting.GetChainID(2)),
 	}
 	suite.path = NewTransferPath(suite.chainA, suite.chainB)
@@ -108,7 +108,7 @@ func CalculateChannelValue(ctx sdk.Context, denom string, bankKeeper bankkeeper.
 	//  using the whole supply for efficiency until there's a solution for
 	//  https://github.com/cosmos/ibc-go/issues/2664
 
-	// For non-native (ibc) tokens, return the supply if the token in osmosis
+	// For non-native (ibc) tokens, return the supply if the token in mokita
 	//if strings.HasPrefix(denom, "ibc/") {
 	//	return bankKeeper.GetSupplyWithOffset(ctx, denom).Amount
 	//}
@@ -250,8 +250,8 @@ func (suite *MiddlewareTestSuite) TestReceiveTransferNoContract() {
 }
 
 func (suite *MiddlewareTestSuite) initializeEscrow() (totalEscrow, expectedSed sdk.Int) {
-	osmosisApp := suite.chainA.GetOsmosisApp()
-	supply := osmosisApp.BankKeeper.GetSupplyWithOffset(suite.chainA.GetContext(), sdk.DefaultBondDenom)
+	mokitaApp := suite.chainA.GetMokisisApp()
+	supply := mokitaApp.BankKeeper.GetSupplyWithOffset(suite.chainA.GetContext(), sdk.DefaultBondDenom)
 
 	// Move some funds from chainA to chainB so that there is something in escrow
 	// Each user has 10% of the supply, so we send most of the funds from one user to chainA
@@ -284,10 +284,10 @@ func (suite *MiddlewareTestSuite) fullSendTest(native bool) map[string]string {
 		denom = denomTrace.IBCDenom()
 	}
 
-	osmosisApp := suite.chainA.GetOsmosisApp()
+	mokitaApp := suite.chainA.GetMokisisApp()
 
 	// This is the first one. Inside the tests. It works as expected.
-	channelValue := CalculateChannelValue(suite.chainA.GetContext(), denom, osmosisApp.BankKeeper)
+	channelValue := CalculateChannelValue(suite.chainA.GetContext(), denom, mokitaApp.BankKeeper)
 
 	// The amount to be sent is send 2.5% (quota is 5%)
 	quota := channelValue.QuoRaw(int64(100 / quotaPercentage))
@@ -376,9 +376,9 @@ func (suite *MiddlewareTestSuite) fullRecvTest(native bool) {
 		sendDenom = denomTrace.IBCDenom()
 	}
 
-	osmosisApp := suite.chainA.GetOsmosisApp()
+	mokitaApp := suite.chainA.GetMokisisApp()
 
-	channelValue := CalculateChannelValue(suite.chainA.GetContext(), localDenom, osmosisApp.BankKeeper)
+	channelValue := CalculateChannelValue(suite.chainA.GetContext(), localDenom, mokitaApp.BankKeeper)
 
 	// The amount to be sent is 2% (quota is 4%)
 	quota := channelValue.QuoRaw(int64(100 / quotaPercentage))
@@ -439,11 +439,11 @@ func (suite *MiddlewareTestSuite) TestFailedSendTransfer() {
 	suite.chainA.RegisterRateLimitingContract(addr)
 
 	// Get the escrowed amount
-	osmosisApp := suite.chainA.GetOsmosisApp()
+	mokitaApp := suite.chainA.GetMokisisApp()
 	// ToDo: This is what we eventually want here, but using the full supply temporarily for performance reasons. See CalculateChannelValue
 	// escrowAddress := transfertypes.GetEscrowAddress("transfer", "channel-0")
-	// escrowed := osmosisApp.BankKeeper.GetBalance(suite.chainA.GetContext(), escrowAddress, sdk.DefaultBondDenom)
-	escrowed := osmosisApp.BankKeeper.GetSupplyWithOffset(suite.chainA.GetContext(), sdk.DefaultBondDenom)
+	// escrowed := mokitaApp.BankKeeper.GetBalance(suite.chainA.GetContext(), escrowAddress, sdk.DefaultBondDenom)
+	escrowed := mokitaApp.BankKeeper.GetSupplyWithOffset(suite.chainA.GetContext(), sdk.DefaultBondDenom)
 	quota := escrowed.Amount.QuoRaw(100) // 1% of the escrowed amount
 
 	// Use the whole quota
@@ -505,8 +505,8 @@ func (suite *MiddlewareTestSuite) TestUnsetRateLimitingContract() {
 	// Unset the contract param
 	params, err := types.NewParams("")
 	suite.Require().NoError(err)
-	osmosisApp := suite.chainA.GetOsmosisApp()
-	paramSpace, ok := osmosisApp.AppKeepers.ParamsKeeper.GetSubspace(types.ModuleName)
+	mokitaApp := suite.chainA.GetMokisisApp()
+	paramSpace, ok := mokitaApp.AppKeepers.ParamsKeeper.GetSubspace(types.ModuleName)
 	suite.Require().True(ok)
 	// N.B.: this panics if validation fails.
 	paramSpace.SetParamSet(suite.chainA.GetContext(), &params)

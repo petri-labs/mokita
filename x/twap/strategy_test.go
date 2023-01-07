@@ -5,11 +5,11 @@ import (
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 
-	"github.com/osmosis-labs/osmosis/osmomath"
-	"github.com/osmosis-labs/osmosis/osmoutils/osmoassert"
-	gammtypes "github.com/osmosis-labs/osmosis/v13/x/gamm/types"
-	"github.com/osmosis-labs/osmosis/v13/x/twap"
-	"github.com/osmosis-labs/osmosis/v13/x/twap/types"
+	"github.com/petri-labs/mokita/mokimath"
+	"github.com/petri-labs/mokita/mokiutils/mokiassert"
+	gammtypes "github.com/petri-labs/mokita/x/gamm/types"
+	"github.com/petri-labs/mokita/x/twap"
+	"github.com/petri-labs/mokita/x/twap/types"
 )
 
 type computeTwapTestCase struct {
@@ -98,7 +98,7 @@ func (s *TestSuite) TestComputeTwap() {
 			for _, twapStrategy := range test.twapStrategies {
 				actualTwap, err := twap.ComputeTwap(test.startRecord, test.endRecord, test.quoteAsset, twapStrategy)
 				s.Require().NoError(err)
-				osmoassert.DecApproxEq(s.T(), test.expTwap, actualTwap, osmomath.GetPowPrecision())
+				mokiassert.DecApproxEq(s.T(), test.expTwap, actualTwap, mokimath.GetPowPrecision())
 			}
 		})
 	}
@@ -149,7 +149,7 @@ func (s *TestSuite) TestComputeArithmeticStrategyTwap() {
 	}
 	for name, test := range tests {
 		s.Run(name, func() {
-			osmoassert.ConditionalPanic(s.T(), test.expPanic, func() {
+			mokiassert.ConditionalPanic(s.T(), test.expPanic, func() {
 				arithmeticStrategy := &twap.ArithmeticTwapStrategy{TwapKeeper: *s.App.TwapKeeper}
 				actualTwap := arithmeticStrategy.ComputeTwap(test.startRecord, test.endRecord, test.quoteAsset)
 				s.Require().Equal(test.expTwap, actualTwap)
@@ -163,9 +163,9 @@ func (s *TestSuite) TestComputeArithmeticStrategyTwap() {
 // this function should panic in case of zero delta.
 func (s *TestSuite) TestComputeGeometricStrategyTwap() {
 	var (
-		errTolerance = osmomath.ErrTolerance{
+		errTolerance = mokimath.ErrTolerance{
 			MultiplicativeTolerance: sdk.SmallestDec(),
-			RoundingDir:             osmomath.RoundDown,
+			RoundingDir:             mokimath.RoundDown,
 		}
 
 		// Compute accumulator difference for the underflow test case by
@@ -283,15 +283,15 @@ func (s *TestSuite) TestComputeGeometricStrategyTwap() {
 	for name, tc := range tests {
 		tc := tc
 		s.Run(name, func() {
-			osmoassert.ConditionalPanic(s.T(), tc.expPanic, func() {
+			mokiassert.ConditionalPanic(s.T(), tc.expPanic, func() {
 
 				geometricStrategy := &twap.GeometricTwapStrategy{TwapKeeper: *s.App.TwapKeeper}
 				actualTwap := geometricStrategy.ComputeTwap(tc.startRecord, tc.endRecord, tc.quoteAsset)
 
 				// Sig fig round the expected value.
-				tc.expTwap = osmomath.SigFigRound(tc.expTwap, gammtypes.SpotPriceSigFigs)
+				tc.expTwap = mokimath.SigFigRound(tc.expTwap, gammtypes.SpotPriceSigFigs)
 
-				s.Require().Equal(0, errTolerance.CompareBigDec(osmomath.BigDecFromSDKDec(tc.expTwap), osmomath.BigDecFromSDKDec(actualTwap)), "expected %s, got %s", tc.expTwap, actualTwap)
+				s.Require().Equal(0, errTolerance.CompareBigDec(mokimath.BigDecFromSDKDec(tc.expTwap), mokimath.BigDecFromSDKDec(actualTwap)), "expected %s, got %s", tc.expTwap, actualTwap)
 			})
 		})
 	}
@@ -359,7 +359,7 @@ func (s *TestSuite) TestComputeGeometricStrategyTwap_ThreeAsset() {
 			for i, startRec := range test.startRecord {
 				geometricStrategy := &twap.GeometricTwapStrategy{TwapKeeper: *s.App.TwapKeeper}
 				actualTwap := geometricStrategy.ComputeTwap(startRec, test.endRecord[i], test.quoteAsset[i])
-				osmoassert.DecApproxEq(s.T(), test.expTwap[i], actualTwap, errTolerance)
+				mokiassert.DecApproxEq(s.T(), test.expTwap[i], actualTwap, errTolerance)
 			}
 		})
 	}

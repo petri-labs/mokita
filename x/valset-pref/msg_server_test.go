@@ -2,8 +2,8 @@ package keeper_test
 
 import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
-	valPref "github.com/osmosis-labs/osmosis/v13/x/valset-pref"
-	"github.com/osmosis-labs/osmosis/v13/x/valset-pref/types"
+	valPref "github.com/petri-labs/mokita/x/valset-pref"
+	"github.com/petri-labs/mokita/x/valset-pref/types"
 )
 
 func (suite *KeeperTestSuite) TestSetValidatorSetPreference() {
@@ -131,7 +131,7 @@ func (suite *KeeperTestSuite) TestDelegateToValidatorSet() {
 	// prepare validators to delegate to
 	preferences := suite.PrepareDelegateToValidatorSet()
 
-	amountToFund := sdk.Coins{sdk.NewInt64Coin(sdk.DefaultBondDenom, 100_000_000)} // 100 osmo
+	amountToFund := sdk.Coins{sdk.NewInt64Coin(sdk.DefaultBondDenom, 100_000_000)} // 100 moki
 
 	tests := []struct {
 		name           string
@@ -221,16 +221,16 @@ func (suite *KeeperTestSuite) TestUnDelegateFromValidatorSet() {
 		{
 			name:           "Unstake half from the ValSet",
 			delegator:      sdk.AccAddress([]byte("addr1---------------")),
-			coinToStake:    sdk.NewCoin(sdk.DefaultBondDenom, sdk.NewInt(20_000_000)), // delegate 20osmo
-			coinToUnStake:  sdk.NewCoin(sdk.DefaultBondDenom, sdk.NewInt(10_000_000)), // undelegate 10osmo
+			coinToStake:    sdk.NewCoin(sdk.DefaultBondDenom, sdk.NewInt(20_000_000)), // delegate 20moki
+			coinToUnStake:  sdk.NewCoin(sdk.DefaultBondDenom, sdk.NewInt(10_000_000)), // undelegate 10moki
 			expectedShares: []sdk.Dec{sdk.NewDec(2_000_000), sdk.NewDec(3_300_000), sdk.NewDec(1_200_000), sdk.NewDec(3_500_000)},
 			expectPass:     true,
 		},
 		{
 			name:           "Unstake x amount from ValSet",
 			delegator:      sdk.AccAddress([]byte("addr2---------------")),
-			coinToStake:    sdk.NewCoin(sdk.DefaultBondDenom, sdk.NewInt(20_000_000)),                                           // delegate 20osmo
-			coinToUnStake:  sdk.NewCoin(sdk.DefaultBondDenom, sdk.NewInt(15_000_000)),                                           // undelegate 15osmo
+			coinToStake:    sdk.NewCoin(sdk.DefaultBondDenom, sdk.NewInt(20_000_000)),                                           // delegate 20moki
+			coinToUnStake:  sdk.NewCoin(sdk.DefaultBondDenom, sdk.NewInt(15_000_000)),                                           // undelegate 15moki
 			expectedShares: []sdk.Dec{sdk.NewDec(1_000_000), sdk.NewDec(1_650_000), sdk.NewDec(600_000), sdk.NewDec(1_750_000)}, // validatorDelegatedShares - (weight * coinToUnstake)
 			expectPass:     true,
 		},
@@ -254,7 +254,7 @@ func (suite *KeeperTestSuite) TestUnDelegateFromValidatorSet() {
 		suite.Run(test.name, func() {
 			suite.SetupTest()
 
-			suite.FundAcc(test.delegator, sdk.Coins{sdk.NewInt64Coin(sdk.DefaultBondDenom, 100_000_000)}) // 100 osmo
+			suite.FundAcc(test.delegator, sdk.Coins{sdk.NewInt64Coin(sdk.DefaultBondDenom, 100_000_000)}) // 100 moki
 
 			// setup message server
 			msgServer := valPref.NewMsgServerImpl(suite.App.ValidatorSetPreferenceKeeper)
@@ -483,7 +483,7 @@ func (suite *KeeperTestSuite) TestWithdrawDelegationRewards() {
 		{
 			name:                 "Withdraw all rewards with existing valset delegations, and existing staking position",
 			delegator:            sdk.AccAddress([]byte("addr1---------------")),
-			coinsToDelegate:      sdk.NewCoin(sdk.DefaultBondDenom, sdk.NewInt(20_000_000)), // delegate 20osmo
+			coinsToDelegate:      sdk.NewCoin(sdk.DefaultBondDenom, sdk.NewInt(20_000_000)), // delegate 20moki
 			setValSetDelegation:  true,
 			setStakingDelegation: true,
 			expectPass:           true,
@@ -491,7 +491,7 @@ func (suite *KeeperTestSuite) TestWithdrawDelegationRewards() {
 		{
 			name:                 "Withdraw all rewards with no existing valset delegation, but existing staking position",
 			delegator:            sdk.AccAddress([]byte("addr2---------------")),
-			coinsToDelegate:      sdk.NewCoin(sdk.DefaultBondDenom, sdk.NewInt(20_000_000)), // delegate 20osmo
+			coinsToDelegate:      sdk.NewCoin(sdk.DefaultBondDenom, sdk.NewInt(20_000_000)), // delegate 20moki
 			setValSetDelegation:  false,
 			setStakingDelegation: true,
 			expectPass:           true,
@@ -499,7 +499,7 @@ func (suite *KeeperTestSuite) TestWithdrawDelegationRewards() {
 		{
 			name:                 "Withdraw all rewards with existing valset delegation, but no existing staking position",
 			delegator:            sdk.AccAddress([]byte("addr3---------------")),
-			coinsToDelegate:      sdk.NewCoin(sdk.DefaultBondDenom, sdk.NewInt(20_000_000)), // delegate 20osmo
+			coinsToDelegate:      sdk.NewCoin(sdk.DefaultBondDenom, sdk.NewInt(20_000_000)), // delegate 20moki
 			setValSetDelegation:  true,
 			setStakingDelegation: false,
 			expectPass:           true,
@@ -507,7 +507,7 @@ func (suite *KeeperTestSuite) TestWithdrawDelegationRewards() {
 		{
 			name:                 "Withdraw all rewards with no existing valset delegation, no existing staking position",
 			delegator:            sdk.AccAddress([]byte("addr4---------------")),
-			coinsToDelegate:      sdk.NewCoin(sdk.DefaultBondDenom, sdk.NewInt(20_000_000)), // delegate 20osmo
+			coinsToDelegate:      sdk.NewCoin(sdk.DefaultBondDenom, sdk.NewInt(20_000_000)), // delegate 20moki
 			setValSetDelegation:  false,
 			setStakingDelegation: false,
 			expectPass:           false,
@@ -518,7 +518,7 @@ func (suite *KeeperTestSuite) TestWithdrawDelegationRewards() {
 		suite.Run(test.name, func() {
 			suite.SetupTest()
 
-			suite.FundAcc(test.delegator, sdk.Coins{sdk.NewInt64Coin(sdk.DefaultBondDenom, 100_000_000)}) // 100 osmo
+			suite.FundAcc(test.delegator, sdk.Coins{sdk.NewInt64Coin(sdk.DefaultBondDenom, 100_000_000)}) // 100 moki
 
 			// setup message server
 			msgServer := valPref.NewMsgServerImpl(suite.App.ValidatorSetPreferenceKeeper)

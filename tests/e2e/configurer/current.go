@@ -5,9 +5,9 @@ import (
 	"testing"
 	"time"
 
-	"github.com/osmosis-labs/osmosis/v13/tests/e2e/configurer/chain"
-	"github.com/osmosis-labs/osmosis/v13/tests/e2e/containers"
-	"github.com/osmosis-labs/osmosis/v13/tests/e2e/initialization"
+	"github.com/petri-labs/mokita/tests/e2e/configurer/chain"
+	"github.com/petri-labs/mokita/tests/e2e/containers"
+	"github.com/petri-labs/mokita/tests/e2e/initialization"
 )
 
 type CurrentBranchConfigurer struct {
@@ -39,7 +39,7 @@ func (cb *CurrentBranchConfigurer) ConfigureChains() error {
 
 func (cb *CurrentBranchConfigurer) ConfigureChain(chainConfig *chain.Config) error {
 	cb.t.Logf("starting e2e infrastructure from current branch for chain-id: %s", chainConfig.Id)
-	tmpDir, err := os.MkdirTemp("", "osmosis-e2e-testnet-")
+	tmpDir, err := os.MkdirTemp("", "mokita-e2e-testnet-")
 	if err != nil {
 		return err
 	}

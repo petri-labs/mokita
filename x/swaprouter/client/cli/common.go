@@ -6,7 +6,7 @@ import (
 
 	flag "github.com/spf13/pflag"
 
-	"github.com/osmosis-labs/osmosis/v13/x/swaprouter/types"
+	"github.com/petri-labs/mokita/x/swaprouter/types"
 )
 
 func swapAmountInRoutes(fs *flag.FlagSet) ([]types.SwapAmountInRoute, error) {

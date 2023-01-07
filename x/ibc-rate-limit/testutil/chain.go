@@ -1,4 +1,4 @@
-package osmosisibctesting
+package mokitaibctesting
 
 import (
 	"encoding/json"
@@ -12,7 +12,7 @@ import (
 	"github.com/cosmos/ibc-go/v4/testing/simapp/helpers"
 	tmproto "github.com/tendermint/tendermint/proto/tendermint/types"
 
-	"github.com/osmosis-labs/osmosis/v13/app"
+	"github.com/petri-labs/mokita/app"
 )
 
 type TestChain struct {
@@ -20,8 +20,8 @@ type TestChain struct {
 }
 
 func SetupTestingApp() (ibctesting.TestingApp, map[string]json.RawMessage) {
-	osmosisApp := app.Setup(false)
-	return osmosisApp, app.NewDefaultGenesisState()
+	mokitaApp := app.Setup(false)
+	return mokitaApp, app.NewDefaultGenesisState()
 }
 
 // SendMsgsNoCheck overrides ibctesting.TestChain.SendMsgs so that it doesn't check for errors. That should be handled by the caller
@@ -82,7 +82,7 @@ func SignAndDeliver(
 
 // Move epochs to the future to avoid issues with minting
 func (chain *TestChain) MoveEpochsToTheFuture() error {
-	epochsKeeper := chain.GetOsmosisApp().EpochsKeeper
+	epochsKeeper := chain.GetMokisisApp().EpochsKeeper
 	ctx := chain.GetContext()
 	for _, epoch := range epochsKeeper.AllEpochInfos(ctx) {
 		epoch.StartTime = ctx.BlockTime().Add(time.Hour * 24 * 30)
@@ -95,8 +95,8 @@ func (chain *TestChain) MoveEpochsToTheFuture() error {
 	return nil
 }
 
-// GetOsmosisApp returns the current chain's app as an OsmosisApp
-func (chain *TestChain) GetOsmosisApp() *app.OsmosisApp {
-	v, _ := chain.App.(*app.OsmosisApp)
+// GetMokisisApp returns the current chain's app as an MokisisApp
+func (chain *TestChain) GetMokisisApp() *app.MokisisApp {
+	v, _ := chain.App.(*app.MokisisApp)
 	return v
 }

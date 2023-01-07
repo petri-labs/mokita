@@ -48,13 +48,13 @@ func NewMempoolFeeOptions(opts servertypes.AppOptions) MempoolFeeOptions {
 }
 
 func parseMaxGasWantedPerTx(opts servertypes.AppOptions) uint64 {
-	valueInterface := opts.Get("osmosis-mempool.max-gas-wanted-per-tx")
+	valueInterface := opts.Get("mokita-mempool.max-gas-wanted-per-tx")
 	if valueInterface == nil {
 		return DefaultMaxGasWantedPerTx
 	}
 	value, err := cast.ToUint64E(valueInterface)
 	if err != nil {
-		panic("invalidly configured osmosis-mempool.max-gas-wanted-per-tx")
+		panic("invalidly configured mokita-mempool.max-gas-wanted-per-tx")
 	}
 	return value
 }
@@ -68,18 +68,18 @@ func parseMinGasPriceForHighGasTx(opts servertypes.AppOptions) sdk.Dec {
 }
 
 func parseDecFromConfig(opts servertypes.AppOptions, optName string, defaultValue sdk.Dec) sdk.Dec {
-	valueInterface := opts.Get("osmosis-mempool." + optName)
+	valueInterface := opts.Get("mokita-mempool." + optName)
 	value := defaultValue
 	if valueInterface != nil {
 		valueStr, ok := valueInterface.(string)
 		if !ok {
-			panic("invalidly configured osmosis-mempool." + optName)
+			panic("invalidly configured mokita-mempool." + optName)
 		}
 		var err error
 		// pre-pend 0 to allow the config to start with a decimal, e.g. ".01"
 		value, err = sdk.NewDecFromStr("0" + valueStr)
 		if err != nil {
-			panic(fmt.Errorf("invalidly configured osmosis-mempool.%v, err= %v", optName, err))
+			panic(fmt.Errorf("invalidly configured mokita-mempool.%v, err= %v", optName, err))
 		}
 	}
 	return value

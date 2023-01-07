@@ -15,8 +15,8 @@ var (
 )
 
 const (
-	setHotRoutes        = "osmosis/MsgSetHotRoutes"
-	setDeveloperAccount = "osmosis/MsgSetDeveloperAccount"
+	setHotRoutes        = "mokita/MsgSetHotRoutes"
+	setDeveloperAccount = "mokita/MsgSetDeveloperAccount"
 )
 
 func init() {

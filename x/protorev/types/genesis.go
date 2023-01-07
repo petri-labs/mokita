@@ -9,8 +9,8 @@ import (
 // AtomDenomination stores the native denom name for Atom on chain used for route building
 var AtomDenomination string = "ibc/27394FB092D2ECCD56123C74F36E4C1F926001CEADA9CA97EA622B25F41E5EB2"
 
-// OsmosisDenomination stores the native denom name for Osmosis on chain used for route building
-var OsmosisDenomination string = "uosmo"
+// MokisisDenomination stores the native denom name for Mokisis on chain used for route building
+var MokisisDenomination string = "umoki"
 
 // MaxInputAmount is the upper bound index for finding the optimal in amount when determining route profitability (2 ^ 14) = 16,384
 var MaxInputAmount = sdk.NewInt(16_384)
@@ -49,7 +49,7 @@ func init() {
 }
 
 // Routes entered into the genesis state must start and end with the same denomination and
-// the denomination must be Osmo or Atom. Additionally, there cannot be duplicate routes (same
+// the denomination must be Moki or Atom. Additionally, there cannot be duplicate routes (same
 // token pairs).
 func (gs GenesisState) CheckRoutes() error {
 	seenTokenPairs := make(map[TokenPair]bool)

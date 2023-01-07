@@ -41,9 +41,9 @@ ifeq ($(LEDGER_ENABLED),true)
   endif
 endif
 
-ifeq (cleveldb,$(findstring cleveldb,$(OSMOSIS_BUILD_OPTIONS)))
+ifeq (cleveldb,$(findstring cleveldb,$(MOKISIS_BUILD_OPTIONS)))
   build_tags += gcc
-else ifeq (rocksdb,$(findstring rocksdb,$(OSMOSIS_BUILD_OPTIONS)))
+else ifeq (rocksdb,$(findstring rocksdb,$(MOKISIS_BUILD_OPTIONS)))
   build_tags += gcc
 endif
 build_tags += $(BUILD_TAGS)
@@ -56,18 +56,18 @@ build_tags_comma_sep := $(subst $(whitespace),$(comma),$(build_tags))
 
 # process linker flags
 
-ldflags = -X github.com/cosmos/cosmos-sdk/version.Name=osmosis \
-		  -X github.com/cosmos/cosmos-sdk/version.AppName=osmosisd \
+ldflags = -X github.com/cosmos/cosmos-sdk/version.Name=mokita \
+		  -X github.com/cosmos/cosmos-sdk/version.AppName=mokitad \
 		  -X github.com/cosmos/cosmos-sdk/version.Version=$(VERSION) \
 		  -X github.com/cosmos/cosmos-sdk/version.Commit=$(COMMIT) \
 		  -X "github.com/cosmos/cosmos-sdk/version.BuildTags=$(build_tags_comma_sep)"
 
-ifeq (cleveldb,$(findstring cleveldb,$(OSMOSIS_BUILD_OPTIONS)))
+ifeq (cleveldb,$(findstring cleveldb,$(MOKISIS_BUILD_OPTIONS)))
   ldflags += -X github.com/cosmos/cosmos-sdk/types.DBBackend=cleveldb
-else ifeq (rocksdb,$(findstring rocksdb,$(OSMOSIS_BUILD_OPTIONS)))
+else ifeq (rocksdb,$(findstring rocksdb,$(MOKISIS_BUILD_OPTIONS)))
   ldflags += -X github.com/cosmos/cosmos-sdk/types.DBBackend=rocksdb
 endif
-ifeq (,$(findstring nostrip,$(OSMOSIS_BUILD_OPTIONS)))
+ifeq (,$(findstring nostrip,$(MOKISIS_BUILD_OPTIONS)))
   ldflags += -w -s
 endif
 ifeq ($(LINK_STATICALLY),true)
@@ -78,7 +78,7 @@ ldflags := $(strip $(ldflags))
 
 BUILD_FLAGS := -tags "$(build_tags)" -ldflags '$(ldflags)'
 # check for nostrip option
-ifeq (,$(findstring nostrip,$(OSMOSIS_BUILD_OPTIONS)))
+ifeq (,$(findstring nostrip,$(MOKISIS_BUILD_OPTIONS)))
   BUILD_FLAGS += -trimpath
 endif
 
@@ -88,7 +88,7 @@ endif
 
 check_version:
 ifneq ($(GO_MINOR_VERSION),18)
-	@echo "ERROR: Go version 1.18 is required for this version of Osmosis. Go 1.19 has changes that are believed to break consensus."
+	@echo "ERROR: Go version 1.18 is required for this version of Mokisis. Go 1.19 has changes that are believed to break consensus."
 	exit 1
 endif
 
@@ -111,38 +111,38 @@ $(BUILDDIR)/:
 build-reproducible: build-reproducible-amd64 build-reproducible-arm64
 
 build-reproducible-amd64: go.sum $(BUILDDIR)/
-	$(DOCKER) buildx create --name osmobuilder || true
-	$(DOCKER) buildx use osmobuilder
+	$(DOCKER) buildx create --name mokibuilder || true
+	$(DOCKER) buildx use mokibuilder
 	$(DOCKER) buildx build \
 		--build-arg GO_VERSION=$(GO_VERSION) \
 		--build-arg GIT_VERSION=$(VERSION) \
 		--build-arg GIT_COMMIT=$(COMMIT) \
 		--build-arg RUNNER_IMAGE=alpine:3.16 \
 		--platform linux/amd64 \
-		-t osmosis:local-amd64 \
+		-t mokita:local-amd64 \
 		--load \
 		-f Dockerfile .
-	$(DOCKER) rm -f osmobinary || true
-	$(DOCKER) create -ti --name osmobinary osmosis:local-amd64
-	$(DOCKER) cp osmobinary:/bin/osmosisd $(BUILDDIR)/osmosisd-linux-amd64
-	$(DOCKER) rm -f osmobinary
+	$(DOCKER) rm -f mokibinary || true
+	$(DOCKER) create -ti --name mokibinary mokita:local-amd64
+	$(DOCKER) cp mokibinary:/bin/mokitad $(BUILDDIR)/mokitad-linux-amd64
+	$(DOCKER) rm -f mokibinary
 
 build-reproducible-arm64: go.sum $(BUILDDIR)/
-	$(DOCKER) buildx create --name osmobuilder || true
-	$(DOCKER) buildx use osmobuilder
+	$(DOCKER) buildx create --name mokibuilder || true
+	$(DOCKER) buildx use mokibuilder
 	$(DOCKER) buildx build \
 		--build-arg GO_VERSION=$(GO_VERSION) \
 		--build-arg GIT_VERSION=$(VERSION) \
 		--build-arg GIT_COMMIT=$(COMMIT) \
 		--build-arg RUNNER_IMAGE=alpine:3.16 \
 		--platform linux/arm64 \
-		-t osmosis:local-arm64 \
+		-t mokita:local-arm64 \
 		--load \
 		-f Dockerfile .
-	$(DOCKER) rm -f osmobinary || true
-	$(DOCKER) create -ti --name osmobinary osmosis:local-arm64
-	$(DOCKER) cp osmobinary:/bin/osmosisd $(BUILDDIR)/osmosisd-linux-arm64
-	$(DOCKER) rm -f osmobinary
+	$(DOCKER) rm -f mokibinary || true
+	$(DOCKER) create -ti --name mokibinary mokita:local-arm64
+	$(DOCKER) cp mokibinary:/bin/mokitad $(BUILDDIR)/mokitad-linux-arm64
+	$(DOCKER) rm -f mokibinary
 
 build-linux: go.sum
 	LEDGER_ENABLED=false GOOS=linux GOARCH=amd64 $(MAKE) build
@@ -162,7 +162,7 @@ go.sum: go.mod
 draw-deps:
 	@# requires brew install graphviz or apt-get install graphviz
 	go get github.com/RobotsAndPencils/goviz
-	@goviz -i ./cmd/osmosisd -d 2 | dot -Tpng -o dependency-graph.png
+	@goviz -i ./cmd/mokitad -d 2 | dot -Tpng -o dependency-graph.png
 
 clean:
 	rm -rf $(CURDIR)/artifacts/
@@ -207,7 +207,7 @@ docs:
 .PHONY: docs
 
 protoVer=v0.8
-protoImageName=osmolabs/osmo-proto-gen:$(protoVer)
+protoImageName=mokilabs/moki-proto-gen:$(protoVer)
 containerProtoGen=cosmos-sdk-proto-gen-$(protoVer)
 containerProtoFmt=cosmos-sdk-proto-fmt-$(protoVer)
 
@@ -269,7 +269,7 @@ test-sim-bench:
 	@VERSION=$(VERSION) go test -benchmem -run ^BenchmarkFullAppSimulation -bench ^BenchmarkFullAppSimulation -cpuprofile cpu.out $(PACKAGES_SIM)
 
 # test-e2e runs a full e2e test suite
-# deletes any pre-existing Osmosis containers before running.
+# deletes any pre-existing Mokisis containers before running.
 #
 # Attempts to delete Docker resources at the end.
 # May fail to do so if stopped mid way.
@@ -282,19 +282,19 @@ test-e2e: e2e-setup test-e2e-ci
 # does not do any validation about the state of the Docker environment
 # As a result, avoid using this locally.
 test-e2e-ci:
-	@VERSION=$(VERSION) OSMOSIS_E2E=True OSMOSIS_E2E_DEBUG_LOG=False OSMOSIS_E2E_UPGRADE_VERSION=$(E2E_UPGRADE_VERSION)  go test -mod=readonly -timeout=25m -v $(PACKAGES_E2E)
+	@VERSION=$(VERSION) MOKISIS_E2E=True MOKISIS_E2E_DEBUG_LOG=False MOKISIS_E2E_UPGRADE_VERSION=$(E2E_UPGRADE_VERSION)  go test -mod=readonly -timeout=25m -v $(PACKAGES_E2E)
 
 # test-e2e-debug runs a full e2e test suite but does
 # not attempt to delete Docker resources at the end.
 test-e2e-debug: e2e-setup
-	@VERSION=$(VERSION) OSMOSIS_E2E=True OSMOSIS_E2E_DEBUG_LOG=True OSMOSIS_E2E_UPGRADE_VERSION=$(E2E_UPGRADE_VERSION) OSMOSIS_E2E_SKIP_CLEANUP=True go test -mod=readonly -timeout=25m -v $(PACKAGES_E2E) -count=1
+	@VERSION=$(VERSION) MOKISIS_E2E=True MOKISIS_E2E_DEBUG_LOG=True MOKISIS_E2E_UPGRADE_VERSION=$(E2E_UPGRADE_VERSION) MOKISIS_E2E_SKIP_CLEANUP=True go test -mod=readonly -timeout=25m -v $(PACKAGES_E2E) -count=1
 
 # test-e2e-short runs the e2e test with only short tests.
 # Does not delete any of the containers after running.
 # Deletes any existing containers before running.
 # Does not use Go cache.
 test-e2e-short: e2e-setup
-	@VERSION=$(VERSION) OSMOSIS_E2E=True OSMOSIS_E2E_DEBUG_LOG=True OSMOSIS_E2E_SKIP_UPGRADE=True OSMOSIS_E2E_SKIP_IBC=True OSMOSIS_E2E_SKIP_STATE_SYNC=True OSMOSIS_E2E_SKIP_CLEANUP=True go test -mod=readonly -timeout=25m -v $(PACKAGES_E2E) -count=1
+	@VERSION=$(VERSION) MOKISIS_E2E=True MOKISIS_E2E_DEBUG_LOG=True MOKISIS_E2E_SKIP_UPGRADE=True MOKISIS_E2E_SKIP_IBC=True MOKISIS_E2E_SKIP_STATE_SYNC=True MOKISIS_E2E_SKIP_CLEANUP=True go test -mod=readonly -timeout=25m -v $(PACKAGES_E2E) -count=1
 
 test-mutation:
 	@bash scripts/mutation-test.sh $(MODULES)
@@ -307,18 +307,18 @@ build-e2e-script:
 	go build -mod=readonly $(BUILD_FLAGS) -o $(BUILDDIR)/ ./tests/e2e/initialization/$(E2E_SCRIPT_NAME)
 
 docker-build-debug:
-	@DOCKER_BUILDKIT=1 docker build -t osmosis:${COMMIT} --build-arg BASE_IMG_TAG=debug -f Dockerfile .
-	@DOCKER_BUILDKIT=1 docker tag osmosis:${COMMIT} osmosis:debug
+	@DOCKER_BUILDKIT=1 docker build -t mokita:${COMMIT} --build-arg BASE_IMG_TAG=debug -f Dockerfile .
+	@DOCKER_BUILDKIT=1 docker tag mokita:${COMMIT} mokita:debug
 
 docker-build-debug-alpine:
-	@DOCKER_BUILDKIT=1 docker build -t osmosis:${COMMIT} --build-arg BASE_IMG_TAG=debug --build-arg RUNNER_IMAGE=$(RUNNER_BASE_IMAGE_ALPINE) -f Dockerfile .
-	@DOCKER_BUILDKIT=1 docker tag osmosis:${COMMIT} osmosis:debug
+	@DOCKER_BUILDKIT=1 docker build -t mokita:${COMMIT} --build-arg BASE_IMG_TAG=debug --build-arg RUNNER_IMAGE=$(RUNNER_BASE_IMAGE_ALPINE) -f Dockerfile .
+	@DOCKER_BUILDKIT=1 docker tag mokita:${COMMIT} mokita:debug
 
 docker-build-e2e-init-chain:
-	@DOCKER_BUILDKIT=1 docker build -t osmosis-e2e-init-chain:debug --build-arg E2E_SCRIPT_NAME=chain --platform=linux/x86_64 -f tests/e2e/initialization/init.Dockerfile .
+	@DOCKER_BUILDKIT=1 docker build -t mokita-e2e-init-chain:debug --build-arg E2E_SCRIPT_NAME=chain --platform=linux/x86_64 -f tests/e2e/initialization/init.Dockerfile .
 
 docker-build-e2e-init-node:
-	@DOCKER_BUILDKIT=1 docker build -t osmosis-e2e-init-node:debug --build-arg E2E_SCRIPT_NAME=node --platform=linux/x86_64 -f tests/e2e/initialization/init.Dockerfile .
+	@DOCKER_BUILDKIT=1 docker build -t mokita-e2e-init-node:debug --build-arg E2E_SCRIPT_NAME=node --platform=linux/x86_64 -f tests/e2e/initialization/init.Dockerfile .
 
 e2e-setup: e2e-check-image-sha e2e-remove-resources
 	@echo Finished e2e environment setup, ready to start the test
@@ -341,8 +341,8 @@ RUNNER_BASE_IMAGE_NONROOT := gcr.io/distroless/static-debian11:nonroot
 
 docker-build:
 	@DOCKER_BUILDKIT=1 docker build \
-		-t osmosis:local \
-		-t osmosis:local-distroless \
+		-t mokita:local \
+		-t mokita:local-distroless \
 		--build-arg GO_VERSION=$(GO_VERSION) \
 		--build-arg RUNNER_IMAGE=$(RUNNER_BASE_IMAGE_DISTROLESS) \
 		--build-arg GIT_VERSION=$(VERSION) \
@@ -353,7 +353,7 @@ docker-build-distroless: docker-build
 
 docker-build-alpine:
 	@DOCKER_BUILDKIT=1 docker build \
-		-t osmosis:local-alpine \
+		-t mokita:local-alpine \
 		--build-arg GO_VERSION=$(GO_VERSION) \
 		--build-arg RUNNER_IMAGE=$(RUNNER_BASE_IMAGE_ALPINE) \
 		--build-arg GIT_VERSION=$(VERSION) \
@@ -362,7 +362,7 @@ docker-build-alpine:
 
 docker-build-nonroot:
 	@DOCKER_BUILDKIT=1 docker build \
-		-t osmosis:local-nonroot \
+		-t mokita:local-nonroot \
 		--build-arg GO_VERSION=$(GO_VERSION) \
 		--build-arg RUNNER_IMAGE=$(RUNNER_BASE_IMAGE_NONROOT) \
 		--build-arg GIT_VERSION=$(VERSION) \
@@ -395,44 +395,44 @@ markdown:
 ###############################################################################
 
 localnet-keys:
-	. tests/localosmosis/scripts/add_keys.sh
+	. tests/localmokita/scripts/add_keys.sh
 
 localnet-init: localnet-clean localnet-build
 
 localnet-build:
-	@DOCKER_BUILDKIT=1 COMPOSE_DOCKER_CLI_BUILD=1 docker-compose -f tests/localosmosis/docker-compose.yml build
+	@DOCKER_BUILDKIT=1 COMPOSE_DOCKER_CLI_BUILD=1 docker-compose -f tests/localmokita/docker-compose.yml build
 
 localnet-start:
-	@STATE="" docker-compose -f tests/localosmosis/docker-compose.yml up
+	@STATE="" docker-compose -f tests/localmokita/docker-compose.yml up
 
 localnet-start-with-state:
-	@STATE=-s docker-compose -f tests/localosmosis/docker-compose.yml up
+	@STATE=-s docker-compose -f tests/localmokita/docker-compose.yml up
 
 localnet-startd:
-	@STATE="" docker-compose -f tests/localosmosis/docker-compose.yml up -d
+	@STATE="" docker-compose -f tests/localmokita/docker-compose.yml up -d
 
 localnet-startd-with-state:
-	@STATE=-s docker-compose -f tests/localosmosis/docker-compose.yml up -d
+	@STATE=-s docker-compose -f tests/localmokita/docker-compose.yml up -d
 
 localnet-stop:
-	@STATE="" docker-compose -f tests/localosmosis/docker-compose.yml down
+	@STATE="" docker-compose -f tests/localmokita/docker-compose.yml down
 
 localnet-clean:
-	@rm -rfI $(HOME)/.osmosisd-local/
+	@rm -rfI $(HOME)/.mokitad-local/
 
 localnet-state-export-init: localnet-state-export-clean localnet-state-export-build 
 
 localnet-state-export-build:
-	@DOCKER_BUILDKIT=1 COMPOSE_DOCKER_CLI_BUILD=1 docker-compose -f tests/localosmosis/state_export/docker-compose.yml build
+	@DOCKER_BUILDKIT=1 COMPOSE_DOCKER_CLI_BUILD=1 docker-compose -f tests/localmokita/state_export/docker-compose.yml build
 
 localnet-state-export-start:
-	@docker-compose -f tests/localosmosis/state_export/docker-compose.yml up
+	@docker-compose -f tests/localmokita/state_export/docker-compose.yml up
 
 localnet-state-export-startd:
-	@docker-compose -f tests/localosmosis/state_export/docker-compose.yml up -d
+	@docker-compose -f tests/localmokita/state_export/docker-compose.yml up -d
 
 localnet-state-export-stop:
-	@docker-compose -f tests/localosmosis/docker-compose.yml down
+	@docker-compose -f tests/localmokita/docker-compose.yml down
 
 localnet-state-export-clean: localnet-clean
 

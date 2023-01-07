@@ -16,9 +16,9 @@ import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/cosmos/cosmos-sdk/types/module"
 
-	"github.com/osmosis-labs/osmosis/v13/x/concentrated-liquidity/client/cli"
-	clmodel "github.com/osmosis-labs/osmosis/v13/x/concentrated-liquidity/model"
-	"github.com/osmosis-labs/osmosis/v13/x/concentrated-liquidity/types"
+	"github.com/petri-labs/mokita/x/concentrated-liquidity/client/cli"
+	clmodel "github.com/petri-labs/mokita/x/concentrated-liquidity/model"
+	"github.com/petri-labs/mokita/x/concentrated-liquidity/types"
 )
 
 var (

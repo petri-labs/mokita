@@ -3,11 +3,11 @@ package concentrated_liquidity
 import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 
-	"github.com/osmosis-labs/osmosis/osmoutils/accum"
-	"github.com/osmosis-labs/osmosis/v13/x/concentrated-liquidity/model"
-	"github.com/osmosis-labs/osmosis/v13/x/concentrated-liquidity/types"
-	cltypes "github.com/osmosis-labs/osmosis/v13/x/concentrated-liquidity/types"
-	swaproutertypes "github.com/osmosis-labs/osmosis/v13/x/swaprouter/types"
+	"github.com/petri-labs/mokita/mokiutils/accum"
+	"github.com/petri-labs/mokita/x/concentrated-liquidity/model"
+	"github.com/petri-labs/mokita/x/concentrated-liquidity/types"
+	cltypes "github.com/petri-labs/mokita/x/concentrated-liquidity/types"
+	swaproutertypes "github.com/petri-labs/mokita/x/swaprouter/types"
 )
 
 // OrderInitialPoolDenoms sets the pool denoms of a cl pool

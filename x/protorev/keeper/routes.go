@@ -5,8 +5,8 @@ import (
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 
-	gammtypes "github.com/osmosis-labs/osmosis/v13/x/gamm/types"
-	"github.com/osmosis-labs/osmosis/v13/x/protorev/types"
+	gammtypes "github.com/petri-labs/mokita/x/gamm/types"
+	"github.com/petri-labs/mokita/x/protorev/types"
 )
 
 // BuildRoutes builds all of the possible arbitrage routes given the tokenIn, tokenOut and poolId that were used in the swap
@@ -18,9 +18,9 @@ func (k Keeper) BuildRoutes(ctx sdk.Context, tokenIn, tokenOut string, poolId ui
 		routes = append(routes, tokenPairRoutes...)
 	}
 
-	// Append an osmo route if one exists
-	if osmoRoute, err := k.BuildOsmoRoute(ctx, tokenIn, tokenOut, poolId); err == nil {
-		routes = append(routes, osmoRoute)
+	// Append an moki route if one exists
+	if mokiRoute, err := k.BuildMokiRoute(ctx, tokenIn, tokenOut, poolId); err == nil {
+		routes = append(routes, mokiRoute)
 	}
 
 	// Append an atom route if one exists
@@ -97,9 +97,9 @@ func (k Keeper) CheckValidHotRoute(ctx sdk.Context, route gammtypes.SwapAmountIn
 	return nil
 }
 
-// BuildOsmoRoute builds a cyclic arbitrage route that starts and ends with osmo given the tokenIn, tokenOut and poolId that were used in the swap
-func (k Keeper) BuildOsmoRoute(ctx sdk.Context, tokenIn, tokenOut string, poolId uint64) (gammtypes.SwapAmountInRoutes, error) {
-	return k.BuildRoute(ctx, types.OsmosisDenomination, tokenIn, tokenOut, poolId, k.GetOsmoPool)
+// BuildMokiRoute builds a cyclic arbitrage route that starts and ends with moki given the tokenIn, tokenOut and poolId that were used in the swap
+func (k Keeper) BuildMokiRoute(ctx sdk.Context, tokenIn, tokenOut string, poolId uint64) (gammtypes.SwapAmountInRoutes, error) {
+	return k.BuildRoute(ctx, types.MokisisDenomination, tokenIn, tokenOut, poolId, k.GetMokiPool)
 }
 
 // BuildAtomRoute builds a cyclic arbitrage route that starts and ends with atom given the tokenIn, tokenOut and poolId that were used in the swap
@@ -107,7 +107,7 @@ func (k Keeper) BuildAtomRoute(ctx sdk.Context, tokenIn, tokenOut string, poolId
 	return k.BuildRoute(ctx, types.AtomDenomination, tokenIn, tokenOut, poolId, k.GetAtomPool)
 }
 
-// BuildRoute constructs a cyclic arbitrage route that is starts/ends with swapDenom (atom or osmo) given the swap (tokenIn, tokenOut, poolId), and
+// BuildRoute constructs a cyclic arbitrage route that is starts/ends with swapDenom (atom or moki) given the swap (tokenIn, tokenOut, poolId), and
 // a function that can get the poolId from the store given a (token, swapDenom) pair.
 func (k Keeper) BuildRoute(ctx sdk.Context, swapDenom, tokenIn, tokenOut string, poolId uint64, getPoolIDFromStore func(sdk.Context, string) (uint64, error)) (gammtypes.SwapAmountInRoutes, error) {
 	// Creating the first trade in the arb

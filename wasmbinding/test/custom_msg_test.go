@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/osmosis-labs/osmosis/v13/x/tokenfactory/types"
+	"github.com/petri-labs/mokita/x/tokenfactory/types"
 
 	"github.com/stretchr/testify/require"
 
@@ -13,148 +13,148 @@ import (
 	wasmvmtypes "github.com/CosmWasm/wasmvm/types"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 
-	"github.com/osmosis-labs/osmosis/v13/app"
-	"github.com/osmosis-labs/osmosis/v13/wasmbinding/bindings"
+	"github.com/petri-labs/mokita/app"
+	"github.com/petri-labs/mokita/wasmbinding/bindings"
 )
 
 func TestCreateDenomMsg(t *testing.T) {
 	creator := RandomAccountAddress()
-	osmosis, ctx := SetupCustomApp(t, creator)
+	mokita, ctx := SetupCustomApp(t, creator)
 
 	lucky := RandomAccountAddress()
-	reflect := instantiateReflectContract(t, ctx, osmosis, lucky)
+	reflect := instantiateReflectContract(t, ctx, mokita, lucky)
 	require.NotEmpty(t, reflect)
 
 	// Fund reflect contract with 100 base denom creation fees
 	reflectAmount := sdk.NewCoins(sdk.NewCoin(types.DefaultParams().DenomCreationFee[0].Denom, types.DefaultParams().DenomCreationFee[0].Amount.MulRaw(100)))
-	fundAccount(t, ctx, osmosis, reflect, reflectAmount)
+	fundAccount(t, ctx, mokita, reflect, reflectAmount)
 
-	msg := bindings.OsmosisMsg{CreateDenom: &bindings.CreateDenom{
+	msg := bindings.MokisisMsg{CreateDenom: &bindings.CreateDenom{
 		Subdenom: "SUN",
 	}}
-	err := executeCustom(t, ctx, osmosis, reflect, lucky, msg, sdk.Coin{})
+	err := executeCustom(t, ctx, mokita, reflect, lucky, msg, sdk.Coin{})
 	require.NoError(t, err)
 
 	// query the denom and see if it matches
-	query := bindings.OsmosisQuery{
+	query := bindings.MokisisQuery{
 		FullDenom: &bindings.FullDenom{
 			CreatorAddr: reflect.String(),
 			Subdenom:    "SUN",
 		},
 	}
 	resp := bindings.FullDenomResponse{}
-	queryCustom(t, ctx, osmosis, reflect, query, &resp)
+	queryCustom(t, ctx, mokita, reflect, query, &resp)
 
 	require.Equal(t, resp.Denom, fmt.Sprintf("factory/%s/SUN", reflect.String()))
 }
 
 func TestMintMsg(t *testing.T) {
 	creator := RandomAccountAddress()
-	osmosis, ctx := SetupCustomApp(t, creator)
+	mokita, ctx := SetupCustomApp(t, creator)
 
 	lucky := RandomAccountAddress()
-	reflect := instantiateReflectContract(t, ctx, osmosis, lucky)
+	reflect := instantiateReflectContract(t, ctx, mokita, lucky)
 	require.NotEmpty(t, reflect)
 
 	// Fund reflect contract with 100 base denom creation fees
 	reflectAmount := sdk.NewCoins(sdk.NewCoin(types.DefaultParams().DenomCreationFee[0].Denom, types.DefaultParams().DenomCreationFee[0].Amount.MulRaw(100)))
-	fundAccount(t, ctx, osmosis, reflect, reflectAmount)
+	fundAccount(t, ctx, mokita, reflect, reflectAmount)
 
 	// lucky was broke
-	balances := osmosis.BankKeeper.GetAllBalances(ctx, lucky)
+	balances := mokita.BankKeeper.GetAllBalances(ctx, lucky)
 	require.Empty(t, balances)
 
 	// Create denom for minting
-	msg := bindings.OsmosisMsg{CreateDenom: &bindings.CreateDenom{
+	msg := bindings.MokisisMsg{CreateDenom: &bindings.CreateDenom{
 		Subdenom: "SUN",
 	}}
-	err := executeCustom(t, ctx, osmosis, reflect, lucky, msg, sdk.Coin{})
+	err := executeCustom(t, ctx, mokita, reflect, lucky, msg, sdk.Coin{})
 	require.NoError(t, err)
 	sunDenom := fmt.Sprintf("factory/%s/%s", reflect.String(), msg.CreateDenom.Subdenom)
 
 	amount, ok := sdk.NewIntFromString("808010808")
 	require.True(t, ok)
-	msg = bindings.OsmosisMsg{MintTokens: &bindings.MintTokens{
+	msg = bindings.MokisisMsg{MintTokens: &bindings.MintTokens{
 		Denom:         sunDenom,
 		Amount:        amount,
 		MintToAddress: lucky.String(),
 	}}
-	err = executeCustom(t, ctx, osmosis, reflect, lucky, msg, sdk.Coin{})
+	err = executeCustom(t, ctx, mokita, reflect, lucky, msg, sdk.Coin{})
 	require.NoError(t, err)
 
-	balances = osmosis.BankKeeper.GetAllBalances(ctx, lucky)
+	balances = mokita.BankKeeper.GetAllBalances(ctx, lucky)
 	require.Len(t, balances, 1)
 	coin := balances[0]
 	require.Equal(t, amount, coin.Amount)
 	require.Contains(t, coin.Denom, "factory/")
 
 	// query the denom and see if it matches
-	query := bindings.OsmosisQuery{
+	query := bindings.MokisisQuery{
 		FullDenom: &bindings.FullDenom{
 			CreatorAddr: reflect.String(),
 			Subdenom:    "SUN",
 		},
 	}
 	resp := bindings.FullDenomResponse{}
-	queryCustom(t, ctx, osmosis, reflect, query, &resp)
+	queryCustom(t, ctx, mokita, reflect, query, &resp)
 
 	require.Equal(t, resp.Denom, coin.Denom)
 
 	// mint the same denom again
-	err = executeCustom(t, ctx, osmosis, reflect, lucky, msg, sdk.Coin{})
+	err = executeCustom(t, ctx, mokita, reflect, lucky, msg, sdk.Coin{})
 	require.NoError(t, err)
 
-	balances = osmosis.BankKeeper.GetAllBalances(ctx, lucky)
+	balances = mokita.BankKeeper.GetAllBalances(ctx, lucky)
 	require.Len(t, balances, 1)
 	coin = balances[0]
 	require.Equal(t, amount.MulRaw(2), coin.Amount)
 	require.Contains(t, coin.Denom, "factory/")
 
 	// query the denom and see if it matches
-	query = bindings.OsmosisQuery{
+	query = bindings.MokisisQuery{
 		FullDenom: &bindings.FullDenom{
 			CreatorAddr: reflect.String(),
 			Subdenom:    "SUN",
 		},
 	}
 	resp = bindings.FullDenomResponse{}
-	queryCustom(t, ctx, osmosis, reflect, query, &resp)
+	queryCustom(t, ctx, mokita, reflect, query, &resp)
 
 	require.Equal(t, resp.Denom, coin.Denom)
 
 	// now mint another amount / denom
 	// create it first
-	msg = bindings.OsmosisMsg{CreateDenom: &bindings.CreateDenom{
+	msg = bindings.MokisisMsg{CreateDenom: &bindings.CreateDenom{
 		Subdenom: "MOON",
 	}}
-	err = executeCustom(t, ctx, osmosis, reflect, lucky, msg, sdk.Coin{})
+	err = executeCustom(t, ctx, mokita, reflect, lucky, msg, sdk.Coin{})
 	require.NoError(t, err)
 	moonDenom := fmt.Sprintf("factory/%s/%s", reflect.String(), msg.CreateDenom.Subdenom)
 
 	amount = amount.SubRaw(1)
-	msg = bindings.OsmosisMsg{MintTokens: &bindings.MintTokens{
+	msg = bindings.MokisisMsg{MintTokens: &bindings.MintTokens{
 		Denom:         moonDenom,
 		Amount:        amount,
 		MintToAddress: lucky.String(),
 	}}
-	err = executeCustom(t, ctx, osmosis, reflect, lucky, msg, sdk.Coin{})
+	err = executeCustom(t, ctx, mokita, reflect, lucky, msg, sdk.Coin{})
 	require.NoError(t, err)
 
-	balances = osmosis.BankKeeper.GetAllBalances(ctx, lucky)
+	balances = mokita.BankKeeper.GetAllBalances(ctx, lucky)
 	require.Len(t, balances, 2)
 	coin = balances[0]
 	require.Equal(t, amount, coin.Amount)
 	require.Contains(t, coin.Denom, "factory/")
 
 	// query the denom and see if it matches
-	query = bindings.OsmosisQuery{
+	query = bindings.MokisisQuery{
 		FullDenom: &bindings.FullDenom{
 			CreatorAddr: reflect.String(),
 			Subdenom:    "MOON",
 		},
 	}
 	resp = bindings.FullDenomResponse{}
-	queryCustom(t, ctx, osmosis, reflect, query, &resp)
+	queryCustom(t, ctx, mokita, reflect, query, &resp)
 
 	require.Equal(t, resp.Denom, coin.Denom)
 
@@ -164,73 +164,73 @@ func TestMintMsg(t *testing.T) {
 	require.Contains(t, coin.Denom, "factory/")
 
 	// query the denom and see if it matches
-	query = bindings.OsmosisQuery{
+	query = bindings.MokisisQuery{
 		FullDenom: &bindings.FullDenom{
 			CreatorAddr: reflect.String(),
 			Subdenom:    "SUN",
 		},
 	}
 	resp = bindings.FullDenomResponse{}
-	queryCustom(t, ctx, osmosis, reflect, query, &resp)
+	queryCustom(t, ctx, mokita, reflect, query, &resp)
 
 	require.Equal(t, resp.Denom, coin.Denom)
 }
 
 func TestBurnMsg(t *testing.T) {
 	creator := RandomAccountAddress()
-	osmosis, ctx := SetupCustomApp(t, creator)
+	mokita, ctx := SetupCustomApp(t, creator)
 
 	lucky := RandomAccountAddress()
-	reflect := instantiateReflectContract(t, ctx, osmosis, lucky)
+	reflect := instantiateReflectContract(t, ctx, mokita, lucky)
 	require.NotEmpty(t, reflect)
 
 	// Fund reflect contract with 100 base denom creation fees
 	reflectAmount := sdk.NewCoins(sdk.NewCoin(types.DefaultParams().DenomCreationFee[0].Denom, types.DefaultParams().DenomCreationFee[0].Amount.MulRaw(100)))
-	fundAccount(t, ctx, osmosis, reflect, reflectAmount)
+	fundAccount(t, ctx, mokita, reflect, reflectAmount)
 
 	// lucky was broke
-	balances := osmosis.BankKeeper.GetAllBalances(ctx, lucky)
+	balances := mokita.BankKeeper.GetAllBalances(ctx, lucky)
 	require.Empty(t, balances)
 
 	// Create denom for minting
-	msg := bindings.OsmosisMsg{CreateDenom: &bindings.CreateDenom{
+	msg := bindings.MokisisMsg{CreateDenom: &bindings.CreateDenom{
 		Subdenom: "SUN",
 	}}
-	err := executeCustom(t, ctx, osmosis, reflect, lucky, msg, sdk.Coin{})
+	err := executeCustom(t, ctx, mokita, reflect, lucky, msg, sdk.Coin{})
 	require.NoError(t, err)
 	sunDenom := fmt.Sprintf("factory/%s/%s", reflect.String(), msg.CreateDenom.Subdenom)
 
 	amount, ok := sdk.NewIntFromString("808010808")
 	require.True(t, ok)
 
-	msg = bindings.OsmosisMsg{MintTokens: &bindings.MintTokens{
+	msg = bindings.MokisisMsg{MintTokens: &bindings.MintTokens{
 		Denom:         sunDenom,
 		Amount:        amount,
 		MintToAddress: lucky.String(),
 	}}
-	err = executeCustom(t, ctx, osmosis, reflect, lucky, msg, sdk.Coin{})
+	err = executeCustom(t, ctx, mokita, reflect, lucky, msg, sdk.Coin{})
 	require.NoError(t, err)
 
 	// can't burn from different address
-	msg = bindings.OsmosisMsg{BurnTokens: &bindings.BurnTokens{
+	msg = bindings.MokisisMsg{BurnTokens: &bindings.BurnTokens{
 		Denom:           sunDenom,
 		Amount:          amount,
 		BurnFromAddress: lucky.String(),
 	}}
-	err = executeCustom(t, ctx, osmosis, reflect, lucky, msg, sdk.Coin{})
+	err = executeCustom(t, ctx, mokita, reflect, lucky, msg, sdk.Coin{})
 	require.Error(t, err)
 
 	// lucky needs to send balance to reflect contract to burn it
-	luckyBalance := osmosis.BankKeeper.GetAllBalances(ctx, lucky)
-	err = osmosis.BankKeeper.SendCoins(ctx, lucky, reflect, luckyBalance)
+	luckyBalance := mokita.BankKeeper.GetAllBalances(ctx, lucky)
+	err = mokita.BankKeeper.SendCoins(ctx, lucky, reflect, luckyBalance)
 	require.NoError(t, err)
 
-	msg = bindings.OsmosisMsg{BurnTokens: &bindings.BurnTokens{
+	msg = bindings.MokisisMsg{BurnTokens: &bindings.BurnTokens{
 		Denom:           sunDenom,
 		Amount:          amount,
 		BurnFromAddress: reflect.String(),
 	}}
-	err = executeCustom(t, ctx, osmosis, reflect, lucky, msg, sdk.Coin{})
+	err = executeCustom(t, ctx, mokita, reflect, lucky, msg, sdk.Coin{})
 	require.NoError(t, err)
 }
 
@@ -246,19 +246,19 @@ type ReflectExec struct {
 }
 
 type ReflectMsgs struct {
-	Msgs []wasmvmtypes.CosmosMsg `json:"msgs"`
+	Msgs []wasmvmtypes.CmokisMsg `json:"msgs"`
 }
 
 type ReflectSubMsgs struct {
 	Msgs []wasmvmtypes.SubMsg `json:"msgs"`
 }
 
-func executeCustom(t *testing.T, ctx sdk.Context, osmosis *app.OsmosisApp, contract sdk.AccAddress, sender sdk.AccAddress, msg bindings.OsmosisMsg, funds sdk.Coin) error {
+func executeCustom(t *testing.T, ctx sdk.Context, mokita *app.MokisisApp, contract sdk.AccAddress, sender sdk.AccAddress, msg bindings.MokisisMsg, funds sdk.Coin) error {
 	customBz, err := json.Marshal(msg)
 	require.NoError(t, err)
 	reflectMsg := ReflectExec{
 		ReflectMsg: &ReflectMsgs{
-			Msgs: []wasmvmtypes.CosmosMsg{{
+			Msgs: []wasmvmtypes.CmokisMsg{{
 				Custom: customBz,
 			}},
 		},
@@ -272,7 +272,7 @@ func executeCustom(t *testing.T, ctx sdk.Context, osmosis *app.OsmosisApp, contr
 		coins = sdk.Coins{funds}
 	}
 
-	contractKeeper := keeper.NewDefaultPermissionKeeper(osmosis.WasmKeeper)
+	contractKeeper := keeper.NewDefaultPermissionKeeper(mokita.WasmKeeper)
 	_, err = contractKeeper.Execute(ctx, contract, sender, reflectBz, coins)
 	return err
 }

@@ -7,9 +7,9 @@ import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 
-	"github.com/osmosis-labs/osmosis/v13/x/gamm/types"
-	"github.com/osmosis-labs/osmosis/v13/x/swaprouter/events"
-	swaproutertypes "github.com/osmosis-labs/osmosis/v13/x/swaprouter/types"
+	"github.com/petri-labs/mokita/x/gamm/types"
+	"github.com/petri-labs/mokita/x/swaprouter/events"
+	swaproutertypes "github.com/petri-labs/mokita/x/swaprouter/types"
 )
 
 // swapExactAmountIn is an internal method for swapping an exact amount of tokens
@@ -17,7 +17,7 @@ import (
 // different swap fees as determined by multi-hops, or when recovering from
 // chain liveness failures.
 // TODO: investigate if swapFee can be unexported
-// https://github.com/osmosis-labs/osmosis/issues/3130
+// https://github.com/petri-labs/mokita/issues/3130
 func (k Keeper) SwapExactAmountIn(
 	ctx sdk.Context,
 	sender sdk.AccAddress,

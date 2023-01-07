@@ -1,7 +1,7 @@
 package keeper_test
 
 import (
-	"github.com/osmosis-labs/osmosis/v13/x/protorev/types"
+	"github.com/petri-labs/mokita/x/protorev/types"
 )
 
 type TestRoute struct {
@@ -30,9 +30,9 @@ func (suite *KeeperTestSuite) TestBuildRoutes() {
 					{PoolId: 4, InputDenom: "bitcoin", OutputDenom: types.AtomDenomination},
 				},
 				{
-					{PoolId: 25, InputDenom: types.OsmosisDenomination, OutputDenom: types.AtomDenomination},
+					{PoolId: 25, InputDenom: types.MokisisDenomination, OutputDenom: types.AtomDenomination},
 					{PoolId: 1, InputDenom: types.AtomDenomination, OutputDenom: "akash"},
-					{PoolId: 7, InputDenom: "akash", OutputDenom: types.OsmosisDenomination},
+					{PoolId: 7, InputDenom: "akash", OutputDenom: types.MokisisDenomination},
 				},
 			},
 		},
@@ -43,9 +43,9 @@ func (suite *KeeperTestSuite) TestBuildRoutes() {
 			poolID:      4,
 			expected: [][]TestRoute{
 				{
-					{PoolId: 25, InputDenom: types.OsmosisDenomination, OutputDenom: types.AtomDenomination},
+					{PoolId: 25, InputDenom: types.MokisisDenomination, OutputDenom: types.AtomDenomination},
 					{PoolId: 4, InputDenom: types.AtomDenomination, OutputDenom: "bitcoin"},
-					{PoolId: 10, InputDenom: "bitcoin", OutputDenom: types.OsmosisDenomination},
+					{PoolId: 10, InputDenom: "bitcoin", OutputDenom: types.MokisisDenomination},
 				},
 			},
 		},
@@ -56,9 +56,9 @@ func (suite *KeeperTestSuite) TestBuildRoutes() {
 			poolID:      19,
 			expected: [][]TestRoute{
 				{
-					{PoolId: 9, InputDenom: types.OsmosisDenomination, OutputDenom: "ethereum"},
+					{PoolId: 9, InputDenom: types.MokisisDenomination, OutputDenom: "ethereum"},
 					{PoolId: 19, InputDenom: "ethereum", OutputDenom: "bitcoin"},
-					{PoolId: 10, InputDenom: "bitcoin", OutputDenom: types.OsmosisDenomination},
+					{PoolId: 10, InputDenom: "bitcoin", OutputDenom: types.MokisisDenomination},
 				},
 				{
 					{PoolId: 3, InputDenom: types.AtomDenomination, OutputDenom: "ethereum"},
@@ -68,8 +68,8 @@ func (suite *KeeperTestSuite) TestBuildRoutes() {
 			},
 		},
 		{
-			description: "No route exists for swap in osmo and swap out Atom",
-			inputDenom:  types.OsmosisDenomination,
+			description: "No route exists for swap in moki and swap out Atom",
+			inputDenom:  types.MokisisDenomination,
 			outputDenom: types.AtomDenomination,
 			poolID:      25,
 			expected:    [][]TestRoute{},
@@ -102,25 +102,25 @@ func (suite *KeeperTestSuite) TestBuildAtomRoute() {
 		hasRoute      bool
 	}{
 		{
-			description:   "Route exists for swap in Osmo and swap out Akash",
-			swapIn:        types.OsmosisDenomination,
+			description:   "Route exists for swap in Moki and swap out Akash",
+			swapIn:        types.MokisisDenomination,
 			swapOut:       "akash",
 			poolId:        7,
-			expectedRoute: []TestRoute{{1, types.AtomDenomination, "akash"}, {7, "akash", types.OsmosisDenomination}, {25, types.OsmosisDenomination, types.AtomDenomination}},
+			expectedRoute: []TestRoute{{1, types.AtomDenomination, "akash"}, {7, "akash", types.MokisisDenomination}, {25, types.MokisisDenomination, types.AtomDenomination}},
 			hasRoute:      true,
 		},
 		{
-			description:   "Route exists for swap in Akash and swap out Osmo",
+			description:   "Route exists for swap in Akash and swap out Moki",
 			swapIn:        "akash",
-			swapOut:       types.OsmosisDenomination,
+			swapOut:       types.MokisisDenomination,
 			poolId:        7,
-			expectedRoute: []TestRoute{{25, types.AtomDenomination, types.OsmosisDenomination}, {7, types.OsmosisDenomination, "akash"}, {1, "akash", types.AtomDenomination}},
+			expectedRoute: []TestRoute{{25, types.AtomDenomination, types.MokisisDenomination}, {7, types.MokisisDenomination, "akash"}, {1, "akash", types.AtomDenomination}},
 			hasRoute:      true,
 		},
 		{
-			description:   "Route does not exist for swap in Terra and swap out Osmo because the pool does not exist",
+			description:   "Route does not exist for swap in Terra and swap out Moki because the pool does not exist",
 			swapIn:        "terra",
-			swapOut:       types.OsmosisDenomination,
+			swapOut:       types.MokisisDenomination,
 			poolId:        7,
 			expectedRoute: []TestRoute{},
 			hasRoute:      false,
@@ -146,7 +146,7 @@ func (suite *KeeperTestSuite) TestBuildAtomRoute() {
 	}
 }
 
-func (suite *KeeperTestSuite) TestBuildOsmoRoute() {
+func (suite *KeeperTestSuite) TestBuildMokiRoute() {
 	cases := []struct {
 		description   string
 		swapIn        string
@@ -160,7 +160,7 @@ func (suite *KeeperTestSuite) TestBuildOsmoRoute() {
 			swapIn:        types.AtomDenomination,
 			swapOut:       "akash",
 			poolId:        1,
-			expectedRoute: []TestRoute{{7, types.OsmosisDenomination, "akash"}, {1, "akash", types.AtomDenomination}, {25, types.AtomDenomination, types.OsmosisDenomination}},
+			expectedRoute: []TestRoute{{7, types.MokisisDenomination, "akash"}, {1, "akash", types.AtomDenomination}, {25, types.AtomDenomination, types.MokisisDenomination}},
 			hasRoute:      true,
 		},
 		{
@@ -168,7 +168,7 @@ func (suite *KeeperTestSuite) TestBuildOsmoRoute() {
 			swapIn:        "akash",
 			swapOut:       types.AtomDenomination,
 			poolId:        1,
-			expectedRoute: []TestRoute{{25, types.OsmosisDenomination, types.AtomDenomination}, {1, types.AtomDenomination, "akash"}, {7, "akash", types.OsmosisDenomination}},
+			expectedRoute: []TestRoute{{25, types.MokisisDenomination, types.AtomDenomination}, {1, types.AtomDenomination, "akash"}, {7, "akash", types.MokisisDenomination}},
 			hasRoute:      true,
 		},
 		{
@@ -183,7 +183,7 @@ func (suite *KeeperTestSuite) TestBuildOsmoRoute() {
 
 	for _, tc := range cases {
 		suite.Run(tc.description, func() {
-			route, err := suite.App.ProtoRevKeeper.BuildOsmoRoute(suite.Ctx, tc.swapIn, tc.swapOut, tc.poolId)
+			route, err := suite.App.ProtoRevKeeper.BuildMokiRoute(suite.Ctx, tc.swapIn, tc.swapOut, tc.poolId)
 
 			if tc.hasRoute {
 				suite.Require().NoError(err)

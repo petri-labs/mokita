@@ -7,8 +7,8 @@ import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/stretchr/testify/suite"
 
-	"github.com/osmosis-labs/osmosis/v13/app/apptesting"
-	"github.com/osmosis-labs/osmosis/v13/x/gamm/types"
+	"github.com/petri-labs/mokita/app/apptesting"
+	"github.com/petri-labs/mokita/x/gamm/types"
 )
 
 type QueryTestSuite struct {
@@ -29,13 +29,13 @@ func (s *QueryTestSuite) TestQueriesNeverAlterState() {
 		fooDenom   = apptesting.DefaultPoolAssets[0].Token.Denom
 		barDenom   = apptesting.DefaultPoolAssets[1].Token.Denom
 		bazDenom   = apptesting.DefaultPoolAssets[2].Token.Denom
-		uosmoDenom = apptesting.DefaultPoolAssets[3].Token.Denom
+		umokiDenom = apptesting.DefaultPoolAssets[3].Token.Denom
 
 		basicValidTokensIn = sdk.NewCoins(
 			sdk.NewCoin(fooDenom, sdk.OneInt()),
 			sdk.NewCoin(barDenom, sdk.OneInt()),
 			sdk.NewCoin(bazDenom, sdk.OneInt()),
-			sdk.NewCoin(uosmoDenom, sdk.OneInt()))
+			sdk.NewCoin(umokiDenom, sdk.OneInt()))
 	)
 
 	testCases := []struct {
@@ -46,73 +46,73 @@ func (s *QueryTestSuite) TestQueriesNeverAlterState() {
 	}{
 		{
 			"Query pools",
-			"/osmosis.gamm.v1beta1.Query/Pools",
+			"/mokita.gamm.v1beta1.Query/Pools",
 			&types.QueryPoolsRequest{},
 			&types.QueryPoolsResponse{},
 		},
 		{
 			"Query single pool",
-			"/osmosis.gamm.v1beta1.Query/Pool",
+			"/mokita.gamm.v1beta1.Query/Pool",
 			&types.QueryPoolRequest{PoolId: 1},
 			&types.QueryPoolsResponse{},
 		},
 		{
 			"Query num pools",
-			"/osmosis.gamm.v1beta1.Query/NumPools",
+			"/mokita.gamm.v1beta1.Query/NumPools",
 			&types.QueryNumPoolsRequest{},
 			&types.QueryNumPoolsResponse{},
 		},
 		{
 			"Query pool params",
-			"/osmosis.gamm.v1beta1.Query/PoolParams",
+			"/mokita.gamm.v1beta1.Query/PoolParams",
 			&types.QueryPoolParamsRequest{PoolId: 1},
 			&types.QueryPoolParamsResponse{},
 		},
 		{
 			"Query pool type",
-			"/osmosis.gamm.v1beta1.Query/PoolType",
+			"/mokita.gamm.v1beta1.Query/PoolType",
 			&types.QueryPoolTypeRequest{PoolId: 1},
 			&types.QueryPoolTypeResponse{},
 		},
 		{
 			"Query spot price",
-			"/osmosis.gamm.v1beta1.Query/SpotPrice",
+			"/mokita.gamm.v1beta1.Query/SpotPrice",
 			&types.QuerySpotPriceRequest{PoolId: 1, BaseAssetDenom: fooDenom, QuoteAssetDenom: barDenom},
 			&types.QuerySpotPriceResponse{},
 		},
 		{
 			"Query total liquidity",
-			"/osmosis.gamm.v1beta1.Query/TotalLiquidity",
+			"/mokita.gamm.v1beta1.Query/TotalLiquidity",
 			&types.QueryTotalLiquidityRequest{},
 			&types.QueryTotalLiquidityResponse{},
 		},
 		{
 			"Query pool total liquidity",
-			"/osmosis.gamm.v1beta1.Query/TotalPoolLiquidity",
+			"/mokita.gamm.v1beta1.Query/TotalPoolLiquidity",
 			&types.QueryTotalPoolLiquidityRequest{PoolId: 1},
 			&types.QueryTotalPoolLiquidityResponse{},
 		},
 		{
 			"Query total shares",
-			"/osmosis.gamm.v1beta1.Query/TotalShares",
+			"/mokita.gamm.v1beta1.Query/TotalShares",
 			&types.QueryTotalSharesRequest{PoolId: 1},
 			&types.QueryTotalSharesResponse{},
 		},
 		{
 			"Query estimate for join pool shares with no swap",
-			"/osmosis.gamm.v1beta1.Query/CalcJoinPoolNoSwapShares",
+			"/mokita.gamm.v1beta1.Query/CalcJoinPoolNoSwapShares",
 			&types.QueryCalcJoinPoolNoSwapSharesRequest{PoolId: 1, TokensIn: basicValidTokensIn},
 			&types.QueryCalcJoinPoolNoSwapSharesResponse{},
 		},
 		{
 			"Query estimate for join pool shares with no swap",
-			"/osmosis.gamm.v1beta1.Query/CalcJoinPoolShares",
+			"/mokita.gamm.v1beta1.Query/CalcJoinPoolShares",
 			&types.QueryCalcJoinPoolSharesRequest{PoolId: 1, TokensIn: basicValidTokensIn},
 			&types.QueryCalcJoinPoolSharesResponse{},
 		},
 		{
 			"Query exit pool coins from shares",
-			"/osmosis.gamm.v1beta1.Query/CalcExitPoolCoinsFromShares",
+			"/mokita.gamm.v1beta1.Query/CalcExitPoolCoinsFromShares",
 			&types.QueryCalcExitPoolCoinsFromSharesRequest{PoolId: 1, ShareInAmount: sdk.OneInt()},
 			&types.QueryCalcExitPoolCoinsFromSharesResponse{},
 		},

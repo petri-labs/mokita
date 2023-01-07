@@ -7,13 +7,13 @@ import (
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 
-	gammkeeper "github.com/osmosis-labs/osmosis/v13/x/gamm/keeper"
-	"github.com/osmosis-labs/osmosis/v13/x/txfees/types"
+	gammkeeper "github.com/petri-labs/mokita/x/gamm/keeper"
+	"github.com/petri-labs/mokita/x/txfees/types"
 )
 
-// Every asset with a liquid osmo pairing pool on Osmosis, as of 12/01/21
-// Notably, Tick is not on this list because the osmo pool has $76 of liquidity.
-// Cheq'd and KRT are also not on this, due to neither having osmo pairings.
+// Every asset with a liquid moki pairing pool on Mokisis, as of 12/01/21
+// Notably, Tick is not on this list because the moki pool has $76 of liquidity.
+// Cheq'd and KRT are also not on this, due to neither having moki pairings.
 // We nolint because these are strings of whitelisted ibc denoms.
 //
 //nolint:gosec

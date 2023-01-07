@@ -8,27 +8,27 @@ import (
 
 	authzcodec "github.com/cosmos/cosmos-sdk/x/authz/codec"
 
-	types "github.com/osmosis-labs/osmosis/v13/x/gamm/types"
-	swaproutertypes "github.com/osmosis-labs/osmosis/v13/x/swaprouter/types"
+	types "github.com/petri-labs/mokita/x/gamm/types"
+	swaproutertypes "github.com/petri-labs/mokita/x/swaprouter/types"
 )
 
 // RegisterLegacyAminoCodec registers the necessary x/gamm interfaces and concrete types
 // on the provided LegacyAmino codec. These types are used for Amino JSON serialization.
 func RegisterLegacyAminoCodec(cdc *codec.LegacyAmino) {
-	cdc.RegisterConcrete(&Pool{}, "osmosis/gamm/StableswapPool", nil)
-	cdc.RegisterConcrete(&MsgCreateStableswapPool{}, "osmosis/gamm/create-stableswap-pool", nil)
-	cdc.RegisterConcrete(&MsgStableSwapAdjustScalingFactors{}, "osmosis/gamm/stableswap-adjust-scaling-factors", nil)
-	cdc.RegisterConcrete(&PoolParams{}, "osmosis/gamm/StableswapPoolParams", nil)
+	cdc.RegisterConcrete(&Pool{}, "mokita/gamm/StableswapPool", nil)
+	cdc.RegisterConcrete(&MsgCreateStableswapPool{}, "mokita/gamm/create-stableswap-pool", nil)
+	cdc.RegisterConcrete(&MsgStableSwapAdjustScalingFactors{}, "mokita/gamm/stableswap-adjust-scaling-factors", nil)
+	cdc.RegisterConcrete(&PoolParams{}, "mokita/gamm/StableswapPoolParams", nil)
 }
 
 func RegisterInterfaces(registry codectypes.InterfaceRegistry) {
 	registry.RegisterInterface(
-		"osmosis.swaprouter.v1beta1.PoolI",
+		"mokita.swaprouter.v1beta1.PoolI",
 		(*swaproutertypes.PoolI)(nil),
 		&Pool{},
 	)
 	registry.RegisterInterface(
-		"osmosis.gamm.v1beta1.PoolI", // N.B.: the old proto-path is preserved for backwards-compatibility.
+		"mokita.gamm.v1beta1.PoolI", // N.B.: the old proto-path is preserved for backwards-compatibility.
 		(*types.CFMMPoolI)(nil),
 		&Pool{},
 	)

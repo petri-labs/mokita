@@ -21,9 +21,9 @@ import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/cosmos/cosmos-sdk/types/simulation"
 
-	"github.com/osmosis-labs/osmosis/v13/simulation/executor/internal/executortypes"
-	"github.com/osmosis-labs/osmosis/v13/simulation/executor/internal/stats"
-	"github.com/osmosis-labs/osmosis/v13/simulation/simtypes"
+	"github.com/petri-labs/mokita/simulation/executor/internal/executortypes"
+	"github.com/petri-labs/mokita/simulation/executor/internal/stats"
+	"github.com/petri-labs/mokita/simulation/simtypes"
 )
 
 const AverageBlockTime = 6 * time.Second
@@ -106,7 +106,7 @@ func simulationHomeDir() string {
 		panic(err)
 	}
 
-	return filepath.Join(userHomeDir, ".osmosis_simulation")
+	return filepath.Join(userHomeDir, ".mokita_simulation")
 }
 
 // The goal of this function is to group the extremely badly abstracted genesis logic,

@@ -522,14 +522,14 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "624a8340c38c1b80fd549087862da4ba43e08858af025b236e509b6649fc13d5"
 
 [[package]]
-name = "osmosis-std"
+name = "mokita-std"
 version = "0.12.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "d2b3792977036dc49cfc9af9fd7a6c021fd48dfffc8ebf09324201506c65a47a"
 dependencies = [
  "chrono",
  "cosmwasm-std",
- "osmosis-std-derive",
+ "mokita-std-derive",
  "prost 0.11.2",
  "prost-types",
  "schemars",
@@ -538,7 +538,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "osmosis-std-derive"
+name = "mokita-std-derive"
 version = "0.12.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "c501f2b8ff88b1c60ab671d7b808e947f384fa2524fe4ec8c06f63ef4be29979"
@@ -659,8 +659,8 @@ dependencies = [
  "cw-storage-plus 0.16.0",
  "cw2",
  "hex",
- "osmosis-std",
- "osmosis-std-derive",
+ "mokita-std",
+ "mokita-std-derive",
  "prost 0.11.2",
  "schemars",
  "serde",

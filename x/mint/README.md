@@ -1,8 +1,8 @@
 # Mint
 
 The `mint` module is responsible for creating tokens in a flexible way to reward
-validators, incentivize providing pool liquidity, provide funds for Osmosis governance,
-and pay developers to maintain and improve Osmosis.
+validators, incentivize providing pool liquidity, provide funds for Mokisis governance,
+and pay developers to maintain and improve Mokisis.
 
 The module is also responsible for reducing the token creation and distribution by a set period
 until it reaches its maximum supply (see `reduction_factor` and `reduction_period_in_epochs`)
@@ -21,7 +21,7 @@ The module uses time basis epochs supported by the `epochs` module.
 ## Concepts
 
 The `x/mint` module is designed to handle the regular printing of new
-tokens within a chain. The design taken within Osmosis is to
+tokens within a chain. The design taken within Mokisis is to
 
 - Mint new tokens once per epoch (default one week)
 - To have a "Reductioning factor" every period, which reduces the number of
@@ -48,7 +48,7 @@ the following formula:
 
 ### Minter
 
-The [`Minter`](https://github.com/osmosis-labs/osmosis/blob/cbb683e8395655042b4421355cd54a8c96bfa507/x/mint/types/mint.pb.go#L30) is an abstraction for holding current rewards information.
+The [`Minter`](https://github.com/petri-labs/mokita/blob/cbb683e8395655042b4421355cd54a8c96bfa507/x/mint/types/mint.pb.go#L30) is an abstraction for holding current rewards information.
 
 ```go
 type Minter struct {
@@ -58,7 +58,7 @@ type Minter struct {
 
 ### Params
 
-Minting [`Params`](https://github.com/osmosis-labs/osmosis/blob/cbb683e8395655042b4421355cd54a8c96bfa507/x/mint/types/mint.pb.go#L168) are held in the global params store.
+Minting [`Params`](https://github.com/petri-labs/mokita/blob/cbb683e8395655042b4421355cd54a8c96bfa507/x/mint/types/mint.pb.go#L168) are held in the global params store.
 
 ### LastReductionEpoch
 
@@ -92,7 +92,7 @@ The minting module contains the following parameters:
 
 | Key                                        | Type         | Example                                |
 | ------------------------------------------ | ------------ | -------------------------------------- |
-| mint_denom                                 | string       | "uosmo"                                |
+| mint_denom                                 | string       | "umoki"                                |
 | genesis_epoch_provisions                   | string (dec) | "500000000"                            |
 | epoch_identifier                           | string       | "weekly"                               |
 | reduction_period_in_epochs                 | int64        | 156                                    |
@@ -101,7 +101,7 @@ The minting module contains the following parameters:
 | distribution_proportions.pool_incentives   | string (dec) | "0.3"                                  |
 | distribution_proportions.developer_rewards | string (dec) | "0.2"                                  |
 | distribution_proportions.community_pool    | string (dec) | "0.1"                                  |
-| weighted_developer_rewards_receivers       | array        | [{"address": "osmoxx", "weight": "1"}] |
+| weighted_developer_rewards_receivers       | array        | [{"address": "mokixx", "weight": "1"}] |
 | minting_rewards_distribution_start_epoch   | int64        | 10                                     |
 
 Below are all the network parameters for the `mint` module:
@@ -112,8 +112,8 @@ Below are all the network parameters for the `mint` module:
 - **`reduction_period_in_epochs`** - How many epochs must occur before implementing the reduction factor
 - **`reduction_factor`** - What the total token issuance factor will reduce by after the reduction period passes (if set to 66.66%, token issuance will reduce by 1/3)
 - **`distribution_proportions`** - Categories in which the specified proportion of newly released tokens are distributed to
-  - **`staking`** - Proportion of minted funds to incentivize staking OSMO
-  - **`pool_incentives`** - Proportion of minted funds to incentivize pools on Osmosis
+  - **`staking`** - Proportion of minted funds to incentivize staking MOKI
+  - **`pool_incentives`** - Proportion of minted funds to incentivize pools on Mokisis
   - **`developer_rewards`** - Proportion of minted funds to pay developers for their past and future work
   - **`community_pool`** - Proportion of minted funds to be set aside for the community pool
 - **`weighted_developer_rewards_receivers`** - Addresses that developer rewards will go to. The weight attached to an address is the percent of the developer rewards that the specific address will receive
@@ -121,7 +121,7 @@ Below are all the network parameters for the `mint` module:
 
 ### Notes
 
-1. `mint_denom` defines denom for minting token - uosmo
+1. `mint_denom` defines denom for minting token - umoki
 2. `genesis_epoch_provisions` provides minting tokens per epoch at genesis.
 3. `epoch_identifier` defines the epoch identifier to be used for the mint module e.g. "weekly"
 4. `reduction_period_in_epochs` defines the number of epochs to pass to reduce the mint amount
@@ -163,14 +163,14 @@ query mint params
 List all current min parameters in json format by:
 
 ```bash
-osmosisd query mint params -o json | jq
+mokitad query mint params -o json | jq
 ```
 
 An example of the output:
 
 ```json
 {
-  "mint_denom": "uosmo",
+  "mint_denom": "umoki",
   "genesis_epoch_provisions": "821917808219.178082191780821917",
   "epoch_identifier": "day",
   "reduction_period_in_epochs": "365",
@@ -183,63 +183,63 @@ An example of the output:
   },
   "weighted_developer_rewards_receivers": [
     {
-      "address": "osmo14kjcwdwcqsujkdt8n5qwpd8x8ty2rys5rjrdjj",
+      "address": "moki14kjcwdwcqsujkdt8n5qwpd8x8ty2rys5rjrdjj",
       "weight": "0.288700000000000000"
     },
     {
-      "address": "osmo1gw445ta0aqn26suz2rg3tkqfpxnq2hs224d7gq",
+      "address": "moki1gw445ta0aqn26suz2rg3tkqfpxnq2hs224d7gq",
       "weight": "0.229000000000000000"
     },
     {
-      "address": "osmo13lt0hzc6u3htsk7z5rs6vuurmgg4hh2ecgxqkf",
+      "address": "moki13lt0hzc6u3htsk7z5rs6vuurmgg4hh2ecgxqkf",
       "weight": "0.162500000000000000"
     },
     {
-      "address": "osmo1kvc3he93ygc0us3ycslwlv2gdqry4ta73vk9hu",
+      "address": "moki1kvc3he93ygc0us3ycslwlv2gdqry4ta73vk9hu",
       "weight": "0.109000000000000000"
     },
     {
-      "address": "osmo19qgldlsk7hdv3ddtwwpvzff30pxqe9phq9evxf",
+      "address": "moki19qgldlsk7hdv3ddtwwpvzff30pxqe9phq9evxf",
       "weight": "0.099500000000000000"
     },
     {
-      "address": "osmo19fs55cx4594een7qr8tglrjtt5h9jrxg458htd",
+      "address": "moki19fs55cx4594een7qr8tglrjtt5h9jrxg458htd",
       "weight": "0.060000000000000000"
     },
     {
-      "address": "osmo1ssp6px3fs3kwreles3ft6c07mfvj89a544yj9k",
+      "address": "moki1ssp6px3fs3kwreles3ft6c07mfvj89a544yj9k",
       "weight": "0.015000000000000000"
     },
     {
-      "address": "osmo1c5yu8498yzqte9cmfv5zcgtl07lhpjrj0skqdx",
+      "address": "moki1c5yu8498yzqte9cmfv5zcgtl07lhpjrj0skqdx",
       "weight": "0.010000000000000000"
     },
     {
-      "address": "osmo1yhj3r9t9vw7qgeg22cehfzj7enwgklw5k5v7lj",
+      "address": "moki1yhj3r9t9vw7qgeg22cehfzj7enwgklw5k5v7lj",
       "weight": "0.007500000000000000"
     },
     {
-      "address": "osmo18nzmtyn5vy5y45dmcdnta8askldyvehx66lqgm",
+      "address": "moki18nzmtyn5vy5y45dmcdnta8askldyvehx66lqgm",
       "weight": "0.007000000000000000"
     },
     {
-      "address": "osmo1z2x9z58cg96ujvhvu6ga07yv9edq2mvkxpgwmc",
+      "address": "moki1z2x9z58cg96ujvhvu6ga07yv9edq2mvkxpgwmc",
       "weight": "0.005000000000000000"
     },
     {
-      "address": "osmo1tvf3373skua8e6480eyy38avv8mw3hnt8jcxg9",
+      "address": "moki1tvf3373skua8e6480eyy38avv8mw3hnt8jcxg9",
       "weight": "0.002500000000000000"
     },
     {
-      "address": "osmo1zs0txy03pv5crj2rvty8wemd3zhrka2ne8u05n",
+      "address": "moki1zs0txy03pv5crj2rvty8wemd3zhrka2ne8u05n",
       "weight": "0.002500000000000000"
     },
     {
-      "address": "osmo1djgf9p53n7m5a55hcn6gg0cm5mue4r5g3fadee",
+      "address": "moki1djgf9p53n7m5a55hcn6gg0cm5mue4r5g3fadee",
       "weight": "0.001000000000000000"
     },
     {
-      "address": "osmo1488zldkrn8xcjh3z40v2mexq7d088qkna8ceze",
+      "address": "moki1488zldkrn8xcjh3z40v2mexq7d088qkna8ceze",
       "weight": "0.000800000000000000"
     }
   ],
@@ -262,10 +262,10 @@ query mint epoch-provisions
 List the current epoch provisions:
 
 ```bash
-osmosisd query mint epoch-provisions
+mokitad query mint epoch-provisions
 ```
 
-As of this writing, this number will be equal to the `genesis-epoch-provisions`. Once the `reduction_period_in_epochs` is reached, the `reduction_factor` will be initiated and reduce the amount of OSMO minted per epoch.
+As of this writing, this number will be equal to the `genesis-epoch-provisions`. Once the `reduction_period_in_epochs` is reached, the `reduction_factor` will be initiated and reduce the amount of MOKI minted per epoch.
 :::
 
 ## Appendix
@@ -297,8 +297,8 @@ The following tables show overall effects on different configurations of the `mi
 <td>Value has to be a positive integer</td> 
 <td>String must be <code>day</code>, <code>week</code>, <code>month</code>, or <code>year</code></td></tr> 
 <tr><td>Current configuration</td> 
-<td><code>uosmo</code></td> 
-<td><code>821917808219.178</code> (821,9178 OSMO)</td> 
+<td><code>umoki</code></td> 
+<td><code>821917808219.178</code> (821,9178 MOKI)</td> 
 <td><code>day</code></td></tr>
 </tbody></table>
 

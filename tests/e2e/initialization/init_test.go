@@ -10,7 +10,7 @@ import (
 
 	"github.com/stretchr/testify/require"
 
-	"github.com/osmosis-labs/osmosis/v13/tests/e2e/initialization"
+	"github.com/petri-labs/mokita/tests/e2e/initialization"
 )
 
 const forkHeight = 10
@@ -45,7 +45,7 @@ func TestChainInit(t *testing.T) {
 				IsValidator:        false,
 			},
 		}
-		dataDir, err = os.MkdirTemp("", "osmosis-e2e-testnet-test")
+		dataDir, err = os.MkdirTemp("", "mokita-e2e-testnet-test")
 	)
 
 	chain, err := initialization.InitChain(id, dataDir, nodeConfigs, time.Second*3, time.Second, forkHeight)
@@ -102,7 +102,7 @@ func TestSingleNodeInit(t *testing.T) {
 			SnapshotKeepRecent: 1,
 			IsValidator:        false,
 		}
-		dataDir, err = os.MkdirTemp("", "osmosis-e2e-testnet-test")
+		dataDir, err = os.MkdirTemp("", "mokita-e2e-testnet-test")
 	)
 
 	// Setup

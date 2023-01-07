@@ -7,7 +7,7 @@ import (
 	abcitypes "github.com/tendermint/tendermint/abci/types"
 	tmproto "github.com/tendermint/tendermint/proto/tendermint/types"
 
-	simapp "github.com/osmosis-labs/osmosis/v13/app"
+	simapp "github.com/petri-labs/mokita/app"
 )
 
 func TestSetBaseDenomOnInitBlock(t *testing.T) {

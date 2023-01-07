@@ -33,31 +33,31 @@ enabled = true
 host = '127.0.0.1'
 port = 3001
 [[chains]]
-id = '$OSMO_A_E2E_CHAIN_ID'
-rpc_addr = 'http://$OSMO_A_E2E_VAL_HOST:26657'
-grpc_addr = 'http://$OSMO_A_E2E_VAL_HOST:9090'
-websocket_addr = 'ws://$OSMO_A_E2E_VAL_HOST:26657/websocket'
+id = '$MOKI_A_E2E_CHAIN_ID'
+rpc_addr = 'http://$MOKI_A_E2E_VAL_HOST:26657'
+grpc_addr = 'http://$MOKI_A_E2E_VAL_HOST:9090'
+websocket_addr = 'ws://$MOKI_A_E2E_VAL_HOST:26657/websocket'
 rpc_timeout = '10s'
-account_prefix = 'osmo'
-key_name = 'val01-osmosis-a'
+account_prefix = 'moki'
+key_name = 'val01-mokita-a'
 store_prefix = 'ibc'
 max_gas = 6000000
-gas_price = { price = 0.000, denom = 'uosmo' }
+gas_price = { price = 0.000, denom = 'umoki' }
 gas_adjustment = 1.0
 clock_drift = '1m' # to accomdate docker containers
 trusting_period = '239seconds'
 trust_threshold = { numerator = '1', denominator = '3' }
 [[chains]]
-id = '$OSMO_B_E2E_CHAIN_ID'
-rpc_addr = 'http://$OSMO_B_E2E_VAL_HOST:26657'
-grpc_addr = 'http://$OSMO_B_E2E_VAL_HOST:9090'
-websocket_addr = 'ws://$OSMO_B_E2E_VAL_HOST:26657/websocket'
+id = '$MOKI_B_E2E_CHAIN_ID'
+rpc_addr = 'http://$MOKI_B_E2E_VAL_HOST:26657'
+grpc_addr = 'http://$MOKI_B_E2E_VAL_HOST:9090'
+websocket_addr = 'ws://$MOKI_B_E2E_VAL_HOST:26657/websocket'
 rpc_timeout = '10s'
-account_prefix = 'osmo'
-key_name = 'val01-osmosis-b'
+account_prefix = 'moki'
+key_name = 'val01-mokita-b'
 store_prefix = 'ibc'
 max_gas = 6000000
-gas_price = { price = 0.000, denom = 'uosmo' }
+gas_price = { price = 0.000, denom = 'umoki' }
 gas_adjustment = 1.0
 clock_drift = '1m' # to accomdate docker containers
 trusting_period = '239seconds'
@@ -65,8 +65,8 @@ trust_threshold = { numerator = '1', denominator = '3' }
 EOF
 
 # import keys
-hermes keys restore ${OSMO_B_E2E_CHAIN_ID} -n "val01-osmosis-b" -m "${OSMO_B_E2E_VAL_MNEMONIC}"
-hermes keys restore ${OSMO_A_E2E_CHAIN_ID} -n "val01-osmosis-a" -m "${OSMO_A_E2E_VAL_MNEMONIC}"
+hermes keys restore ${MOKI_B_E2E_CHAIN_ID} -n "val01-mokita-b" -m "${MOKI_B_E2E_VAL_MNEMONIC}"
+hermes keys restore ${MOKI_A_E2E_CHAIN_ID} -n "val01-mokita-a" -m "${MOKI_A_E2E_VAL_MNEMONIC}"
 
 # start Hermes relayer
 hermes start
