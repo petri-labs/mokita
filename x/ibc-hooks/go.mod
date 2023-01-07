@@ -134,7 +134,7 @@ require (
 
 replace (
 	// mokita-patched wasmd
-	github.com/CosmWasm/wasmd => github.com/petri-labs/wasmd v0.29.2-0.20221222131554-7c8ea36a6e30
+	github.com/CosmWasm/wasmd => github.com/osmosis-labs/wasmd v0.29.2-0.20221222131554-7c8ea36a6e30
 	// dragonberry
 	github.com/confio/ics23/go => github.com/cosmos/cosmos-sdk/ics23/go v0.8.0
 	// Our cosmos-sdk branch is:  https://github.com/petri-labs/cosmos-sdk, current branch: v13.x. Direct commit link: https://github.com/petri-labs/cosmos-sdk/commit/8757a61551aa1ea993c85a523e18094ab555b1d7
