@@ -1,4 +1,4 @@
-module github.com/petri-labs/mokita/x/ibc-hooks
+module github.com/osmosis-labs/osmosis/x/ibc-hooks
 
 go 1.18
 

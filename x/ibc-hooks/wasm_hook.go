@@ -7,7 +7,7 @@ import (
 	"github.com/cosmos/cosmos-sdk/types/address"
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 	capabilitytypes "github.com/cosmos/cosmos-sdk/x/capability/types"
-	"github.com/petri-labs/mokita/x/ibc-hooks/keeper"
+	"github.com/osmosis-labs/osmosis/x/ibc-hooks/keeper"
 
 	wasmtypes "github.com/CosmWasm/wasmd/x/wasm/types"
 
@@ -18,7 +18,7 @@ import (
 	channeltypes "github.com/cosmos/ibc-go/v4/modules/core/04-channel/types"
 	ibcexported "github.com/cosmos/ibc-go/v4/modules/core/exported"
 
-	"github.com/petri-labs/mokita/x/ibc-hooks/types"
+	"github.com/osmosis-labs/osmosis/x/ibc-hooks/types"
 )
 
 type ContractAck struct {

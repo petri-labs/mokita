@@ -40,9 +40,9 @@ import (
 	ibcratelimittypes "github.com/petri-labs/mokita/x/ibc-rate-limit/types"
 	"github.com/petri-labs/mokita/x/swaprouter"
 	swaproutertypes "github.com/petri-labs/mokita/x/swaprouter/types"
-	ibchooks "github.com/petri-labs/mokita/x/ibc-hooks"
-	ibchookskeeper "github.com/petri-labs/mokita/x/ibc-hooks/keeper"
-	ibchookstypes "github.com/petri-labs/mokita/x/ibc-hooks/types"
+	ibchooks "github.com/osmosis-labs/osmosis/x/ibc-hooks"
+	ibchookskeeper "github.com/osmosis-labs/osmosis/x/ibc-hooks/keeper"
+	ibchookstypes "github.com/osmosis-labs/osmosis/x/ibc-hooks/types"
 
 	icahost "github.com/cosmos/ibc-go/v4/modules/apps/27-interchain-accounts/host"
 	icahostkeeper "github.com/cosmos/ibc-go/v4/modules/apps/27-interchain-accounts/host/keeper"
