@@ -1,6 +1,6 @@
 /*
 The superfluid module handles all logic in relation to
-the superfluid staking feature on Mokisis. Namely:
+the superfluid staking feature on Mokita. Namely:
 - Methods to lock funds and mint synthetic moki for staking
 - Daily minting and burning of the purpose of adjusting synthetic moki lockups.
 - Staking reward distribution via the intermediary account.

@@ -13,9 +13,9 @@ import (
 	"github.com/petri-labs/mokita/simulation/simtypes"
 )
 
-func MokisisAppCreator(logger log.Logger, db db.DB) simtypes.AppCreator {
+func MokitaAppCreator(logger log.Logger, db db.DB) simtypes.AppCreator {
 	return func(homepath string, legacyInvariantPeriod uint, baseappOptions ...func(*baseapp.BaseApp)) simtypes.App {
-		return app.NewMokisisApp(
+		return app.NewMokitaApp(
 			logger,
 			db,
 			nil,
@@ -30,7 +30,7 @@ func MokisisAppCreator(logger log.Logger, db db.DB) simtypes.AppCreator {
 	}
 }
 
-var MokisisInitFns = simexec.InitFunctions{
+var MokitaInitFns = simexec.InitFunctions{
 	RandomAccountFn: simexec.WrapRandAccFnForResampling(simulation.RandomAccounts, app.ModuleAccountAddrs()),
 	InitChainFn:     InitChainFn(),
 }

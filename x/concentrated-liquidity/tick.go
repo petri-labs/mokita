@@ -3,7 +3,7 @@ package concentrated_liquidity
 import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 
-	"github.com/petri-labs/mokita/mokiutils"
+	"github.com/petri-labs/mokita/osmoutils"
 	"github.com/petri-labs/mokita/x/concentrated-liquidity/internal/math"
 	"github.com/petri-labs/mokita/x/concentrated-liquidity/model"
 	types "github.com/petri-labs/mokita/x/concentrated-liquidity/types"
@@ -61,7 +61,7 @@ func (k Keeper) getTickInfo(ctx sdk.Context, poolId uint64, tickIndex int64) (ti
 		return model.TickInfo{}, types.PoolNotFoundError{PoolId: poolId}
 	}
 
-	found, err := mokiutils.Get(store, key, &tickStruct)
+	found, err := osmoutils.Get(store, key, &tickStruct)
 	// return 0 values if key has not been initialized
 	if !found {
 		return model.TickInfo{LiquidityGross: sdk.ZeroDec(), LiquidityNet: sdk.ZeroDec()}, err
@@ -76,7 +76,7 @@ func (k Keeper) getTickInfo(ctx sdk.Context, poolId uint64, tickIndex int64) (ti
 func (k Keeper) SetTickInfo(ctx sdk.Context, poolId uint64, tickIndex int64, tickInfo model.TickInfo) {
 	store := ctx.KVStore(k.storeKey)
 	key := types.KeyTick(poolId, tickIndex)
-	mokiutils.MustSet(store, key, &tickInfo)
+	osmoutils.MustSet(store, key, &tickInfo)
 }
 
 // validateTickInRangeIsValid validates that given ticks are valid.

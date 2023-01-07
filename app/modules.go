@@ -51,7 +51,7 @@ import (
 	"github.com/cosmos/cosmos-sdk/x/upgrade"
 	upgradetypes "github.com/cosmos/cosmos-sdk/x/upgrade/types"
 
-	"github.com/petri-labs/mokita/mokiutils/partialord"
+	"github.com/petri-labs/mokita/osmoutils/partialord"
 	appparams "github.com/petri-labs/mokita/app/params"
 	_ "github.com/petri-labs/mokita/client/docs/statik"
 	"github.com/petri-labs/mokita/simulation/simtypes"
@@ -113,7 +113,7 @@ var moduleAccountPermissions = map[string][]string{
 
 // appModules return modules to initialize module manager.
 func appModules(
-	app *MokisisApp,
+	app *MokitaApp,
 	encodingConfig appparams.EncodingConfig,
 	skipGenesisInvariants bool,
 ) []module.AppModule {
@@ -201,7 +201,7 @@ func OrderEndBlockers(allModuleNames []string) []string {
 	ord.FirstElements(govtypes.ModuleName)
 	ord.LastElements(stakingtypes.ModuleName)
 
-	// only Mokisis modules with endblock code are: twap, crisis, govtypes, staking
+	// only Mokita modules with endblock code are: twap, crisis, govtypes, staking
 	// we don't care about the relative ordering between them.
 	return ord.TotalOrdering()
 }
@@ -263,27 +263,27 @@ func ModuleAccountAddrs() map[string]bool {
 	return modAccAddrs
 }
 
-func (app *MokisisApp) GetAccountKeeper() simtypes.AccountKeeper {
+func (app *MokitaApp) GetAccountKeeper() simtypes.AccountKeeper {
 	return app.AppKeepers.AccountKeeper
 }
 
-func (app *MokisisApp) GetBankKeeper() simtypes.BankKeeper {
+func (app *MokitaApp) GetBankKeeper() simtypes.BankKeeper {
 	return app.AppKeepers.BankKeeper
 }
 
 // Required for ibctesting
-func (app *MokisisApp) GetStakingKeeper() stakingkeeper.Keeper {
+func (app *MokitaApp) GetStakingKeeper() stakingkeeper.Keeper {
 	return *app.AppKeepers.StakingKeeper // Dereferencing the pointer
 }
 
-func (app *MokisisApp) GetIBCKeeper() *ibckeeper.Keeper {
+func (app *MokitaApp) GetIBCKeeper() *ibckeeper.Keeper {
 	return app.AppKeepers.IBCKeeper // This is a *ibckeeper.Keeper
 }
 
-func (app *MokisisApp) GetScopedIBCKeeper() capabilitykeeper.ScopedKeeper {
+func (app *MokitaApp) GetScopedIBCKeeper() capabilitykeeper.ScopedKeeper {
 	return app.AppKeepers.ScopedIBCKeeper
 }
 
-func (app *MokisisApp) GetTxConfig() client.TxConfig {
+func (app *MokitaApp) GetTxConfig() client.TxConfig {
 	return MakeEncodingConfig().TxConfig
 }

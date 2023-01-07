@@ -16,7 +16,7 @@ import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	coretypes "github.com/tendermint/tendermint/rpc/core/types"
 
-	"github.com/petri-labs/mokita/mokiutils/mokiassert"
+	"github.com/petri-labs/mokita/osmoutils/mokiassert"
 	appparams "github.com/petri-labs/mokita/app/params"
 	"github.com/petri-labs/mokita/tests/e2e/configurer/config"
 	"github.com/petri-labs/mokita/tests/e2e/initialization"
@@ -88,7 +88,7 @@ func (s *IntegrationTestSuite) TestSuperfluidVoting() {
 		},
 		1*time.Minute,
 		10*time.Millisecond,
-		"Mokisis node failed to retrieve prop tally",
+		"Mokita node failed to retrieve prop tally",
 	)
 	noTotal, _, _, _, _ := chainANode.QueryPropTally(chainA.LatestProposalNumber)
 	noTotalFinal, err := strconv.Atoi(noTotal.String())
@@ -216,7 +216,7 @@ func (s *IntegrationTestSuite) TestIBCTokenTransferRateLimiting() {
 		},
 		1*time.Minute,
 		10*time.Millisecond,
-		"Mokisis node failed to retrieve params",
+		"Mokita node failed to retrieve params",
 	)
 
 	// Sending <1%. Should work

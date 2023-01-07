@@ -10,7 +10,7 @@ import (
 	"github.com/cosmos/cosmos-sdk/client/flags"
 	"github.com/spf13/cobra"
 
-	"github.com/petri-labs/mokita/mokiutils/mokicli"
+	"github.com/petri-labs/mokita/osmoutils/mokicli"
 	gammtypes "github.com/petri-labs/mokita/x/gamm/types"
 	"github.com/petri-labs/mokita/x/twap/client/queryproto"
 	"github.com/petri-labs/mokita/x/twap/types"

@@ -31,7 +31,7 @@ go mod edit -replace github.com/tendermint/tm-db=github.com/notional-labs/tm-db@
 go mod tidy
 go install -ldflags '-w -s -X github.com/cosmos/cosmos-sdk/types.DBBackend=pebbledb' -tags pebbledb ./...
 mokitad init speedrun
-wget -O ~/.mokitad/config/genesis.json https://github.com/mokita-labs/networks/raw/main/mokita-1/genesis.json
+wget -O ~/.mokitad/config/genesis.json https://github.com/petri-labs/networks/raw/main/mokita-1/genesis.json
 mokitad start --db_backend pebbledb
 git reset --hard
 

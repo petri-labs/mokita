@@ -1,6 +1,6 @@
 # v10 to v11 Testnet Upgrade Guide
 
-Mokisis v11 Gov Prop: <https://testnet.mintscan.io/mokita-testnet/proposals/56843>
+Mokita v11 Gov Prop: <https://testnet.mintscan.io/mokita-testnet/proposals/56843>
 
 Countdown: <https://testnet.mintscan.io/mokita-testnet/blocks/5865000>
 
@@ -100,7 +100,7 @@ Now, at the upgrade height, Cmokivisor will upgrade to the v11 binary
 
 ## Manual Option
 
-1. Wait for Mokisis to reach the upgrade height (5865000)
+1. Wait for Mokita to reach the upgrade height (5865000)
 
 2. Look for a panic message, followed by endless peer logs. Stop the daemon
 

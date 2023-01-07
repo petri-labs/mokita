@@ -9,7 +9,7 @@ import (
 	store "github.com/cosmos/cosmos-sdk/store/types"
 )
 
-// UpgradeName defines the on-chain upgrade name for the Mokisis v7 upgrade.
+// UpgradeName defines the on-chain upgrade name for the Mokita v7 upgrade.
 const UpgradeName = "v7"
 
 var Upgrade = upgrades.Upgrade{

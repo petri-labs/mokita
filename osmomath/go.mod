@@ -1,4 +1,4 @@
-module github.com/petri-labs/mokita/mokimath
+module github.com/petri-labs/mokita/osmomath
 
 go 1.18
 
@@ -79,9 +79,9 @@ require (
 )
 
 replace (
-	// Our cosmos-sdk branch is:  https://github.com/mokita-labs/cosmos-sdk, current branch: v13.x. Direct commit link: https://github.com/mokita-labs/cosmos-sdk/commit/8757a61551aa1ea993c85a523e18094ab555b1d7
-	// tag: https://github.com/mokita-labs/cosmos-sdk/releases/tag/sdk-v13.0.0-rc2
-	github.com/cosmos/cosmos-sdk => github.com/mokita-labs/cosmos-sdk v0.45.1-0.20221118211718-545aed73e94e
+	// Our cosmos-sdk branch is:  https://github.com/petri-labs/cosmos-sdk, current branch: v13.x. Direct commit link: https://github.com/petri-labs/cosmos-sdk/commit/8757a61551aa1ea993c85a523e18094ab555b1d7
+	// tag: https://github.com/petri-labs/cosmos-sdk/releases/tag/sdk-v13.0.0-rc2
+	github.com/cosmos/cosmos-sdk => github.com/petri-labs/cosmos-sdk v0.45.1-0.20221118211718-545aed73e94e
 	// use cosmos-compatible protobufs
 	github.com/gogo/protobuf => github.com/regen-network/protobuf v1.3.3-alpha.regen.1
 	// use grpc compatible with cosmos protobufs

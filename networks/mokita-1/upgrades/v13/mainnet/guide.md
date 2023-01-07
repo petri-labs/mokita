@@ -1,6 +1,6 @@
 # v12 to v13 Mainnet Upgrade Guide
 
-Mokisis v13 Gov Prop: <https://www.mintscan.io/mokita/proposals/370>
+Mokita v13 Gov Prop: <https://www.mintscan.io/mokita/proposals/370>
 
 Countdown: <https://www.mintscan.io/mokita/blocks/7241500>
 
@@ -106,7 +106,7 @@ Now, at the upgrade height, Cmokivisor will upgrade to the v13 binary
 
 ## Manual Option
 
-1. Wait for Mokisis to reach the upgrade height (FILL ME IN WITH UPGRADE HEIGHT) TODO: Update upgrade height
+1. Wait for Mokita to reach the upgrade height (FILL ME IN WITH UPGRADE HEIGHT) TODO: Update upgrade height
 
 2. Look for a panic message, followed by endless peer logs. Stop the daemon
 

@@ -209,8 +209,8 @@ func (m *Manager) RunNodeResource(chainId string, containerName, valCondifDir st
 
 	runOpts := &dockertest.RunOptions{
 		Name:       containerName,
-		Repository: m.MokisisRepository,
-		Tag:        m.MokisisTag,
+		Repository: m.MokitaRepository,
+		Tag:        m.MokitaTag,
 		NetworkID:  m.network.Network.ID,
 		User:       "root:root",
 		Cmd:        []string{"start"},

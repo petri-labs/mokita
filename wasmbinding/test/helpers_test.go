@@ -16,13 +16,13 @@ import (
 	"github.com/petri-labs/mokita/app"
 )
 
-func CreateTestInput() (*app.MokisisApp, sdk.Context) {
+func CreateTestInput() (*app.MokitaApp, sdk.Context) {
 	mokita := app.Setup(false)
 	ctx := mokita.BaseApp.NewContext(false, tmproto.Header{Height: 1, ChainID: "mokita-1", Time: time.Now().UTC()})
 	return mokita, ctx
 }
 
-func FundAccount(t *testing.T, ctx sdk.Context, mokita *app.MokisisApp, acct sdk.AccAddress) {
+func FundAccount(t *testing.T, ctx sdk.Context, mokita *app.MokitaApp, acct sdk.AccAddress) {
 	err := simapp.FundAccount(mokita.BankKeeper, ctx, acct, sdk.NewCoins(
 		sdk.NewCoin("umoki", sdk.NewInt(10000000000)),
 	))

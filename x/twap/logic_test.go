@@ -9,9 +9,9 @@ import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/stretchr/testify/require"
 
-	"github.com/petri-labs/mokita/mokimath"
-	"github.com/petri-labs/mokita/mokiutils"
-	"github.com/petri-labs/mokita/mokiutils/mokiassert"
+	"github.com/petri-labs/mokita/osmomath"
+	"github.com/petri-labs/mokita/osmoutils"
+	"github.com/petri-labs/mokita/osmoutils/mokiassert"
 	gammtypes "github.com/petri-labs/mokita/x/gamm/types"
 	"github.com/petri-labs/mokita/x/twap"
 	"github.com/petri-labs/mokita/x/twap/types"
@@ -1230,7 +1230,7 @@ func (s *TestSuite) TestAfterCreatePool() {
 			s.Require().Equal(tc.poolId, poolId)
 			s.Require().NoError(err)
 
-			denoms := mokiutils.CoinsDenoms(tc.poolCoins)
+			denoms := osmoutils.CoinsDenoms(tc.poolCoins)
 			denomPairs := types.GetAllUniqueDenomPairs(denoms)
 			expectedRecords := []types.TwapRecord{}
 			for _, denomPair := range denomPairs {
@@ -1340,7 +1340,7 @@ func (s *TestSuite) TestTwapLog_CorrectBase() {
 }
 
 func (s *TestSuite) TestTwapLog() {
-	smallestAdditiveTolerance := mokimath.ErrTolerance{
+	smallestAdditiveTolerance := osmomath.ErrTolerance{
 		AdditiveTolerance: sdk.SmallestDec(),
 	}
 
@@ -1378,8 +1378,8 @@ func (s *TestSuite) TestTwapLog() {
 				result := twap.TwapLog(tc.price)
 
 				smallestAdditiveTolerance.CompareBigDec(
-					mokimath.BigDecFromSDKDec(tc.expected),
-					mokimath.BigDecFromSDKDec(result),
+					osmomath.BigDecFromSDKDec(tc.expected),
+					osmomath.BigDecFromSDKDec(result),
 				)
 			})
 		})

@@ -8,7 +8,7 @@ import (
 	"github.com/cosmos/cosmos-sdk/store"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 
-	"github.com/petri-labs/mokita/mokiutils"
+	"github.com/petri-labs/mokita/osmoutils"
 )
 
 // GetPosition returns the position associated with the given address.
@@ -17,7 +17,7 @@ import (
 // can be moved to a non-test file.
 func (accum AccumulatorObject) GetPosition(name string) Record {
 	position := Record{}
-	mokiutils.MustGet(accum.store, formatPositionPrefixKey(accum.name, name), &position)
+	osmoutils.MustGet(accum.store, formatPositionPrefixKey(accum.name, name), &position)
 	return position
 }
 
@@ -27,7 +27,7 @@ func (accum AccumulatorObject) GetPosition(name string) Record {
 // If there is a need to use this function in production, it
 // can be moved to a non-test file.
 func (accum AccumulatorObject) GetAllPositions() ([]Record, error) {
-	return mokiutils.GatherValuesFromStorePrefix(accum.store, formatPositionPrefixKey(accum.name, ""), parseRecordFromBz)
+	return osmoutils.GatherValuesFromStorePrefix(accum.store, formatPositionPrefixKey(accum.name, ""), parseRecordFromBz)
 }
 
 // Creates an accumulator object for testing purposes
@@ -72,7 +72,7 @@ func ValidateAccumulatorValue(customAccumulatorValue, oldPositionAccumulatorValu
 
 // WithPosition is a decorator test function to append a position with the given name to the given accumulator.
 func WithPosition(accum AccumulatorObject, name string, position Record) AccumulatorObject {
-	mokiutils.MustSet(accum.store, formatPositionPrefixKey(accum.name, name), &position)
+	osmoutils.MustSet(accum.store, formatPositionPrefixKey(accum.name, name), &position)
 	return accum
 }
 

@@ -46,10 +46,10 @@ func DefaultConfig() network.Config {
 	}
 }
 
-// NewAppConstructor returns a new Mokisis app given encoding type configs.
+// NewAppConstructor returns a new Mokita app given encoding type configs.
 func NewAppConstructor() network.AppConstructor {
 	return func(val network.Validator) servertypes.Application {
-		return NewMokisisApp(
+		return NewMokitaApp(
 			val.Ctx.Logger, dbm.NewMemDB(), nil, true, make(map[int64]bool), val.Ctx.Config.RootDir, 0,
 			simapp.EmptyAppOptions{},
 			GetWasmEnabledProposals(),

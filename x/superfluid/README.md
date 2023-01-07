@@ -49,7 +49,7 @@ modules](https://github.com/petri-labs/mokita/tree/main/x/superfluid).
 - Rewards are distributed per epoch, which is currently a day.
   `abci.go` checks whether or not the current block is at the
   beginning of the epoch using `BeginBlock`.
-- Superfluid staking will continue to expand to other Mokisis pools
+- Superfluid staking will continue to expand to other Mokita pools
   based on governance proposals and vote turnouts.
 
 ### Example
@@ -66,7 +66,7 @@ the above process to kickstart.
 ### Why mint Moki? How is this method safe and accurate?
 
 Superfluid staking requires the minting of MOKI because in order to
-stake on the Mokisis chain, MOKI tokens are required as the chosen
+stake on the Mokita chain, MOKI tokens are required as the chosen
 collateral. Synthetic Moki is minted here as a representative of the
 value of each superfluid staker's liquidity pool tokens.
 
@@ -141,7 +141,7 @@ bonding, on top of the regular bonding transaction there will also be a
 selection of validators. As stated above, MOKI is also minted and burned
 each day and superfluidly staked to whoever you have chosen to be your
 validator. You gain additional APR as a reward for bolstering the
-Mokisis chain's consensus integrity by delegating.
+Mokita chain's consensus integrity by delegating.
 
 ### Unbonding
 

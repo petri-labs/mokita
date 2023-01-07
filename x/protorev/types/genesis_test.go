@@ -33,7 +33,7 @@ func TestGenesisStateValidate(t *testing.T) {
 			description: "Default parameters with valid routes",
 			genState: &types.GenesisState{
 				Params:     types.DefaultParams(),
-				TokenPairs: []types.TokenPairArbRoutes{types.CreateSeacherRoutes(3, types.MokisisDenomination, "ethereum", types.AtomDenomination, types.AtomDenomination)},
+				TokenPairs: []types.TokenPairArbRoutes{types.CreateSeacherRoutes(3, types.MokitaDenomination, "ethereum", types.AtomDenomination, types.AtomDenomination)},
 			},
 			valid: true,
 		},
@@ -41,7 +41,7 @@ func TestGenesisStateValidate(t *testing.T) {
 			description: "Default parameters with invalid routes (duplicate token pairs)",
 			genState: &types.GenesisState{
 				Params:     types.DefaultParams(),
-				TokenPairs: []types.TokenPairArbRoutes{types.CreateSeacherRoutes(3, types.MokisisDenomination, "ethereum", types.AtomDenomination, types.AtomDenomination), types.CreateSeacherRoutes(3, types.MokisisDenomination, "ethereum", types.AtomDenomination, types.AtomDenomination)},
+				TokenPairs: []types.TokenPairArbRoutes{types.CreateSeacherRoutes(3, types.MokitaDenomination, "ethereum", types.AtomDenomination, types.AtomDenomination), types.CreateSeacherRoutes(3, types.MokitaDenomination, "ethereum", types.AtomDenomination, types.AtomDenomination)},
 			},
 			valid: false,
 		},
@@ -65,7 +65,7 @@ func TestGenesisStateValidate(t *testing.T) {
 			description: "Default parameters with invalid routes (mismatch in and out denoms)",
 			genState: &types.GenesisState{
 				Params:     types.DefaultParams(),
-				TokenPairs: []types.TokenPairArbRoutes{types.CreateSeacherRoutes(3, types.MokisisDenomination, "ethereum", types.AtomDenomination, types.MokisisDenomination)},
+				TokenPairs: []types.TokenPairArbRoutes{types.CreateSeacherRoutes(3, types.MokitaDenomination, "ethereum", types.AtomDenomination, types.MokitaDenomination)},
 			},
 			valid: false,
 		},
@@ -73,7 +73,7 @@ func TestGenesisStateValidate(t *testing.T) {
 			description: "Default parameters with invalid routes (invalid in arb denom)",
 			genState: &types.GenesisState{
 				Params:     types.DefaultParams(),
-				TokenPairs: []types.TokenPairArbRoutes{types.CreateSeacherRoutes(3, types.MokisisDenomination, "ethereum", "juno", "juno")},
+				TokenPairs: []types.TokenPairArbRoutes{types.CreateSeacherRoutes(3, types.MokitaDenomination, "ethereum", "juno", "juno")},
 			},
 			valid: false,
 		},

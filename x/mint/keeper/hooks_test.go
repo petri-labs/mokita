@@ -6,7 +6,7 @@ import (
 	"github.com/stretchr/testify/suite"
 	tmproto "github.com/tendermint/tendermint/proto/tendermint/types"
 
-	"github.com/petri-labs/mokita/mokiutils/mokiassert"
+	"github.com/petri-labs/mokita/osmoutils/mokiassert"
 	mokiapp "github.com/petri-labs/mokita/app"
 	"github.com/petri-labs/mokita/x/mint/keeper"
 	"github.com/petri-labs/mokita/x/mint/types"
@@ -16,7 +16,7 @@ import (
 
 const (
 	// Most values here are taken from mainnet genesis to mimic real-world behavior:
-	// https://github.com/mokita-labs/networks/raw/main/mokita-1/genesis.json
+	// https://github.com/petri-labs/networks/raw/main/mokita-1/genesis.json
 	defaultGenesisEpochProvisions = "821917808219.178082191780821917"
 	defaultEpochIdentifier        = "day"
 	// actual value taken from mainnet for sanity checking calculations.

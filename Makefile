@@ -88,7 +88,7 @@ endif
 
 check_version:
 ifneq ($(GO_MINOR_VERSION),18)
-	@echo "ERROR: Go version 1.18 is required for this version of Mokisis. Go 1.19 has changes that are believed to break consensus."
+	@echo "ERROR: Go version 1.18 is required for this version of Mokita. Go 1.19 has changes that are believed to break consensus."
 	exit 1
 endif
 
@@ -269,7 +269,7 @@ test-sim-bench:
 	@VERSION=$(VERSION) go test -benchmem -run ^BenchmarkFullAppSimulation -bench ^BenchmarkFullAppSimulation -cpuprofile cpu.out $(PACKAGES_SIM)
 
 # test-e2e runs a full e2e test suite
-# deletes any pre-existing Mokisis containers before running.
+# deletes any pre-existing Mokita containers before running.
 #
 # Attempts to delete Docker resources at the end.
 # May fail to do so if stopped mid way.

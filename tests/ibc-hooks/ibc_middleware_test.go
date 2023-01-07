@@ -9,7 +9,7 @@ import (
 
 	wasmkeeper "github.com/CosmWasm/wasmd/x/wasm/keeper"
 
-	"github.com/petri-labs/mokita/mokiutils"
+	"github.com/petri-labs/mokita/osmoutils"
 	"github.com/petri-labs/mokita/x/gamm/pool-models/balancer"
 	gammtypes "github.com/petri-labs/mokita/x/gamm/types"
 	minttypes "github.com/petri-labs/mokita/x/mint/types"
@@ -88,11 +88,11 @@ func (suite *HooksTestSuite) TestOnRecvPacketHooks() {
 		expPass  bool
 	}{
 		{"override", func(status *testutils.Status) {
-			suite.chainB.GetMokisisApp().TransferStack.
+			suite.chainB.GetMokitaApp().TransferStack.
 				ICS4Middleware.Hooks = testutils.TestRecvOverrideHooks{Status: status}
 		}, true},
 		{"before and after", func(status *testutils.Status) {
-			suite.chainB.GetMokisisApp().TransferStack.
+			suite.chainB.GetMokitaApp().TransferStack.
 				ICS4Middleware.Hooks = testutils.TestRecvBeforeAfterHooks{Status: status}
 		}, true},
 	}
@@ -122,7 +122,7 @@ func (suite *HooksTestSuite) TestOnRecvPacketHooks() {
 			data := transfertypes.NewFungibleTokenPacketData(trace.GetFullDenomPath(), amount.String(), suite.chainA.SenderAccount.GetAddress().String(), receiver)
 			packet := channeltypes.NewPacket(data.GetBytes(), seq, path.EndpointA.ChannelConfig.PortID, path.EndpointA.ChannelID, path.EndpointB.ChannelConfig.PortID, path.EndpointB.ChannelID, clienttypes.NewHeight(1, 100), 0)
 
-			ack := suite.chainB.GetMokisisApp().TransferStack.
+			ack := suite.chainB.GetMokitaApp().TransferStack.
 				OnRecvPacket(suite.chainB.GetContext(), packet, suite.chainA.SenderAccount.GetAddress())
 
 			if tc.expPass {
@@ -131,14 +131,14 @@ func (suite *HooksTestSuite) TestOnRecvPacketHooks() {
 				suite.Require().False(ack.Success())
 			}
 
-			if _, ok := suite.chainB.GetMokisisApp().TransferStack.
+			if _, ok := suite.chainB.GetMokitaApp().TransferStack.
 				ICS4Middleware.Hooks.(testutils.TestRecvOverrideHooks); ok {
 				suite.Require().True(status.OverrideRan)
 				suite.Require().False(status.BeforeRan)
 				suite.Require().False(status.AfterRan)
 			}
 
-			if _, ok := suite.chainB.GetMokisisApp().TransferStack.
+			if _, ok := suite.chainB.GetMokitaApp().TransferStack.
 				ICS4Middleware.Hooks.(testutils.TestRecvBeforeAfterHooks); ok {
 				suite.Require().False(status.OverrideRan)
 				suite.Require().True(status.BeforeRan)
@@ -180,7 +180,7 @@ func (suite *HooksTestSuite) receivePacketWithSequence(receiver, memo string, pr
 
 	packet := suite.makeMockPacket(receiver, memo, prevSequence)
 
-	err := suite.chainB.GetMokisisApp().HooksICS4Wrapper.SendPacket(
+	err := suite.chainB.GetMokitaApp().HooksICS4Wrapper.SendPacket(
 		suite.chainB.GetContext(), channelCap, packet)
 	suite.Require().NoError(err, "IBC send failed. Expected success. %s", err)
 
@@ -225,8 +225,8 @@ func (suite *HooksTestSuite) TestFundsAreTransferredToTheContract() {
 	addr := suite.chainA.InstantiateContract(&suite.Suite, "{}", 1)
 
 	// Check that the contract has no funds
-	localDenom := mokiutils.MustExtractDenomFromPacketOnRecv(suite.makeMockPacket("", "", 0))
-	balance := suite.chainA.GetMokisisApp().BankKeeper.GetBalance(suite.chainA.GetContext(), addr, localDenom)
+	localDenom := osmoutils.MustExtractDenomFromPacketOnRecv(suite.makeMockPacket("", "", 0))
+	balance := suite.chainA.GetMokitaApp().BankKeeper.GetBalance(suite.chainA.GetContext(), addr, localDenom)
 	suite.Require().Equal(sdk.NewInt(0), balance.Amount)
 
 	// Execute the contract via IBC
@@ -240,7 +240,7 @@ func (suite *HooksTestSuite) TestFundsAreTransferredToTheContract() {
 	suite.Require().Equal(ack["result"], "eyJjb250cmFjdF9yZXN1bHQiOiJkR2hwY3lCemFHOTFiR1FnWldOb2J3PT0iLCJpYmNfYWNrIjoiZXlKeVpYTjFiSFFpT2lKQlVUMDlJbjA9In0=")
 
 	// Check that the token has now been transferred to the contract
-	balance = suite.chainA.GetMokisisApp().BankKeeper.GetBalance(suite.chainA.GetContext(), addr, localDenom)
+	balance = suite.chainA.GetMokitaApp().BankKeeper.GetBalance(suite.chainA.GetContext(), addr, localDenom)
 	suite.Require().Equal(sdk.NewInt(1), balance.Amount)
 }
 
@@ -251,8 +251,8 @@ func (suite *HooksTestSuite) TestFundsAreReturnedOnFailedContractExec() {
 	addr := suite.chainA.InstantiateContract(&suite.Suite, "{}", 1)
 
 	// Check that the contract has no funds
-	localDenom := mokiutils.MustExtractDenomFromPacketOnRecv(suite.makeMockPacket("", "", 0))
-	balance := suite.chainA.GetMokisisApp().BankKeeper.GetBalance(suite.chainA.GetContext(), addr, localDenom)
+	localDenom := osmoutils.MustExtractDenomFromPacketOnRecv(suite.makeMockPacket("", "", 0))
+	balance := suite.chainA.GetMokitaApp().BankKeeper.GetBalance(suite.chainA.GetContext(), addr, localDenom)
 	suite.Require().Equal(sdk.NewInt(0), balance.Amount)
 
 	// Execute the contract via IBC with a message that the contract will reject
@@ -265,7 +265,7 @@ func (suite *HooksTestSuite) TestFundsAreReturnedOnFailedContractExec() {
 	suite.Require().Contains(ack, "error")
 
 	// Check that the token has now been transferred to the contract
-	balance = suite.chainA.GetMokisisApp().BankKeeper.GetBalance(suite.chainA.GetContext(), addr, localDenom)
+	balance = suite.chainA.GetMokitaApp().BankKeeper.GetBalance(suite.chainA.GetContext(), addr, localDenom)
 	fmt.Println(balance)
 	suite.Require().Equal(sdk.NewInt(0), balance.Amount)
 }
@@ -319,8 +319,8 @@ func (suite *HooksTestSuite) TestFundTracking() {
 	addr := suite.chainA.InstantiateContract(&suite.Suite, `{"count": 0}`, 1)
 
 	// Check that the contract has no funds
-	localDenom := mokiutils.MustExtractDenomFromPacketOnRecv(suite.makeMockPacket("", "", 0))
-	balance := suite.chainA.GetMokisisApp().BankKeeper.GetBalance(suite.chainA.GetContext(), addr, localDenom)
+	localDenom := osmoutils.MustExtractDenomFromPacketOnRecv(suite.makeMockPacket("", "", 0))
+	balance := suite.chainA.GetMokitaApp().BankKeeper.GetBalance(suite.chainA.GetContext(), addr, localDenom)
 	suite.Require().Equal(sdk.NewInt(0), balance.Amount)
 
 	// Execute the contract via IBC
@@ -358,7 +358,7 @@ func (suite *HooksTestSuite) TestFundTracking() {
 	suite.Require().Equal(`{"total_funds":[{"denom":"ibc/C053D637CCA2A2BA030E2C5EE1B28A16F71CCB0E45E8BE52766DC1B241B77878","amount":"2"}]}`, state)
 
 	// Check that the token has now been transferred to the contract
-	balance = suite.chainA.GetMokisisApp().BankKeeper.GetBalance(suite.chainA.GetContext(), addr, localDenom)
+	balance = suite.chainA.GetMokitaApp().BankKeeper.GetBalance(suite.chainA.GetContext(), addr, localDenom)
 	suite.Require().Equal(sdk.NewInt(2), balance.Amount)
 }
 
@@ -517,7 +517,7 @@ const (
 func (suite *HooksTestSuite) SetupPools(chainName Chain, multipliers []sdk.Dec) []gammtypes.CFMMPoolI {
 	chain := suite.GetChain(chainName)
 	acc1 := chain.SenderAccount.GetAddress()
-	bondDenom := chain.GetMokisisApp().StakingKeeper.BondDenom(chain.GetContext())
+	bondDenom := chain.GetMokitaApp().StakingKeeper.BondDenom(chain.GetContext())
 
 	pools := []gammtypes.CFMMPoolI{}
 	for index, multiplier := range multipliers {
@@ -546,10 +546,10 @@ func (suite *HooksTestSuite) SetupPools(chainName Chain, multipliers []sdk.Dec) 
 		}
 		msg := balancer.NewMsgCreateBalancerPool(acc1, poolParams, poolAssets, defaultFutureGovernor)
 
-		poolId, err := chain.GetMokisisApp().SwapRouterKeeper.CreatePool(chain.GetContext(), msg)
+		poolId, err := chain.GetMokitaApp().SwapRouterKeeper.CreatePool(chain.GetContext(), msg)
 		suite.Require().NoError(err)
 
-		pool, err := chain.GetMokisisApp().GAMMKeeper.GetPoolAndPoke(chain.GetContext(), poolId)
+		pool, err := chain.GetMokitaApp().GAMMKeeper.GetPoolAndPoke(chain.GetContext(), poolId)
 		suite.Require().NoError(err)
 
 		pools = append(pools, pool)
@@ -563,7 +563,7 @@ func (suite *HooksTestSuite) SetupCrosschainSwaps(chainName Chain, withAckTracki
 	owner := chain.SenderAccount.GetAddress()
 
 	// Fund the account with some umoki and some stake
-	bankKeeper := chain.GetMokisisApp().BankKeeper
+	bankKeeper := chain.GetMokitaApp().BankKeeper
 	i, ok := sdk.NewIntFromString("20000000000000000000000")
 	suite.Require().True(ok)
 	amounts := sdk.NewCoins(sdk.NewCoin("umoki", i), sdk.NewCoin("stake", i), sdk.NewCoin("token0", i), sdk.NewCoin("token1", i))
@@ -588,7 +588,7 @@ func (suite *HooksTestSuite) SetupCrosschainSwaps(chainName Chain, withAckTracki
 	crosschainAddr := chain.InstantiateContract(&suite.Suite,
 		fmt.Sprintf(`{"swap_contract": "%s", "track_ibc_sends": %s, "channels": %s}`, swaprouterAddr, trackAcks, channels), 2)
 
-	mokitaApp := chain.GetMokisisApp()
+	mokitaApp := chain.GetMokitaApp()
 	contractKeeper := wasmkeeper.NewDefaultPermissionKeeper(mokitaApp.WasmKeeper)
 
 	ctx := chain.GetContext()
@@ -614,7 +614,7 @@ func (suite *HooksTestSuite) SetupCrosschainSwaps(chainName Chain, withAckTracki
 func (suite *HooksTestSuite) TestCrosschainSwaps() {
 	owner := suite.chainA.SenderAccount.GetAddress()
 	_, crosschainAddr := suite.SetupCrosschainSwaps(ChainA, true)
-	mokitaApp := suite.chainA.GetMokisisApp()
+	mokitaApp := suite.chainA.GetMokitaApp()
 	contractKeeper := wasmkeeper.NewDefaultPermissionKeeper(mokitaApp.WasmKeeper)
 
 	balanceSender := mokitaApp.BankKeeper.GetBalance(suite.chainA.GetContext(), owner, "token0")
@@ -655,7 +655,7 @@ func (suite *HooksTestSuite) CrosschainSwapsViaIBCTest(withAckTracking bool) {
 	denomTrace1 := transfertypes.ParseDenomTrace(transfertypes.GetPrefixedDenom("transfer", "channel-0", "token1"))
 	token1IBC := denomTrace1.IBCDenom()
 
-	mokitaAppB := suite.chainB.GetMokisisApp()
+	mokitaAppB := suite.chainB.GetMokitaApp()
 	balanceToken0 := mokitaAppB.BankKeeper.GetBalance(suite.chainB.GetContext(), initializer, token0IBC)
 	receiver := initializer
 	balanceToken1 := mokitaAppB.BankKeeper.GetBalance(suite.chainB.GetContext(), receiver, token1IBC)
@@ -703,7 +703,7 @@ func (suite *HooksTestSuite) TestCrosschainSwapsViaIBCBadAck() {
 	denomTrace0 := transfertypes.ParseDenomTrace(transfertypes.GetPrefixedDenom("transfer", "channel-0", "token0"))
 	token0IBC := denomTrace0.IBCDenom()
 
-	mokitaAppB := suite.chainB.GetMokisisApp()
+	mokitaAppB := suite.chainB.GetMokitaApp()
 	balanceToken0 := mokitaAppB.BankKeeper.GetBalance(suite.chainB.GetContext(), initializer, token0IBC)
 	receiver := "juno1ka8v934kgrw6679fs9cuu0kesyl0ljjy4tmycx" // Will not exist on chainB
 
@@ -733,7 +733,7 @@ func (suite *HooksTestSuite) TestCrosschainSwapsViaIBCBadAck() {
 	suite.Require().Equal(int64(1000), balanceToken0.Amount.Sub(balanceToken0After.Amount).Int64())
 
 	// The balance is stuck in the contract
-	mokitaAppA := suite.chainA.GetMokisisApp()
+	mokitaAppA := suite.chainA.GetMokitaApp()
 	balanceContract := mokitaAppA.BankKeeper.GetBalance(suite.chainA.GetContext(), crosschainAddr, "token1")
 	suite.Require().Greater(balanceContract.Amount.Int64(), int64(0))
 
@@ -803,7 +803,7 @@ func (suite *HooksTestSuite) TestBadCrosschainSwapsNextMemoMessages() {
 func (suite *HooksTestSuite) CreateIBCPoolOnChainB() {
 	chain := suite.GetChain(ChainB)
 	acc1 := chain.SenderAccount.GetAddress()
-	bondDenom := chain.GetMokisisApp().StakingKeeper.BondDenom(chain.GetContext())
+	bondDenom := chain.GetMokitaApp().StakingKeeper.BondDenom(chain.GetContext())
 
 	multiplier := sdk.NewDec(20)
 	denomTrace1 := transfertypes.ParseDenomTrace(transfertypes.GetPrefixedDenom("transfer", "channel-0", "token1"))
@@ -831,10 +831,10 @@ func (suite *HooksTestSuite) CreateIBCPoolOnChainB() {
 	}
 	msg := balancer.NewMsgCreateBalancerPool(acc1, poolParams, poolAssets, defaultFutureGovernor)
 
-	poolId, err := chain.GetMokisisApp().SwapRouterKeeper.CreatePool(chain.GetContext(), msg)
+	poolId, err := chain.GetMokitaApp().SwapRouterKeeper.CreatePool(chain.GetContext(), msg)
 	suite.Require().NoError(err)
 
-	_, err = chain.GetMokisisApp().GAMMKeeper.GetPoolAndPoke(chain.GetContext(), poolId)
+	_, err = chain.GetMokitaApp().GAMMKeeper.GetPoolAndPoke(chain.GetContext(), poolId)
 	suite.Require().NoError(err)
 
 }
@@ -846,7 +846,7 @@ func (suite *HooksTestSuite) SetupIBCRouteOnChainB(swaprouterAddr, owner sdk.Acc
 
 	msg := fmt.Sprintf(`{"set_route":{"input_denom":"%s","output_denom":"token0","pool_route":[{"pool_id":"3","token_out_denom":"stake"},{"pool_id":"1","token_out_denom":"token0"}]}}`,
 		token1IBC)
-	mokitaApp := chain.GetMokisisApp()
+	mokitaApp := chain.GetMokitaApp()
 	contractKeeper := wasmkeeper.NewDefaultPermissionKeeper(mokitaApp.WasmKeeper)
 	_, err := contractKeeper.Execute(chain.GetContext(), swaprouterAddr, owner, []byte(msg), sdk.NewCoins())
 	suite.Require().NoError(err)
@@ -883,7 +883,7 @@ func (suite *HooksTestSuite) TestCrosschainForwardWithMemo() {
 	denomTrace1 := transfertypes.ParseDenomTrace(transfertypes.GetPrefixedDenom("transfer", "channel-0", "token1"))
 	token1IBC := denomTrace1.IBCDenom()
 
-	balanceToken0IBCBefore := suite.chainA.GetMokisisApp().BankKeeper.GetBalance(suite.chainA.GetContext(), receiver, token0IBC)
+	balanceToken0IBCBefore := suite.chainA.GetMokitaApp().BankKeeper.GetBalance(suite.chainA.GetContext(), receiver, token0IBC)
 	fmt.Println("receiver now has: ", balanceToken0IBCBefore)
 	suite.Require().Equal(int64(0), balanceToken0IBCBefore.Amount.Int64())
 
@@ -920,7 +920,7 @@ func (suite *HooksTestSuite) TestCrosschainForwardWithMemo() {
 	suite.Require().NoError(err)
 	suite.RelayPacket(packet2, BtoA)
 
-	balanceToken0IBCAfter := suite.chainA.GetMokisisApp().BankKeeper.GetBalance(suite.chainA.GetContext(), receiver, token0IBC)
+	balanceToken0IBCAfter := suite.chainA.GetMokitaApp().BankKeeper.GetBalance(suite.chainA.GetContext(), receiver, token0IBC)
 	fmt.Println("receiver now has: ", balanceToken0IBCAfter)
 	suite.Require().Greater(balanceToken0IBCAfter.Amount.Int64(), int64(0))
 }

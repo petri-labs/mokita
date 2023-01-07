@@ -1,6 +1,6 @@
 # GAMM
 
-The ``GAMM`` module (**G**eneralized **A**utomated **M**arket **M**aker) provides the logic to create and interact with liquidity pools on the Mokisis DEX.
+The ``GAMM`` module (**G**eneralized **A**utomated **M**arket **M**aker) provides the logic to create and interact with liquidity pools on the Mokita DEX.
 
 ## Contents
 
@@ -181,7 +181,7 @@ Pools have the following parameters:
 2. **ExitFee** -
     The exit fee is a fee that is applied to LP's that want to remove their liquidity from the pool. Suppose a pool has an exit fee `e`. If they currently have `S` LP shares, then when they remove their liquidity they get tokens worth `(1 - e)S` shares back. The remaining `eS` shares are then burned, and the tokens corresponding to these shares are kept as liquidity.
 3. **FutureGovernor** -
-    Mokisis plans to allow every pool to act as a DAO, with its own governance in a future upgrade. To facilitate this transition, we allow pools to specify who the governor should be as a string. There are currently 3 options for the future governor.
+    Mokita plans to allow every pool to act as a DAO, with its own governance in a future upgrade. To facilitate this transition, we allow pools to specify who the governor should be as a string. There are currently 3 options for the future governor.
     - No one will govern it. This is done by leaving the future governor string as blank.
     - Allow a given address to govern it. This is done by setting the future governor as a bech32 address.
     - Lockups to a token. This is the full DAO scenario. The future governor specifies a token denomination `denom`, and a lockup duration `duration`. This says that "all tokens of denomination `denom` that are locked up for `duration` or longer, have equal say in governance of this pool".

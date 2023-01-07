@@ -118,7 +118,7 @@ func (suite *KeeperTestSuite) TestDeleteAllMokiPools() {
 
 	// Iterate through all of the pools and check if any paired with Moki exist
 	for _, pool := range suite.pools {
-		if otherDenom, match := types.CheckMokiAtomDenomMatch(pool.Asset1, pool.Asset2, types.MokisisDenomination); match {
+		if otherDenom, match := types.CheckMokiAtomDenomMatch(pool.Asset1, pool.Asset2, types.MokitaDenomination); match {
 			_, err := suite.App.AppKeepers.ProtoRevKeeper.GetMokiPool(suite.Ctx, otherDenom)
 			suite.Require().Error(err)
 		}

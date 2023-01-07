@@ -2,7 +2,7 @@ package v5
 
 import (
 	ibcconnectiontypes "github.com/cosmos/ibc-go/v4/modules/core/03-connection/types"
-	// bech32ibctypes "github.com/mokita-labs/bech32-ibc/x/bech32ibc/types"
+	// bech32ibctypes "github.com/petri-labs/bech32-ibc/x/bech32ibc/types"
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/cosmos/cosmos-sdk/types/module"

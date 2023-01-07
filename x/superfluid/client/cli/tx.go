@@ -7,8 +7,8 @@ import (
 	"github.com/spf13/cobra"
 	flag "github.com/spf13/pflag"
 
-	"github.com/petri-labs/mokita/mokiutils"
-	"github.com/petri-labs/mokita/mokiutils/mokicli"
+	"github.com/petri-labs/mokita/osmoutils"
+	"github.com/petri-labs/mokita/osmoutils/mokicli"
 	"github.com/petri-labs/mokita/x/superfluid/types"
 
 	"github.com/cosmos/cosmos-sdk/client"
@@ -357,7 +357,7 @@ func parseUpdateUnpoolWhitelistArgsToContent(flags *flag.FlagSet) (govtypes.Cont
 		return nil, err
 	}
 
-	poolIds, err := mokiutils.ParseUint64SliceFromString(poolIdsStr, ",")
+	poolIds, err := osmoutils.ParseUint64SliceFromString(poolIdsStr, ",")
 	if err != nil {
 		return nil, err
 	}

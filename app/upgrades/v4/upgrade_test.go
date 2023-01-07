@@ -22,7 +22,7 @@ type UpgradeTestSuite struct {
 	suite.Suite
 
 	ctx sdk.Context
-	app *app.MokisisApp
+	app *app.MokitaApp
 }
 
 func (suite *UpgradeTestSuite) SetupTest() {

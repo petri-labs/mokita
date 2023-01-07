@@ -35,7 +35,7 @@ on:
 
 env:
   GOLANG_VERSION: 1.18
-  GENESIS_URL: https://github.com/mokita-labs/networks/raw/main/mokita-1/genesis.json
+  GENESIS_URL: https://github.com/petri-labs/networks/raw/main/mokita-1/genesis.json
   ADDRBOOK_URL: https://dl2.quicksync.io/json/addrbook.mokita.json
   SNAPSHOT_BUCKET: https://snapshots.mokita.zone
   RPC_ENDPOINT: https://rpc.mokita.zone
@@ -101,7 +101,7 @@ jobs:
           make build
           build/mokitad version
       -
-        name: 🧪 Initialize Mokisis Node
+        name: 🧪 Initialize Mokita Node
         run:  |
           rm -rf $HOME/.mokitad/ || true
           build/mokitad init runner -o
@@ -136,7 +136,7 @@ jobs:
           # Copy snapshot in Data folder
           cp -R /mnt/data/snapshots/$REPO_MAJOR_VERSION/$SNAPSHOT_ID/* $HOME/.mokitad/
       -
-        name: 🧪 Configure Mokisis Node
+        name: 🧪 Configure Mokita Node
         run:  |
           CONFIG_FOLDER=$HOME/.mokitad/config
           
@@ -158,7 +158,7 @@ jobs:
 
           HALT_HEIGHT=$(($LAST_EPOCH_BLOCK_HEIGHT + ${{ env.DELTA_HALT_HEIGHT }}))
 
-          echo "Mokisis repo version: $REPO_MAJOR_VERSION"
+          echo "Mokita repo version: $REPO_MAJOR_VERSION"
           echo "Last Epoch Height: $LAST_EPOCH_BLOCK_HEIGHT"
           echo "Halt Height: $HALT_HEIGHT"
 
@@ -175,9 +175,9 @@ jobs:
           # Download addrbook
           wget -q -O $CONFIG_FOLDER/addrbook.json ${{ env.ADDRBOOK_URL }}
       -
-        name: 🧪 Start Mokisis Node
+        name: 🧪 Start Mokita Node
         run: build/mokitad start
       -
-        name: 🧹 Clean up Mokisis Home
+        name: 🧹 Clean up Mokita Home
         if: always()
         run: rm -rf $HOME/.mokitad/ || true

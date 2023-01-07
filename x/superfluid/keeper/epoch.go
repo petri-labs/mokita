@@ -7,7 +7,7 @@ import (
 
 	distributiontypes "github.com/cosmos/cosmos-sdk/x/distribution/types"
 
-	"github.com/petri-labs/mokita/mokiutils"
+	"github.com/petri-labs/mokita/osmoutils"
 	gammtypes "github.com/petri-labs/mokita/x/gamm/types"
 	incentivestypes "github.com/petri-labs/mokita/x/incentives/types"
 	lockuptypes "github.com/petri-labs/mokita/x/lockup/types"
@@ -62,7 +62,7 @@ func (k Keeper) MoveSuperfluidDelegationRewardToGauges(ctx sdk.Context) {
 
 		// To avoid unexpected issues on WithdrawDelegationRewards and AddToGaugeRewards
 		// we use cacheCtx and apply the changes later
-		_ = mokiutils.ApplyFuncIfNoError(ctx, func(cacheCtx sdk.Context) error {
+		_ = osmoutils.ApplyFuncIfNoError(ctx, func(cacheCtx sdk.Context) error {
 			_, err := k.ck.WithdrawDelegationRewards(cacheCtx, addr, valAddr)
 			if errors.Is(err, distributiontypes.ErrEmptyDelegationDistInfo) {
 				ctx.Logger().Debug("no swaps occurred in this pool between last epoch and this epoch")
@@ -72,7 +72,7 @@ func (k Keeper) MoveSuperfluidDelegationRewardToGauges(ctx sdk.Context) {
 		})
 
 		// Send delegation rewards to gauges
-		_ = mokiutils.ApplyFuncIfNoError(ctx, func(cacheCtx sdk.Context) error {
+		_ = osmoutils.ApplyFuncIfNoError(ctx, func(cacheCtx sdk.Context) error {
 			// Note! We only send the bond denom (moki), to avoid attack vectors where people
 			// send many different denoms to the intermediary account, and make a resource exhaustion attack on end block.
 			bondDenom := k.sk.BondDenom(cacheCtx)

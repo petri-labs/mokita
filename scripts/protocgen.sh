@@ -25,7 +25,7 @@ cd ..
 #
 # Note: Proto files are suffixed with the current binary version.
 cp -r github.com/petri-labs/mokita/* ./
-cp -r github.com/petri-labs/mokita/mokiutils ./
+cp -r github.com/petri-labs/mokita/osmoutils ./
 rm -rf github.com
 
 go mod tidy -compat=1.18

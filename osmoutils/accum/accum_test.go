@@ -11,8 +11,8 @@ import (
 	"github.com/stretchr/testify/suite"
 	dbm "github.com/tendermint/tm-db"
 
-	"github.com/petri-labs/mokita/mokiutils"
-	accumPackage "github.com/petri-labs/mokita/mokiutils/accum"
+	"github.com/petri-labs/mokita/osmoutils"
+	accumPackage "github.com/petri-labs/mokita/osmoutils/accum"
 )
 
 type AccumTestSuite struct {
@@ -545,7 +545,7 @@ func (suite *AccumTestSuite) TestAddToPosition() {
 		suite.Run(name, func() {
 			// We reset the store for each test
 			suite.SetupTest()
-			positionName := mokiutils.CreateRandomAccounts(1)[0].String()
+			positionName := osmoutils.CreateRandomAccounts(1)[0].String()
 
 			// Create a new accumulator with initial value specified by test case
 			curAccum := accumPackage.CreateRawAccumObject(suite.store, testNameOne, tc.accumInit)
@@ -817,7 +817,7 @@ func (suite *AccumTestSuite) TestRemoveFromPosition() {
 		suite.Run(name, func() {
 			// We reset the store for each test
 			suite.SetupTest()
-			positionName := mokiutils.CreateRandomAccounts(1)[0].String()
+			positionName := osmoutils.CreateRandomAccounts(1)[0].String()
 
 			// Create a new accumulator with initial value specified by test case
 			curAccum := accumPackage.CreateRawAccumObject(suite.store, testNameOne, tc.accumInit)
@@ -1021,7 +1021,7 @@ func (suite *AccumTestSuite) TestGetPositionSize() {
 		suite.Run(name, func() {
 			// We reset the store for each test
 			suite.SetupTest()
-			positionName := mokiutils.CreateRandomAccounts(1)[0].String()
+			positionName := osmoutils.CreateRandomAccounts(1)[0].String()
 
 			// Create a new accumulator with initial value specified by test case
 			curAccum := accumPackage.CreateRawAccumObject(suite.store, testNameOne, tc.accumInit)

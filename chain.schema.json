@@ -22,7 +22,7 @@
     ],
     "genesis": {
       "name": "v3",
-      "genesis_url": "https://github.com/mokita-labs/networks/raw/main/mokita-1/genesis.json"
+      "genesis_url": "https://github.com/petri-labs/networks/raw/main/mokita-1/genesis.json"
     },
     "versions": [
       {

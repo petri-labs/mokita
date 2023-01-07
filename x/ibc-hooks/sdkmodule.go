@@ -15,7 +15,7 @@ import (
 
 	cdctypes "github.com/cosmos/cosmos-sdk/codec/types"
 
-	"github.com/petri-labs/mokita/mokiutils"
+	"github.com/petri-labs/mokita/osmoutils"
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	abci "github.com/tendermint/tendermint/abci/types"
@@ -74,11 +74,11 @@ func (AppModuleBasic) GetQueryCmd() *cobra.Command {
 type AppModule struct {
 	AppModuleBasic
 
-	authKeeper mokiutils.AccountKeeper
+	authKeeper osmoutils.AccountKeeper
 }
 
 // NewAppModule creates a new AppModule object.
-func NewAppModule(ak mokiutils.AccountKeeper) AppModule {
+func NewAppModule(ak osmoutils.AccountKeeper) AppModule {
 	return AppModule{
 		AppModuleBasic: AppModuleBasic{},
 		authKeeper:     ak,

@@ -13,7 +13,7 @@ import (
 	valsetpreftypes "github.com/petri-labs/mokita/x/valset-pref/types"
 )
 
-// UpgradeName defines the on-chain upgrade name for the Mokisis v14 upgrade.
+// UpgradeName defines the on-chain upgrade name for the Mokita v14 upgrade.
 const UpgradeName = "v14"
 
 var Upgrade = upgrades.Upgrade{

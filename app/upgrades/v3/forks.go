@@ -8,10 +8,10 @@ import (
 	"github.com/petri-labs/mokita/app/keepers"
 )
 
-// RunForkLogic executes height-gated on-chain fork logic for the Mokisis v3
+// RunForkLogic executes height-gated on-chain fork logic for the Mokita v3
 // upgrade.
 func RunForkLogic(ctx sdk.Context, keepers *keepers.AppKeepers) {
-	ctx.Logger().Info("Applying Mokisis v3 upgrade." +
+	ctx.Logger().Info("Applying Mokita v3 upgrade." +
 		" Fixing governance deposit so proposals can be voted upon," +
 		" and fixing validator min commission rate.")
 	FixMinDepositDenom(ctx, keepers.GovKeeper)

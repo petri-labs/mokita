@@ -6,7 +6,7 @@ import (
 	"github.com/petri-labs/mokita/app/upgrades"
 )
 
-// UpgradeName defines the on-chain upgrade name for the Mokisis v11 upgrade.
+// UpgradeName defines the on-chain upgrade name for the Mokita v11 upgrade.
 const UpgradeName = "v11"
 
 var Upgrade = upgrades.Upgrade{

@@ -99,7 +99,7 @@ func (k Keeper) CheckValidHotRoute(ctx sdk.Context, route gammtypes.SwapAmountIn
 
 // BuildMokiRoute builds a cyclic arbitrage route that starts and ends with moki given the tokenIn, tokenOut and poolId that were used in the swap
 func (k Keeper) BuildMokiRoute(ctx sdk.Context, tokenIn, tokenOut string, poolId uint64) (gammtypes.SwapAmountInRoutes, error) {
-	return k.BuildRoute(ctx, types.MokisisDenomination, tokenIn, tokenOut, poolId, k.GetMokiPool)
+	return k.BuildRoute(ctx, types.MokitaDenomination, tokenIn, tokenOut, poolId, k.GetMokiPool)
 }
 
 // BuildAtomRoute builds a cyclic arbitrage route that starts and ends with atom given the tokenIn, tokenOut and poolId that were used in the swap

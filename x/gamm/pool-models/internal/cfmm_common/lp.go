@@ -6,7 +6,7 @@ import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 
-	"github.com/petri-labs/mokita/mokimath"
+	"github.com/petri-labs/mokita/osmomath"
 	"github.com/petri-labs/mokita/x/gamm/types"
 )
 
@@ -154,9 +154,9 @@ func BinarySearchSingleAssetJoin(
 	}
 
 	// We accept an additive tolerance of 1 LP share error and round down
-	errTolerance := mokimath.ErrTolerance{AdditiveTolerance: sdk.OneDec(), MultiplicativeTolerance: sdk.Dec{}, RoundingDir: mokimath.RoundDown}
+	errTolerance := osmomath.ErrTolerance{AdditiveTolerance: sdk.OneDec(), MultiplicativeTolerance: sdk.Dec{}, RoundingDir: osmomath.RoundDown}
 
-	numLPShares, err = mokimath.BinarySearch(
+	numLPShares, err = osmomath.BinarySearch(
 		estimateCoinOutGivenShares,
 		LPShareLowerBound, LPShareUpperBound, tokenIn.Amount, errTolerance, maxIterations)
 	if err != nil {

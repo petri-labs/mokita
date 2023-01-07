@@ -3,7 +3,7 @@ package cli
 import (
 	"github.com/spf13/cobra"
 
-	"github.com/petri-labs/mokita/mokiutils/mokicli"
+	"github.com/petri-labs/mokita/osmoutils/mokicli"
 	"github.com/petri-labs/mokita/x/ibc-rate-limit/types"
 )
 

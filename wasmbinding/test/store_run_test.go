@@ -34,7 +34,7 @@ func TestNoStorageWithoutProposal(t *testing.T) {
 	require.Error(t, err)
 }
 
-func storeCodeViaProposal(t *testing.T, ctx sdk.Context, mokita *app.MokisisApp, addr sdk.AccAddress) {
+func storeCodeViaProposal(t *testing.T, ctx sdk.Context, mokita *app.MokitaApp, addr sdk.AccAddress) {
 	govKeeper := mokita.GovKeeper
 	wasmCode, err := os.ReadFile("../testdata/hackatom.wasm")
 	require.NoError(t, err)

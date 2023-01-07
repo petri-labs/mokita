@@ -24,7 +24,7 @@ var _ = math.Inf
 const _ = proto.GoGoProtoPackageIsVersion3 // please upgrade the proto package
 
 // FeeToken is a struct that specifies a coin denom, and pool ID pair.
-// This marks the token as eligible for use as a tx fee asset in Mokisis.
+// This marks the token as eligible for use as a tx fee asset in Mokita.
 // Its price in moki is derived through looking at the provided pool ID.
 // The pool ID must have moki as one of its assets.
 type FeeToken struct {

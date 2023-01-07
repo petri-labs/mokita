@@ -31,7 +31,7 @@ func (tp *TokenPairArbRoutes) Validate() error {
 		}
 
 		// In denoms must match either moki or atom
-		if route.Trades[0].TokenIn != AtomDenomination && route.Trades[0].TokenIn != MokisisDenomination {
+		if route.Trades[0].TokenIn != AtomDenomination && route.Trades[0].TokenIn != MokitaDenomination {
 			return fmt.Errorf("the first trade must have either moki or atom as the in denom")
 		}
 

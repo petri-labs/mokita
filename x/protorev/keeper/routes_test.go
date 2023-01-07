@@ -30,9 +30,9 @@ func (suite *KeeperTestSuite) TestBuildRoutes() {
 					{PoolId: 4, InputDenom: "bitcoin", OutputDenom: types.AtomDenomination},
 				},
 				{
-					{PoolId: 25, InputDenom: types.MokisisDenomination, OutputDenom: types.AtomDenomination},
+					{PoolId: 25, InputDenom: types.MokitaDenomination, OutputDenom: types.AtomDenomination},
 					{PoolId: 1, InputDenom: types.AtomDenomination, OutputDenom: "akash"},
-					{PoolId: 7, InputDenom: "akash", OutputDenom: types.MokisisDenomination},
+					{PoolId: 7, InputDenom: "akash", OutputDenom: types.MokitaDenomination},
 				},
 			},
 		},
@@ -43,9 +43,9 @@ func (suite *KeeperTestSuite) TestBuildRoutes() {
 			poolID:      4,
 			expected: [][]TestRoute{
 				{
-					{PoolId: 25, InputDenom: types.MokisisDenomination, OutputDenom: types.AtomDenomination},
+					{PoolId: 25, InputDenom: types.MokitaDenomination, OutputDenom: types.AtomDenomination},
 					{PoolId: 4, InputDenom: types.AtomDenomination, OutputDenom: "bitcoin"},
-					{PoolId: 10, InputDenom: "bitcoin", OutputDenom: types.MokisisDenomination},
+					{PoolId: 10, InputDenom: "bitcoin", OutputDenom: types.MokitaDenomination},
 				},
 			},
 		},
@@ -56,9 +56,9 @@ func (suite *KeeperTestSuite) TestBuildRoutes() {
 			poolID:      19,
 			expected: [][]TestRoute{
 				{
-					{PoolId: 9, InputDenom: types.MokisisDenomination, OutputDenom: "ethereum"},
+					{PoolId: 9, InputDenom: types.MokitaDenomination, OutputDenom: "ethereum"},
 					{PoolId: 19, InputDenom: "ethereum", OutputDenom: "bitcoin"},
-					{PoolId: 10, InputDenom: "bitcoin", OutputDenom: types.MokisisDenomination},
+					{PoolId: 10, InputDenom: "bitcoin", OutputDenom: types.MokitaDenomination},
 				},
 				{
 					{PoolId: 3, InputDenom: types.AtomDenomination, OutputDenom: "ethereum"},
@@ -69,7 +69,7 @@ func (suite *KeeperTestSuite) TestBuildRoutes() {
 		},
 		{
 			description: "No route exists for swap in moki and swap out Atom",
-			inputDenom:  types.MokisisDenomination,
+			inputDenom:  types.MokitaDenomination,
 			outputDenom: types.AtomDenomination,
 			poolID:      25,
 			expected:    [][]TestRoute{},
@@ -103,24 +103,24 @@ func (suite *KeeperTestSuite) TestBuildAtomRoute() {
 	}{
 		{
 			description:   "Route exists for swap in Moki and swap out Akash",
-			swapIn:        types.MokisisDenomination,
+			swapIn:        types.MokitaDenomination,
 			swapOut:       "akash",
 			poolId:        7,
-			expectedRoute: []TestRoute{{1, types.AtomDenomination, "akash"}, {7, "akash", types.MokisisDenomination}, {25, types.MokisisDenomination, types.AtomDenomination}},
+			expectedRoute: []TestRoute{{1, types.AtomDenomination, "akash"}, {7, "akash", types.MokitaDenomination}, {25, types.MokitaDenomination, types.AtomDenomination}},
 			hasRoute:      true,
 		},
 		{
 			description:   "Route exists for swap in Akash and swap out Moki",
 			swapIn:        "akash",
-			swapOut:       types.MokisisDenomination,
+			swapOut:       types.MokitaDenomination,
 			poolId:        7,
-			expectedRoute: []TestRoute{{25, types.AtomDenomination, types.MokisisDenomination}, {7, types.MokisisDenomination, "akash"}, {1, "akash", types.AtomDenomination}},
+			expectedRoute: []TestRoute{{25, types.AtomDenomination, types.MokitaDenomination}, {7, types.MokitaDenomination, "akash"}, {1, "akash", types.AtomDenomination}},
 			hasRoute:      true,
 		},
 		{
 			description:   "Route does not exist for swap in Terra and swap out Moki because the pool does not exist",
 			swapIn:        "terra",
-			swapOut:       types.MokisisDenomination,
+			swapOut:       types.MokitaDenomination,
 			poolId:        7,
 			expectedRoute: []TestRoute{},
 			hasRoute:      false,
@@ -160,7 +160,7 @@ func (suite *KeeperTestSuite) TestBuildMokiRoute() {
 			swapIn:        types.AtomDenomination,
 			swapOut:       "akash",
 			poolId:        1,
-			expectedRoute: []TestRoute{{7, types.MokisisDenomination, "akash"}, {1, "akash", types.AtomDenomination}, {25, types.AtomDenomination, types.MokisisDenomination}},
+			expectedRoute: []TestRoute{{7, types.MokitaDenomination, "akash"}, {1, "akash", types.AtomDenomination}, {25, types.AtomDenomination, types.MokitaDenomination}},
 			hasRoute:      true,
 		},
 		{
@@ -168,7 +168,7 @@ func (suite *KeeperTestSuite) TestBuildMokiRoute() {
 			swapIn:        "akash",
 			swapOut:       types.AtomDenomination,
 			poolId:        1,
-			expectedRoute: []TestRoute{{25, types.MokisisDenomination, types.AtomDenomination}, {1, types.AtomDenomination, "akash"}, {7, "akash", types.MokisisDenomination}},
+			expectedRoute: []TestRoute{{25, types.MokitaDenomination, types.AtomDenomination}, {1, types.AtomDenomination, "akash"}, {7, "akash", types.MokitaDenomination}},
 			hasRoute:      true,
 		},
 		{

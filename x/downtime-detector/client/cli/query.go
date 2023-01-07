@@ -6,7 +6,7 @@ import (
 	"github.com/spf13/cobra"
 	"github.com/spf13/pflag"
 
-	"github.com/petri-labs/mokita/mokiutils/mokicli"
+	"github.com/petri-labs/mokita/osmoutils/mokicli"
 	"github.com/petri-labs/mokita/x/downtime-detector/client/queryproto"
 	"github.com/petri-labs/mokita/x/downtime-detector/types"
 )

@@ -25,8 +25,8 @@ num_points_plot = 10000
 # function to approximate
 approximated_fn = lambda x: sp.Pow(2, x)
 
-# fixed point precision used in Mokisis `mokimath` package.
-mokimath_precision = 36
+# fixed point precision used in Mokita `osmomath` package.
+osmomath_precision = 36
 
 # flag controlling whether to plot each approximation.
 # Plots if true.
@@ -174,41 +174,41 @@ def main():
 
 # This script isolates the 13-parameter Chebyshev Rational approximation of e^x
 # We are planning to use it in production. Therefore, we need to peform coefficient
-# truncations to 36 decimal points (the max mokimath supported precision).
+# truncations to 36 decimal points (the max osmomath supported precision).
 def exponent_approximation_choice():
     # Equispaced x coordinates to be used for plotting every approximation.
     x_coordinates = approximations.linspace(x_start, x_end, num_points_plot)
-    x_coordinates = [sp.N(sp.Float(coef, mokimath_precision), n=mokimath_precision) for coef in x_coordinates]
+    x_coordinates = [sp.N(sp.Float(coef, osmomath_precision), n=osmomath_precision) for coef in x_coordinates]
 
     print(x_coordinates)
 
     # Chebyshev Rational Approximation to get the coefficients.
     # coef_numerator, coef_denominator = approximations.chebyshev_rational_approx(approximated_fn, x_start, x_end, num_parameters)
-    # coef_numerator = [sp.N(coef, mokimath_precision + 2) for coef in coef_numerator]
-    # coef_denominator = [sp.N(coef, mokimath_precision + 2) for coef in coef_denominator]
+    # coef_numerator = [sp.N(coef, osmomath_precision + 2) for coef in coef_numerator]
+    # coef_denominator = [sp.N(coef, osmomath_precision + 2) for coef in coef_denominator]
 
     # Hard code and round up numerator coefficientst that are to be used in production
     # Hard code and round down numerator coefficientst that are to be used in production
     # Both of these are calculated us=ing the above commented out code.
 
     coef_numerator = [
-        sp.N(sp.Float("1.000000000000000000000044212244679434", mokimath_precision), n=mokimath_precision),
-        sp.N(sp.Float("0.352032455817400196452603772766844426", mokimath_precision), n=mokimath_precision),
-        sp.N(sp.Float("0.056507868883666405413116800969512484", mokimath_precision), n=mokimath_precision),
-        sp.N(sp.Float("0.005343900728213034434757419480319916", mokimath_precision), n=mokimath_precision),
-        sp.N(sp.Float("0.000317708814342353603087543715930732", mokimath_precision), n=mokimath_precision),
-        sp.N(sp.Float("0.000011429747507407623028722262874632", mokimath_precision), n=mokimath_precision),
-        sp.N(sp.Float("0.000000198381965651614980168744540366", mokimath_precision), n=mokimath_precision),
+        sp.N(sp.Float("1.000000000000000000000044212244679434", osmomath_precision), n=osmomath_precision),
+        sp.N(sp.Float("0.352032455817400196452603772766844426", osmomath_precision), n=osmomath_precision),
+        sp.N(sp.Float("0.056507868883666405413116800969512484", osmomath_precision), n=osmomath_precision),
+        sp.N(sp.Float("0.005343900728213034434757419480319916", osmomath_precision), n=osmomath_precision),
+        sp.N(sp.Float("0.000317708814342353603087543715930732", osmomath_precision), n=osmomath_precision),
+        sp.N(sp.Float("0.000011429747507407623028722262874632", osmomath_precision), n=osmomath_precision),
+        sp.N(sp.Float("0.000000198381965651614980168744540366", osmomath_precision), n=osmomath_precision),
     ]
 
     coef_denominator = [
-        sp.N(sp.Float("1.0000000000000000000000000000000000000", mokimath_precision), n=mokimath_precision),
-        sp.N(sp.Float("-0.341114724742545112949699755780593311", mokimath_precision), n=mokimath_precision),
-        sp.N(sp.Float("0.052724071627342653404436933178482287", mokimath_precision), n=mokimath_precision),
-        sp.N(sp.Float("-0.004760950735524957576233524801866342", mokimath_precision), n=mokimath_precision),
-        sp.N(sp.Float("0.000267168475410566529819971616894193", mokimath_precision), n=mokimath_precision),
-        sp.N(sp.Float("-0.000008923715368802211181557353097439", mokimath_precision), n=mokimath_precision),
-        sp.N(sp.Float("0.000000140277233177373698516010555916", mokimath_precision), n=mokimath_precision),
+        sp.N(sp.Float("1.0000000000000000000000000000000000000", osmomath_precision), n=osmomath_precision),
+        sp.N(sp.Float("-0.341114724742545112949699755780593311", osmomath_precision), n=osmomath_precision),
+        sp.N(sp.Float("0.052724071627342653404436933178482287", osmomath_precision), n=osmomath_precision),
+        sp.N(sp.Float("-0.004760950735524957576233524801866342", osmomath_precision), n=osmomath_precision),
+        sp.N(sp.Float("0.000267168475410566529819971616894193", osmomath_precision), n=osmomath_precision),
+        sp.N(sp.Float("-0.000008923715368802211181557353097439", osmomath_precision), n=osmomath_precision),
+        sp.N(sp.Float("0.000000140277233177373698516010555916", osmomath_precision), n=osmomath_precision),
     ]
 
     print(coef_numerator)

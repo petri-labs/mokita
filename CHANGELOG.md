@@ -44,7 +44,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### API breaks
 
-* [#3763](https://github.com/petri-labs/mokita/pull/3763) Remove Mokisis gamm and twap `bindings` that were previously supported as custom wasm plugins.
+* [#3763](https://github.com/petri-labs/mokita/pull/3763) Remove Mokita gamm and twap `bindings` that were previously supported as custom wasm plugins.
 * [#3905](https://github.com/petri-labs/mokita/pull/3905) Deprecate gamm queries `NumPools`, `EstimateSwapExactAmountIn` and `EstimateSwapExactAmountOut`.
 * [#3907](https://github.com/petri-labs/mokita/pull/3907) Add `NumPools`, `EstimateSwapExactAmountIn` and `EstimateSwapExactAmountOut` query in swaprouter module to stargate whitelist.
 
@@ -76,21 +76,21 @@ This release's main features are utility helpers for smart contract developers. 
 * [#2387](https://github.com/petri-labs/mokita/pull/3838) Upgrade to IBC v4.2.0, and as a requirement for it wasmd to 0.30.0
 * [#3609](https://github.com/petri-labs/mokita/pull/3609) Add Downtime-detection module.
 * [#2788](https://github.com/petri-labs/mokita/pull/2788) Add logarithm base 2 implementation.
-* [#3677](https://github.com/petri-labs/mokita/pull/3677) Add methods for cloning and mutative multiplication on mokimath.BigDec.
-* [#3676](https://github.com/petri-labs/mokita/pull/3676) implement `PowerInteger` function on `mokimath.BigDec` 
-* [#3678](https://github.com/petri-labs/mokita/pull/3678) implement mutative `PowerIntegerMut` function on `mokimath.BigDec`.
+* [#3677](https://github.com/petri-labs/mokita/pull/3677) Add methods for cloning and mutative multiplication on osmomath.BigDec.
+* [#3676](https://github.com/petri-labs/mokita/pull/3676) implement `PowerInteger` function on `osmomath.BigDec` 
+* [#3678](https://github.com/petri-labs/mokita/pull/3678) implement mutative `PowerIntegerMut` function on `osmomath.BigDec`.
 * [#3708](https://github.com/petri-labs/mokita/pull/3708) `Exp2` function to compute 2^decimal.
 * [#3693](https://github.com/petri-labs/mokita/pull/3693) Add `EstimateSwapExactAmountOut` query to stargate whitelist
 * [#3731](https://github.com/petri-labs/mokita/pull/3731) BigDec Power functions with decimal exponent.
 * [#3847](https://github.com/petri-labs/mokita/pull/3847) GeometricTwap and GeometricTwapToNow queries added to Stargate whitelist.
-* [#3899](https://github.com/petri-labs/mokita/pull/3899) Fixed mokiutils so its importable by chains that don't use the mokita CmokisSDK fork 
+* [#3899](https://github.com/petri-labs/mokita/pull/3899) Fixed osmoutils so its importable by chains that don't use the mokita CmokisSDK fork 
   
 ### API breaks
 
-* [#3763](https://github.com/petri-labs/mokita/pull/3763) Move binary search and error tolerance code from `mokiutils` into `mokimath`
-* [#3817](https://github.com/petri-labs/mokita/pull/3817) Move mokiassert from `app/apptesting/mokiassert` to `mokiutils/mokiassert`.
-* [#3771](https://github.com/petri-labs/mokita/pull/3771) Move mokimath into its own go.mod
-* [#3827](https://github.com/petri-labs/mokita/pull/3827) Move mokiutils into its own go.mod
+* [#3763](https://github.com/petri-labs/mokita/pull/3763) Move binary search and error tolerance code from `osmoutils` into `osmomath`
+* [#3817](https://github.com/petri-labs/mokita/pull/3817) Move mokiassert from `app/apptesting/mokiassert` to `osmoutils/mokiassert`.
+* [#3771](https://github.com/petri-labs/mokita/pull/3771) Move osmomath into its own go.mod
+* [#3827](https://github.com/petri-labs/mokita/pull/3827) Move osmoutils into its own go.mod
 
 ### Bug fixes
 
@@ -98,7 +98,7 @@ This release's main features are utility helpers for smart contract developers. 
 
 ## v13.1.2
 
-Mokisis v13.1.2 is a minor patch release that includes several bug fixes and updates.
+Mokita v13.1.2 is a minor patch release that includes several bug fixes and updates.
 
 The main bug fix in this release is for the state export feature, which was not working properly in previous versions. This issue has now been resolved, and state export should work as expected in v13.1.2.
 
@@ -108,13 +108,13 @@ Additionally, the swagger files for v13 have been updated to improve compatibili
 
 * [#3611](https://github.com/petri-labs/mokita/pull/3611),[#3647](https://github.com/petri-labs/mokita/pull/3647) Introduce mokicli, to automate thousands of lines of CLI boilerplate
 * [#3634](https://github.com/petri-labs/mokita/pull/3634) (Makefile) Ensure correct golang version in make build and make install. (Thank you @jhernandezb )
-* [#3712](https://github.com/petri-labs/mokita/pull/3712) replace `mokimath.BigDec` `Power` with `PowerInteger` 
-* [#3711](https://github.com/petri-labs/mokita/pull/3711) Use Dec instead of Int for additive `ErrTolerace` in `mokiutils`.
+* [#3712](https://github.com/petri-labs/mokita/pull/3712) replace `osmomath.BigDec` `Power` with `PowerInteger` 
+* [#3711](https://github.com/petri-labs/mokita/pull/3711) Use Dec instead of Int for additive `ErrTolerace` in `osmoutils`.
 
 
 ## v13.0.0
 
-This release includes stableswap, and expands the IBC safety & composability functionality of Mokisis. The primary features are:
+This release includes stableswap, and expands the IBC safety & composability functionality of Mokita. The primary features are:
 
 * Gamm:
   * Introduction of the stableswap pool type
@@ -142,7 +142,7 @@ This release includes stableswap, and expands the IBC safety & composability fun
 * [#3335](https://github.com/petri-labs/mokita/pull/3335) Add v2 spot price queries
   - The v1beta1 queries actually have base asset and quote asset reversed, so you were always getting 1/correct spot price. People fixed this by reordering the arguments.
   - This PR adds v2 queries for doing the correct thing, and giving people time to migrate from v1beta1 queries to v2.
-  - It also changes cosmwasm to only allow the v2 queries, as no contracts on Mokisis mainnet uses the v1beta1 queries.
+  - It also changes cosmwasm to only allow the v2 queries, as no contracts on Mokita mainnet uses the v1beta1 queries.
 
 ### Bug fixes
 
@@ -172,13 +172,13 @@ This release includes several cosmwasm-developer and appchain-ecosystem affectin
 * Upgrading IBC to v3.3.0
 * Consistently makes authz work with ledger for all messages
 
-The release also contains the following changes affecting Mokisis users and node operators
+The release also contains the following changes affecting Mokita users and node operators
 
 * Fixing State Sync
 * Enabling expedited proposals
 
 This upgrade also adds a number of safety and API boundary improving changes to the codebase.
-While not state machine breaking, this release also includes the revamped Mokisis simulator,
+While not state machine breaking, this release also includes the revamped Mokita simulator,
 which acts as a fuzz testing tool tailored for the SDK state machine.
 
 ### Breaking Changes
@@ -193,7 +193,7 @@ which acts as a fuzz testing tool tailored for the SDK state machine.
 * [#1825](https://github.com/petri-labs/mokita/pull/1825) Fixes Interchain Accounts (host side) by adding it to AppModuleBasics
 * [#1994](https://github.com/petri-labs/mokita/pull/1994) Removed bech32ibc module
 * [#2016](https://github.com/petri-labs/mokita/pull/2016) Add fixed 10000 gas cost for each Balancer swap
-* [#2193](https://github.com/petri-labs/mokita/pull/2193) Add TwapKeeper to the Mokisis app
+* [#2193](https://github.com/petri-labs/mokita/pull/2193) Add TwapKeeper to the Mokita app
 * [#2227](https://github.com/petri-labs/mokita/pull/2227) Enable charging fee in base denom for `CreateGauge` and `AddToGauge`.
 * [#2283](https://github.com/petri-labs/mokita/pull/2283) x/incentives: refactor `CreateGauge` and `AddToGauge` fees to use txfees denom
 * [#2206](https://github.com/petri-labs/mokita/pull/2283) Register all Amino interfaces and concrete types on the authz Amino codec. This will allow the authz module to properly serialize and de-serializes instances using Amino.
@@ -217,7 +217,7 @@ which acts as a fuzz testing tool tailored for the SDK state machine.
 * [#2390](https://github.com/petri-labs/mokita/pull/2390) x/mint remove unused mintCoins parameter from AfterDistributeMintedCoin
 * [#2418](https://github.com/petri-labs/mokita/pull/2418) x/mint remove SetInitialSupplyOffsetDuringMigration from keeper
 * [#2417](https://github.com/petri-labs/mokita/pull/2417) x/mint unexport keeper `SetLastReductionEpochNum`, `getLastReductionEpochNum`, `CreateDeveloperVestingModuleAccount`, and `MintCoins`
-* [#2587](https://github.com/petri-labs/mokita/pull/2587) remove encoding config argument from NewMokisisApp
+* [#2587](https://github.com/petri-labs/mokita/pull/2587) remove encoding config argument from NewMokitaApp
 x
 
 ### Features
@@ -258,7 +258,7 @@ x
 
 #### SDK Upgrades
 * [#2245](https://github.com/petri-labs/mokita/pull/2245) Upgrade SDK for to v0.45.0x-moki-v9.2. Major changes:
-   * Minimum deposit on proposer at submission time: https://github.com/mokita-labs/cosmos-sdk/pull/302
+   * Minimum deposit on proposer at submission time: https://github.com/petri-labs/cosmos-sdk/pull/302
 
 ## v10.1.1
 
@@ -280,11 +280,11 @@ x
 
 #### SDK Upgrades
 * [#2146](https://github.com/petri-labs/mokita/pull/2146) Upgrade SDK for to v0.45.0x-moki-v9.1. Major changes:
-   * Concurrency query client option: https://github.com/mokita-labs/cosmos-sdk/pull/281
-   * Remove redacted message fix: https://github.com/mokita-labs/cosmos-sdk/pull/284
-   * Reduce commit store logs (change to Debug): https://github.com/mokita-labs/cosmos-sdk/pull/282
-   * Bring back the cliff vesting command: https://github.com/mokita-labs/cosmos-sdk/pull/272
-   * Allow ScheduleUpgrade to come from same block: https://github.com/mokita-labs/cosmos-sdk/pull/261
+   * Concurrency query client option: https://github.com/petri-labs/cosmos-sdk/pull/281
+   * Remove redacted message fix: https://github.com/petri-labs/cosmos-sdk/pull/284
+   * Reduce commit store logs (change to Debug): https://github.com/petri-labs/cosmos-sdk/pull/282
+   * Bring back the cliff vesting command: https://github.com/petri-labs/cosmos-sdk/pull/272
+   * Allow ScheduleUpgrade to come from same block: https://github.com/petri-labs/cosmos-sdk/pull/261
 
 
 ## v10.0.1
@@ -316,7 +316,7 @@ This release contains minor CLI bug fixes.
 
 ## [v9.0.0 - Nitrogen](https://github.com/petri-labs/mokita/releases/tag/v9.0.0)
 
-The Nitrogen release brings with it a number of features enabling further cosmwasm development work in Mokisis.
+The Nitrogen release brings with it a number of features enabling further cosmwasm development work in Mokita.
 It including breaking changes to the GAMM API's, many developer and node operator improvements for Cosmwasm & IBC, along with new txfee and governance features. In addition to various bug fixes and code quality improvements.
 
 #### GAMM API changes
@@ -327,7 +327,7 @@ Integrators will have to update their messages and queries to adapt, please see 
 #### Governance Changes
 
 * [#1191](https://github.com/petri-labs/mokita/pull/1191), [#1555](https://github.com/petri-labs/mokita/pull/1555) Superfluid stakers now have their votes override their validators votes
-* [sdk #239](https://github.com/mokita-labs/cosmos-sdk/pull/239) Governance can set a distinct voting period for every proposal type.
+* [sdk #239](https://github.com/petri-labs/cosmos-sdk/pull/239) Governance can set a distinct voting period for every proposal type.
 
 #### IBC
 
@@ -368,7 +368,7 @@ Cosmwasm bindings have been added, to make swapping and creating these new token
 
 ## [v8.0.0 - Emergency proposals upgrade](https://github.com/petri-labs/mokita/releases/tag/v8.0.0)
 
-This upgrade is a patch that must be hard forked in, as on-chain governance of Mokisis approved proposal [227](https://www.mintscan.io/mokita/proposals/227) and proposal [228](https://www.mintscan.io/mokita/proposals/228).
+This upgrade is a patch that must be hard forked in, as on-chain governance of Mokita approved proposal [227](https://www.mintscan.io/mokita/proposals/227) and proposal [228](https://www.mintscan.io/mokita/proposals/228).
 
 This upgrade includes:
 
@@ -439,22 +439,22 @@ Every node should upgrade their software version to v8.0.0 before the upgrade bl
 
 ### SDK fork updates
 
-* [sdk-#136](https://github.com/mokita-labs/iavl/pull/136) add after validator slash hook
-* [sdk-#137](https://github.com/mokita-labs/iavl/pull/137) backport feat: Modify grpc gateway to be concurrent
-* [sdk-#146](https://github.com/mokita-labs/cosmos-sdk/pull/146) extra logs during commit
-* [sdk-#151](https://github.com/mokita-labs/cosmos-sdk/pull/151) fix logs related to store keys and commit hash
-* [sdk-#140](https://github.com/mokita-labs/cosmos-sdk/pull/140) refactor: snapshot and pruning functionality
-* [sdk-#156](https://github.com/mokita-labs/cosmos-sdk/pull/156) feat: implement querying for commit hash and proofs
-* [sdk-#155](https://github.com/mokita-labs/cosmos-sdk/pull/155) fix: commit info data race
-* [sdk-#158](https://github.com/mokita-labs/cosmos-sdk/pull/158) Fixes the go race tests
-* [sdk-#160](https://github.com/mokita-labs/cosmos-sdk/pull/160) increase setupBaseAppWithSnapshots timeout to 90 seconds
-* [sdk-#161](https://github.com/mokita-labs/cosmos-sdk/pull/155) upgrade iavl to v0.17.3-moki-v7 with lowered fast node cache size
+* [sdk-#136](https://github.com/petri-labs/iavl/pull/136) add after validator slash hook
+* [sdk-#137](https://github.com/petri-labs/iavl/pull/137) backport feat: Modify grpc gateway to be concurrent
+* [sdk-#146](https://github.com/petri-labs/cosmos-sdk/pull/146) extra logs during commit
+* [sdk-#151](https://github.com/petri-labs/cosmos-sdk/pull/151) fix logs related to store keys and commit hash
+* [sdk-#140](https://github.com/petri-labs/cosmos-sdk/pull/140) refactor: snapshot and pruning functionality
+* [sdk-#156](https://github.com/petri-labs/cosmos-sdk/pull/156) feat: implement querying for commit hash and proofs
+* [sdk-#155](https://github.com/petri-labs/cosmos-sdk/pull/155) fix: commit info data race
+* [sdk-#158](https://github.com/petri-labs/cosmos-sdk/pull/158) Fixes the go race tests
+* [sdk-#160](https://github.com/petri-labs/cosmos-sdk/pull/160) increase setupBaseAppWithSnapshots timeout to 90 seconds
+* [sdk-#161](https://github.com/petri-labs/cosmos-sdk/pull/155) upgrade iavl to v0.17.3-moki-v7 with lowered fast node cache size
 
 ### IAVL fork updates
 
-* [iavl-35](https://github.com/mokita-labs/iavl/pull/35) avoid clearing fast node cache during pruning
-* [iavl-36](https://github.com/mokita-labs/iavl/pull/36) fix data race related to VersionExists
-* [iavl-37](https://github.com/mokita-labs/iavl/pull/36) hardcode fast node cache size to 100k
+* [iavl-35](https://github.com/petri-labs/iavl/pull/35) avoid clearing fast node cache during pruning
+* [iavl-36](https://github.com/petri-labs/iavl/pull/36) fix data race related to VersionExists
+* [iavl-37](https://github.com/petri-labs/iavl/pull/36) hardcode fast node cache size to 100k
 
 ## [v7.0.4](https://github.com/petri-labs/mokita/releases/tag/v7.0.4)
 
@@ -465,11 +465,11 @@ Every node should upgrade their software version to v8.0.0 before the upgrade bl
 
 ### SDK fork updates
 
-* [sdk-#135](https://github.com/mokita-labs/cosmos-sdk/pull/135) upgrade iavl to v0.17.3-moki-v5 with concurrent map write fix
+* [sdk-#135](https://github.com/petri-labs/cosmos-sdk/pull/135) upgrade iavl to v0.17.3-moki-v5 with concurrent map write fix
 
 ### IAVL fork updates
 
-* [iavl-34](https://github.com/mokita-labs/iavl/pull/34) fix concurrent map panic when querying and committing
+* [iavl-34](https://github.com/petri-labs/iavl/pull/34) fix concurrent map panic when querying and committing
 
 ## [v7.0.3](https://github.com/petri-labs/mokita/releases/tag/v7.0.3)
 
@@ -489,7 +489,7 @@ Right now a panic in this code block would halt the node, as it would not know h
 
 ## [v7.0.0 - Carbon](https://github.com/petri-labs/mokita/releases/tag/v7.0.0)
 
-The Mokisis Carbon Release! The changes are primarily
+The Mokita Carbon Release! The changes are primarily
 
 The large features include:
 
@@ -507,13 +507,13 @@ The v7 release introduces Superfluid Staking! This allows governance-approved LP
 
 * {Across many PRs} Add superfluid staking
 * [#893](https://github.com/petri-labs/mokita/pull/893/) Allow (non-superfluid'd) locks to be partially unlocked.
-* [#828](https://github.com/petri-labs/mokita/pull/828) Move docs to their own repository, <https://github.com/mokita-labs/docs>
-* [#804](https://github.com/petri-labs/mokita/pull/804/) Make the Mokisis repo use proper golang module versioning in self-package imports. (Enables other go projects to easily import Mokisis tags)
+* [#828](https://github.com/petri-labs/mokita/pull/828) Move docs to their own repository, <https://github.com/petri-labs/docs>
+* [#804](https://github.com/petri-labs/mokita/pull/804/) Make the Mokita repo use proper golang module versioning in self-package imports. (Enables other go projects to easily import Mokita tags)
 * [#782](https://github.com/petri-labs/mokita/pull/782) Upgrade to cosmos SDK v0.45.0
 * [#777](https://github.com/petri-labs/mokita/pull/777) Add framework for mempool filters for charging different gas rates, add mempool filter for higher gas txs.
 * [#772](https://github.com/petri-labs/mokita/pull/772) Fix SDK bug where incorrect sequence number txs wouldn't get removed from blocks.
 * [#769](https://github.com/petri-labs/mokita/pull/769/) Add governance permissioned cosmwasm module
-* [#680](https://github.com/petri-labs/mokita/pull/680/),[#697](https://github.com/petri-labs/mokita/pull/697/) Change app.go file structure to mitigate risk of keeper reference vs keeper struct bugs. (What caused Mokisis v5 -> v6)
+* [#680](https://github.com/petri-labs/mokita/pull/680/),[#697](https://github.com/petri-labs/mokita/pull/697/) Change app.go file structure to mitigate risk of keeper reference vs keeper struct bugs. (What caused Mokita v5 -> v6)
 
 ### Minor improvements & Bug Fixes
 
@@ -531,14 +531,14 @@ The v7 release introduces Superfluid Staking! This allows governance-approved LP
 
 ### SDK fork updates
 
-* [sdk-#119](https://github.com/mokita-labs/cosmos-sdk/pull/119) Add bank supply offsets to let applications have some minted tokens not count in total supply.
-* [sdk-#117](https://github.com/mokita-labs/cosmos-sdk/pull/117) Add an instant undelegate method to staking, for use in superfluid.
-* [sdk-#116](https://github.com/mokita-labs/cosmos-sdk/pull/116) Fix the slashing hooks to be correct.
-* [sdk-#108](https://github.com/mokita-labs/cosmos-sdk/pull/108) upgrade to IAVL fast storage on v0.45.0x-moki-v7-fast
+* [sdk-#119](https://github.com/petri-labs/cosmos-sdk/pull/119) Add bank supply offsets to let applications have some minted tokens not count in total supply.
+* [sdk-#117](https://github.com/petri-labs/cosmos-sdk/pull/117) Add an instant undelegate method to staking, for use in superfluid.
+* [sdk-#116](https://github.com/petri-labs/cosmos-sdk/pull/116) Fix the slashing hooks to be correct.
+* [sdk-#108](https://github.com/petri-labs/cosmos-sdk/pull/108) upgrade to IAVL fast storage on v0.45.0x-moki-v7-fast
 
 ### Wasmd fork updates
 
-* [wasmd-v.022.0-moki-v7.2](https://github.com/mokita-labs/wasmd/releases/tag/v0.22.0-moki-v7.2) Upgrade SDK and IAVL dependencies to use fast storage
+* [wasmd-v.022.0-moki-v7.2](https://github.com/petri-labs/wasmd/releases/tag/v0.22.0-moki-v7.2) Upgrade SDK and IAVL dependencies to use fast storage
 
 ## [v6.4.0](https://github.com/petri-labs/mokita/releases/tag/v6.4.0)
 
@@ -548,11 +548,11 @@ The v7 release introduces Superfluid Staking! This allows governance-approved LP
 
 ### SDK fork updates
 
-* [sdk-#114](https://github.com/mokita-labs/cosmos-sdk/pull/114) upgrading iavl with ram optimizations during migration, and extra logs and fixes for "version X was already saved to a different hash" and "insufficient funds" bugs
+* [sdk-#114](https://github.com/petri-labs/cosmos-sdk/pull/114) upgrading iavl with ram optimizations during migration, and extra logs and fixes for "version X was already saved to a different hash" and "insufficient funds" bugs
 
 ### IAVL fork updates
 
-* [iavl-19](https://github.com/mokita-labs/iavl/pull/19) force GC, no cache during migration, auto heap profile
+* [iavl-19](https://github.com/petri-labs/iavl/pull/19) force GC, no cache during migration, auto heap profile
 
 ## [v6.3.1](https://github.com/petri-labs/mokita/releases/tag/v6.3.1)
 
@@ -581,17 +581,17 @@ The v7 release introduces Superfluid Staking! This allows governance-approved LP
 
 ### SDK fork updates
 
-* [sdk-#100](https://github.com/mokita-labs/cosmos-sdk/pull/100) Upgrade iavl with fast storage
+* [sdk-#100](https://github.com/petri-labs/cosmos-sdk/pull/100) Upgrade iavl with fast storage
 
 ### IAVL fork updates
 
-* [iavl-5](https://github.com/mokita-labs/iavl/pull/5) Fast storage optimization for queries and iterations
+* [iavl-5](https://github.com/petri-labs/iavl/pull/5) Fast storage optimization for queries and iterations
 
 ## [v6.2.0](https://github.com/petri-labs/mokita/releases/tag/v6.2.0)
 
 ### SDK fork updates
 
-* [sdk-#58](https://github.com/mokita-labs/cosmos-sdk/pull/58) Fix a bug where recheck would not remove txs with invalid sequence numbers
+* [sdk-#58](https://github.com/petri-labs/cosmos-sdk/pull/58) Fix a bug where recheck would not remove txs with invalid sequence numbers
 
 ## Minor improvements & Bug Fixes
 
@@ -616,12 +616,12 @@ The v7 release introduces Superfluid Staking! This allows governance-approved LP
 
 ### SDK fork updates
 
-* [sdk-#52](https://github.com/mokita-labs/cosmos-sdk/pull/52) Fix inconsistencies in default pruning config, and change defaults. Fix pruning=everything defaults.
+* [sdk-#52](https://github.com/petri-labs/cosmos-sdk/pull/52) Fix inconsistencies in default pruning config, and change defaults. Fix pruning=everything defaults.
   * previously default was actually keeping 3 weeks of state, and every 100th state. (Not that far off from archive nodes)
   * pruning=default now changed to 1 week of state (100k blocks), and keep-every=0. (So a constant number of states stored)
   * pruning=everything now stores the last 10 states, to avoid db corruption errors plaguing everyone who used it. This isn't a significant change, because the pruning interval was anyways 10 blocks, so your node had to store 10 blocks of state anyway.
-* [sdk-#51](https://github.com/mokita-labs/cosmos-sdk/pull/51) Add hooks for superfluid staking
-* [sdk-#50](https://github.com/mokita-labs/cosmos-sdk/pull/50) Make it possible to better permission the bank keeper's minting ability
+* [sdk-#51](https://github.com/petri-labs/cosmos-sdk/pull/51) Add hooks for superfluid staking
+* [sdk-#50](https://github.com/petri-labs/cosmos-sdk/pull/50) Make it possible to better permission the bank keeper's minting ability
 
 ## [v6.0.0](https://github.com/petri-labs/mokita/releases/tag/v6.0.0)
 
@@ -629,18 +629,18 @@ This upgrade fixes a bug in the v5.0.0 upgrade's app.go, which prevents new IBC 
 This binary is compatible with v5.0.0 until block height `2464000`, estimated to be at 4PM UTC Monday December 20th.
 
 * [Patch](https://github.com/petri-labs/mokita/commit/907001b08686ed980e0afa3d97a9c5e2f095b79f#diff-a172cedcae47474b615c54d510a5d84a8dea3032e958587430b413538be3f333) - Revert back to passing in the correct staking keeper into the IBC keeper constructor.
-* [Height gating change](https://github.com/mokita-labs/ibc-go/pull/1) - Height gate the change in IBC, to make the v6.0.0 binary compatible until upgrade height.
+* [Height gating change](https://github.com/petri-labs/ibc-go/pull/1) - Height gate the change in IBC, to make the v6.0.0 binary compatible until upgrade height.
 
 ## [v5.0.0](https://github.com/petri-labs/mokita/releases/tag/v5.0.0) - Boron upgrade
 
-The Mokisis Boron release is made!
+The Mokita Boron release is made!
 
 Notable features include:
 
 * Upgrading from SDK v0.42 to [SDK v0.44](https://github.com/cosmos/cosmos-sdk/blob/v0.43.0/RELEASE_NOTES.md), bringing efficiency improvements, integrations and Rosetta support.
-* Bringing in the new modules [Bech32IBC](https://github.com/mokita-labs/bech32-ibc/), [Authz](https://github.com/cosmos/cosmos-sdk/tree/master/x/authz/spec), [TxFees](https://github.com/petri-labs/mokita/tree/main/x/txfees)
+* Bringing in the new modules [Bech32IBC](https://github.com/petri-labs/bech32-ibc/), [Authz](https://github.com/cosmos/cosmos-sdk/tree/master/x/authz/spec), [TxFees](https://github.com/petri-labs/mokita/tree/main/x/txfees)
 * Upgrading to IBC v2, allowing for improved Ethereum Bridge and CosmWasm support
-* Implementing Mokisis chain governance's [Proposal 32](https://www.mintscan.io/mokita/proposals/32)
+* Implementing Mokita chain governance's [Proposal 32](https://www.mintscan.io/mokita/proposals/32)
 * Large suite of gas bugs fixed. (Including several that we have not seen on chain)
 * More queries exposed to aid node operators.
 * Blocking the OFAC banned Ethereum addresses.
@@ -650,19 +650,19 @@ Upgrade instructions for node operators can be found [here](https://github.com/p
 
 ## Features
 
-* [\#637](https://github.com/petri-labs/mokita/pull/637) Add [Bech32IBC](https://github.com/mokita-labs/bech32-ibc/)
+* [\#637](https://github.com/petri-labs/mokita/pull/637) Add [Bech32IBC](https://github.com/petri-labs/bech32-ibc/)
 * [\#610](https://github.com/petri-labs/mokita/pull/610) Upgrade to Cmokis SDK v0.44.x
   * Numerous large updates, such as making module accounts be 32 bytes, Rosetta support, etc.
   * Adds & integrates the [Authz module](https://github.com/cosmos/cosmos-sdk/tree/master/x/authz/spec)
     See: [SDK v0.43.0 Release Notes](https://github.com/cosmos/cosmos-sdk/releases/tag/v0.43.0) For more details
 * [\#610](https://github.com/petri-labs/mokita/pull/610) Upgrade to IBC-v2
-* [\#560](https://github.com/petri-labs/mokita/pull/560) Implements Mokisis [prop32](https://www.mintscan.io/mokita/proposals/32) -- clawing back the final 20% of unclaimed moki and ion airdrop.
+* [\#560](https://github.com/petri-labs/mokita/pull/560) Implements Mokita [prop32](https://www.mintscan.io/mokita/proposals/32) -- clawing back the final 20% of unclaimed moki and ion airdrop.
 * [\#394](https://github.com/petri-labs/mokita/pull/394) Allow whitelisted tx fee tokens based on conversion rate to MOKI
 * [Commit db450f0](https://github.com/petri-labs/mokita/commit/db450f0dce8c595211d920f9bca7ed0f3a136e43) Add blocking of OFAC banned Ethereum addresses
 
 ## Minor improvements & Bug Fixes
 
-* {In the Mokisis-labs SDK fork}
+* {In the Mokita-labs SDK fork}
   * Increase default IAVL cache size to be in the hundred megabyte range
   * Significantly improve CacheKVStore speed problems, reduced IBC upgrade time from 2hrs to 5min
   * Add debug info to make it clear whats happening during upgrade
@@ -693,21 +693,21 @@ Upgrade instructions for node operators can be found [here](https://github.com/p
 * Added changelog and info about changelog format.
 * Fix accumulation store only counting bonded tokens, not unbonding tokens, that prevented the front-end from using more correct APY estimates. (Previously, the front-end could only underestimate rewards)
 
-## [v3.2.0](https://github.com/mokita/mokita-labs/releases/tag/v2.0.0) - 2021-06-28
+## [v3.2.0](https://github.com/mokita/petri-labs/releases/tag/v2.0.0) - 2021-06-28
 
 * Update the cosmos-sdk version we modify to v0.42.9
 * Fix a bug in the min commission rate code that allows validators to be created with commission rates less than the minimum.
 * Automatically upgrade any validator with less than the minimum comission rate to the minimum at upgrade time.
 * Unbrick on-chain governance, by fixing the deposit parameter to use `umoki` instead of `moki`.
 
-## [v1.0.2](https://github.com/mokita/mokita-labs/releases/tag/v1.0.2) - 2021-06-18
+## [v1.0.2](https://github.com/mokita/petri-labs/releases/tag/v1.0.2) - 2021-06-18
 
 This release improves the CLI UX of creating and querying gauges.
 
-## [v1.0.1](https://github.com/mokita/mokita-labs/releases/tag/v1.0.1) - 2021-06-17
+## [v1.0.1](https://github.com/mokita/petri-labs/releases/tag/v1.0.1) - 2021-06-17
 
 This release fixes a bug in `mokitad version` always displaying 0.0.1.
 
-## [v1.0.0](https://github.com/mokita/mokita-labs/releases/tag/v1.0.0) - 2021-06-16
+## [v1.0.0](https://github.com/mokita/petri-labs/releases/tag/v1.0.0) - 2021-06-16
 
 Initial Release!

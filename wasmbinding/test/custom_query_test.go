@@ -29,7 +29,7 @@ var defaultFunds = sdk.NewCoins(
 	sdk.NewInt64Coin("ustar", 999000000),
 )
 
-func SetupCustomApp(t *testing.T, addr sdk.AccAddress) (*app.MokisisApp, sdk.Context) {
+func SetupCustomApp(t *testing.T, addr sdk.AccAddress) (*app.MokitaApp, sdk.Context) {
 	mokita, ctx := CreateTestInput()
 	wasmKeeper := mokita.WasmKeeper
 
@@ -49,7 +49,7 @@ func TestQueryFullDenom(t *testing.T) {
 	require.NotEmpty(t, reflect)
 
 	// query full denom
-	query := bindings.MokisisQuery{
+	query := bindings.MokitaQuery{
 		FullDenom: &bindings.FullDenom{
 			CreatorAddr: reflect.String(),
 			Subdenom:    "ustart",
@@ -74,7 +74,7 @@ type ChainResponse struct {
 	Data []byte `json:"data"`
 }
 
-func queryCustom(t *testing.T, ctx sdk.Context, mokita *app.MokisisApp, contract sdk.AccAddress, request bindings.MokisisQuery, response interface{}) {
+func queryCustom(t *testing.T, ctx sdk.Context, mokita *app.MokitaApp, contract sdk.AccAddress, request bindings.MokitaQuery, response interface{}) {
 	msgBz, err := json.Marshal(request)
 	require.NoError(t, err)
 
@@ -102,7 +102,7 @@ func assertValidShares(t *testing.T, shares wasmvmtypes.Coin, poolID uint64) {
 	require.Greater(t, len(shares.Amount), 18)
 }
 
-func storeReflectCode(t *testing.T, ctx sdk.Context, mokita *app.MokisisApp, addr sdk.AccAddress) {
+func storeReflectCode(t *testing.T, ctx sdk.Context, mokita *app.MokitaApp, addr sdk.AccAddress) {
 	govKeeper := mokita.GovKeeper
 	wasmCode, err := os.ReadFile("../testdata/moki_reflect.wasm")
 	require.NoError(t, err)
@@ -124,7 +124,7 @@ func storeReflectCode(t *testing.T, ctx sdk.Context, mokita *app.MokisisApp, add
 	require.NoError(t, err)
 }
 
-func instantiateReflectContract(t *testing.T, ctx sdk.Context, mokita *app.MokisisApp, funder sdk.AccAddress) sdk.AccAddress {
+func instantiateReflectContract(t *testing.T, ctx sdk.Context, mokita *app.MokitaApp, funder sdk.AccAddress) sdk.AccAddress {
 	initMsgBz := []byte("{}")
 	contractKeeper := keeper.NewDefaultPermissionKeeper(mokita.WasmKeeper)
 	codeID := uint64(1)
@@ -134,7 +134,7 @@ func instantiateReflectContract(t *testing.T, ctx sdk.Context, mokita *app.Mokis
 	return addr
 }
 
-func fundAccount(t *testing.T, ctx sdk.Context, mokita *app.MokisisApp, addr sdk.AccAddress, coins sdk.Coins) {
+func fundAccount(t *testing.T, ctx sdk.Context, mokita *app.MokitaApp, addr sdk.AccAddress, coins sdk.Coins) {
 	err := simapp.FundAccount(
 		mokita.BankKeeper,
 		ctx,
@@ -144,7 +144,7 @@ func fundAccount(t *testing.T, ctx sdk.Context, mokita *app.MokisisApp, addr sdk
 	require.NoError(t, err)
 }
 
-func preparePool(t *testing.T, ctx sdk.Context, mokita *app.MokisisApp, addr sdk.AccAddress, funds []sdk.Coin) uint64 {
+func preparePool(t *testing.T, ctx sdk.Context, mokita *app.MokitaApp, addr sdk.AccAddress, funds []sdk.Coin) uint64 {
 	var assets []balancer.PoolAsset
 	for _, coin := range funds {
 		assets = append(assets, balancer.PoolAsset{

@@ -6,8 +6,8 @@ import (
 
 	"github.com/stretchr/testify/suite"
 
-	"github.com/petri-labs/mokita/mokiutils"
-	"github.com/petri-labs/mokita/mokiutils/mokicli"
+	"github.com/petri-labs/mokita/osmoutils"
+	"github.com/petri-labs/mokita/osmoutils/mokicli"
 	"github.com/petri-labs/mokita/x/gamm/client/cli"
 	"github.com/petri-labs/mokita/x/gamm/pool-models/balancer"
 	"github.com/petri-labs/mokita/x/gamm/types"
@@ -18,7 +18,7 @@ import (
 	"github.com/cosmos/cosmos-sdk/types/query"
 )
 
-var testAddresses = mokiutils.CreateRandomAccounts(3)
+var testAddresses = osmoutils.CreateRandomAccounts(3)
 
 type IntegrationTestSuite struct {
 	suite.Suite

@@ -7,7 +7,7 @@ import (
 	"github.com/gogo/protobuf/proto"
 	"github.com/stretchr/testify/suite"
 
-	"github.com/petri-labs/mokita/mokiutils"
+	"github.com/petri-labs/mokita/osmoutils"
 	"github.com/petri-labs/mokita/app"
 	"github.com/petri-labs/mokita/x/swaprouter/client/cli"
 	swaprouterqueryproto "github.com/petri-labs/mokita/x/swaprouter/client/queryproto"
@@ -82,7 +82,7 @@ func (s IntegrationTestSuite) TestNewSwapExactAmountOutCmd() {
 		newAddr,
 		sdk.NewCoins(sdk.NewInt64Coin(s.cfg.BondDenom, 20000), sdk.NewInt64Coin("node0token", 20000)), fmt.Sprintf("--%s=true", flags.FlagSkipConfirmation),
 		fmt.Sprintf("--%s=%s", flags.FlagBroadcastMode, flags.BroadcastBlock),
-		mokiutils.DefaultFeeString(s.cfg),
+		osmoutils.DefaultFeeString(s.cfg),
 	)
 	s.Require().NoError(err)
 
@@ -228,7 +228,7 @@ func (s IntegrationTestSuite) TestNewSwapExactAmountInCmd() {
 		newAddr,
 		sdk.NewCoins(sdk.NewInt64Coin(s.cfg.BondDenom, 20000), sdk.NewInt64Coin("node0token", 20000)), fmt.Sprintf("--%s=true", flags.FlagSkipConfirmation),
 		fmt.Sprintf("--%s=%s", flags.FlagBroadcastMode, flags.BroadcastBlock),
-		mokiutils.DefaultFeeString(s.cfg),
+		osmoutils.DefaultFeeString(s.cfg),
 	)
 	s.Require().NoError(err)
 
@@ -330,7 +330,7 @@ func (s *IntegrationTestSuite) TestNewCreatePoolCmd() {
 		newAddr,
 		sdk.NewCoins(sdk.NewInt64Coin(s.cfg.BondDenom, 200000000), sdk.NewInt64Coin("node0token", 20000)), fmt.Sprintf("--%s=true", flags.FlagSkipConfirmation),
 		fmt.Sprintf("--%s=%s", flags.FlagBroadcastMode, flags.BroadcastBlock),
-		mokiutils.DefaultFeeString(s.cfg),
+		osmoutils.DefaultFeeString(s.cfg),
 	)
 	s.Require().NoError(err)
 
@@ -578,7 +578,7 @@ func (s *IntegrationTestSuite) TestNewCreatePoolCmd() {
 				// common args
 				fmt.Sprintf("--%s=true", flags.FlagSkipConfirmation),
 				fmt.Sprintf("--%s=%s", flags.FlagBroadcastMode, flags.BroadcastBlock),
-				mokiutils.DefaultFeeString(s.cfg),
+				osmoutils.DefaultFeeString(s.cfg),
 				fmt.Sprintf("--%s=%s", flags.FlagGas, fmt.Sprint(400000)),
 			}
 

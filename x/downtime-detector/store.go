@@ -6,7 +6,7 @@ import (
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 
-	"github.com/petri-labs/mokita/mokiutils"
+	"github.com/petri-labs/mokita/osmoutils"
 	"github.com/petri-labs/mokita/x/downtime-detector/types"
 )
 
@@ -16,7 +16,7 @@ func (k *Keeper) GetLastBlockTime(ctx sdk.Context) (time.Time, error) {
 	if len(timeBz) == 0 {
 		return time.Time{}, errors.New("no last block time stored in state. Should not happen, did initialization happen correctly?")
 	}
-	timeV, err := mokiutils.ParseTimeString(string(timeBz))
+	timeV, err := osmoutils.ParseTimeString(string(timeBz))
 	if err != nil {
 		return time.Time{}, err
 	}
@@ -25,7 +25,7 @@ func (k *Keeper) GetLastBlockTime(ctx sdk.Context) (time.Time, error) {
 
 func (k *Keeper) StoreLastBlockTime(ctx sdk.Context, t time.Time) {
 	store := ctx.KVStore(k.storeKey)
-	timeBz := mokiutils.FormatTimeString(t)
+	timeBz := osmoutils.FormatTimeString(t)
 	store.Set(types.GetLastBlockTimestampKey(), []byte(timeBz))
 }
 
@@ -35,7 +35,7 @@ func (k *Keeper) GetLastDowntimeOfLength(ctx sdk.Context, dur types.Downtime) (t
 	if len(timeBz) == 0 {
 		return time.Time{}, errors.New("no last time stored in state. Should not happen, did initialization happen correctly?")
 	}
-	timeV, err := mokiutils.ParseTimeString(string(timeBz))
+	timeV, err := osmoutils.ParseTimeString(string(timeBz))
 	if err != nil {
 		return time.Time{}, err
 	}
@@ -44,6 +44,6 @@ func (k *Keeper) GetLastDowntimeOfLength(ctx sdk.Context, dur types.Downtime) (t
 
 func (k *Keeper) StoreLastDowntimeOfLength(ctx sdk.Context, dur types.Downtime, t time.Time) {
 	store := ctx.KVStore(k.storeKey)
-	timeBz := mokiutils.FormatTimeString(t)
+	timeBz := osmoutils.FormatTimeString(t)
 	store.Set(types.GetLastDowntimeOfLengthKey(dur), []byte(timeBz))
 }

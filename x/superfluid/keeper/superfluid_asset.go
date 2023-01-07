@@ -1,7 +1,7 @@
 package keeper
 
 import (
-	"github.com/petri-labs/mokita/mokiutils"
+	"github.com/petri-labs/mokita/osmoutils"
 	"github.com/petri-labs/mokita/x/superfluid/types"
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
@@ -42,7 +42,7 @@ func (k Keeper) AddNewSuperfluidAsset(ctx sdk.Context, asset types.SuperfluidAss
 	// initialize moki equivalent multipliers
 	epochIdentifier := k.GetEpochIdentifier(ctx)
 	currentEpoch := k.ek.GetEpochInfo(ctx, epochIdentifier).CurrentEpoch
-	return mokiutils.ApplyFuncIfNoError(ctx, func(ctx sdk.Context) error {
+	return osmoutils.ApplyFuncIfNoError(ctx, func(ctx sdk.Context) error {
 		k.SetSuperfluidAsset(ctx, asset)
 		err := k.UpdateMokiEquivalentMultipliers(ctx, asset, currentEpoch)
 		return err

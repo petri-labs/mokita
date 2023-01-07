@@ -3,7 +3,7 @@ package accum
 import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 
-	"github.com/petri-labs/mokita/mokiutils"
+	"github.com/petri-labs/mokita/osmoutils"
 )
 
 var (
@@ -18,13 +18,13 @@ func createNewPosition(accum AccumulatorObject, accumulatorValue sdk.DecCoins, i
 		UnclaimedRewards: unclaimedRewards,
 		Options:          options,
 	}
-	mokiutils.MustSet(accum.store, formatPositionPrefixKey(accum.name, index), &position)
+	osmoutils.MustSet(accum.store, formatPositionPrefixKey(accum.name, index), &position)
 }
 
 // Gets addr's current position from store
 func getPosition(accum AccumulatorObject, name string) (Record, error) {
 	position := Record{}
-	found, err := mokiutils.Get(accum.store, formatPositionPrefixKey(accum.name, name), &position)
+	found, err := osmoutils.Get(accum.store, formatPositionPrefixKey(accum.name, name), &position)
 	if err != nil {
 		return Record{}, err
 	}

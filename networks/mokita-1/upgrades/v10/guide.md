@@ -12,7 +12,7 @@ The coordination of restart will happen over Discord. In the event Discord is do
 
 ## Go Requirement
 
-You will need to be running go1.18 for this version of Mokisis. You can check if you are running go1.18 with the following command:
+You will need to be running go1.18 for this version of Mokita. You can check if you are running go1.18 with the following command:
 
 ```{.sh}
 go version

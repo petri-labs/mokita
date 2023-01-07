@@ -9,7 +9,7 @@ import (
 	"github.com/petri-labs/mokita/app/upgrades"
 )
 
-// CreateUpgradeHandler returns an x/upgrade handler for the Mokisis v4 on-chain
+// CreateUpgradeHandler returns an x/upgrade handler for the Mokita v4 on-chain
 // upgrade. Namely, it executes:
 //
 // 1. Setting x/gamm parameters for pool creation

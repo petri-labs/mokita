@@ -5,7 +5,7 @@ import (
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 
-	"github.com/petri-labs/mokita/mokimath"
+	"github.com/petri-labs/mokita/osmomath"
 	"github.com/petri-labs/mokita/x/twap/types"
 )
 
@@ -95,9 +95,9 @@ func TwapLog(x sdk.Dec) sdk.Dec {
 // twapPow exponentiates 2 to the given exponent.
 // Used as a test-helper for the power function used in geometric twap.
 func TwapPow(exponent sdk.Dec) sdk.Dec {
-	exp2 := mokimath.Exp2(mokimath.BigDecFromSDKDec(exponent.Abs()))
+	exp2 := osmomath.Exp2(osmomath.BigDecFromSDKDec(exponent.Abs()))
 	if exponent.IsNegative() {
-		return mokimath.OneDec().Quo(exp2).SDKDec()
+		return osmomath.OneDec().Quo(exp2).SDKDec()
 	}
 	return exp2.SDKDec()
 }

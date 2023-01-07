@@ -18,7 +18,7 @@ import (
 )
 
 func (chain *TestChain) StoreContractCode(suite *suite.Suite, path string) {
-	mokitaApp := chain.GetMokisisApp()
+	mokitaApp := chain.GetMokitaApp()
 
 	govKeeper := mokitaApp.GovKeeper
 	wasmCode, err := os.ReadFile(path)
@@ -43,7 +43,7 @@ func (chain *TestChain) StoreContractCode(suite *suite.Suite, path string) {
 }
 
 func (chain *TestChain) InstantiateRLContract(suite *suite.Suite, quotas string) sdk.AccAddress {
-	mokitaApp := chain.GetMokisisApp()
+	mokitaApp := chain.GetMokitaApp()
 	transferModule := mokitaApp.AccountKeeper.GetModuleAddress(transfertypes.ModuleName)
 	govModule := mokitaApp.AccountKeeper.GetModuleAddress(govtypes.ModuleName)
 
@@ -63,7 +63,7 @@ func (chain *TestChain) InstantiateRLContract(suite *suite.Suite, quotas string)
 }
 
 func (chain *TestChain) InstantiateContract(suite *suite.Suite, msg string, codeID uint64) sdk.AccAddress {
-	mokitaApp := chain.GetMokisisApp()
+	mokitaApp := chain.GetMokitaApp()
 	contractKeeper := wasmkeeper.NewDefaultPermissionKeeper(mokitaApp.WasmKeeper)
 	creator := mokitaApp.AccountKeeper.GetModuleAddress(govtypes.ModuleName)
 	addr, _, err := contractKeeper.Instantiate(chain.GetContext(), codeID, creator, creator, []byte(msg), "contract", nil)
@@ -72,7 +72,7 @@ func (chain *TestChain) InstantiateContract(suite *suite.Suite, msg string, code
 }
 
 func (chain *TestChain) QueryContract(suite *suite.Suite, contract sdk.AccAddress, key []byte) string {
-	mokitaApp := chain.GetMokisisApp()
+	mokitaApp := chain.GetMokitaApp()
 	state, err := mokitaApp.WasmKeeper.QuerySmart(chain.GetContext(), contract, key)
 	suite.Require().NoError(err)
 	return string(state)
@@ -83,7 +83,7 @@ func (chain *TestChain) RegisterRateLimitingContract(addr []byte) {
 	require.NoError(chain.T, err)
 	params, err := types.NewParams(addrStr)
 	require.NoError(chain.T, err)
-	mokitaApp := chain.GetMokisisApp()
+	mokitaApp := chain.GetMokitaApp()
 	paramSpace, ok := mokitaApp.AppKeepers.ParamsKeeper.GetSubspace(types.ModuleName)
 	require.True(chain.T, ok)
 	paramSpace.SetParamSet(chain.GetContext(), &params)

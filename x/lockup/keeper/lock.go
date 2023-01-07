@@ -10,7 +10,7 @@ import (
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 	"github.com/gogo/protobuf/proto"
 
-	"github.com/petri-labs/mokita/mokiutils/sumtree"
+	"github.com/petri-labs/mokita/osmoutils/sumtree"
 	"github.com/petri-labs/mokita/x/lockup/types"
 )
 

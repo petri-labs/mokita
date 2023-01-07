@@ -1,6 +1,6 @@
 # Localrelayer
 
-Localrelayer is a local testing environment composed of two localMokisis instances connected by a relayer.
+Localrelayer is a local testing environment composed of two localMokita instances connected by a relayer.
 
 ![Architecture](./assets/architecture.png)
 

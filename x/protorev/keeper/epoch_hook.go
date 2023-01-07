@@ -89,7 +89,7 @@ func (k Keeper) GetHighestLiquidityPools(ctx sdk.Context) (map[string]LiquidityP
 			}
 
 			// Check if there is a match with moki
-			if otherDenom, match := types.CheckMokiAtomDenomMatch(tokenA.Denom, tokenB.Denom, types.MokisisDenomination); match {
+			if otherDenom, match := types.CheckMokiAtomDenomMatch(tokenA.Denom, tokenB.Denom, types.MokitaDenomination); match {
 				k.updateHighestLiquidityPool(otherDenom, mokiPools, newPool)
 			}
 

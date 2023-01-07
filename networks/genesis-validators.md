@@ -1,11 +1,11 @@
-# Setting Up a Genesis Mokisis Validator
+# Setting Up a Genesis Mokita Validator
 
-Thank you for becoming a genesis validator on Mokisis! This guide will
+Thank you for becoming a genesis validator on Mokita! This guide will
 provide instructions on setting up a node, submitting a gentx, and other
-tasks needed to participate in the launch of the Mokisis mainnet.
+tasks needed to participate in the launch of the Mokita mainnet.
 
 The primary point of communication for the genesis process and future
-updates will be the \#validators channel on the [Mokisis
+updates will be the \#validators channel on the [Mokita
 Discord](https://discord.gg/FAarwSC8Tr). This channel is private by
 default in order to keep it free of spam and unnecessary noise. To join
 the channel, please send a message to @Meow#6669 to add yourself and any
@@ -16,16 +16,16 @@ Some important notes on joining as a genesis validator:
 1. **Gentxs must be submitted by End of Day UTC on June 11.**
 2. We highly recommend only experienced validators who have run on past
     Cmokis SDK chains and have participated in a genesis ceremony before
-    become genesis validators on Mokisis.
-3. All Mokisis validators should be expected to be ready to participate
-    active operators of the network. As explained in the [Mokisis: A Hub
+    become genesis validators on Mokita.
+3. All Mokita validators should be expected to be ready to participate
+    active operators of the network. As explained in the [Mokita: A Hub
     AMM](https://medium.com/mokita/mokita-a-hub-amm-c4c12788f94c)
-    post, Mokisis is intended to be a fast iterating platform that
+    post, Mokita is intended to be a fast iterating platform that
     regularly add new features and modules through software upgrades. A
     precise timeline for upgrade schedules does not exist, but
     validators are expected to be ready to upgrade the network
     potentially as frequently as a monthly basis early on. Furthermore,
-    Mokisis intends to adopt many new custom low-level features such as
+    Mokita intends to adopt many new custom low-level features such as
     threshold decryption, custom bridges, and price oracles. Some of
     these future upgrades may require validators to run additional
     software beyond the normal node software, and validators should be
@@ -67,7 +67,7 @@ OS/architecture you are running on.
 
 ### Install Go
 
-Mokisis is built using Go and requires Go version 1.15+. In this
+Mokita is built using Go and requires Go version 1.15+. In this
 example, we will be installing Go on the above Ubuntu 20.04:
 
 ``` {.sh}
@@ -93,9 +93,9 @@ go version
 # Should return go version go1.16.4 linux/amd64
 ```
 
-### Get Mokisis Source Code
+### Get Mokita Source Code
 
-Use git to retrieve Mokisis source code from the [official
+Use git to retrieve Mokita source code from the [official
 repo](https://github.com/petri-labs/mokita), and checkout the
 `gentx-launch` tag, which contains the latest stable release.
 
@@ -107,8 +107,8 @@ git checkout gentx-launch
 
 ## Install mokitad
 
-You can now build Mokisis node software. Running the following command
-will install the executable mokitad (Mokisis node daemon) to your
+You can now build Mokita node software. Running the following command
+will install the executable mokitad (Mokita node daemon) to your
 GOPATH.
 
 ``` {.sh}
@@ -118,7 +118,7 @@ make install
 ### Verify Your Installation
 
 Verify that everything is OK. If you get something *like* the following,
-you've successfully installed Mokisis on your system.
+you've successfully installed Mokita on your system.
 
 ``` {.sh}
 mokitad version --long
@@ -162,7 +162,7 @@ genesis file with the chain-id and airdrop balances.
 
 ``` {.sh}
 cd $HOME/.mokitad/config/
-curl https://raw.githubusercontent.com/mokita-labs/networks/main/mokita-1/pregenesis.json > $HOME/.mokitad/config/genesis.json
+curl https://raw.githubusercontent.com/petri-labs/networks/main/mokita-1/pregenesis.json > $HOME/.mokitad/config/genesis.json
 ```
 
 ### Import Validator Key
@@ -261,7 +261,7 @@ parameters for your validator:
 
 Note that your gentx will be rejected if you use an amount greater than
 what you have as liquid from the fairdrop. Recall only 20% of your
-fairdrop allocation is liquid at genesis. Also, note that Mokisis has a
+fairdrop allocation is liquid at genesis. Also, note that Mokita has a
 chain-mandated minimum commission rate of 5%.
 
 If you would like to override the memo field, use the `--ip` and
@@ -295,7 +295,7 @@ file](%22/Users/sunnya97/.mokitad/config/gentx/gentx-eb3b1768d00e66ef83acb1eee59
 ### Submit Your GenTx
 
 To submit your GenTx for inclusion in the chain, please upload it to the
-[github.com/mokita-labs/networks](https://github.com/mokita-labs/networks)
+[github.com/petri-labs/networks](https://github.com/petri-labs/networks)
 repo by End of Day, June 10.
 
 To upload the your genesis file, please follow these steps:
@@ -304,7 +304,7 @@ To upload the your genesis file, please follow these steps:
     (please do not have any spaces or special characters in the file
     name)
 2. Fork this repo by going to
-    <https://github.com/mokita-labs/networks>, clicking on fork, and
+    <https://github.com/petri-labs/networks>, clicking on fork, and
     choose your account (if multiple).
 3. Clone your copy of the fork to your local machine
 
@@ -338,7 +338,7 @@ git push origin master
 
 Thank you for submitting a gentx! We had 40 gentxs submitted! This guide
 will provide instructions on the next stage of getting ready for the
-Mokisis launch.
+Mokita launch.
 
 **The Chain Genesis Time is 17:00 UTC on June 18, 2021.**
 
@@ -346,7 +346,7 @@ Please have your validator up and ready by this time, and be available
 for further instructions if necessary at that time.
 
 The primary point of communication for the genesis process will be the
-\#validators channel on the [Mokisis
+\#validators channel on the [Mokita
 Discord](https://discord.gg/FAarwSC8Tr). It is absolutely critical that
 you and your team join the Discord during launch, as it will be the
 coordination point in case of any hiccups or issues during the launch
@@ -373,7 +373,7 @@ are running on.
 ### Update mokitad to v1.0.0
 
 For the gentx creation, we used the `gentx-launch` branch of the
-[Mokisis codebase](https://github.com/petri-labs/mokita).
+[Mokita codebase](https://github.com/petri-labs/mokita).
 
 For launch, please update to the `v1.0.1` tag and rebuild your binaries.
 (The `v1.0.0` tag is also fine, `v1.0.1` just fixes a bug in displaying
@@ -390,7 +390,7 @@ make install
 ### Verify Your Installation
 
 Verify that everything is OK. If you get something *like* the following,
-you've successfully installed Mokisis on your system. (scroll up to see
+you've successfully installed Mokita on your system. (scroll up to see
 above the list of dependencies)
 
 ``` {.sh}
@@ -409,7 +409,7 @@ to ensure the correct `mokitad` is running.
 
 ### Save your Chain ID in mokitad config
 
-Mokisis reintroduces the client-side config that was removed in earlier
+Mokita reintroduces the client-side config that was removed in earlier
 Stargate versions of the Cmokis SDK.
 
 If you haven't done so already, please save the mainnet chain-id to your
@@ -478,7 +478,7 @@ You can now download the "genesis" file for the chain. It is pre-filled
 with the entire genesis state and gentxs.
 
 ``` {.sh}
-curl https://media.githubusercontent.com/media/mokita-labs/networks/main/mokita-1/genesis.json > ~/.mokitad/config/genesis.json
+curl https://media.githubusercontent.com/media/petri-labs/networks/main/mokita-1/genesis.json > ~/.mokitad/config/genesis.json
 ```
 
 ### Updates to config files
@@ -532,7 +532,7 @@ linux, you can do this by creating a service.
 ``` {.sh}
 sudo tee /etc/systemd/system/mokitad.service > /dev/null <<EOF  
 [Unit]
-Description=Mokisis Daemon
+Description=Mokita Daemon
 After=network-online.target
 
 [Service]
@@ -581,16 +581,16 @@ is not directed at nor intended for use by any investors or prospective
 investors, and may not under any circumstances be relied upon when
 making investment decisions.*
 
-This work, ["Mokisis Genesis Validators
-Guide"](https://github.com/mokita-labs/networks/genesis-validators.md),
+This work, ["Mokita Genesis Validators
+Guide"](https://github.com/petri-labs/networks/genesis-validators.md),
 is a derivative of ["Agoric Validator
 Guide"](https://github.com/Agoric/agoric-sdk/wiki/Validator-Guide) used
 under [CC BY](http://creativecommons.org/licenses/by/4.0/). The Agoric
 validator gudie is itself is a derivative of ["Validating Kava
 Mainnet"](https://medium.com/kava-labs/validating-kava-mainnet-72fa1b6ea579)
 by [Kevin Davis](https://medium.com/@kevin_35106), used under [CC
-BY](http://creativecommons.org/licenses/by/4.0/). "Mokisis Validator
+BY](http://creativecommons.org/licenses/by/4.0/). "Mokita Validator
 Guide" is licensed under [CC
-BY](http://creativecommons.org/licenses/by/4.0/) by [Mokisis
+BY](http://creativecommons.org/licenses/by/4.0/) by [Mokita
 Labs](https://mokita.zone/). It was extensively modified to be relevant
-to the Mokisis Chain.
+to the Mokita Chain.

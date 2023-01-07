@@ -64,7 +64,7 @@ func (suite *KeeperTestSuite) SetupTest() {
 
 	// Set default configuration for testing
 	suite.balances = sdk.NewCoins(
-		sdk.NewCoin(types.MokisisDenomination, sdk.NewInt(9000000000000000000)),
+		sdk.NewCoin(types.MokitaDenomination, sdk.NewInt(9000000000000000000)),
 		sdk.NewCoin(types.AtomDenomination, sdk.NewInt(9000000000000000000)),
 		sdk.NewCoin("akash", sdk.NewInt(9000000000000000000)),
 		sdk.NewCoin("bitcoin", sdk.NewInt(9000000000000000000)),
@@ -95,11 +95,11 @@ func (suite *KeeperTestSuite) SetupTest() {
 
 // setUpPools sets up the pools needed for testing
 // This creates several assets and pools between most of them (used in testing throughout the module)
-// akash <-> types.MokisisDenomination
-// juno <-> types.MokisisDenomination
-// ethereum <-> types.MokisisDenomination
-// bitcoin <-> types.MokisisDenomination
-// canto <-> types.MokisisDenomination
+// akash <-> types.MokitaDenomination
+// juno <-> types.MokitaDenomination
+// ethereum <-> types.MokitaDenomination
+// bitcoin <-> types.MokitaDenomination
+// canto <-> types.MokitaDenomination
 // and so on....
 func (suite *KeeperTestSuite) setUpPools() {
 	// Create any necessary sdk.Ints that require string conversion
@@ -186,7 +186,7 @@ func (suite *KeeperTestSuite) setUpPools() {
 		{ // Pool 6
 			PoolAssets: []balancertypes.PoolAsset{
 				{
-					Token:  sdk.NewCoin(types.MokisisDenomination, sdk.NewInt(1000)),
+					Token:  sdk.NewCoin(types.MokitaDenomination, sdk.NewInt(1000)),
 					Weight: sdk.NewInt(1),
 				},
 				{
@@ -205,7 +205,7 @@ func (suite *KeeperTestSuite) setUpPools() {
 					Weight: sdk.NewInt(1),
 				},
 				{
-					Token:  sdk.NewCoin(types.MokisisDenomination, sdk.NewInt(1000)),
+					Token:  sdk.NewCoin(types.MokitaDenomination, sdk.NewInt(1000)),
 					Weight: sdk.NewInt(1),
 				},
 			},
@@ -220,7 +220,7 @@ func (suite *KeeperTestSuite) setUpPools() {
 					Weight: sdk.NewInt(1),
 				},
 				{
-					Token:  sdk.NewCoin(types.MokisisDenomination, sdk.NewInt(1000)),
+					Token:  sdk.NewCoin(types.MokitaDenomination, sdk.NewInt(1000)),
 					Weight: sdk.NewInt(1),
 				},
 			},
@@ -235,7 +235,7 @@ func (suite *KeeperTestSuite) setUpPools() {
 					Weight: sdk.NewInt(1),
 				},
 				{
-					Token:  sdk.NewCoin(types.MokisisDenomination, sdk.NewInt(1000)),
+					Token:  sdk.NewCoin(types.MokitaDenomination, sdk.NewInt(1000)),
 					Weight: sdk.NewInt(1),
 				},
 			},
@@ -250,7 +250,7 @@ func (suite *KeeperTestSuite) setUpPools() {
 					Weight: sdk.NewInt(1),
 				},
 				{
-					Token:  sdk.NewCoin(types.MokisisDenomination, sdk.NewInt(1000)),
+					Token:  sdk.NewCoin(types.MokitaDenomination, sdk.NewInt(1000)),
 					Weight: sdk.NewInt(1),
 				},
 			},
@@ -265,7 +265,7 @@ func (suite *KeeperTestSuite) setUpPools() {
 					Weight: sdk.NewInt(1),
 				},
 				{
-					Token:  sdk.NewCoin(types.MokisisDenomination, sdk.NewInt(1000)),
+					Token:  sdk.NewCoin(types.MokitaDenomination, sdk.NewInt(1000)),
 					Weight: sdk.NewInt(1),
 				},
 			},
@@ -430,7 +430,7 @@ func (suite *KeeperTestSuite) setUpPools() {
 					Weight: sdk.NewInt(1),
 				},
 				{
-					Token:  sdk.NewCoin(types.MokisisDenomination, sdk.NewInt(191801648570)),
+					Token:  sdk.NewCoin(types.MokitaDenomination, sdk.NewInt(191801648570)),
 					Weight: sdk.NewInt(1),
 				},
 			},
@@ -460,7 +460,7 @@ func (suite *KeeperTestSuite) setUpPools() {
 					Weight: sdk.NewInt(1),
 				},
 				{
-					Token:  sdk.NewCoin(types.MokisisDenomination, sdk.NewInt(13901565323)),
+					Token:  sdk.NewCoin(types.MokitaDenomination, sdk.NewInt(13901565323)),
 					Weight: sdk.NewInt(1),
 				},
 			},
@@ -475,7 +475,7 @@ func (suite *KeeperTestSuite) setUpPools() {
 					Weight: sdk.NewInt(1),
 				},
 				{
-					Token:  sdk.NewCoin(types.MokisisDenomination, sdk.NewInt(139015653231902)),
+					Token:  sdk.NewCoin(types.MokitaDenomination, sdk.NewInt(139015653231902)),
 					Weight: sdk.NewInt(1),
 				},
 			},
@@ -490,7 +490,7 @@ func (suite *KeeperTestSuite) setUpPools() {
 					Weight: sdk.NewInt(50),
 				},
 				{
-					Token:  sdk.NewCoin(types.MokisisDenomination, sdk.NewInt(171274446980)),
+					Token:  sdk.NewCoin(types.MokitaDenomination, sdk.NewInt(171274446980)),
 					Weight: sdk.NewInt(50),
 				},
 			},
@@ -505,7 +505,7 @@ func (suite *KeeperTestSuite) setUpPools() {
 					Weight: sdk.NewInt(50),
 				},
 				{
-					Token:  sdk.NewCoin(types.MokisisDenomination, sdk.NewInt(13466662920841)),
+					Token:  sdk.NewCoin(types.MokitaDenomination, sdk.NewInt(13466662920841)),
 					Weight: sdk.NewInt(50),
 				},
 			},

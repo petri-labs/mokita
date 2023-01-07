@@ -104,7 +104,7 @@ Now, at the upgrade height, Cmokivisor will upgrade to the v12 binary
 
 ## Manual Option
 
-1. Wait for Mokisis to reach the upgrade height (6799850)
+1. Wait for Mokita to reach the upgrade height (6799850)
 
 2. Look for a panic message, followed by endless peer logs. Stop the daemon
 
