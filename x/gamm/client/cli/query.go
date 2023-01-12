@@ -22,12 +22,12 @@ import (
 
 // GetQueryCmd returns the cli query commands for this module.
 func GetQueryCmd() *cobra.Command {
-	cmd := mokicli.QueryIndexCmd(types.ModuleName)
-	mokicli.AddQueryCmd(cmd, types.NewQueryClient, GetCmdSpotPrice)
-	mokicli.AddQueryCmd(cmd, types.NewQueryClient, GetCmdPool)
-	mokicli.AddQueryCmd(cmd, types.NewQueryClient, GetCmdPools)
-	mokicli.AddQueryCmd(cmd, types.NewQueryClient, GetCmdEstimateSwapExactAmountIn)
-	mokicli.AddQueryCmd(cmd, types.NewQueryClient, GetCmdEstimateSwapExactAmountOut)
+	cmd := osmocli.QueryIndexCmd(types.ModuleName)
+	osmocli.AddQueryCmd(cmd, types.NewQueryClient, GetCmdSpotPrice)
+	osmocli.AddQueryCmd(cmd, types.NewQueryClient, GetCmdPool)
+	osmocli.AddQueryCmd(cmd, types.NewQueryClient, GetCmdPools)
+	osmocli.AddQueryCmd(cmd, types.NewQueryClient, GetCmdEstimateSwapExactAmountIn)
+	osmocli.AddQueryCmd(cmd, types.NewQueryClient, GetCmdEstimateSwapExactAmountOut)
 	cmd.AddCommand(
 		GetCmdNumPools(),
 		GetCmdPoolParams(),
@@ -41,8 +41,8 @@ func GetQueryCmd() *cobra.Command {
 	return cmd
 }
 
-func GetCmdPool() (*mokicli.QueryDescriptor, *types.QueryPoolRequest) {
-	return &mokicli.QueryDescriptor{
+func GetCmdPool() (*osmocli.QueryDescriptor, *types.QueryPoolRequest) {
+	return &osmocli.QueryDescriptor{
 		Use:   "pool [poolID]",
 		Short: "Query pool",
 		Long: `{{.Short}}{{.ExampleHeader}}
@@ -71,8 +71,8 @@ func writeOutputBoilerplate(ctx client.Context, out []byte) error {
 	return nil
 }
 
-func GetCmdPools() (*mokicli.QueryDescriptor, *types.QueryPoolsRequest) {
-	return &mokicli.QueryDescriptor{
+func GetCmdPools() (*osmocli.QueryDescriptor, *types.QueryPoolsRequest) {
+	return &osmocli.QueryDescriptor{
 		Use:   "pools",
 		Short: "Query pools",
 		Long: `{{.Short}}{{.ExampleHeader}}
@@ -81,7 +81,7 @@ func GetCmdPools() (*mokicli.QueryDescriptor, *types.QueryPoolsRequest) {
 
 // nolint: staticcheck
 func GetCmdNumPools() *cobra.Command {
-	return mokicli.SimpleQueryCmd[*types.QueryNumPoolsRequest](
+	return osmocli.SimpleQueryCmd[*types.QueryNumPoolsRequest](
 		"num-pools",
 		"Query number of pools",
 		"{{.Short}}",
@@ -150,7 +150,7 @@ $ %s query gamm pool-params 1
 }
 
 func GetCmdTotalPoolLiquidity() *cobra.Command {
-	return mokicli.SimpleQueryCmd[*types.QueryTotalPoolLiquidityRequest](
+	return osmocli.SimpleQueryCmd[*types.QueryTotalPoolLiquidityRequest](
 		"total-pool-liquidity [poolID]",
 		"Query total-pool-liquidity",
 		`Query total-pool-liquidity.
@@ -162,7 +162,7 @@ Example:
 }
 
 func GetCmdTotalShares() *cobra.Command {
-	return mokicli.SimpleQueryCmd[*types.QueryTotalSharesRequest](
+	return osmocli.SimpleQueryCmd[*types.QueryTotalSharesRequest](
 		"total-share [poolID]",
 		"Query total-share",
 		`Query total-share.
@@ -174,7 +174,7 @@ Example:
 }
 
 func GetCmdQueryTotalLiquidity() *cobra.Command {
-	return mokicli.SimpleQueryCmd[*types.QueryTotalLiquidityRequest](
+	return osmocli.SimpleQueryCmd[*types.QueryTotalLiquidityRequest](
 		"total-liquidity",
 		"Query total-liquidity",
 		`Query total-liquidity.
@@ -186,8 +186,8 @@ Example:
 }
 
 //nolint:staticcheck
-func GetCmdSpotPrice() (*mokicli.QueryDescriptor, *types.QuerySpotPriceRequest) {
-	return &mokicli.QueryDescriptor{
+func GetCmdSpotPrice() (*osmocli.QueryDescriptor, *types.QuerySpotPriceRequest) {
+	return &osmocli.QueryDescriptor{
 		Use:   "spot-price <pool-ID> [quote-asset-denom] [base-asset-denom]",
 		Short: "Query spot-price (LEGACY, arguments are reversed!!)",
 		Long: `Query spot price (Legacy).{{.ExampleHeader}}
@@ -197,27 +197,27 @@ func GetCmdSpotPrice() (*mokicli.QueryDescriptor, *types.QuerySpotPriceRequest) 
 
 // GetCmdEstimateSwapExactAmountIn returns estimation of output coin when amount of x token input.
 // nolint: staticcheck
-func GetCmdEstimateSwapExactAmountIn() (*mokicli.QueryDescriptor, *types.QuerySwapExactAmountInRequest) {
-	return &mokicli.QueryDescriptor{
+func GetCmdEstimateSwapExactAmountIn() (*osmocli.QueryDescriptor, *types.QuerySwapExactAmountInRequest) {
+	return &osmocli.QueryDescriptor{
 		Use:   "estimate-swap-exact-amount-in <poolID> <sender> <tokenIn>",
 		Short: "Query estimate-swap-exact-amount-in",
 		Long: `Query estimate-swap-exact-amount-in.{{.ExampleHeader}}
 {{.CommandPrefix}} estimate-swap-exact-amount-in 1 osm11vmx8jtggpd9u7qr0t8vxclycz85u925sazglr7 stake --swap-route-pool-ids=2 --swap-route-pool-ids=3`,
 		ParseQuery: EstimateSwapExactAmountInParseArgs,
-		Flags:      mokicli.FlagDesc{RequiredFlags: []*flag.FlagSet{FlagSetMultihopSwapRoutes()}},
+		Flags:      osmocli.FlagDesc{RequiredFlags: []*flag.FlagSet{FlagSetMultihopSwapRoutes()}},
 	}, &types.QuerySwapExactAmountInRequest{}
 }
 
 // GetCmdEstimateSwapExactAmountOut returns estimation of input coin to get exact amount of x token output.
 // nolint: staticcheck
-func GetCmdEstimateSwapExactAmountOut() (*mokicli.QueryDescriptor, *types.QuerySwapExactAmountOutRequest) {
-	return &mokicli.QueryDescriptor{
+func GetCmdEstimateSwapExactAmountOut() (*osmocli.QueryDescriptor, *types.QuerySwapExactAmountOutRequest) {
+	return &osmocli.QueryDescriptor{
 		Use:   "estimate-swap-exact-amount-out <poolID> <sender> <tokenOut>",
 		Short: "Query estimate-swap-exact-amount-out",
 		Long: `Query estimate-swap-exact-amount-out.{{.ExampleHeader}}
 {{.CommandPrefix}} estimate-swap-exact-amount-out 1 osm11vmx8jtggpd9u7qr0t8vxclycz85u925sazglr7 stake --swap-route-pool-ids=2 --swap-route-pool-ids=3`,
 		ParseQuery: EstimateSwapExactAmountOutParseArgs,
-		Flags:      mokicli.FlagDesc{RequiredFlags: []*flag.FlagSet{FlagSetMultihopSwapRoutes()}},
+		Flags:      osmocli.FlagDesc{RequiredFlags: []*flag.FlagSet{FlagSetMultihopSwapRoutes()}},
 	}, &types.QuerySwapExactAmountOutRequest{}
 }
 
@@ -312,7 +312,7 @@ $ %s query gamm pools-with-filter <min_liquidity> <pool_type>
 
 // GetCmdPoolType returns pool type given pool id.
 func GetCmdPoolType() *cobra.Command {
-	return mokicli.SimpleQueryCmd[*types.QueryPoolTypeRequest](
+	return osmocli.SimpleQueryCmd[*types.QueryPoolTypeRequest](
 		"pool-type <pool_id>",
 		"Query pool type",
 		`Query pool type

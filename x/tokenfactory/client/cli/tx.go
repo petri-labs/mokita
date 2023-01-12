@@ -10,7 +10,7 @@ import (
 
 // GetTxCmd returns the transaction commands for this module
 func GetTxCmd() *cobra.Command {
-	cmd := mokicli.TxIndexCmd(types.ModuleName)
+	cmd := osmocli.TxIndexCmd(types.ModuleName)
 	cmd.AddCommand(
 		NewCreateDenomCmd(),
 		NewMintCmd(),
@@ -23,28 +23,28 @@ func GetTxCmd() *cobra.Command {
 }
 
 func NewCreateDenomCmd() *cobra.Command {
-	return mokicli.BuildTxCli[*types.MsgCreateDenom](&mokicli.TxCliDesc{
+	return osmocli.BuildTxCli[*types.MsgCreateDenom](&osmocli.TxCliDesc{
 		Use:   "create-denom [subdenom] [flags]",
 		Short: "create a new denom from an account. (Costs moki though!)",
 	})
 }
 
 func NewMintCmd() *cobra.Command {
-	return mokicli.BuildTxCli[*types.MsgMint](&mokicli.TxCliDesc{
+	return osmocli.BuildTxCli[*types.MsgMint](&osmocli.TxCliDesc{
 		Use:   "mint [amount] [flags]",
 		Short: "Mint a denom to an address. Must have admin authority to do so.",
 	})
 }
 
 func NewBurnCmd() *cobra.Command {
-	return mokicli.BuildTxCli[*types.MsgBurn](&mokicli.TxCliDesc{
+	return osmocli.BuildTxCli[*types.MsgBurn](&osmocli.TxCliDesc{
 		Use:   "burn [amount] [flags]",
 		Short: "Burn tokens from an address. Must have admin authority to do so.",
 	})
 }
 
 func NewChangeAdminCmd() *cobra.Command {
-	return mokicli.BuildTxCli[*types.MsgChangeAdmin](&mokicli.TxCliDesc{
+	return osmocli.BuildTxCli[*types.MsgChangeAdmin](&osmocli.TxCliDesc{
 		Use:   "change-admin [denom] [new-admin-address] [flags]",
 		Short: "Changes the admin address for a factory-created denom. Must have admin authority to do so.",
 	})

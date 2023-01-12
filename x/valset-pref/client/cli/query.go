@@ -10,14 +10,14 @@ import (
 
 // GetQueryCmd returns the cli query commands for this module.
 func GetQueryCmd() *cobra.Command {
-	cmd := mokicli.QueryIndexCmd(types.ModuleName)
+	cmd := osmocli.QueryIndexCmd(types.ModuleName)
 	cmd.AddCommand(GetCmdValSetPref())
 	return cmd
 }
 
 // GetCmdValSetPref takes the  address and returns the existing validator set for that address.
 func GetCmdValSetPref() *cobra.Command {
-	return mokicli.SimpleQueryCmd[*queryproto.UserValidatorPreferencesRequest](
+	return osmocli.SimpleQueryCmd[*queryproto.UserValidatorPreferencesRequest](
 		"val-set [address]",
 		"Query the validator set for a specific user address", "",
 		types.ModuleName, queryproto.NewQueryClient,

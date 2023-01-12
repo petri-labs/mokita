@@ -13,7 +13,7 @@ import (
 // We test the custom duration parser via this
 func TestRecoveredSinceQueryCmd(t *testing.T) {
 	desc, _ := cli.RecoveredSinceQueryCmd()
-	tcs := map[string]mokicli.QueryCliTestCase[*queryproto.RecoveredSinceDowntimeOfLengthRequest]{
+	tcs := map[string]osmocli.QueryCliTestCase[*queryproto.RecoveredSinceDowntimeOfLengthRequest]{
 		"basic test": {
 			Cmd: "30s 10m",
 			ExpectedQuery: &queryproto.RecoveredSinceDowntimeOfLengthRequest{
@@ -46,5 +46,5 @@ func TestRecoveredSinceQueryCmd(t *testing.T) {
 				Recovery: time.Minute * 10},
 		},
 	}
-	mokicli.RunQueryTestCases(t, desc, tcs)
+	osmocli.RunQueryTestCases(t, desc, tcs)
 }

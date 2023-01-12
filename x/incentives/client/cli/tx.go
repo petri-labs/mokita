@@ -19,7 +19,7 @@ import (
 
 // GetTxCmd returns the transaction commands for this module.
 func GetTxCmd() *cobra.Command {
-	cmd := mokicli.TxIndexCmd(types.ModuleName)
+	cmd := osmocli.TxIndexCmd(types.ModuleName)
 	cmd.AddCommand(
 		NewCreateGaugeCmd(),
 		NewAddToGaugeCmd(),
@@ -108,7 +108,7 @@ func NewCreateGaugeCmd() *cobra.Command {
 }
 
 func NewAddToGaugeCmd() *cobra.Command {
-	return mokicli.BuildTxCli[*types.MsgAddToGauge](&mokicli.TxCliDesc{
+	return osmocli.BuildTxCli[*types.MsgAddToGauge](&osmocli.TxCliDesc{
 		Use:   "add-to-gauge [gauge_id] [rewards] [flags]",
 		Short: "add coins to gauge to distribute more rewards to users",
 	})

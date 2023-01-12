@@ -106,7 +106,7 @@ Additionally, the swagger files for v13 have been updated to improve compatibili
 
 ### Misc Improvements
 
-* [#3611](https://github.com/petri-labs/mokita/pull/3611),[#3647](https://github.com/petri-labs/mokita/pull/3647) Introduce mokicli, to automate thousands of lines of CLI boilerplate
+* [#3611](https://github.com/petri-labs/mokita/pull/3611),[#3647](https://github.com/petri-labs/mokita/pull/3647) Introduce osmocli, to automate thousands of lines of CLI boilerplate
 * [#3634](https://github.com/petri-labs/mokita/pull/3634) (Makefile) Ensure correct golang version in make build and make install. (Thank you @jhernandezb )
 * [#3712](https://github.com/petri-labs/mokita/pull/3712) replace `osmomath.BigDec` `Power` with `PowerInteger` 
 * [#3711](https://github.com/petri-labs/mokita/pull/3711) Use Dec instead of Int for additive `ErrTolerace` in `osmoutils`.

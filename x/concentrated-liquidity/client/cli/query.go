@@ -9,26 +9,26 @@ import (
 
 // GetQueryCmd returns the cli query commands for this module.
 func GetQueryCmd() *cobra.Command {
-	cmd := mokicli.QueryIndexCmd(types.ModuleName)
-	mokicli.AddQueryCmd(cmd, types.NewQueryClient, GetCmdPool)
-	mokicli.AddQueryCmd(cmd, types.NewQueryClient, GetCmdPools)
+	cmd := osmocli.QueryIndexCmd(types.ModuleName)
+	osmocli.AddQueryCmd(cmd, types.NewQueryClient, GetCmdPool)
+	osmocli.AddQueryCmd(cmd, types.NewQueryClient, GetCmdPools)
 	cmd.AddCommand(
-		mokicli.GetParams[*types.QueryParamsRequest](
+		osmocli.GetParams[*types.QueryParamsRequest](
 			types.ModuleName, types.NewQueryClient),
 	)
 	return cmd
 }
 
-func GetCmdPool() (*mokicli.QueryDescriptor, *types.QueryPoolRequest) {
-	return &mokicli.QueryDescriptor{
+func GetCmdPool() (*osmocli.QueryDescriptor, *types.QueryPoolRequest) {
+	return &osmocli.QueryDescriptor{
 		Use:   "pool [poolID]",
 		Short: "Query pool",
 		Long: `{{.Short}}{{.ExampleHeader}}
 {{.CommandPrefix}} pool 1`}, &types.QueryPoolRequest{}
 }
 
-func GetCmdPools() (*mokicli.QueryDescriptor, *types.QueryPoolsRequest) {
-	return &mokicli.QueryDescriptor{
+func GetCmdPools() (*osmocli.QueryDescriptor, *types.QueryPoolsRequest) {
+	return &osmocli.QueryDescriptor{
 		Use:   "pools",
 		Short: "Query pools",
 		Long: `{{.Short}}{{.ExampleHeader}}

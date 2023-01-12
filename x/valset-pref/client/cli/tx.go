@@ -15,15 +15,15 @@ import (
 )
 
 func GetTxCmd() *cobra.Command {
-	txCmd := mokicli.TxIndexCmd(types.ModuleName)
-	mokicli.AddTxCmd(txCmd, NewSetValSetCmd)
-	mokicli.AddTxCmd(txCmd, NewDelValSetCmd)
-	mokicli.AddTxCmd(txCmd, NewUnDelValSetCmd)
+	txCmd := osmocli.TxIndexCmd(types.ModuleName)
+	osmocli.AddTxCmd(txCmd, NewSetValSetCmd)
+	osmocli.AddTxCmd(txCmd, NewDelValSetCmd)
+	osmocli.AddTxCmd(txCmd, NewUnDelValSetCmd)
 	return txCmd
 }
 
-func NewSetValSetCmd() (*mokicli.TxCliDesc, *types.MsgSetValidatorSetPreference) {
-	return &mokicli.TxCliDesc{
+func NewSetValSetCmd() (*osmocli.TxCliDesc, *types.MsgSetValidatorSetPreference) {
+	return &osmocli.TxCliDesc{
 		Use:              "set-valset [delegator_addr] [validators] [weights]",
 		Short:            "Creates a new validator set for the delegator with valOperAddress and weight",
 		Example:          "mokitad tx valset-pref set-valset moki1... mokivaloper1abc...,mokivaloper1def...  0.56,0.44",
@@ -32,8 +32,8 @@ func NewSetValSetCmd() (*mokicli.TxCliDesc, *types.MsgSetValidatorSetPreference)
 	}, &types.MsgSetValidatorSetPreference{}
 }
 
-func NewDelValSetCmd() (*mokicli.TxCliDesc, *types.MsgDelegateToValidatorSet) {
-	return &mokicli.TxCliDesc{
+func NewDelValSetCmd() (*osmocli.TxCliDesc, *types.MsgDelegateToValidatorSet) {
+	return &osmocli.TxCliDesc{
 		Use:     "delegate-valset [delegator_addr] [amount]",
 		Short:   "Delegate tokens to existing valset using delegatorAddress and tokenAmount.",
 		Example: "mokitad tx valset-pref delegate-valset  moki1... 100stake",
@@ -41,8 +41,8 @@ func NewDelValSetCmd() (*mokicli.TxCliDesc, *types.MsgDelegateToValidatorSet) {
 	}, &types.MsgDelegateToValidatorSet{}
 }
 
-func NewUnDelValSetCmd() (*mokicli.TxCliDesc, *types.MsgUndelegateFromValidatorSet) {
-	return &mokicli.TxCliDesc{
+func NewUnDelValSetCmd() (*osmocli.TxCliDesc, *types.MsgUndelegateFromValidatorSet) {
+	return &osmocli.TxCliDesc{
 		Use:     "undelegate-valset [delegator_addr] [amount]",
 		Short:   "UnDelegate tokens from existing valset using delegatorAddress and tokenAmount.",
 		Example: "mokitad tx valset-pref undelegate-valset  moki1... 100stake",

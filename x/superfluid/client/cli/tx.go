@@ -21,7 +21,7 @@ import (
 
 // GetTxCmd returns the transaction commands for this module.
 func GetTxCmd() *cobra.Command {
-	cmd := mokicli.TxIndexCmd(types.ModuleName)
+	cmd := osmocli.TxIndexCmd(types.ModuleName)
 	cmd.AddCommand(
 		NewSuperfluidDelegateCmd(),
 		NewSuperfluidUndelegateCmd(),
@@ -73,14 +73,14 @@ func NewSuperfluidDelegateCmd() *cobra.Command {
 }
 
 func NewSuperfluidUndelegateCmd() *cobra.Command {
-	return mokicli.BuildTxCli[*types.MsgSuperfluidUndelegate](&mokicli.TxCliDesc{
+	return osmocli.BuildTxCli[*types.MsgSuperfluidUndelegate](&osmocli.TxCliDesc{
 		Use:   "undelegate [lock_id] [flags]",
 		Short: "superfluid undelegate a lock from a validator",
 	})
 }
 
 func NewSuperfluidUnbondLockCmd() *cobra.Command {
-	return mokicli.BuildTxCli[*types.MsgSuperfluidUnbondLock](&mokicli.TxCliDesc{
+	return osmocli.BuildTxCli[*types.MsgSuperfluidUnbondLock](&osmocli.TxCliDesc{
 		Use:   "unbond-lock [lock_id] [flags]",
 		Short: "unbond lock that has been superfluid staked",
 	})
@@ -281,7 +281,7 @@ func NewCmdLockAndSuperfluidDelegate() *cobra.Command {
 }
 
 func NewCmdUnPoolWhitelistedPool() *cobra.Command {
-	return mokicli.BuildTxCli[*types.MsgUnPoolWhitelistedPool](&mokicli.TxCliDesc{
+	return osmocli.BuildTxCli[*types.MsgUnPoolWhitelistedPool](&osmocli.TxCliDesc{
 		Use:   "unpool-whitelisted-pool [pool_id] [flags]",
 		Short: "unpool whitelisted pool",
 	})

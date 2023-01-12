@@ -14,7 +14,7 @@ var testAddresses = osmoutils.CreateRandomAccounts(3)
 
 func TestGetCmdGauges(t *testing.T) {
 	desc, _ := GetCmdGauges()
-	tcs := map[string]mokicli.QueryCliTestCase[*types.GaugesRequest]{
+	tcs := map[string]osmocli.QueryCliTestCase[*types.GaugesRequest]{
 		"basic test": {
 			Cmd: "--offset=2",
 			ExpectedQuery: &types.GaugesRequest{
@@ -22,44 +22,44 @@ func TestGetCmdGauges(t *testing.T) {
 			},
 		},
 	}
-	mokicli.RunQueryTestCases(t, desc, tcs)
+	osmocli.RunQueryTestCases(t, desc, tcs)
 }
 
 func TestGetCmdToDistributeCoins(t *testing.T) {
 	desc, _ := GetCmdToDistributeCoins()
-	tcs := map[string]mokicli.QueryCliTestCase[*types.ModuleToDistributeCoinsRequest]{
+	tcs := map[string]osmocli.QueryCliTestCase[*types.ModuleToDistributeCoinsRequest]{
 		"basic test": {
 			Cmd: "", ExpectedQuery: &types.ModuleToDistributeCoinsRequest{},
 		},
 	}
-	mokicli.RunQueryTestCases(t, desc, tcs)
+	osmocli.RunQueryTestCases(t, desc, tcs)
 }
 
 func TestGetCmdGaugeByID(t *testing.T) {
 	desc, _ := GetCmdGaugeByID()
-	tcs := map[string]mokicli.QueryCliTestCase[*types.GaugeByIDRequest]{
+	tcs := map[string]osmocli.QueryCliTestCase[*types.GaugeByIDRequest]{
 		"basic test": {
 			Cmd: "1", ExpectedQuery: &types.GaugeByIDRequest{Id: 1},
 		},
 	}
-	mokicli.RunQueryTestCases(t, desc, tcs)
+	osmocli.RunQueryTestCases(t, desc, tcs)
 }
 
 func TestGetCmdActiveGauges(t *testing.T) {
 	desc, _ := GetCmdActiveGauges()
-	tcs := map[string]mokicli.QueryCliTestCase[*types.ActiveGaugesRequest]{
+	tcs := map[string]osmocli.QueryCliTestCase[*types.ActiveGaugesRequest]{
 		"basic test": {
 			Cmd: "--offset=2",
 			ExpectedQuery: &types.ActiveGaugesRequest{
 				Pagination: &query.PageRequest{Key: []uint8{}, Offset: 2, Limit: 100},
 			}},
 	}
-	mokicli.RunQueryTestCases(t, desc, tcs)
+	osmocli.RunQueryTestCases(t, desc, tcs)
 }
 
 func TestGetCmdActiveGaugesPerDenom(t *testing.T) {
 	desc, _ := GetCmdActiveGaugesPerDenom()
-	tcs := map[string]mokicli.QueryCliTestCase[*types.ActiveGaugesPerDenomRequest]{
+	tcs := map[string]osmocli.QueryCliTestCase[*types.ActiveGaugesPerDenomRequest]{
 		"basic test": {
 			Cmd: "umoki --offset=2",
 			ExpectedQuery: &types.ActiveGaugesPerDenomRequest{
@@ -67,24 +67,24 @@ func TestGetCmdActiveGaugesPerDenom(t *testing.T) {
 				Pagination: &query.PageRequest{Key: []uint8{}, Offset: 2, Limit: 100},
 			}},
 	}
-	mokicli.RunQueryTestCases(t, desc, tcs)
+	osmocli.RunQueryTestCases(t, desc, tcs)
 }
 
 func TestGetCmdUpcomingGauges(t *testing.T) {
 	desc, _ := GetCmdUpcomingGauges()
-	tcs := map[string]mokicli.QueryCliTestCase[*types.UpcomingGaugesRequest]{
+	tcs := map[string]osmocli.QueryCliTestCase[*types.UpcomingGaugesRequest]{
 		"basic test": {
 			Cmd: "--offset=2",
 			ExpectedQuery: &types.UpcomingGaugesRequest{
 				Pagination: &query.PageRequest{Key: []uint8{}, Offset: 2, Limit: 100},
 			}},
 	}
-	mokicli.RunQueryTestCases(t, desc, tcs)
+	osmocli.RunQueryTestCases(t, desc, tcs)
 }
 
 func TestGetCmdUpcomingGaugesPerDenom(t *testing.T) {
 	desc, _ := GetCmdUpcomingGaugesPerDenom()
-	tcs := map[string]mokicli.QueryCliTestCase[*types.UpcomingGaugesPerDenomRequest]{
+	tcs := map[string]osmocli.QueryCliTestCase[*types.UpcomingGaugesPerDenomRequest]{
 		"basic test": {
 			Cmd: "umoki --offset=2",
 			ExpectedQuery: &types.UpcomingGaugesPerDenomRequest{
@@ -92,5 +92,5 @@ func TestGetCmdUpcomingGaugesPerDenom(t *testing.T) {
 				Pagination: &query.PageRequest{Key: []uint8{}, Offset: 2, Limit: 100},
 			}},
 	}
-	mokicli.RunQueryTestCases(t, desc, tcs)
+	osmocli.RunQueryTestCases(t, desc, tcs)
 }
