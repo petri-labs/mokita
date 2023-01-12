@@ -214,7 +214,7 @@ contain valid denominations. Accounts may optionally be supplied with vesting pa
 // 	return ionAmts, nil
 // }
 
-// func CmokisToMokiAddress(cosmosAddr string) (string, error) {
+// func CosmosToMokiAddress(cosmosAddr string) (string, error) {
 // 	_, bz, err := bech32.DecodeAndConvert(cosmosAddr)
 // 	if err != nil {
 // 		return "", err
@@ -256,7 +256,7 @@ contain valid denominations. Accounts may optionally be supplied with vesting pa
 
 // 			for _, acc := range snapshot.Accounts {
 // 				if !acc.MokiBalance.Equal(sdk.ZeroInt()) {
-// 					mokiAddr, err := CmokisToMokiAddress(acc.AtomAddress)
+// 					mokiAddr, err := CosmosToMokiAddress(acc.AtomAddress)
 // 					if err != nil {
 // 						return err
 // 					}
@@ -266,7 +266,7 @@ contain valid denominations. Accounts may optionally be supplied with vesting pa
 // 			}
 
 // 			for addr := range ionAmts {
-// 				ionAddr, err := CmokisToMokiAddress(addr)
+// 				ionAddr, err := CosmosToMokiAddress(addr)
 // 				if err != nil {
 // 					return err
 // 				}
@@ -356,7 +356,7 @@ contain valid denominations. Accounts may optionally be supplied with vesting pa
 // 			}
 
 // 			for addr, amt := range ionAmts {
-// 				address, err := CmokisToMokiAddress(addr)
+// 				address, err := CosmosToMokiAddress(addr)
 // 				if err != nil {
 // 					return err
 // 				}
@@ -381,7 +381,7 @@ contain valid denominations. Accounts may optionally be supplied with vesting pa
 // 			// for each account in the snapshot
 // 			for _, acc := range snapshot.Accounts {
 // 				// convert cosmos address to moki address
-// 				address, err := CmokisToMokiAddress(acc.AtomAddress)
+// 				address, err := CosmosToMokiAddress(acc.AtomAddress)
 // 				if err != nil {
 // 					return err
 // 				}
