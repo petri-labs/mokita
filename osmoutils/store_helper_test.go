@@ -86,7 +86,7 @@ var (
 	onetwoABCalternating = []string{prefixOne + keyA, prefixTwo + keyA, prefixOne + keyB, prefixTwo + keyB, prefixOne + keyC, prefixTwo + keyC}
 )
 
-func TestMokiUtilsTestSuite(t *testing.T) {
+func TestOsmoUtilsTestSuite(t *testing.T) {
 	suite.Run(t, new(TestSuite))
 }
 

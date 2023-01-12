@@ -30,17 +30,17 @@ func TickToSqrtPrice(tickIndex sdk.Int) (sqrtPrice sdk.Dec, err error) {
 	// If the tick index is positive, we can use the normal equation to calculate the square root price.
 	// However, if the tick index is negative, since we cannot take negative powers with the sdk,
 	// we need to take one over the original equation in order to make the power positive.
-	var sqrtPriceMokiMath osmomath.BigDec
+	var sqrtPriceOsmoMath osmomath.BigDec
 	if tickIndex.GTE(sdk.ZeroInt()) {
-		sqrtPriceMokiMath, err = TickBase.PowerInteger(tickIndex.Uint64()).ApproxSqrt()
+		sqrtPriceOsmoMath, err = TickBase.PowerInteger(tickIndex.Uint64()).ApproxSqrt()
 	} else {
-		sqrtPriceMokiMath, err = osmomath.OneDec().Quo(TickBase.PowerInteger(tickIndex.Abs().Uint64())).ApproxSqrt()
+		sqrtPriceOsmoMath, err = osmomath.OneDec().Quo(TickBase.PowerInteger(tickIndex.Abs().Uint64())).ApproxSqrt()
 	}
 	if err != nil {
 		return sdk.Dec{}, err
 	}
 
-	sqrtPrice = sqrtPriceMokiMath.SDKDec()
+	sqrtPrice = sqrtPriceOsmoMath.SDKDec()
 
 	return sqrtPrice, nil
 }
