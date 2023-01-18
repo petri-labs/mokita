@@ -8,7 +8,7 @@ import (
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 
-	"github.com/petri-labs/mokita/osmomath"
+	"github.com/osmosis-labs/osmosis/osmomath"
 	sdkrand "github.com/petri-labs/mokita/simulation/simtypes/random"
 	"github.com/petri-labs/mokita/x/gamm/pool-models/balancer"
 	"github.com/petri-labs/mokita/x/twap"

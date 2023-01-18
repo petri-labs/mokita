@@ -7,7 +7,7 @@ import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 
-	"github.com/petri-labs/mokita/osmoutils"
+	"github.com/osmosis-labs/osmosis/osmoutils"
 	gammtypes "github.com/petri-labs/mokita/x/gamm/types"
 	"github.com/petri-labs/mokita/x/swaprouter/types"
 )

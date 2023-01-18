@@ -3,7 +3,7 @@ package concentrated_liquidity
 import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 
-	"github.com/petri-labs/mokita/osmoutils/accum"
+	"github.com/osmosis-labs/osmosis/osmoutils/accum"
 	"github.com/petri-labs/mokita/x/concentrated-liquidity/model"
 	"github.com/petri-labs/mokita/x/concentrated-liquidity/types"
 	cltypes "github.com/petri-labs/mokita/x/concentrated-liquidity/types"

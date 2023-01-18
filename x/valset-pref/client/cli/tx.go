@@ -9,8 +9,8 @@ import (
 	"github.com/spf13/pflag"
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
-	"github.com/petri-labs/mokita/osmoutils"
-	"github.com/petri-labs/mokita/osmoutils/mokicli"
+	"github.com/osmosis-labs/osmosis/osmoutils"
+	"github.com/osmosis-labs/osmosis/osmoutils/mokicli"
 	"github.com/petri-labs/mokita/x/valset-pref/types"
 )
 

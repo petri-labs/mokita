@@ -1,4 +1,4 @@
-module github.com/petri-labs/mokita/osmomath
+module github.com/osmosis-labs/osmosis/osmomath
 
 go 1.18
 

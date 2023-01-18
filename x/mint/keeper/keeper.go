@@ -5,7 +5,7 @@ import (
 
 	"github.com/tendermint/tendermint/libs/log"
 
-	"github.com/petri-labs/mokita/osmoutils"
+	"github.com/osmosis-labs/osmosis/osmoutils"
 	"github.com/petri-labs/mokita/x/mint/types"
 	poolincentivestypes "github.com/petri-labs/mokita/x/pool-incentives/types"
 

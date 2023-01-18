@@ -6,7 +6,7 @@ import (
 
 	"github.com/tendermint/tendermint/libs/log"
 
-	"github.com/petri-labs/mokita/osmoutils"
+	"github.com/osmosis-labs/osmosis/osmoutils"
 	gammtypes "github.com/petri-labs/mokita/x/gamm/types"
 	incentivestypes "github.com/petri-labs/mokita/x/incentives/types"
 	lockuptypes "github.com/petri-labs/mokita/x/lockup/types"

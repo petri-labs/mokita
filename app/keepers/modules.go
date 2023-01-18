@@ -46,7 +46,7 @@ import (
 	"github.com/petri-labs/mokita/x/twap/twapmodule"
 	"github.com/petri-labs/mokita/x/txfees"
 	valsetprefmodule "github.com/petri-labs/mokita/x/valset-pref/valpref-module"
-	ibc_hooks "github.com/petri-labs/mokita/x/ibc-hooks"
+	ibc_hooks "github.com/osmosis-labs/osmosis/x/ibc-hooks"
 )
 
 // AppModuleBasics returns ModuleBasics for the module BasicManager.

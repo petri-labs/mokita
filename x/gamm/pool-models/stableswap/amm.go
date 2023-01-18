@@ -5,7 +5,7 @@ import (
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 
-	"github.com/petri-labs/mokita/osmomath"
+	"github.com/osmosis-labs/osmosis/osmomath"
 	"github.com/petri-labs/mokita/x/gamm/pool-models/internal/cfmm_common"
 	types "github.com/petri-labs/mokita/x/gamm/types"
 )

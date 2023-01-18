@@ -5,7 +5,7 @@ import (
 
 	"github.com/spf13/cobra"
 
-	"github.com/petri-labs/mokita/osmoutils/mokicli"
+	"github.com/osmosis-labs/osmosis/osmoutils/mokicli"
 	clmodel "github.com/petri-labs/mokita/x/concentrated-liquidity/model"
 	"github.com/petri-labs/mokita/x/concentrated-liquidity/types"
 )

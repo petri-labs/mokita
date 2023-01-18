@@ -5,7 +5,7 @@ import (
 
 	legacysimulationtype "github.com/cosmos/cosmos-sdk/types/simulation"
 
-	"github.com/petri-labs/mokita/osmoutils"
+	"github.com/osmosis-labs/osmosis/osmoutils"
 	"github.com/petri-labs/mokita/simulation/simtypes"
 	"github.com/petri-labs/mokita/x/tokenfactory/keeper"
 	"github.com/petri-labs/mokita/x/tokenfactory/types"

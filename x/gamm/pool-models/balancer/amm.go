@@ -6,7 +6,7 @@ import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 
-	"github.com/petri-labs/mokita/osmomath"
+	"github.com/osmosis-labs/osmosis/osmomath"
 	"github.com/petri-labs/mokita/x/gamm/types"
 )
 

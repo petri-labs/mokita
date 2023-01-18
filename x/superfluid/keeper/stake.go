@@ -5,7 +5,7 @@ import (
 
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 
-	"github.com/petri-labs/mokita/osmoutils"
+	"github.com/osmosis-labs/osmosis/osmoutils"
 	lockuptypes "github.com/petri-labs/mokita/x/lockup/types"
 	"github.com/petri-labs/mokita/x/superfluid/types"
 

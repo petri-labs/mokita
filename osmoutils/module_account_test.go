@@ -6,8 +6,8 @@ import (
 	"github.com/cosmos/cosmos-sdk/types/address"
 	authtypes "github.com/cosmos/cosmos-sdk/x/auth/types"
 
-	"github.com/petri-labs/mokita/osmoutils"
-	"github.com/petri-labs/mokita/osmoutils/mokiassert"
+	"github.com/osmosis-labs/osmosis/osmoutils"
+	"github.com/osmosis-labs/osmosis/osmoutils/mokiassert"
 )
 
 func (s *TestSuite) TestCreateModuleAccount() {

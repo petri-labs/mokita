@@ -1,7 +1,7 @@
 package keeper
 
 import (
-	"github.com/petri-labs/mokita/osmoutils"
+	"github.com/osmosis-labs/osmosis/osmoutils"
 	"github.com/petri-labs/mokita/x/superfluid/types"
 
 	sdk "github.com/cosmos/cosmos-sdk/types"

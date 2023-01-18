@@ -5,7 +5,7 @@ import (
 
 	"github.com/spf13/cobra"
 
-	"github.com/petri-labs/mokita/osmoutils/mokicli"
+	"github.com/osmosis-labs/osmosis/osmoutils/mokicli"
 	"github.com/petri-labs/mokita/x/superfluid/types"
 
 	"github.com/cosmos/cosmos-sdk/client"

@@ -9,9 +9,9 @@ import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/stretchr/testify/require"
 
-	"github.com/petri-labs/mokita/osmomath"
-	"github.com/petri-labs/mokita/osmoutils"
-	"github.com/petri-labs/mokita/osmoutils/mokiassert"
+	"github.com/osmosis-labs/osmosis/osmomath"
+	"github.com/osmosis-labs/osmosis/osmoutils"
+	"github.com/osmosis-labs/osmosis/osmoutils/mokiassert"
 	gammtypes "github.com/petri-labs/mokita/x/gamm/types"
 	"github.com/petri-labs/mokita/x/twap"
 	"github.com/petri-labs/mokita/x/twap/types"

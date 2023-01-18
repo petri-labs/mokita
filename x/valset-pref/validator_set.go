@@ -7,7 +7,7 @@ import (
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	stakingtypes "github.com/cosmos/cosmos-sdk/x/staking/types"
-	"github.com/petri-labs/mokita/osmomath"
+	"github.com/osmosis-labs/osmosis/osmomath"
 	"github.com/petri-labs/mokita/x/valset-pref/types"
 )
 

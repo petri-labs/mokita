@@ -3,7 +3,7 @@ package twap
 import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 
-	"github.com/petri-labs/mokita/osmomath"
+	"github.com/osmosis-labs/osmosis/osmomath"
 	"github.com/petri-labs/mokita/x/twap/types"
 
 	gammtypes "github.com/petri-labs/mokita/x/gamm/types"

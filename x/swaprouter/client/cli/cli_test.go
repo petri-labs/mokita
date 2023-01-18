@@ -7,7 +7,7 @@ import (
 	"github.com/gogo/protobuf/proto"
 	"github.com/stretchr/testify/suite"
 
-	"github.com/petri-labs/mokita/osmoutils"
+	"github.com/osmosis-labs/osmosis/osmoutils"
 	"github.com/petri-labs/mokita/app"
 	"github.com/petri-labs/mokita/x/swaprouter/client/cli"
 	swaprouterqueryproto "github.com/petri-labs/mokita/x/swaprouter/client/queryproto"
