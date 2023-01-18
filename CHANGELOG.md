@@ -88,7 +88,7 @@ This release's main features are utility helpers for smart contract developers. 
 ### API breaks
 
 * [#3763](https://github.com/petri-labs/mokita/pull/3763) Move binary search and error tolerance code from `osmoutils` into `osmomath`
-* [#3817](https://github.com/petri-labs/mokita/pull/3817) Move mokiassert from `app/apptesting/mokiassert` to `osmoutils/mokiassert`.
+* [#3817](https://github.com/petri-labs/mokita/pull/3817) Move osmoassert from `app/apptesting/osmoassert` to `osmoutils/osmoassert`.
 * [#3771](https://github.com/petri-labs/mokita/pull/3771) Move osmomath into its own go.mod
 * [#3827](https://github.com/petri-labs/mokita/pull/3827) Move osmoutils into its own go.mod
 
@@ -106,7 +106,7 @@ Additionally, the swagger files for v13 have been updated to improve compatibili
 
 ### Misc Improvements
 
-* [#3611](https://github.com/petri-labs/mokita/pull/3611),[#3647](https://github.com/petri-labs/mokita/pull/3647) Introduce mokicli, to automate thousands of lines of CLI boilerplate
+* [#3611](https://github.com/petri-labs/mokita/pull/3611),[#3647](https://github.com/petri-labs/mokita/pull/3647) Introduce osmocli, to automate thousands of lines of CLI boilerplate
 * [#3634](https://github.com/petri-labs/mokita/pull/3634) (Makefile) Ensure correct golang version in make build and make install. (Thank you @jhernandezb )
 * [#3712](https://github.com/petri-labs/mokita/pull/3712) replace `osmomath.BigDec` `Power` with `PowerInteger` 
 * [#3711](https://github.com/petri-labs/mokita/pull/3711) Use Dec instead of Int for additive `ErrTolerace` in `osmoutils`.

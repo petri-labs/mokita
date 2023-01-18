@@ -851,7 +851,7 @@ func (suite *KeeperTestSuite) TestCalcJoinPoolShares() {
 			}
 
 			assertPoolStateNotModified(t, pool, func() {
-				mokiassert.ConditionalPanic(t, tc.expectPanic, sut)
+				osmoassert.ConditionalPanic(t, tc.expectPanic, sut)
 			})
 		})
 	}
@@ -890,7 +890,7 @@ func (suite *KeeperTestSuite) TestJoinPool() {
 				}
 			}
 
-			mokiassert.ConditionalPanic(t, tc.expectPanic, sut)
+			osmoassert.ConditionalPanic(t, tc.expectPanic, sut)
 		})
 	}
 }
@@ -985,7 +985,7 @@ func (suite *KeeperTestSuite) TestJoinPoolNoSwap() {
 				}
 			}
 
-			mokiassert.ConditionalPanic(t, tc.expectPanic, sut)
+			osmoassert.ConditionalPanic(t, tc.expectPanic, sut)
 		})
 	}
 }

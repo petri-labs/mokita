@@ -60,7 +60,7 @@ func (s *TestSuite) TestCreateModuleAccount() {
 				s.accountKeeper.SetAccount(s.ctx, priorAcc)
 			}
 			err := osmoutils.CreateModuleAccount(s.ctx, s.accountKeeper, tc.moduleAccAddr)
-			mokiassert.ConditionalError(s.T(), tc.expErr, err)
+			osmoassert.ConditionalError(s.T(), tc.expErr, err)
 		})
 	}
 }

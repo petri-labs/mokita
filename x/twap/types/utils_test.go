@@ -29,7 +29,7 @@ func TestGetAllUniqueDenomPairs(t *testing.T) {
 	}
 	for name, tt := range tests {
 		t.Run(name, func(t *testing.T) {
-			mokiassert.ConditionalPanic(t, tt.panics, func() {
+			osmoassert.ConditionalPanic(t, tt.panics, func() {
 				pairs := GetAllUniqueDenomPairs(tt.denoms)
 				require.Equal(t, pairs, tt.wantedPairs)
 			})

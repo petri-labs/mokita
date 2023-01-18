@@ -18,7 +18,7 @@ import (
 )
 
 func NewTxCmd() *cobra.Command {
-	txCmd := mokicli.TxIndexCmd(types.ModuleName)
+	txCmd := osmocli.TxIndexCmd(types.ModuleName)
 	txCmd.AddCommand(
 		NewCmdSubmitUpdateFeeTokenProposal(),
 	)

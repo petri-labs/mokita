@@ -426,7 +426,7 @@ func TestCFMMInvariantTwoAssets(t *testing.T) {
 				osmomath.DecApproxEq(t, k0, k1, kErrTolerance)
 			}
 
-			mokiassert.ConditionalPanic(t, test.expectPanic, sut)
+			osmoassert.ConditionalPanic(t, test.expectPanic, sut)
 		})
 	}
 }
@@ -448,7 +448,7 @@ func TestCFMMInvariantTwoAssetsDirect(t *testing.T) {
 				osmomath.DecApproxEq(t, k0, k1, kErrTolerance)
 			}
 
-			mokiassert.ConditionalPanic(t, test.expectPanic, sut)
+			osmoassert.ConditionalPanic(t, test.expectPanic, sut)
 		})
 	}
 }
@@ -472,7 +472,7 @@ func TestCFMMInvariantMultiAssets(t *testing.T) {
 				osmomath.DecApproxEq(t, k2, k3, kErrTolerance)
 			}
 
-			mokiassert.ConditionalPanic(t, test.expectPanic, sut)
+			osmoassert.ConditionalPanic(t, test.expectPanic, sut)
 		})
 	}
 }
@@ -495,7 +495,7 @@ func TestCFMMInvariantMultiAssetsDirect(t *testing.T) {
 				osmomath.DecApproxEq(t, k2, k3, kErrTolerance)
 			}
 
-			mokiassert.ConditionalPanic(t, test.expectPanic, sut)
+			osmoassert.ConditionalPanic(t, test.expectPanic, sut)
 		})
 	}
 }
@@ -518,7 +518,7 @@ func TestCFMMInvariantMultiAssetsBinarySearch(t *testing.T) {
 				osmomath.DecApproxEq(t, k2, k3, kErrTolerance)
 			}
 
-			mokiassert.ConditionalPanic(t, test.expectPanic, sut)
+			osmoassert.ConditionalPanic(t, test.expectPanic, sut)
 		})
 	}
 }
@@ -996,7 +996,7 @@ func TestJoinPoolSharesInternal(t *testing.T) {
 				require.Equal(t, tc.expTokensJoined, joinedLiquidity)
 				require.Equal(t, tc.expPoolAssets, p.PoolLiquidity)
 			}
-			mokiassert.ConditionalError(t, !tc.expectPass, err)
+			osmoassert.ConditionalError(t, !tc.expectPass, err)
 		})
 	}
 }

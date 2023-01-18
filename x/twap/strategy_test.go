@@ -98,7 +98,7 @@ func (s *TestSuite) TestComputeTwap() {
 			for _, twapStrategy := range test.twapStrategies {
 				actualTwap, err := twap.ComputeTwap(test.startRecord, test.endRecord, test.quoteAsset, twapStrategy)
 				s.Require().NoError(err)
-				mokiassert.DecApproxEq(s.T(), test.expTwap, actualTwap, osmomath.GetPowPrecision())
+				osmoassert.DecApproxEq(s.T(), test.expTwap, actualTwap, osmomath.GetPowPrecision())
 			}
 		})
 	}
@@ -149,7 +149,7 @@ func (s *TestSuite) TestComputeArithmeticStrategyTwap() {
 	}
 	for name, test := range tests {
 		s.Run(name, func() {
-			mokiassert.ConditionalPanic(s.T(), test.expPanic, func() {
+			osmoassert.ConditionalPanic(s.T(), test.expPanic, func() {
 				arithmeticStrategy := &twap.ArithmeticTwapStrategy{TwapKeeper: *s.App.TwapKeeper}
 				actualTwap := arithmeticStrategy.ComputeTwap(test.startRecord, test.endRecord, test.quoteAsset)
 				s.Require().Equal(test.expTwap, actualTwap)
@@ -283,7 +283,7 @@ func (s *TestSuite) TestComputeGeometricStrategyTwap() {
 	for name, tc := range tests {
 		tc := tc
 		s.Run(name, func() {
-			mokiassert.ConditionalPanic(s.T(), tc.expPanic, func() {
+			osmoassert.ConditionalPanic(s.T(), tc.expPanic, func() {
 
 				geometricStrategy := &twap.GeometricTwapStrategy{TwapKeeper: *s.App.TwapKeeper}
 				actualTwap := geometricStrategy.ComputeTwap(tc.startRecord, tc.endRecord, tc.quoteAsset)
@@ -359,7 +359,7 @@ func (s *TestSuite) TestComputeGeometricStrategyTwap_ThreeAsset() {
 			for i, startRec := range test.startRecord {
 				geometricStrategy := &twap.GeometricTwapStrategy{TwapKeeper: *s.App.TwapKeeper}
 				actualTwap := geometricStrategy.ComputeTwap(startRec, test.endRecord[i], test.quoteAsset[i])
-				mokiassert.DecApproxEq(s.T(), test.expTwap[i], actualTwap, errTolerance)
+				osmoassert.DecApproxEq(s.T(), test.expTwap[i], actualTwap, errTolerance)
 			}
 		})
 	}

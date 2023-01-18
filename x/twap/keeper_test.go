@@ -236,7 +236,7 @@ func (suite *TestSuite) TestTwapInitGenesis() {
 			twapKeeper := suite.App.TwapKeeper
 
 			// Test.
-			mokiassert.ConditionalPanic(suite.T(), tc.expectPanic, func() { twapKeeper.InitGenesis(ctx, tc.twapGenesis) })
+			osmoassert.ConditionalPanic(suite.T(), tc.expectPanic, func() { twapKeeper.InitGenesis(ctx, tc.twapGenesis) })
 			if tc.expectPanic {
 				return
 			}

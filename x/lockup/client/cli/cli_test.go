@@ -15,7 +15,7 @@ var testAddresses = osmoutils.CreateRandomAccounts(3)
 
 func TestLockTokensCmd(t *testing.T) {
 	desc, _ := NewLockTokensCmd()
-	tcs := map[string]mokicli.TxCliTestCase[*types.MsgLockTokens]{
+	tcs := map[string]osmocli.TxCliTestCase[*types.MsgLockTokens]{
 		"lock 201stake tokens for 1 day": {
 			Cmd: "201umoki --duration=24h --from=" + testAddresses[0].String(),
 			ExpectedMsg: &types.MsgLockTokens{
@@ -25,12 +25,12 @@ func TestLockTokensCmd(t *testing.T) {
 			},
 		},
 	}
-	mokicli.RunTxTestCases(t, desc, tcs)
+	osmocli.RunTxTestCases(t, desc, tcs)
 }
 
 func TestBeginUnlockingAllCmd(t *testing.T) {
 	desc, _ := NewBeginUnlockingAllCmd()
-	tcs := map[string]mokicli.TxCliTestCase[*types.MsgBeginUnlockingAll]{
+	tcs := map[string]osmocli.TxCliTestCase[*types.MsgBeginUnlockingAll]{
 		"basic test": {
 			Cmd: "--from=" + testAddresses[0].String(),
 			ExpectedMsg: &types.MsgBeginUnlockingAll{
@@ -38,12 +38,12 @@ func TestBeginUnlockingAllCmd(t *testing.T) {
 			},
 		},
 	}
-	mokicli.RunTxTestCases(t, desc, tcs)
+	osmocli.RunTxTestCases(t, desc, tcs)
 }
 
 func TestBeginUnlockingByIDCmd(t *testing.T) {
 	desc, _ := NewBeginUnlockByIDCmd()
-	tcs := map[string]mokicli.TxCliTestCase[*types.MsgBeginUnlocking]{
+	tcs := map[string]osmocli.TxCliTestCase[*types.MsgBeginUnlocking]{
 		"basic test no coins": {
 			Cmd: "10 --from=" + testAddresses[0].String(),
 			ExpectedMsg: &types.MsgBeginUnlocking{
@@ -61,23 +61,23 @@ func TestBeginUnlockingByIDCmd(t *testing.T) {
 			},
 		},
 	}
-	mokicli.RunTxTestCases(t, desc, tcs)
+	osmocli.RunTxTestCases(t, desc, tcs)
 }
 
 func TestModuleBalanceCmd(t *testing.T) {
 	desc, _ := GetCmdModuleBalance()
-	tcs := map[string]mokicli.QueryCliTestCase[*types.ModuleBalanceRequest]{
+	tcs := map[string]osmocli.QueryCliTestCase[*types.ModuleBalanceRequest]{
 		"basic test": {
 			Cmd:           "",
 			ExpectedQuery: &types.ModuleBalanceRequest{},
 		},
 	}
-	mokicli.RunQueryTestCases(t, desc, tcs)
+	osmocli.RunQueryTestCases(t, desc, tcs)
 }
 
 func TestAccountUnlockingCoinsCmd(t *testing.T) {
 	desc, _ := GetCmdAccountUnlockingCoins()
-	tcs := map[string]mokicli.QueryCliTestCase[*types.AccountUnlockingCoinsRequest]{
+	tcs := map[string]osmocli.QueryCliTestCase[*types.AccountUnlockingCoinsRequest]{
 		"basic test": {
 			Cmd: testAddresses[0].String(),
 			ExpectedQuery: &types.AccountUnlockingCoinsRequest{
@@ -85,12 +85,12 @@ func TestAccountUnlockingCoinsCmd(t *testing.T) {
 			},
 		},
 	}
-	mokicli.RunQueryTestCases(t, desc, tcs)
+	osmocli.RunQueryTestCases(t, desc, tcs)
 }
 
 func TestCmdAccountLockedPastTime(t *testing.T) {
 	desc, _ := GetCmdAccountLockedPastTime()
-	tcs := map[string]mokicli.QueryCliTestCase[*types.AccountLockedPastTimeRequest]{
+	tcs := map[string]osmocli.QueryCliTestCase[*types.AccountLockedPastTimeRequest]{
 		"basic test": {
 			Cmd: testAddresses[0].String() + " 1670431012",
 			ExpectedQuery: &types.AccountLockedPastTimeRequest{
@@ -99,12 +99,12 @@ func TestCmdAccountLockedPastTime(t *testing.T) {
 			},
 		},
 	}
-	mokicli.RunQueryTestCases(t, desc, tcs)
+	osmocli.RunQueryTestCases(t, desc, tcs)
 }
 
 func TestCmdAccountLockedPastTimeNotUnlockingOnly(t *testing.T) {
 	desc, _ := GetCmdAccountLockedPastTimeNotUnlockingOnly()
-	tcs := map[string]mokicli.QueryCliTestCase[*types.AccountLockedPastTimeNotUnlockingOnlyRequest]{
+	tcs := map[string]osmocli.QueryCliTestCase[*types.AccountLockedPastTimeNotUnlockingOnlyRequest]{
 		"basic test": {
 			Cmd: testAddresses[0].String() + " 1670431012",
 			ExpectedQuery: &types.AccountLockedPastTimeNotUnlockingOnlyRequest{
@@ -113,12 +113,12 @@ func TestCmdAccountLockedPastTimeNotUnlockingOnly(t *testing.T) {
 			},
 		},
 	}
-	mokicli.RunQueryTestCases(t, desc, tcs)
+	osmocli.RunQueryTestCases(t, desc, tcs)
 }
 
 func TestCmdTotalLockedByDenom(t *testing.T) {
 	desc, _ := GetCmdTotalLockedByDenom()
-	tcs := map[string]mokicli.QueryCliTestCase[*types.LockedDenomRequest]{
+	tcs := map[string]osmocli.QueryCliTestCase[*types.LockedDenomRequest]{
 		"basic test": {
 			Cmd: "umoki --min-duration=1s",
 			ExpectedQuery: &types.LockedDenomRequest{
@@ -127,5 +127,5 @@ func TestCmdTotalLockedByDenom(t *testing.T) {
 			},
 		},
 	}
-	mokicli.RunQueryTestCases(t, desc, tcs)
+	osmocli.RunQueryTestCases(t, desc, tcs)
 }

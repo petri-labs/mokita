@@ -10,7 +10,7 @@ import (
 
 func TestGetCmdDenomAuthorityMetadata(t *testing.T) {
 	desc, _ := cli.GetCmdDenomAuthorityMetadata()
-	tcs := map[string]mokicli.QueryCliTestCase[*types.QueryDenomAuthorityMetadataRequest]{
+	tcs := map[string]osmocli.QueryCliTestCase[*types.QueryDenomAuthorityMetadataRequest]{
 		"basic test": {
 			Cmd: "uatom",
 			ExpectedQuery: &types.QueryDenomAuthorityMetadataRequest{
@@ -18,12 +18,12 @@ func TestGetCmdDenomAuthorityMetadata(t *testing.T) {
 			},
 		},
 	}
-	mokicli.RunQueryTestCases(t, desc, tcs)
+	osmocli.RunQueryTestCases(t, desc, tcs)
 }
 
 func TestGetCmdDenomsFromCreator(t *testing.T) {
 	desc, _ := cli.GetCmdDenomsFromCreator()
-	tcs := map[string]mokicli.QueryCliTestCase[*types.QueryDenomsFromCreatorRequest]{
+	tcs := map[string]osmocli.QueryCliTestCase[*types.QueryDenomsFromCreatorRequest]{
 		"basic test": {
 			Cmd: "moki1test",
 			ExpectedQuery: &types.QueryDenomsFromCreatorRequest{
@@ -31,5 +31,5 @@ func TestGetCmdDenomsFromCreator(t *testing.T) {
 			},
 		},
 	}
-	mokicli.RunQueryTestCases(t, desc, tcs)
+	osmocli.RunQueryTestCases(t, desc, tcs)
 }

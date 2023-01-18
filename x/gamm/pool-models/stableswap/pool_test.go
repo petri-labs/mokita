@@ -136,7 +136,7 @@ func TestReorderReservesAndScalingFactors(t *testing.T) {
 				require.Equal(t, tc.reordedReserves, reserves)
 				require.Equal(t, tc.reordedScalingFactors, factors)
 			}
-			mokiassert.ConditionalError(t, tc.expError, err)
+			osmoassert.ConditionalError(t, tc.expError, err)
 		})
 	}
 }
@@ -238,7 +238,7 @@ func TestScaledSortedPoolReserves(t *testing.T) {
 			if !tc.expError {
 				require.Equal(t, tc.expReserves, reserves)
 			}
-			mokiassert.ConditionalError(t, tc.expError, err)
+			osmoassert.ConditionalError(t, tc.expError, err)
 		})
 	}
 }
@@ -424,7 +424,7 @@ func TestGetDescaledPoolAmts(t *testing.T) {
 				require.Equal(t, tc.expResult, result)
 			}
 
-			mokiassert.ConditionalPanic(t, tc.expPanic, sut)
+			osmoassert.ConditionalPanic(t, tc.expPanic, sut)
 		})
 	}
 }
@@ -514,7 +514,7 @@ func TestScaleCoin(t *testing.T) {
 				require.Equal(t, tc.expOutput, scaledInput)
 			}
 
-			mokiassert.ConditionalError(t, tc.expError, err)
+			osmoassert.ConditionalError(t, tc.expError, err)
 		})
 	}
 }
@@ -767,7 +767,7 @@ func TestSwapOutAmtGivenIn(t *testing.T) {
 			p := poolStructFromAssets(tc.poolAssets, tc.scalingFactors)
 
 			tokenOut, err := p.SwapOutAmtGivenIn(ctx, tc.tokenIn, tc.expectedTokenOut.Denom, tc.swapFee)
-			mokiassert.ConditionalError(t, tc.expError, err)
+			osmoassert.ConditionalError(t, tc.expError, err)
 			if !tc.expError {
 				require.Equal(t, tc.expectedTokenOut.Amount, tokenOut.Amount)
 				require.True(t, p.PoolLiquidity.IsAllGTE(tc.expectedPoolLiquidity),
@@ -839,7 +839,7 @@ func TestSwapInAmtGivenOut(t *testing.T) {
 				require.True(t, tokenIn.Amount.GTE(tc.expectedTokenIn.Amount))
 				require.True(t, p.PoolLiquidity.IsAllGTE(tc.expectedPoolLiquidity))
 			}
-			mokiassert.ConditionalError(t, tc.expError, err)
+			osmoassert.ConditionalError(t, tc.expError, err)
 		})
 	}
 }
@@ -1047,7 +1047,7 @@ func TestExitPool(t *testing.T) {
 				require.True(t, tokenOut.IsAllLTE(tc.expectedTokenOut))
 				require.True(t, finalPoolLiquidity.IsAllGTE(tc.expectedPoolLiquidity))
 			}
-			mokiassert.ConditionalError(t, !tc.expectPass, err)
+			osmoassert.ConditionalError(t, !tc.expectPass, err)
 		})
 	}
 }
@@ -1358,7 +1358,7 @@ func TestStableswapSpotPrice(t *testing.T) {
 				// Pool liquidity should remain unchanged
 				require.Equal(t, tc.poolAssets, p.GetTotalPoolLiquidity(ctx))
 			}
-			mokiassert.ConditionalError(t, !tc.expectPass, err)
+			osmoassert.ConditionalError(t, !tc.expectPass, err)
 		})
 	}
 }
