@@ -3,8 +3,8 @@ package keeper
 import (
 	"time"
 
-	"github.com/petri-labs/mokita/x/incentives/types"
-	lockuptypes "github.com/petri-labs/mokita/x/lockup/types"
+	"github.com/tessornetwork/mokita/x/incentives/types"
+	lockuptypes "github.com/tessornetwork/mokita/x/lockup/types"
 
 	storetypes "github.com/cosmos/cosmos-sdk/store/types"
 	sdk "github.com/cosmos/cosmos-sdk/types"

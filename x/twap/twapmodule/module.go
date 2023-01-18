@@ -16,12 +16,12 @@ import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/cosmos/cosmos-sdk/types/module"
 
-	"github.com/petri-labs/mokita/x/twap"
-	twapclient "github.com/petri-labs/mokita/x/twap/client"
-	twapcli "github.com/petri-labs/mokita/x/twap/client/cli"
-	"github.com/petri-labs/mokita/x/twap/client/grpc"
-	"github.com/petri-labs/mokita/x/twap/client/queryproto"
-	"github.com/petri-labs/mokita/x/twap/types"
+	"github.com/tessornetwork/mokita/x/twap"
+	twapclient "github.com/tessornetwork/mokita/x/twap/client"
+	twapcli "github.com/tessornetwork/mokita/x/twap/client/cli"
+	"github.com/tessornetwork/mokita/x/twap/client/grpc"
+	"github.com/tessornetwork/mokita/x/twap/client/queryproto"
+	"github.com/tessornetwork/mokita/x/twap/types"
 )
 
 var (

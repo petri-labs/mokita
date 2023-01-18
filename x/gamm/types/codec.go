@@ -11,7 +11,7 @@ import (
 // RegisterLegacyAminoCodec registers the necessary x/gamm interfaces and concrete types
 // on the provided LegacyAmino codec. These types are used for Amino JSON serialization.
 func RegisterLegacyAminoCodec(cdc *codec.LegacyAmino) {
-	cdc.RegisterInterface((*CFMMPoolI)(nil), nil)
+	cdc.RegisterInterface((*PoolI)(nil), nil)
 	cdc.RegisterConcrete(&MsgJoinPool{}, "mokita/gamm/join-pool", nil)
 	cdc.RegisterConcrete(&MsgExitPool{}, "mokita/gamm/exit-pool", nil)
 	cdc.RegisterConcrete(&MsgSwapExactAmountIn{}, "mokita/gamm/swap-exact-amount-in", nil)
@@ -24,8 +24,8 @@ func RegisterLegacyAminoCodec(cdc *codec.LegacyAmino) {
 
 func RegisterInterfaces(registry types.InterfaceRegistry) {
 	registry.RegisterInterface(
-		"mokita.gamm.v1beta1.PoolI", // N.B.: the old proto-path is preserved for backwards-compatibility.
-		(*CFMMPoolI)(nil),
+		"mokita.gamm.v1beta1.PoolI",
+		(*PoolI)(nil),
 	)
 
 	registry.RegisterImplementations(

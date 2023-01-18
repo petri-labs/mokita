@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"strings"
 
-	gammtypes "github.com/petri-labs/mokita/x/gamm/types"
+	gammtypes "github.com/tessornetwork/mokita/x/gamm/types"
 
 	govtypes "github.com/cosmos/cosmos-sdk/x/gov/types"
 )

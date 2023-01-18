@@ -3,8 +3,8 @@ package v9
 import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 
-	gammkeeper "github.com/petri-labs/mokita/x/gamm/keeper"
-	"github.com/petri-labs/mokita/x/gamm/pool-models/balancer"
+	gammkeeper "github.com/tessornetwork/mokita/x/gamm/keeper"
+	"github.com/tessornetwork/mokita/x/gamm/pool-models/balancer"
 )
 
 // Executes prop214, https://www.mintscan.io/mokita/proposals/214

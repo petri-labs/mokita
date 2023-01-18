@@ -1,6 +1,6 @@
 package v3
 
-import "github.com/petri-labs/mokita/app/upgrades"
+import "github.com/tessornetwork/mokita/app/upgrades"
 
 const (
 	// UpgradeName defines the on-chain upgrade name for the Mokita v3 upgrade.

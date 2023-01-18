@@ -25,9 +25,9 @@ import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/cosmos/cosmos-sdk/types/module"
 
-	"github.com/petri-labs/mokita/x/txfees/client/cli"
-	"github.com/petri-labs/mokita/x/txfees/keeper"
-	"github.com/petri-labs/mokita/x/txfees/types"
+	"github.com/tessornetwork/mokita/x/txfees/client/cli"
+	"github.com/tessornetwork/mokita/x/txfees/keeper"
+	"github.com/tessornetwork/mokita/x/txfees/types"
 )
 
 var (

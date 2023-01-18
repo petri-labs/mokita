@@ -4,7 +4,7 @@ import (
 	"errors"
 	"time"
 
-	lockuptypes "github.com/petri-labs/mokita/x/lockup/types"
+	lockuptypes "github.com/tessornetwork/mokita/x/lockup/types"
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 )

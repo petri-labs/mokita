@@ -1,4 +1,4 @@
-package osmomath
+package mokimath
 
 import (
 	"fmt"
@@ -21,7 +21,7 @@ var (
 )
 
 // Returns the internal "power precision".
-// All fractional exponentiation in osmosis is expected to be accurate up to
+// All fractional exponentiation in mokita is expected to be accurate up to
 // powPrecision.
 // *technically* the error term can be greater than this powPrecision,
 // but for small bases this bound applies. See comments in the PowApprox function

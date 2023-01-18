@@ -6,9 +6,9 @@ import (
 
 	"github.com/stretchr/testify/require"
 
-	simapp "github.com/petri-labs/mokita/app"
-	"github.com/petri-labs/mokita/x/mint/simulation"
-	"github.com/petri-labs/mokita/x/mint/types"
+	simapp "github.com/tessornetwork/mokita/app"
+	"github.com/tessornetwork/mokita/x/mint/simulation"
+	"github.com/tessornetwork/mokita/x/mint/types"
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/cosmos/cosmos-sdk/types/kv"

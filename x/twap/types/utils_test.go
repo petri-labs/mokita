@@ -6,8 +6,8 @@ import (
 
 	"github.com/stretchr/testify/require"
 
-	"github.com/osmosis-labs/osmosis/osmoutils/osmoassert"
-	"github.com/petri-labs/mokita/x/gamm/types"
+	"github.com/mokita-labs/mokita/mokiutils/mokiassert"
+	"github.com/tessornetwork/mokita/x/gamm/types"
 )
 
 func TestMaxSpotPriceEquality(t *testing.T) {
@@ -29,7 +29,7 @@ func TestGetAllUniqueDenomPairs(t *testing.T) {
 	}
 	for name, tt := range tests {
 		t.Run(name, func(t *testing.T) {
-			osmoassert.ConditionalPanic(t, tt.panics, func() {
+			mokiassert.ConditionalPanic(t, tt.panics, func() {
 				pairs := GetAllUniqueDenomPairs(tt.denoms)
 				require.Equal(t, pairs, tt.wantedPairs)
 			})

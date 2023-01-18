@@ -29,9 +29,9 @@ import (
 	simtypes "github.com/cosmos/cosmos-sdk/types/simulation"
 	"github.com/cosmos/cosmos-sdk/x/gov/simulation"
 
-	"github.com/petri-labs/mokita/x/pool-incentives/client/cli"
-	"github.com/petri-labs/mokita/x/pool-incentives/keeper"
-	"github.com/petri-labs/mokita/x/pool-incentives/types"
+	"github.com/tessornetwork/mokita/x/pool-incentives/client/cli"
+	"github.com/tessornetwork/mokita/x/pool-incentives/keeper"
+	"github.com/tessornetwork/mokita/x/pool-incentives/types"
 )
 
 var (

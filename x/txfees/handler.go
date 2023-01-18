@@ -5,8 +5,8 @@ import (
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 	govtypes "github.com/cosmos/cosmos-sdk/x/gov/types"
 
-	"github.com/petri-labs/mokita/x/txfees/keeper"
-	"github.com/petri-labs/mokita/x/txfees/types"
+	"github.com/tessornetwork/mokita/x/txfees/keeper"
+	"github.com/tessornetwork/mokita/x/txfees/types"
 )
 
 func NewUpdateFeeTokenProposalHandler(k keeper.Keeper) govtypes.Handler {

@@ -9,12 +9,12 @@ import (
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 
-	incentivestypes "github.com/petri-labs/mokita/x/incentives/types"
+	incentivestypes "github.com/tessornetwork/mokita/x/incentives/types"
 
-	"github.com/petri-labs/mokita/app/apptesting"
+	"github.com/tessornetwork/mokita/app/apptesting"
 
-	appParams "github.com/petri-labs/mokita/app/params"
-	lockuptypes "github.com/petri-labs/mokita/x/lockup/types"
+	appParams "github.com/tessornetwork/mokita/app/params"
+	lockuptypes "github.com/tessornetwork/mokita/x/lockup/types"
 )
 
 // TestMsgCreatePool tests if valid/invalid create pool messages are properly validated/invalidated

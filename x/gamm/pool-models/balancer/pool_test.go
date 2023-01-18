@@ -9,11 +9,11 @@ import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/stretchr/testify/require"
 
-	"github.com/osmosis-labs/osmosis/osmomath"
-	"github.com/osmosis-labs/osmosis/osmoutils/osmoassert"
-	"github.com/petri-labs/mokita/x/gamm/pool-models/balancer"
-	"github.com/petri-labs/mokita/x/gamm/pool-models/internal/test_helpers"
-	"github.com/petri-labs/mokita/x/gamm/types"
+	"github.com/mokita-labs/mokita/mokimath"
+	"github.com/mokita-labs/mokita/mokiutils/mokiassert"
+	"github.com/tessornetwork/mokita/x/gamm/pool-models/balancer"
+	"github.com/tessornetwork/mokita/x/gamm/pool-models/internal/test_helpers"
+	"github.com/tessornetwork/mokita/x/gamm/types"
 )
 
 var (
@@ -137,6 +137,9 @@ func TestCalcSingleAssetJoin(t *testing.T) {
 		t.Run(tc.name, func(t *testing.T) {
 			pool := createTestPool(t, tc.swapFee, sdk.MustNewDecFromStr("0"), tc.poolAssets...)
 
+			balancerPool, ok := pool.(*balancer.Pool)
+			require.True(t, ok)
+
 			tokenIn := tc.tokensIn[0]
 
 			poolAssetInDenom := tokenIn.Denom
@@ -149,12 +152,12 @@ func TestCalcSingleAssetJoin(t *testing.T) {
 			// find pool asset in pool
 			// must be in pool since weights get scaled in Balancer pool
 			// constructor
-			poolAssetIn, err := pool.GetPoolAsset(poolAssetInDenom)
+			poolAssetIn, err := balancerPool.GetPoolAsset(poolAssetInDenom)
 			require.NoError(t, err)
 
 			// system under test
 			sut := func() {
-				shares, err := pool.CalcSingleAssetJoin(tokenIn, tc.swapFee, poolAssetIn, pool.GetTotalShares())
+				shares, err := balancerPool.CalcSingleAssetJoin(tokenIn, tc.swapFee, poolAssetIn, pool.GetTotalShares())
 
 				if tc.expErr != nil {
 					require.Error(t, err)
@@ -167,8 +170,8 @@ func TestCalcSingleAssetJoin(t *testing.T) {
 				assertExpectedSharesErrRatio(t, tc.expectShares, shares)
 			}
 
-			assertPoolStateNotModified(t, pool, func() {
-				osmoassert.ConditionalPanic(t, tc.expectPanic, sut)
+			assertPoolStateNotModified(t, balancerPool, func() {
+				mokiassert.ConditionalPanic(t, tc.expectPanic, sut)
 			})
 		})
 	}
@@ -344,7 +347,10 @@ func TestCalcJoinSingleAssetTokensIn(t *testing.T) {
 		t.Run(tc.name, func(t *testing.T) {
 			pool := createTestPool(t, tc.swapFee, sdk.ZeroDec(), tc.poolAssets...)
 
-			poolAssetsByDenom, err := balancer.GetPoolAssetsByDenom(pool.GetAllPoolAssets())
+			balancerPool, ok := pool.(*balancer.Pool)
+			require.True(t, ok)
+
+			poolAssetsByDenom, err := balancer.GetPoolAssetsByDenom(balancerPool.GetAllPoolAssets())
 			require.NoError(t, err)
 
 			// estimate expected liquidity
@@ -354,7 +360,7 @@ func TestCalcJoinSingleAssetTokensIn(t *testing.T) {
 			}
 
 			sut := func() {
-				totalNumShares, totalNewLiquidity, err := pool.CalcJoinSingleAssetTokensIn(tc.tokensIn, pool.GetTotalShares(), poolAssetsByDenom, tc.swapFee)
+				totalNumShares, totalNewLiquidity, err := balancerPool.CalcJoinSingleAssetTokensIn(tc.tokensIn, pool.GetTotalShares(), poolAssetsByDenom, tc.swapFee)
 
 				if tc.expErr != nil {
 					require.Error(t, err)
@@ -376,7 +382,7 @@ func TestCalcJoinSingleAssetTokensIn(t *testing.T) {
 				assertExpectedSharesErrRatio(t, tc.expectShares, totalNumShares)
 			}
 
-			assertPoolStateNotModified(t, pool, sut)
+			assertPoolStateNotModified(t, balancerPool, sut)
 		})
 	}
 }
@@ -568,13 +574,16 @@ func (suite *BalancerTestSuite) TestBalancerCalculateAmountOutAndIn_InverseRelat
 				pool := createTestPool(suite.T(), swapFeeDec, exitFeeDec, poolAssetOut, poolAssetIn)
 				suite.Require().NotNil(pool)
 
-				errTolerance := osmomath.ErrTolerance{
+				errTolerance := mokimath.ErrTolerance{
 					AdditiveTolerance: sdk.OneDec(), MultiplicativeTolerance: sdk.Dec{}}
 				sut := func() {
 					test_helpers.TestCalculateAmountOutAndIn_InverseRelationship(suite.T(), ctx, pool, poolAssetIn.Token.Denom, poolAssetOut.Token.Denom, tc.initialCalcOut, swapFeeDec, errTolerance)
 				}
 
-				assertPoolStateNotModified(suite.T(), pool, sut)
+				balancerPool, ok := pool.(*balancer.Pool)
+				suite.Require().True(ok)
+
+				assertPoolStateNotModified(suite.T(), balancerPool, sut)
 			})
 		}
 	}
@@ -684,7 +693,7 @@ func TestCalcSingleAssetInAndOut_InverseRelationship(t *testing.T) {
 				)
 
 				tol := sdk.NewDec(1)
-				osmoassert.DecApproxEq(t, initialCalcTokenOut.ToDec(), inverseCalcTokenOut, tol)
+				mokiassert.DecApproxEq(t, initialCalcTokenOut.ToDec(), inverseCalcTokenOut, tol)
 			})
 		}
 	}

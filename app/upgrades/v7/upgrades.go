@@ -7,10 +7,10 @@ import (
 	"github.com/cosmos/cosmos-sdk/types/module"
 	upgradetypes "github.com/cosmos/cosmos-sdk/x/upgrade/types"
 
-	"github.com/petri-labs/mokita/app/keepers"
-	"github.com/petri-labs/mokita/app/upgrades"
-	lockupkeeper "github.com/petri-labs/mokita/x/lockup/keeper"
-	superfluidtypes "github.com/petri-labs/mokita/x/superfluid/types"
+	"github.com/tessornetwork/mokita/app/keepers"
+	"github.com/tessornetwork/mokita/app/upgrades"
+	lockupkeeper "github.com/tessornetwork/mokita/x/lockup/keeper"
+	superfluidtypes "github.com/tessornetwork/mokita/x/superfluid/types"
 )
 
 func CreateUpgradeHandler(

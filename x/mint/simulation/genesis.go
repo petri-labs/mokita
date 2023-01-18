@@ -5,7 +5,7 @@ package simulation
 import (
 	"math/rand"
 
-	"github.com/petri-labs/mokita/x/mint/types"
+	"github.com/tessornetwork/mokita/x/mint/types"
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/cosmos/cosmos-sdk/types/module"
@@ -24,7 +24,7 @@ const (
 )
 
 var (
-	// Taken from: // https://github.com/osmosis-labs/networks/raw/main/mokita-1/genesis.json
+	// Taken from: // https://github.com/mokita-labs/networks/raw/main/mokita-1/genesis.json
 	distributionProportions = types.DistributionProportions{
 		Staking:          sdk.NewDecWithPrec(25, 2),
 		PoolIncentives:   sdk.NewDecWithPrec(45, 2),

@@ -8,10 +8,10 @@ import (
 	"github.com/cosmos/cosmos-sdk/client"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 
-	mokitaapp "github.com/petri-labs/mokita/app"
+	mokitaapp "github.com/tessornetwork/mokita/app"
 
-	"github.com/petri-labs/mokita/app/apptesting"
-	"github.com/petri-labs/mokita/x/txfees/types"
+	"github.com/tessornetwork/mokita/app/apptesting"
+	"github.com/tessornetwork/mokita/x/txfees/types"
 )
 
 type KeeperTestSuite struct {

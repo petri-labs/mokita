@@ -1,8 +1,8 @@
 package client
 
 import (
-	"github.com/petri-labs/mokita/x/superfluid/client/cli"
-	"github.com/petri-labs/mokita/x/superfluid/client/rest"
+	"github.com/tessornetwork/mokita/x/superfluid/client/cli"
+	"github.com/tessornetwork/mokita/x/superfluid/client/rest"
 
 	govclient "github.com/cosmos/cosmos-sdk/x/gov/client"
 )

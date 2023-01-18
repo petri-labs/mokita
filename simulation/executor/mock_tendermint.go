@@ -14,7 +14,7 @@ import (
 	tmtypes "github.com/tendermint/tendermint/types"
 	"golang.org/x/exp/maps"
 
-	markov "github.com/petri-labs/mokita/simulation/simtypes/transitionmatrix"
+	markov "github.com/tessornetwork/mokita/simulation/simtypes/transitionmatrix"
 )
 
 type mockValidator struct {

@@ -5,9 +5,9 @@ import (
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 	govtypes "github.com/cosmos/cosmos-sdk/x/gov/types"
 
-	"github.com/petri-labs/mokita/x/superfluid/keeper"
-	"github.com/petri-labs/mokita/x/superfluid/keeper/gov"
-	"github.com/petri-labs/mokita/x/superfluid/types"
+	"github.com/tessornetwork/mokita/x/superfluid/keeper"
+	"github.com/tessornetwork/mokita/x/superfluid/keeper/gov"
+	"github.com/tessornetwork/mokita/x/superfluid/types"
 )
 
 func NewSuperfluidProposalHandler(k keeper.Keeper, ek types.EpochKeeper, gk types.GammKeeper) govtypes.Handler {

@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/petri-labs/mokita/simulation/simtypes"
+	"github.com/tessornetwork/mokita/simulation/simtypes"
 )
 
 func getTestingMode(tb testing.TB) (testingMode bool, t *testing.T, b *testing.B) {

@@ -7,9 +7,9 @@ import (
 	"github.com/stretchr/testify/require"
 	"github.com/stretchr/testify/suite"
 
-	"github.com/petri-labs/mokita/x/gamm/pool-models/balancer"
-	"github.com/petri-labs/mokita/x/gamm/pool-models/internal/test_helpers"
-	"github.com/petri-labs/mokita/x/gamm/types"
+	"github.com/tessornetwork/mokita/x/gamm/pool-models/balancer"
+	"github.com/tessornetwork/mokita/x/gamm/pool-models/internal/test_helpers"
+	"github.com/tessornetwork/mokita/x/gamm/types"
 )
 
 type BalancerTestSuite struct {

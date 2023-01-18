@@ -8,7 +8,7 @@ import (
 	"github.com/stretchr/testify/suite"
 	abci "github.com/tendermint/tendermint/abci/types"
 
-	"github.com/petri-labs/mokita/app/apptesting"
+	"github.com/tessornetwork/mokita/app/apptesting"
 )
 
 type UpgradeTestSuite struct {

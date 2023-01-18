@@ -3,7 +3,7 @@ package keeper
 import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 
-	"github.com/petri-labs/mokita/x/mint/types"
+	"github.com/tessornetwork/mokita/x/mint/types"
 )
 
 type (

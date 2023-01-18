@@ -8,24 +8,24 @@ import (
 
 	"github.com/stretchr/testify/suite"
 
-	configurer "github.com/petri-labs/mokita/tests/e2e/configurer"
+	configurer "github.com/tessornetwork/mokita/tests/e2e/configurer"
 )
 
 const (
 	// Environment variable signifying whether to run e2e tests.
-	e2eEnabledEnv = "MOKISIS_E2E"
+	e2eEnabledEnv = "MOKITA_E2E"
 	// Environment variable name to skip the upgrade tests
-	skipUpgradeEnv = "MOKISIS_E2E_SKIP_UPGRADE"
+	skipUpgradeEnv = "MOKITA_E2E_SKIP_UPGRADE"
 	// Environment variable name to skip the IBC tests
-	skipIBCEnv = "MOKISIS_E2E_SKIP_IBC"
+	skipIBCEnv = "MOKITA_E2E_SKIP_IBC"
 	// Environment variable name to skip state sync testing
-	skipStateSyncEnv = "MOKISIS_E2E_SKIP_STATE_SYNC"
+	skipStateSyncEnv = "MOKITA_E2E_SKIP_STATE_SYNC"
 	// Environment variable name to determine if this upgrade is a fork
-	forkHeightEnv = "MOKISIS_E2E_FORK_HEIGHT"
+	forkHeightEnv = "MOKITA_E2E_FORK_HEIGHT"
 	// Environment variable name to skip cleaning up Docker resources in teardown
-	skipCleanupEnv = "MOKISIS_E2E_SKIP_CLEANUP"
+	skipCleanupEnv = "MOKITA_E2E_SKIP_CLEANUP"
 	// Environment variable name to determine what version we are upgrading to
-	upgradeVersionEnv = "MOKISIS_E2E_UPGRADE_VERSION"
+	upgradeVersionEnv = "MOKITA_E2E_UPGRADE_VERSION"
 )
 
 type IntegrationTestSuite struct {
@@ -84,7 +84,7 @@ func (s *IntegrationTestSuite) SetupSuite() {
 		}
 	}
 
-	if str := os.Getenv("MOKISIS_E2E_SKIP_STATE_SYNC"); len(str) > 0 {
+	if str := os.Getenv("MOKITA_E2E_SKIP_STATE_SYNC"); len(str) > 0 {
 		s.skipStateSync, err = strconv.ParseBool(str)
 		s.Require().NoError(err)
 		if s.skipStateSync {
@@ -93,7 +93,7 @@ func (s *IntegrationTestSuite) SetupSuite() {
 	}
 
 	isDebugLogEnabled := false
-	if str := os.Getenv("MOKISIS_E2E_DEBUG_LOG"); len(str) > 0 {
+	if str := os.Getenv("MOKITA_E2E_DEBUG_LOG"); len(str) > 0 {
 		isDebugLogEnabled, err = strconv.ParseBool(str)
 		s.Require().NoError(err)
 		if isDebugLogEnabled {

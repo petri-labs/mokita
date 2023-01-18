@@ -1,4 +1,4 @@
-package osmoutils
+package mokiutils
 
 import sdk "github.com/cosmos/cosmos-sdk/types"
 

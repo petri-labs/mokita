@@ -7,10 +7,10 @@ import (
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 
-	"github.com/petri-labs/mokita/x/twap"
+	"github.com/tessornetwork/mokita/x/twap"
 
-	gammtypes "github.com/petri-labs/mokita/x/gamm/types"
-	"github.com/petri-labs/mokita/x/twap/types"
+	gammtypes "github.com/tessornetwork/mokita/x/gamm/types"
+	"github.com/tessornetwork/mokita/x/twap/types"
 )
 
 // TestTrackChangedPool takes a list of poolIds as test cases, and runs one list per block.
@@ -162,11 +162,11 @@ func (s *TestSuite) TestGetRecordAtOrBeforeTime() {
 	defaultInputAt := func(t time.Time) getRecordInput { return getRecordInput{1, t, denom0, denom1} }
 	wrongPoolIdInputAt := func(t time.Time) getRecordInput { return getRecordInput{2, t, denom0, denom1} }
 	defaultRevInputAt := func(t time.Time) getRecordInput { return getRecordInput{1, t, denom1, denom0} }
-	baseRecord := withPrice0Set(newEmptyPriceRecord(1, baseTime, denom0, denom1), sdk.OneDec())
+	baseRecord := newEmptyPriceRecord(1, baseTime, denom0, denom1)
 	tMin1 := baseTime.Add(-time.Second)
-	tMin1Record := withPrice0Set(newEmptyPriceRecord(1, tMin1, denom0, denom1), sdk.OneDec())
+	tMin1Record := newEmptyPriceRecord(1, tMin1, denom0, denom1)
 	tPlus1 := baseTime.Add(time.Second)
-	tPlus1Record := withPrice0Set(newEmptyPriceRecord(1, tPlus1, denom0, denom1), sdk.OneDec())
+	tPlus1Record := newEmptyPriceRecord(1, tPlus1, denom0, denom1)
 
 	tests := map[string]struct {
 		recordsToSet   []types.TwapRecord

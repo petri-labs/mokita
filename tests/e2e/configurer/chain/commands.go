@@ -9,11 +9,11 @@ import (
 	"strings"
 	"time"
 
-	appparams "github.com/petri-labs/mokita/app/params"
-	"github.com/petri-labs/mokita/tests/e2e/configurer/config"
-	"github.com/petri-labs/mokita/tests/e2e/util"
-	gammtypes "github.com/petri-labs/mokita/x/gamm/types"
-	lockuptypes "github.com/petri-labs/mokita/x/lockup/types"
+	appparams "github.com/tessornetwork/mokita/app/params"
+	"github.com/tessornetwork/mokita/tests/e2e/configurer/config"
+	"github.com/tessornetwork/mokita/tests/e2e/util"
+	gammtypes "github.com/tessornetwork/mokita/x/gamm/types"
+	lockuptypes "github.com/tessornetwork/mokita/x/lockup/types"
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/stretchr/testify/require"
@@ -30,7 +30,6 @@ func (n *NodeConfig) CreatePool(poolFile, from string) uint64 {
 	bz, err := n.QueryGRPCGateway(path)
 	require.NoError(n.t, err)
 
-	//nolint:staticcheck
 	var numPools gammtypes.QueryNumPoolsResponse
 	err = util.Cdc.UnmarshalJSON(bz, &numPools)
 	require.NoError(n.t, err)

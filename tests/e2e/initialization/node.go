@@ -29,8 +29,8 @@ import (
 	"github.com/tendermint/tendermint/privval"
 	tmtypes "github.com/tendermint/tendermint/types"
 
-	mokitaApp "github.com/petri-labs/mokita/app"
-	"github.com/petri-labs/mokita/tests/e2e/util"
+	mokitaApp "github.com/tessornetwork/mokita/app"
+	"github.com/tessornetwork/mokita/tests/e2e/util"
 )
 
 type internalNode struct {

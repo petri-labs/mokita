@@ -3,19 +3,19 @@ package app
 import (
 	wasm "github.com/CosmWasm/wasmd/x/wasm"
 	wasmkeeper "github.com/CosmWasm/wasmd/x/wasm/keeper"
-	ibcante "github.com/cosmos/ibc-go/v4/modules/core/ante"
-	ibckeeper "github.com/cosmos/ibc-go/v4/modules/core/keeper"
+	ibcante "github.com/cosmos/ibc-go/v3/modules/core/ante"
+	ibckeeper "github.com/cosmos/ibc-go/v3/modules/core/keeper"
 
 	servertypes "github.com/cosmos/cosmos-sdk/server/types"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	ante "github.com/cosmos/cosmos-sdk/x/auth/ante"
 	"github.com/cosmos/cosmos-sdk/x/auth/signing"
 
-	mokiante "github.com/petri-labs/mokita/ante"
-	v9 "github.com/petri-labs/mokita/app/upgrades/v9"
+	mokiante "github.com/tessornetwork/mokita/ante"
+	v9 "github.com/tessornetwork/mokita/app/upgrades/v9"
 
-	txfeeskeeper "github.com/petri-labs/mokita/x/txfees/keeper"
-	txfeestypes "github.com/petri-labs/mokita/x/txfees/types"
+	txfeeskeeper "github.com/tessornetwork/mokita/x/txfees/keeper"
+	txfeestypes "github.com/tessornetwork/mokita/x/txfees/types"
 )
 
 // Link to default ante handler used by cosmos sdk:

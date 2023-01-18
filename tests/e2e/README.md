@@ -110,7 +110,7 @@ Conceptually, we can split the e2e setup into 2 parts:
 
     This is done in `configurer/setup_runner.go` via function decorator design pattern
     where we chain the desired setup components during configurer creation.
-    [Example](https://github.com/petri-labs/mokita/blob/c5d5c9f0c6b5c7fdf9688057eb78ec793f6dd580/tests/e2e/configurer/configurer.go#L166)
+    [Example](https://github.com/mokita-labs/mokita/blob/c5d5c9f0c6b5c7fdf9688057eb78ec793f6dd580/tests/e2e/configurer/configurer.go#L166)
 
 ## `initialization` Package
 
@@ -155,23 +155,23 @@ Some tests take a long time to run. Sometimes, we would like to disable them
 locally or in CI. The following are the environment variables to disable
 certain components of e2e testing.
 
-- `MOKISIS_E2E_SKIP_UPGRADE` - when true, skips the upgrade tests.
-If MOKISIS_E2E_SKIP_IBC is true, this must also be set to true because upgrade
+- `MOKITA_E2E_SKIP_UPGRADE` - when true, skips the upgrade tests.
+If MOKITA_E2E_SKIP_IBC is true, this must also be set to true because upgrade
 tests require IBC logic.
 
-- `MOKISIS_E2E_SKIP_IBC` - when true, skips the IBC tests tests.
+- `MOKITA_E2E_SKIP_IBC` - when true, skips the IBC tests tests.
 
-- `MOKISIS_E2E_SKIP_STATE_SYNC` - when true, skips the state sync tests.
+- `MOKITA_E2E_SKIP_STATE_SYNC` - when true, skips the state sync tests.
 
-- `MOKISIS_E2E_SKIP_CLEANUP` - when true, avoids cleaning up the e2e Docker
+- `MOKITA_E2E_SKIP_CLEANUP` - when true, avoids cleaning up the e2e Docker
 containers.
 
-- `MOKISIS_E2E_FORK_HEIGHT` - when the above "IS_FORK" env variable is set to true, this is the string
+- `MOKITA_E2E_FORK_HEIGHT` - when the above "IS_FORK" env variable is set to true, this is the string
 of the height in which the network should fork. This should match the ForkHeight set in constants.go
 
-- `MOKISIS_E2E_UPGRADE_VERSION` - string of what version will be upgraded to (for example, "v10")
+- `MOKITA_E2E_UPGRADE_VERSION` - string of what version will be upgraded to (for example, "v10")
 
-- `MOKISIS_E2E_DEBUG_LOG` - when true, prints debug logs from executing CLI commands
+- `MOKITA_E2E_DEBUG_LOG` - when true, prints debug logs from executing CLI commands
 via Docker containers. Set to trus in CI by default.
 
 #### VS Code Debug Configuration
@@ -194,13 +194,13 @@ This debug configuration helps to run e2e tests locally and skip the desired tes
     ],
     "buildFlags": "-tags e2e",
     "env": {
-        "MOKISIS_E2E_SKIP_IBC": "true",
-        "MOKISIS_E2E_SKIP_UPGRADE": "true",
-        "MOKISIS_E2E_SKIP_CLEANUP": "true",
-        "MOKISIS_E2E_SKIP_STATE_SYNC": "true",
-        "MOKISIS_E2E_UPGRADE_VERSION": "v10",
-        "MOKISIS_E2E_DEBUG_LOG": "true",
-        "MOKISIS_E2E_FORK_HEIGHT": "4713065" # this is v10 fork height.
+        "MOKITA_E2E_SKIP_IBC": "true",
+        "MOKITA_E2E_SKIP_UPGRADE": "true",
+        "MOKITA_E2E_SKIP_CLEANUP": "true",
+        "MOKITA_E2E_SKIP_STATE_SYNC": "true",
+        "MOKITA_E2E_UPGRADE_VERSION": "v10",
+        "MOKITA_E2E_DEBUG_LOG": "true",
+        "MOKITA_E2E_FORK_HEIGHT": "4713065" # this is v10 fork height.
     }
 }
 ```

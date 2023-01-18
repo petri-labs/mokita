@@ -8,31 +8,25 @@ import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 
-	"github.com/osmosis-labs/osmosis/osmoutils"
-	"github.com/petri-labs/mokita/x/gamm/pool-models/balancer"
-	"github.com/petri-labs/mokita/x/gamm/pool-models/stableswap"
-	"github.com/petri-labs/mokita/x/gamm/types"
-	swaproutertypes "github.com/petri-labs/mokita/x/swaprouter/types"
+	"github.com/mokita-labs/mokita/mokiutils"
+	"github.com/tessornetwork/mokita/x/gamm/pool-models/balancer"
+	"github.com/tessornetwork/mokita/x/gamm/pool-models/stableswap"
+	"github.com/tessornetwork/mokita/x/gamm/types"
 )
 
-func (k Keeper) MarshalPool(pool swaproutertypes.PoolI) ([]byte, error) {
+func (k Keeper) MarshalPool(pool types.PoolI) ([]byte, error) {
 	return k.cdc.MarshalInterface(pool)
 }
 
-func (k Keeper) UnmarshalPool(bz []byte) (types.CFMMPoolI, error) {
-	var acc types.CFMMPoolI
+func (k Keeper) UnmarshalPool(bz []byte) (types.PoolI, error) {
+	var acc types.PoolI
 	return acc, k.cdc.UnmarshalInterface(bz, &acc)
-}
-
-// GetPool returns a pool with a given id.
-func (k Keeper) GetPool(ctx sdk.Context, poolId uint64) (swaproutertypes.PoolI, error) {
-	return k.GetPoolAndPoke(ctx, poolId)
 }
 
 // GetPoolAndPoke returns a PoolI based on it's identifier if one exists. If poolId corresponds
 // to a pool with weights (e.g. balancer), the weights of the pool are updated via PokePool prior to returning.
 // TODO: Consider rename to GetPool due to downstream API confusion.
-func (k Keeper) GetPoolAndPoke(ctx sdk.Context, poolId uint64) (types.CFMMPoolI, error) {
+func (k Keeper) GetPoolAndPoke(ctx sdk.Context, poolId uint64) (types.PoolI, error) {
 	store := ctx.KVStore(k.storeKey)
 	poolKey := types.GetKeyPrefixPools(poolId)
 	if !store.Has(poolKey) {
@@ -54,7 +48,7 @@ func (k Keeper) GetPoolAndPoke(ctx sdk.Context, poolId uint64) (types.CFMMPoolI,
 }
 
 // Get pool and check if the pool is active, i.e. allowed to be swapped against.
-func (k Keeper) getPoolForSwap(ctx sdk.Context, poolId uint64) (types.CFMMPoolI, error) {
+func (k Keeper) getPoolForSwap(ctx sdk.Context, poolId uint64) (types.PoolI, error) {
 	pool, err := k.GetPoolAndPoke(ctx, poolId)
 	if err != nil {
 		return &balancer.Pool{}, err
@@ -71,7 +65,7 @@ func (k Keeper) iterator(ctx sdk.Context, prefix []byte) sdk.Iterator {
 	return sdk.KVStorePrefixIterator(store, prefix)
 }
 
-func (k Keeper) GetPoolsAndPoke(ctx sdk.Context) (res []types.CFMMPoolI, err error) {
+func (k Keeper) GetPoolsAndPoke(ctx sdk.Context) (res []types.PoolI, err error) {
 	iter := k.iterator(ctx, types.KeyPrefixPools)
 	defer iter.Close()
 
@@ -92,7 +86,7 @@ func (k Keeper) GetPoolsAndPoke(ctx sdk.Context) (res []types.CFMMPoolI, err err
 	return res, nil
 }
 
-func (k Keeper) setPool(ctx sdk.Context, pool swaproutertypes.PoolI) error {
+func (k Keeper) setPool(ctx sdk.Context, pool types.PoolI) error {
 	bz, err := k.MarshalPool(pool)
 	if err != nil {
 		return err
@@ -124,7 +118,7 @@ func (k Keeper) DeletePool(ctx sdk.Context, poolId uint64) error {
 // All locks on this pool share must be unlocked prior to execution. Use LockupKeeper.ForceUnlock
 // on remaining locks before calling this function.
 // func (k Keeper) CleanupBalancerPool(ctx sdk.Context, poolIds []uint64, excludedModules []string) (err error) {
-// 	pools := make(map[string]types.CFMMPoolI)
+// 	pools := make(map[string]types.PoolI)
 // 	totalShares := make(map[string]sdk.Int)
 // 	for _, poolId := range poolIds {
 // 		pool, err := k.GetPool(ctx, poolId)
@@ -216,7 +210,7 @@ func (k Keeper) GetPoolDenoms(ctx sdk.Context, poolId uint64) ([]string, error) 
 		return nil, err
 	}
 
-	denoms := osmoutils.CoinsDenoms(pool.GetTotalPoolLiquidity(ctx))
+	denoms := mokiutils.CoinsDenoms(pool.GetTotalPoolLiquidity(ctx))
 	return denoms, err
 }
 
@@ -227,7 +221,7 @@ func (k Keeper) setNextPoolId(ctx sdk.Context, poolId uint64) {
 	store.Set(types.KeyNextGlobalPoolId, bz)
 }
 
-// Deprecated: pool id index has been moved to x/swaprouter.
+// GetNextPoolId returns the next pool Id.
 func (k Keeper) GetNextPoolId(ctx sdk.Context) uint64 {
 	var nextPoolId uint64
 	store := ctx.KVStore(k.storeKey)
@@ -248,21 +242,28 @@ func (k Keeper) GetNextPoolId(ctx sdk.Context) uint64 {
 	return nextPoolId
 }
 
-func (k Keeper) GetPoolType(ctx sdk.Context, poolId uint64) (swaproutertypes.PoolType, error) {
+func (k Keeper) GetPoolType(ctx sdk.Context, poolId uint64) (string, error) {
 	pool, err := k.GetPoolAndPoke(ctx, poolId)
 	if err != nil {
-		return -1, err
+		return "", err
 	}
 
 	switch pool := pool.(type) {
 	case *balancer.Pool:
-		return swaproutertypes.Balancer, nil
+		return balancer.PoolTypeName, nil
 	case *stableswap.Pool:
-		return swaproutertypes.Stableswap, nil
+		return stableswap.PoolTypeName, nil
 	default:
 		errMsg := fmt.Sprintf("unrecognized %s pool type: %T", types.ModuleName, pool)
-		return -1, sdkerrors.Wrap(sdkerrors.ErrUnpackAny, errMsg)
+		return "", sdkerrors.Wrap(sdkerrors.ErrUnpackAny, errMsg)
 	}
+}
+
+// getNextPoolIdAndIncrement returns the next pool Id, and increments the corresponding state entry.
+func (k Keeper) getNextPoolIdAndIncrement(ctx sdk.Context) uint64 {
+	nextPoolId := k.GetNextPoolId(ctx)
+	k.setNextPoolId(ctx, nextPoolId+1)
+	return nextPoolId
 }
 
 // setStableSwapScalingFactors sets the stable swap scaling factors.
@@ -282,16 +283,4 @@ func (k Keeper) setStableSwapScalingFactors(ctx sdk.Context, poolId uint64, scal
 	}
 
 	return k.setPool(ctx, stableswapPool)
-}
-
-// convertToCFMMPool converts PoolI to CFMMPoolI by casting the input.
-// Returns the pool of the CFMMPoolI or error if the given pool does not implement
-// CFMMPoolI.
-// nolint: unused
-func convertToCFMMPool(pool swaproutertypes.PoolI) (types.CFMMPoolI, error) {
-	cfmmPool, ok := pool.(types.CFMMPoolI)
-	if !ok {
-		return nil, fmt.Errorf("given pool does not implement CFMMPoolI, implements %T", pool)
-	}
-	return cfmmPool, nil
 }

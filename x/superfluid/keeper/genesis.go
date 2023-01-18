@@ -3,7 +3,7 @@ package keeper
 import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 
-	"github.com/petri-labs/mokita/x/superfluid/types"
+	"github.com/tessornetwork/mokita/x/superfluid/types"
 )
 
 // InitGenesis initializes the capability module's state from a provided genesis

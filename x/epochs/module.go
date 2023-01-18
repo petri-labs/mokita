@@ -28,9 +28,9 @@ import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/cosmos/cosmos-sdk/types/module"
 
-	"github.com/petri-labs/mokita/x/epochs/client/cli"
-	"github.com/petri-labs/mokita/x/epochs/keeper"
-	"github.com/petri-labs/mokita/x/epochs/types"
+	"github.com/tessornetwork/mokita/x/epochs/client/cli"
+	"github.com/tessornetwork/mokita/x/epochs/keeper"
+	"github.com/tessornetwork/mokita/x/epochs/types"
 )
 
 var (

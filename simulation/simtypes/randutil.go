@@ -6,7 +6,7 @@ import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"golang.org/x/exp/constraints"
 
-	sdkrand "github.com/petri-labs/mokita/simulation/simtypes/random"
+	sdkrand "github.com/tessornetwork/mokita/simulation/simtypes/random"
 )
 
 func RandLTBound[T constraints.Integer](sim *SimCtx, upperbound T) T {

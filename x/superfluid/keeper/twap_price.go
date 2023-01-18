@@ -3,8 +3,8 @@ package keeper
 import (
 	"github.com/gogo/protobuf/proto"
 
-	gammtypes "github.com/petri-labs/mokita/x/gamm/types"
-	"github.com/petri-labs/mokita/x/superfluid/types"
+	gammtypes "github.com/tessornetwork/mokita/x/gamm/types"
+	"github.com/tessornetwork/mokita/x/superfluid/types"
 
 	"github.com/cosmos/cosmos-sdk/store/prefix"
 	sdk "github.com/cosmos/cosmos-sdk/types"
@@ -13,7 +13,7 @@ import (
 // This function calculates the moki equivalent worth of an LP share.
 // It is intended to eventually use the TWAP of the worth of an LP share
 // once that is exposed from the gamm module.
-func (k Keeper) calculateMokiBackingPerShare(pool gammtypes.CFMMPoolI, mokiInPool sdk.Int) sdk.Dec {
+func (k Keeper) calculateMokiBackingPerShare(pool gammtypes.PoolI, mokiInPool sdk.Int) sdk.Dec {
 	twap := mokiInPool.ToDec().Quo(pool.GetTotalShares().ToDec())
 	return twap
 }

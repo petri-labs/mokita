@@ -3,7 +3,7 @@ package keeper
 import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 
-	"github.com/petri-labs/mokita/x/incentives/types"
+	"github.com/tessornetwork/mokita/x/incentives/types"
 )
 
 // InitGenesis initializes the incentives module's state from a provided genesis state.

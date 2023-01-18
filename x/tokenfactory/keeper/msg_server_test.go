@@ -3,7 +3,7 @@ package keeper_test
 import (
 	"fmt"
 
-	"github.com/petri-labs/mokita/x/tokenfactory/types"
+	"github.com/tessornetwork/mokita/x/tokenfactory/types"
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	banktypes "github.com/cosmos/cosmos-sdk/x/bank/types"

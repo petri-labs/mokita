@@ -5,8 +5,8 @@ import (
 	"github.com/cosmos/cosmos-sdk/types/module"
 	upgradetypes "github.com/cosmos/cosmos-sdk/x/upgrade/types"
 
-	"github.com/petri-labs/mokita/app/keepers"
-	"github.com/petri-labs/mokita/app/upgrades"
+	"github.com/tessornetwork/mokita/app/keepers"
+	"github.com/tessornetwork/mokita/app/upgrades"
 )
 
 func CreateUpgradeHandler(

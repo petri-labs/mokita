@@ -3,14 +3,14 @@ package cli_test
 import (
 	"testing"
 
-	"github.com/osmosis-labs/osmosis/osmoutils/osmocli"
-	"github.com/petri-labs/mokita/x/tokenfactory/client/cli"
-	"github.com/petri-labs/mokita/x/tokenfactory/types"
+	"github.com/mokita-labs/mokita/mokiutils/mokicli"
+	"github.com/tessornetwork/mokita/x/tokenfactory/client/cli"
+	"github.com/tessornetwork/mokita/x/tokenfactory/types"
 )
 
 func TestGetCmdDenomAuthorityMetadata(t *testing.T) {
 	desc, _ := cli.GetCmdDenomAuthorityMetadata()
-	tcs := map[string]osmocli.QueryCliTestCase[*types.QueryDenomAuthorityMetadataRequest]{
+	tcs := map[string]mokicli.QueryCliTestCase[*types.QueryDenomAuthorityMetadataRequest]{
 		"basic test": {
 			Cmd: "uatom",
 			ExpectedQuery: &types.QueryDenomAuthorityMetadataRequest{
@@ -18,12 +18,12 @@ func TestGetCmdDenomAuthorityMetadata(t *testing.T) {
 			},
 		},
 	}
-	osmocli.RunQueryTestCases(t, desc, tcs)
+	mokicli.RunQueryTestCases(t, desc, tcs)
 }
 
 func TestGetCmdDenomsFromCreator(t *testing.T) {
 	desc, _ := cli.GetCmdDenomsFromCreator()
-	tcs := map[string]osmocli.QueryCliTestCase[*types.QueryDenomsFromCreatorRequest]{
+	tcs := map[string]mokicli.QueryCliTestCase[*types.QueryDenomsFromCreatorRequest]{
 		"basic test": {
 			Cmd: "moki1test",
 			ExpectedQuery: &types.QueryDenomsFromCreatorRequest{
@@ -31,5 +31,5 @@ func TestGetCmdDenomsFromCreator(t *testing.T) {
 			},
 		},
 	}
-	osmocli.RunQueryTestCases(t, desc, tcs)
+	mokicli.RunQueryTestCases(t, desc, tcs)
 }

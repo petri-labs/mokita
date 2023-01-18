@@ -26,11 +26,11 @@ import (
 	simtypes "github.com/cosmos/cosmos-sdk/types/simulation"
 	stakingtypes "github.com/cosmos/cosmos-sdk/x/staking/types"
 
-	"github.com/petri-labs/mokita/x/mint/client/rest"
-	"github.com/petri-labs/mokita/x/superfluid/client/cli"
-	"github.com/petri-labs/mokita/x/superfluid/keeper"
-	"github.com/petri-labs/mokita/x/superfluid/simulation"
-	"github.com/petri-labs/mokita/x/superfluid/types"
+	"github.com/tessornetwork/mokita/x/mint/client/rest"
+	"github.com/tessornetwork/mokita/x/superfluid/client/cli"
+	"github.com/tessornetwork/mokita/x/superfluid/keeper"
+	"github.com/tessornetwork/mokita/x/superfluid/simulation"
+	"github.com/tessornetwork/mokita/x/superfluid/types"
 )
 
 var (

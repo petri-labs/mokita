@@ -1,7 +1,7 @@
 package v5
 
 import (
-	"github.com/petri-labs/mokita/app/upgrades"
+	"github.com/tessornetwork/mokita/app/upgrades"
 
 	store "github.com/cosmos/cosmos-sdk/store/types"
 )

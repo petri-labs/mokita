@@ -27,11 +27,11 @@ import (
 	"github.com/cosmos/cosmos-sdk/types/module"
 	simtypes "github.com/cosmos/cosmos-sdk/types/simulation"
 
-	"github.com/petri-labs/mokita/x/mint/client/cli"
-	"github.com/petri-labs/mokita/x/mint/client/rest"
-	"github.com/petri-labs/mokita/x/mint/keeper"
-	"github.com/petri-labs/mokita/x/mint/simulation"
-	"github.com/petri-labs/mokita/x/mint/types"
+	"github.com/tessornetwork/mokita/x/mint/client/cli"
+	"github.com/tessornetwork/mokita/x/mint/client/rest"
+	"github.com/tessornetwork/mokita/x/mint/keeper"
+	"github.com/tessornetwork/mokita/x/mint/simulation"
+	"github.com/tessornetwork/mokita/x/mint/types"
 )
 
 var (

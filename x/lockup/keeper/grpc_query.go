@@ -8,7 +8,7 @@ import (
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 
-	"github.com/petri-labs/mokita/x/lockup/types"
+	"github.com/tessornetwork/mokita/x/lockup/types"
 )
 
 var _ types.QueryServer = Querier{}

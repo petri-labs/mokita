@@ -62,10 +62,7 @@
 var Upgrade = upgrades.Upgrade{
 	UpgradeName:          UpgradeName,
 	CreateUpgradeHandler: CreateUpgradeHandler,
-	StoreUpgrades:        store.StoreUpgrades{
-		Added:   []string{},
-		Deleted: []string{},
-    },
+	StoreUpgrades:        store.StoreUpgrades{},
 }" >> $CONSTANTS_FILE
  
  # upgrades.go logic

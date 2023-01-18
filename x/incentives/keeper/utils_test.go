@@ -7,7 +7,7 @@ import (
 
 	"github.com/stretchr/testify/require"
 
-	"github.com/petri-labs/mokita/x/incentives/types"
+	"github.com/tessornetwork/mokita/x/incentives/types"
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 )

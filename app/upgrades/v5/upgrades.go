@@ -1,8 +1,8 @@
 package v5
 
 import (
-	ibcconnectiontypes "github.com/cosmos/ibc-go/v4/modules/core/03-connection/types"
-	// bech32ibctypes "github.com/osmosis-labs/bech32-ibc/x/bech32ibc/types"
+	ibcconnectiontypes "github.com/cosmos/ibc-go/v3/modules/core/03-connection/types"
+	// bech32ibctypes "github.com/mokita-labs/bech32-ibc/x/bech32ibc/types"
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/cosmos/cosmos-sdk/types/module"
@@ -10,9 +10,9 @@ import (
 	"github.com/cosmos/cosmos-sdk/x/authz"
 	upgradetypes "github.com/cosmos/cosmos-sdk/x/upgrade/types"
 
-	"github.com/petri-labs/mokita/app/keepers"
-	"github.com/petri-labs/mokita/app/upgrades"
-	txfeestypes "github.com/petri-labs/mokita/x/txfees/types"
+	"github.com/tessornetwork/mokita/app/keepers"
+	"github.com/tessornetwork/mokita/app/upgrades"
+	txfeestypes "github.com/tessornetwork/mokita/x/txfees/types"
 )
 
 func CreateUpgradeHandler(

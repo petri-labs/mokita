@@ -10,8 +10,8 @@ import (
 	"github.com/stretchr/testify/suite"
 	tmcli "github.com/tendermint/tendermint/libs/cli"
 
-	"github.com/petri-labs/mokita/app"
-	"github.com/petri-labs/mokita/x/mint/client/cli"
+	"github.com/tessornetwork/mokita/app"
+	"github.com/tessornetwork/mokita/x/mint/client/cli"
 
 	"github.com/cosmos/cosmos-sdk/client/flags"
 	clitestutil "github.com/cosmos/cosmos-sdk/testutil/cli"

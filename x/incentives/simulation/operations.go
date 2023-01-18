@@ -4,13 +4,13 @@ import (
 	"math/rand"
 	"time"
 
-	mokisimtypes "github.com/petri-labs/mokita/simulation/simtypes"
+	mokisimtypes "github.com/tessornetwork/mokita/simulation/simtypes"
 
 	"github.com/cosmos/cosmos-sdk/baseapp"
 
-	"github.com/petri-labs/mokita/x/incentives/keeper"
-	"github.com/petri-labs/mokita/x/incentives/types"
-	lockuptypes "github.com/petri-labs/mokita/x/lockup/types"
+	"github.com/tessornetwork/mokita/x/incentives/keeper"
+	"github.com/tessornetwork/mokita/x/incentives/types"
+	lockuptypes "github.com/tessornetwork/mokita/x/lockup/types"
 
 	"github.com/cosmos/cosmos-sdk/codec"
 	simappparams "github.com/cosmos/cosmos-sdk/simapp/params"

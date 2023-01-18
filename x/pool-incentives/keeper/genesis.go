@@ -3,7 +3,7 @@ package keeper
 import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 
-	"github.com/petri-labs/mokita/x/pool-incentives/types"
+	"github.com/tessornetwork/mokita/x/pool-incentives/types"
 )
 
 func (k Keeper) InitGenesis(ctx sdk.Context, genState *types.GenesisState) {
@@ -26,7 +26,7 @@ func (k Keeper) InitGenesis(ctx sdk.Context, genState *types.GenesisState) {
 
 func (k Keeper) ExportGenesis(ctx sdk.Context) *types.GenesisState {
 	distrInfo := k.GetDistrInfo(ctx)
-	lastPoolId := k.swaprouterKeeper.GetNextPoolId(ctx)
+	lastPoolId := k.gammKeeper.GetNextPoolId(ctx)
 	lockableDurations := k.GetLockableDurations(ctx)
 	var poolToGauges types.PoolToGauges
 	for i := 1; i < int(lastPoolId); i++ {

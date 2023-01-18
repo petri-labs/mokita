@@ -13,12 +13,12 @@ import (
 	"github.com/cosmos/cosmos-sdk/x/gov/client/cli"
 	govtypes "github.com/cosmos/cosmos-sdk/x/gov/types"
 
-	"github.com/osmosis-labs/osmosis/osmoutils/osmocli"
-	"github.com/petri-labs/mokita/x/txfees/types"
+	"github.com/mokita-labs/mokita/mokiutils/mokicli"
+	"github.com/tessornetwork/mokita/x/txfees/types"
 )
 
 func NewTxCmd() *cobra.Command {
-	txCmd := osmocli.TxIndexCmd(types.ModuleName)
+	txCmd := mokicli.TxIndexCmd(types.ModuleName)
 	txCmd.AddCommand(
 		NewCmdSubmitUpdateFeeTokenProposal(),
 	)

@@ -3,7 +3,7 @@ package types
 import (
 	"fmt"
 
-	appparams "github.com/petri-labs/mokita/app/params"
+	appparams "github.com/tessornetwork/mokita/app/params"
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	paramtypes "github.com/cosmos/cosmos-sdk/x/params/types"

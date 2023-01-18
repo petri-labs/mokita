@@ -1,5 +1,5 @@
 #!/bin/sh
-MOKISIS_HOME="/tmp/mokitad$(date +%s)"
+MOKITA_HOME="/tmp/mokitad$(date +%s)"
 RANDOM_KEY="randommokitavalidatorkey"
 CHAIN_ID=mokita-1
 DENOM=umoki
@@ -48,22 +48,22 @@ else
 
     echo "...........Init Mokita.............."
 
-    git clone https://github.com/petri-labs/mokita
+    git clone https://github.com/mokita-labs/mokita
     cd mokita
     git checkout gentx-launch
     make build
     chmod +x ./build/mokitad
 
-    ./build/mokitad keys add $RANDOM_KEY --keyring-backend test --home $MOKISIS_HOME
+    ./build/mokitad keys add $RANDOM_KEY --keyring-backend test --home $MOKITA_HOME
 
-    ./build/mokitad init --chain-id $CHAIN_ID validator --home $MOKISIS_HOME
+    ./build/mokitad init --chain-id $CHAIN_ID validator --home $MOKITA_HOME
 
     echo "..........Fetching genesis......."
-    rm -rf $MOKISIS_HOME/config/genesis.json
-    curl -s https://raw.githubusercontent.com/osmosis-labs/networks/main/$CHAIN_ID/pregenesis.json >$MOKISIS_HOME/config/genesis.json
+    rm -rf $MOKITA_HOME/config/genesis.json
+    curl -s https://raw.githubusercontent.com/mokita-labs/networks/main/$CHAIN_ID/pregenesis.json >$MOKITA_HOME/config/genesis.json
 
     # this genesis time is different from original genesis time, just for validating gentx.
-    sed -i '/genesis_time/c\   \"genesis_time\" : \"2021-03-29T00:00:00Z\",' $MOKISIS_HOME/config/genesis.json
+    sed -i '/genesis_time/c\   \"genesis_time\" : \"2021-03-29T00:00:00Z\",' $MOKITA_HOME/config/genesis.json
 
     GENACC=$(cat ../$GENTX_FILE | sed -n 's|.*"delegator_address":"\([^"]*\)".*|\1|p')
     denomquery=$(jq -r '.body.messages[0].value.denom' ../$GENTX_FILE)
@@ -86,22 +86,22 @@ else
         exit 1
     fi
 
-    ./build/mokitad add-genesis-account $RANDOM_KEY 100000000000000$DENOM --home $MOKISIS_HOME \
+    ./build/mokitad add-genesis-account $RANDOM_KEY 100000000000000$DENOM --home $MOKITA_HOME \
         --keyring-backend test
 
-    ./build/mokitad gentx $RANDOM_KEY 90000000000000$DENOM --home $MOKISIS_HOME \
+    ./build/mokitad gentx $RANDOM_KEY 90000000000000$DENOM --home $MOKITA_HOME \
         --keyring-backend test --chain-id $CHAIN_ID
 
-    cp ../$GENTX_FILE $MOKISIS_HOME/config/gentx/
+    cp ../$GENTX_FILE $MOKITA_HOME/config/gentx/
 
     echo "..........Collecting gentxs......."
-    ./build/mokitad collect-gentxs --home $MOKISIS_HOME
-    sed -i '/persistent_peers =/c\persistent_peers = ""' $MOKISIS_HOME/config/config.toml
+    ./build/mokitad collect-gentxs --home $MOKITA_HOME
+    sed -i '/persistent_peers =/c\persistent_peers = ""' $MOKITA_HOME/config/config.toml
 
-    ./build/mokitad validate-genesis --home $MOKISIS_HOME
+    ./build/mokitad validate-genesis --home $MOKITA_HOME
 
     echo "..........Starting node......."
-    ./build/mokitad start --home $MOKISIS_HOME &
+    ./build/mokitad start --home $MOKITA_HOME &
 
     sleep 1800s
 
@@ -111,5 +111,5 @@ else
 
     echo "...Cleaning the stuff..."
     killall mokitad >/dev/null 2>&1
-    rm -rf $MOKISIS_HOME >/dev/null 2>&1
+    rm -rf $MOKITA_HOME >/dev/null 2>&1
 fi

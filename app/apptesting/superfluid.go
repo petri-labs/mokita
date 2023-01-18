@@ -4,8 +4,8 @@ import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	stakingtypes "github.com/cosmos/cosmos-sdk/x/staking/types"
 
-	gammtypes "github.com/petri-labs/mokita/x/gamm/types"
-	"github.com/petri-labs/mokita/x/superfluid/types"
+	gammtypes "github.com/tessornetwork/mokita/x/gamm/types"
+	"github.com/tessornetwork/mokita/x/superfluid/types"
 )
 
 func (s *KeeperTestHelper) SuperfluidDelegateToDefaultVal(sender sdk.AccAddress, poolId uint64, lockId uint64) error {

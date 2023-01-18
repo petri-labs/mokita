@@ -11,10 +11,10 @@ import (
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 
-	appparams "github.com/petri-labs/mokita/app/params"
+	appparams "github.com/tessornetwork/mokita/app/params"
 
-	lockuptypes "github.com/petri-labs/mokita/x/lockup/types"
-	"github.com/petri-labs/mokita/x/superfluid/types"
+	lockuptypes "github.com/tessornetwork/mokita/x/lockup/types"
+	"github.com/tessornetwork/mokita/x/superfluid/types"
 )
 
 var _ types.QueryServer = Querier{}

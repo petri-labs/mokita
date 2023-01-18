@@ -18,16 +18,15 @@ import (
 	"github.com/gogo/protobuf/proto"
 	tmjson "github.com/tendermint/tendermint/libs/json"
 
-	epochtypes "github.com/petri-labs/mokita/x/epochs/types"
-	gammtypes "github.com/petri-labs/mokita/x/gamm/types"
-	incentivestypes "github.com/petri-labs/mokita/x/incentives/types"
-	minttypes "github.com/petri-labs/mokita/x/mint/types"
-	poolitypes "github.com/petri-labs/mokita/x/pool-incentives/types"
-	swaproutertypes "github.com/petri-labs/mokita/x/swaprouter/types"
-	twaptypes "github.com/petri-labs/mokita/x/twap/types"
-	txfeestypes "github.com/petri-labs/mokita/x/txfees/types"
+	epochtypes "github.com/tessornetwork/mokita/x/epochs/types"
+	gammtypes "github.com/tessornetwork/mokita/x/gamm/types"
+	incentivestypes "github.com/tessornetwork/mokita/x/incentives/types"
+	minttypes "github.com/tessornetwork/mokita/x/mint/types"
+	poolitypes "github.com/tessornetwork/mokita/x/pool-incentives/types"
+	twaptypes "github.com/tessornetwork/mokita/x/twap/types"
+	txfeestypes "github.com/tessornetwork/mokita/x/txfees/types"
 
-	"github.com/petri-labs/mokita/tests/e2e/util"
+	"github.com/tessornetwork/mokita/tests/e2e/util"
 )
 
 // NodeConfig is a confiuration for the node supplied from the test runner
@@ -159,6 +158,7 @@ func addAccount(path, moniker, amountStr string, accAddr sdk.AccAddress, forkHei
 	return genutil.ExportGenesisFile(genDoc, genFile)
 }
 
+//nolint:typecheck
 func updateModuleGenesis[V proto.Message](appGenState map[string]json.RawMessage, moduleName string, protoVal V, updateGenesis func(V)) error {
 	if err := util.Cdc.UnmarshalJSON(appGenState[moduleName], protoVal); err != nil {
 		return err
@@ -243,11 +243,6 @@ func initGenesis(chain *internalChain, votingPeriod, expeditedVotingPeriod time.
 	}
 
 	err = updateModuleGenesis(appGenState, gammtypes.ModuleName, &gammtypes.GenesisState{}, updateGammGenesis)
-	if err != nil {
-		return err
-	}
-
-	err = updateModuleGenesis(appGenState, swaproutertypes.ModuleName, &swaproutertypes.GenesisState{}, updateSwaprouterGenesis(appGenState))
 	if err != nil {
 		return err
 	}
@@ -359,16 +354,6 @@ func updateTxfeesGenesis(txfeesGenState *txfeestypes.GenesisState) {
 
 func updateGammGenesis(gammGenState *gammtypes.GenesisState) {
 	gammGenState.Params.PoolCreationFee = tenMoki
-}
-
-func updateSwaprouterGenesis(appGenState map[string]json.RawMessage) func(*swaproutertypes.GenesisState) {
-	return func(s *swaproutertypes.GenesisState) {
-		gammGenState := &gammtypes.GenesisState{}
-		if err := util.Cdc.UnmarshalJSON(appGenState[gammtypes.ModuleName], gammGenState); err != nil {
-			panic(err)
-		}
-		s.NextPoolId = gammGenState.NextPoolNumber
-	}
 }
 
 func updateEpochGenesis(epochGenState *epochtypes.GenesisState) {

@@ -4,7 +4,7 @@ import (
 	"bytes"
 	"time"
 
-	"github.com/petri-labs/mokita/x/lockup/types"
+	"github.com/tessornetwork/mokita/x/lockup/types"
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 )

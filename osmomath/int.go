@@ -1,4 +1,4 @@
-package osmomath
+package mokimath
 
 import (
 	"encoding"

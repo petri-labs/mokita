@@ -42,7 +42,7 @@ yarn convert
 yarn build
 
 #Add public servers to spec file for Mokita testnet and mainnet
-yq -i '."servers"+=[{"url":"https://lcd.osmosis.zone","description":"Mokita mainnet node"},{"url":"https://lcd-test.osmosis.zone","description":"Mokita testnet node"}]' static/openapi/openapi.yaml
+yq -i '."servers"+=[{"url":"https://lcd.mokita.zone","description":"Mokita mainnet node"},{"url":"https://lcd-test.mokita.zone","description":"Mokita testnet node"}]' static/openapi/openapi.yaml
 
 cd ../../
 

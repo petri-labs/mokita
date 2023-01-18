@@ -5,7 +5,7 @@ import (
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 
-	"github.com/petri-labs/mokita/x/twap/types"
+	"github.com/tessornetwork/mokita/x/twap/types"
 )
 
 // GetArithmeticTwap returns an arithmetic time weighted average price.
@@ -42,58 +42,11 @@ func (k Keeper) GetArithmeticTwap(
 	startTime time.Time,
 	endTime time.Time,
 ) (sdk.Dec, error) {
-	return k.getTwap(ctx, poolId, baseAssetDenom, quoteAssetDenom, startTime, endTime, k.GetArithmeticStrategy())
-}
-
-func (k Keeper) GetGeometricTwap(
-	ctx sdk.Context,
-	poolId uint64,
-	baseAssetDenom string,
-	quoteAssetDenom string,
-	startTime time.Time,
-	endTime time.Time,
-) (sdk.Dec, error) {
-	return k.getTwap(ctx, poolId, baseAssetDenom, quoteAssetDenom, startTime, endTime, k.GetGeometricStrategy())
-}
-
-// GetArithmeticTwapToNow returns arithmetic twap from start time until the current block time for quote and base
-// assets in a given pool.
-func (k Keeper) GetArithmeticTwapToNow(
-	ctx sdk.Context,
-	poolId uint64,
-	baseAssetDenom string,
-	quoteAssetDenom string,
-	startTime time.Time,
-) (sdk.Dec, error) {
-	return k.getTwapToNow(ctx, poolId, baseAssetDenom, quoteAssetDenom, startTime, k.GetArithmeticStrategy())
-}
-
-func (k Keeper) GetGeometricTwapToNow(
-	ctx sdk.Context,
-	poolId uint64,
-	baseAssetDenom string,
-	quoteAssetDenom string,
-	startTime time.Time,
-) (sdk.Dec, error) {
-	return k.getTwapToNow(ctx, poolId, baseAssetDenom, quoteAssetDenom, startTime, k.GetGeometricStrategy())
-}
-
-// getTwap computes and returns twap from the start time until the end time. The type
-// of twap returned depends on the strategy given and can be either arithmetic or geometric.
-func (k Keeper) getTwap(
-	ctx sdk.Context,
-	poolId uint64,
-	baseAssetDenom string,
-	quoteAssetDenom string,
-	startTime time.Time,
-	endTime time.Time,
-	strategy twapStrategy,
-) (sdk.Dec, error) {
 	if startTime.After(endTime) {
 		return sdk.Dec{}, types.StartTimeAfterEndTimeError{StartTime: startTime, EndTime: endTime}
 	}
 	if endTime.Equal(ctx.BlockTime()) {
-		return k.getTwapToNow(ctx, poolId, baseAssetDenom, quoteAssetDenom, startTime, strategy)
+		return k.GetArithmeticTwapToNow(ctx, poolId, baseAssetDenom, quoteAssetDenom, startTime)
 	} else if endTime.After(ctx.BlockTime()) {
 		return sdk.Dec{}, types.EndTimeInFutureError{EndTime: endTime, BlockTime: ctx.BlockTime()}
 	}
@@ -105,19 +58,17 @@ func (k Keeper) getTwap(
 	if err != nil {
 		return sdk.Dec{}, err
 	}
-
-	return computeTwap(startRecord, endRecord, quoteAssetDenom, strategy)
+	return computeArithmeticTwap(startRecord, endRecord, quoteAssetDenom)
 }
 
-// getTwapToNow computes and returns twap from the start time until the current block time. The type
-// of twap returned depends on the strategy given and can be either arithmetic or geometric.
-func (k Keeper) getTwapToNow(
+// GetArithmeticTwapToNow returns GetArithmeticTwap on the input, with endTime being fixed to ctx.BlockTime()
+// This function does not mutate records.
+func (k Keeper) GetArithmeticTwapToNow(
 	ctx sdk.Context,
 	poolId uint64,
 	baseAssetDenom string,
 	quoteAssetDenom string,
 	startTime time.Time,
-	strategy twapStrategy,
 ) (sdk.Dec, error) {
 	if startTime.After(ctx.BlockTime()) {
 		return sdk.Dec{}, types.StartTimeAfterEndTimeError{StartTime: startTime, EndTime: ctx.BlockTime()}
@@ -131,12 +82,14 @@ func (k Keeper) getTwapToNow(
 	if err != nil {
 		return sdk.Dec{}, err
 	}
-
-	return computeTwap(startRecord, endRecord, quoteAssetDenom, strategy)
+	return computeArithmeticTwap(startRecord, endRecord, quoteAssetDenom)
 }
 
 // GetBeginBlockAccumulatorRecord returns a TwapRecord struct corresponding to the state of pool `poolId`
 // as of the beginning of the block this is called on.
+// This uses the state of the beginning of the block, as if there were swaps since the block has started,
+// these swaps have had no time to be arbitraged back.
+// This accumulator can be stored, to compute wider ranged twaps.
 func (k Keeper) GetBeginBlockAccumulatorRecord(ctx sdk.Context, poolId uint64, asset0Denom string, asset1Denom string) (types.TwapRecord, error) {
 	return k.getMostRecentRecord(ctx, poolId, asset0Denom, asset1Denom)
 }

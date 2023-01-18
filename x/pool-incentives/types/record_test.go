@@ -7,7 +7,7 @@ import (
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 
-	"github.com/petri-labs/mokita/x/pool-incentives/types"
+	"github.com/tessornetwork/mokita/x/pool-incentives/types"
 )
 
 // TestDistrRecord is a test on the weights of distribution gauges.

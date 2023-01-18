@@ -13,10 +13,10 @@ import (
 
 	"github.com/stretchr/testify/require"
 
-	"github.com/petri-labs/mokita/tests/e2e/configurer/chain"
-	"github.com/petri-labs/mokita/tests/e2e/containers"
-	"github.com/petri-labs/mokita/tests/e2e/initialization"
-	"github.com/petri-labs/mokita/tests/e2e/util"
+	"github.com/tessornetwork/mokita/tests/e2e/configurer/chain"
+	"github.com/tessornetwork/mokita/tests/e2e/containers"
+	"github.com/tessornetwork/mokita/tests/e2e/initialization"
+	"github.com/tessornetwork/mokita/tests/e2e/util"
 )
 
 // baseConfigurer is the base implementation for the

@@ -8,8 +8,8 @@ import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	stakingtypes "github.com/cosmos/cosmos-sdk/x/staking/types"
 
-	mokitaApp "github.com/petri-labs/mokita/app"
-	"github.com/petri-labs/mokita/app/params"
+	mokitaApp "github.com/tessornetwork/mokita/app"
+	"github.com/tessornetwork/mokita/app/params"
 )
 
 var (

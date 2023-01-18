@@ -29,13 +29,12 @@ import (
 	tmtypes "github.com/tendermint/tendermint/proto/tendermint/types"
 	dbm "github.com/tendermint/tm-db"
 
-	"github.com/petri-labs/mokita/app"
-	"github.com/petri-labs/mokita/x/gamm/pool-models/balancer"
-	gammtypes "github.com/petri-labs/mokita/x/gamm/types"
-	lockupkeeper "github.com/petri-labs/mokita/x/lockup/keeper"
-	lockuptypes "github.com/petri-labs/mokita/x/lockup/types"
-	minttypes "github.com/petri-labs/mokita/x/mint/types"
-	swaproutertypes "github.com/petri-labs/mokita/x/swaprouter/types"
+	"github.com/tessornetwork/mokita/app"
+	"github.com/tessornetwork/mokita/x/gamm/pool-models/balancer"
+	gammtypes "github.com/tessornetwork/mokita/x/gamm/types"
+	lockupkeeper "github.com/tessornetwork/mokita/x/lockup/keeper"
+	lockuptypes "github.com/tessornetwork/mokita/x/lockup/types"
+	minttypes "github.com/tessornetwork/mokita/x/mint/types"
 )
 
 type KeeperTestHelper struct {
@@ -167,16 +166,6 @@ func (s *KeeperTestHelper) SetupValidator(bondStatus stakingtypes.BondStatus) sd
 	return valAddr
 }
 
-// SetupMultipleValidators setups "numValidator" validators and returns their address in string
-func (s *KeeperTestHelper) SetupMultipleValidators(numValidator int) []string {
-	valAddrs := []string{}
-	for i := 0; i < numValidator; i++ {
-		valAddr := s.SetupValidator(stakingtypes.Bonded)
-		valAddrs = append(valAddrs, valAddr.String())
-	}
-	return valAddrs
-}
-
 // BeginNewBlock starts a new block.
 func (s *KeeperTestHelper) BeginNewBlock(executeNextEpoch bool) {
 	var valAddr []byte
@@ -263,14 +252,14 @@ func (s *KeeperTestHelper) AllocateRewardsToValidator(valAddr sdk.ValAddress, re
 }
 
 // SetupGammPoolsWithBondDenomMultiplier uses given multipliers to set initial pool supply of bond denom.
-func (s *KeeperTestHelper) SetupGammPoolsWithBondDenomMultiplier(multipliers []sdk.Dec) []gammtypes.CFMMPoolI {
+func (s *KeeperTestHelper) SetupGammPoolsWithBondDenomMultiplier(multipliers []sdk.Dec) []gammtypes.PoolI {
 	bondDenom := s.App.StakingKeeper.BondDenom(s.Ctx)
 	// TODO: use sdk crypto instead of tendermint to generate address
 	acc1 := sdk.AccAddress(ed25519.GenPrivKey().PubKey().Address().Bytes())
 
 	params := s.App.GAMMKeeper.GetParams(s.Ctx)
 
-	pools := []gammtypes.CFMMPoolI{}
+	pools := []gammtypes.PoolI{}
 	for index, multiplier := range multipliers {
 		token := fmt.Sprintf("token%d", index)
 		umokiAmount := gammtypes.InitPoolSharesSupply.ToDec().Mul(multiplier).RoundInt()
@@ -302,7 +291,7 @@ func (s *KeeperTestHelper) SetupGammPoolsWithBondDenomMultiplier(multipliers []s
 		}
 		msg := balancer.NewMsgCreateBalancerPool(acc1, poolParams, poolAssets, defaultFutureGovernor)
 
-		poolId, err := s.App.SwapRouterKeeper.CreatePool(s.Ctx, msg)
+		poolId, err := s.App.GAMMKeeper.CreatePool(s.Ctx, msg)
 		s.Require().NoError(err)
 
 		pool, err := s.App.GAMMKeeper.GetPoolAndPoke(s.Ctx, poolId)
@@ -324,22 +313,17 @@ func (s *KeeperTestHelper) SwapAndSetSpotPrice(poolId uint64, fromAsset sdk.Coin
 	coins := sdk.Coins{sdk.NewInt64Coin(fromAsset.Denom, 100000000000000)}
 	s.FundAcc(acc1, coins)
 
-	route := []swaproutertypes.SwapAmountOutRoute{
-		{
-			PoolId:       poolId,
-			TokenInDenom: fromAsset.Denom,
-		},
-	}
-	_, err := s.App.SwapRouterKeeper.RouteExactAmountOut(
+	_, err := s.App.GAMMKeeper.SwapExactAmountOut(
 		s.Ctx,
 		acc1,
-		route,
+		poolId,
+		fromAsset.Denom,
 		fromAsset.Amount,
-		sdk.NewCoin(toAsset.Denom,
-			toAsset.Amount.Quo(sdk.NewInt(4))))
+		sdk.NewCoin(toAsset.Denom, toAsset.Amount.Quo(sdk.NewInt(4))),
+	)
 	s.Require().NoError(err)
 
-	spotPrice, err := s.App.GAMMKeeper.CalculateSpotPrice(s.Ctx, poolId, fromAsset.Denom, toAsset.Denom)
+	spotPrice, err := s.App.GAMMKeeper.CalculateSpotPrice(s.Ctx, poolId, toAsset.Denom, fromAsset.Denom)
 	s.Require().NoError(err)
 
 	return spotPrice
@@ -380,7 +364,7 @@ func (s *KeeperTestHelper) BuildTx(
 // StateNotAltered validates that app state is not altered. Fails if it is.
 func (s *KeeperTestHelper) StateNotAltered() {
 	oldState := s.App.ExportState(s.Ctx)
-	s.App.Commit()
+	s.Commit()
 	newState := s.App.ExportState(s.Ctx)
 	s.Require().Equal(oldState, newState)
 }

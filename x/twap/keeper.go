@@ -8,7 +8,7 @@ import (
 
 	paramtypes "github.com/cosmos/cosmos-sdk/x/params/types"
 
-	"github.com/petri-labs/mokita/x/twap/types"
+	"github.com/tessornetwork/mokita/x/twap/types"
 )
 
 type Keeper struct {
@@ -82,14 +82,4 @@ func (k Keeper) ExportGenesis(ctx sdk.Context) *types.GenesisState {
 		Params: k.GetParams(ctx),
 		Twaps:  twapRecords,
 	}
-}
-
-// GetGeometricStrategy gets geometric TWAP keeper.
-func (k Keeper) GetGeometricStrategy() *geometric {
-	return &geometric{k}
-}
-
-// GetArithmeticStrategy gets arithmetic TWAP keeper.
-func (k Keeper) GetArithmeticStrategy() *arithmetic {
-	return &arithmetic{k}
 }

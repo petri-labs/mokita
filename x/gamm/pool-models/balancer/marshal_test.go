@@ -8,7 +8,7 @@ import (
 	"github.com/gogo/protobuf/proto"
 	"github.com/stretchr/testify/require"
 
-	"github.com/petri-labs/mokita/x/gamm/pool-models/balancer"
+	"github.com/tessornetwork/mokita/x/gamm/pool-models/balancer"
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 )

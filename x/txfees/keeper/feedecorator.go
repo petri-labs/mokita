@@ -6,8 +6,8 @@ import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 
-	"github.com/petri-labs/mokita/x/txfees/keeper/txfee_filters"
-	"github.com/petri-labs/mokita/x/txfees/types"
+	"github.com/tessornetwork/mokita/x/txfees/keeper/txfee_filters"
+	"github.com/tessornetwork/mokita/x/txfees/types"
 
 	authtypes "github.com/cosmos/cosmos-sdk/x/auth/types"
 )

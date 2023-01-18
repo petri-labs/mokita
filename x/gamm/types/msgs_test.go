@@ -7,11 +7,11 @@ import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/stretchr/testify/require"
 
-	"github.com/petri-labs/mokita/x/gamm/pool-models/stableswap"
-	gammtypes "github.com/petri-labs/mokita/x/gamm/types"
+	"github.com/tessornetwork/mokita/x/gamm/pool-models/stableswap"
+	gammtypes "github.com/tessornetwork/mokita/x/gamm/types"
 
-	"github.com/petri-labs/mokita/app/apptesting"
-	appParams "github.com/petri-labs/mokita/app/params"
+	"github.com/tessornetwork/mokita/app/apptesting"
+	appParams "github.com/tessornetwork/mokita/app/params"
 )
 
 func TestMsgSwapExactAmountIn(t *testing.T) {

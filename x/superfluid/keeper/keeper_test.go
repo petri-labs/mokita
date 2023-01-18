@@ -10,14 +10,14 @@ import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	stakingtypes "github.com/cosmos/cosmos-sdk/x/staking/types"
 
-	"github.com/petri-labs/mokita/app/apptesting"
-	epochtypes "github.com/petri-labs/mokita/x/epochs/types"
-	"github.com/petri-labs/mokita/x/gamm/pool-models/balancer"
-	gammtypes "github.com/petri-labs/mokita/x/gamm/types"
-	lockuptypes "github.com/petri-labs/mokita/x/lockup/types"
-	minttypes "github.com/petri-labs/mokita/x/mint/types"
-	"github.com/petri-labs/mokita/x/superfluid/keeper"
-	"github.com/petri-labs/mokita/x/superfluid/types"
+	"github.com/tessornetwork/mokita/app/apptesting"
+	epochtypes "github.com/tessornetwork/mokita/x/epochs/types"
+	"github.com/tessornetwork/mokita/x/gamm/pool-models/balancer"
+	gammtypes "github.com/tessornetwork/mokita/x/gamm/types"
+	lockuptypes "github.com/tessornetwork/mokita/x/lockup/types"
+	minttypes "github.com/tessornetwork/mokita/x/mint/types"
+	"github.com/tessornetwork/mokita/x/superfluid/keeper"
+	"github.com/tessornetwork/mokita/x/superfluid/types"
 )
 
 type KeeperTestSuite struct {
@@ -112,7 +112,7 @@ func (suite *KeeperTestSuite) createGammPool(denoms []string) uint64 {
 		SwapFee: sdk.NewDecWithPrec(1, 2),
 		ExitFee: sdk.ZeroDec(),
 	}, poolAssets, "")
-	poolId, err := suite.App.SwapRouterKeeper.CreatePool(suite.Ctx, msg)
+	poolId, err := suite.App.GAMMKeeper.CreatePool(suite.Ctx, msg)
 	suite.Require().NoError(err)
 
 	return poolId

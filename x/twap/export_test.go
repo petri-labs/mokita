@@ -5,15 +5,11 @@ import (
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 
-	"github.com/osmosis-labs/osmosis/osmomath"
-	"github.com/petri-labs/mokita/x/twap/types"
+	"github.com/tessornetwork/mokita/x/twap/types"
 )
 
 type (
-	TimeTooOldError        = timeTooOldError
-	TwapStrategy           = twapStrategy
-	ArithmeticTwapStrategy = arithmetic
-	GeometricTwapStrategy  = geometric
+	TimeTooOldError = timeTooOldError
 )
 
 func (k Keeper) StoreNewRecord(ctx sdk.Context, record types.TwapRecord) {
@@ -68,16 +64,8 @@ func (k Keeper) GetInterpolatedRecord(ctx sdk.Context, poolId uint64, asset0Deno
 	return k.getInterpolatedRecord(ctx, poolId, t, asset0Denom, asset1Denom)
 }
 
-func ComputeTwap(startRecord types.TwapRecord, endRecord types.TwapRecord, quoteAsset string, strategy twapStrategy) (sdk.Dec, error) {
-	return computeTwap(startRecord, endRecord, quoteAsset, strategy)
-}
-
-func (as arithmetic) ComputeTwap(startRecord types.TwapRecord, endRecord types.TwapRecord, quoteAsset string) sdk.Dec {
-	return as.computeTwap(startRecord, endRecord, quoteAsset)
-}
-
-func (gs geometric) ComputeTwap(startRecord types.TwapRecord, endRecord types.TwapRecord, quoteAsset string) sdk.Dec {
-	return gs.computeTwap(startRecord, endRecord, quoteAsset)
+func ComputeArithmeticTwap(startRecord types.TwapRecord, endRecord types.TwapRecord, quoteAsset string) (sdk.Dec, error) {
+	return computeArithmeticTwap(startRecord, endRecord, quoteAsset)
 }
 
 func RecordWithUpdatedAccumulators(record types.TwapRecord, t time.Time) types.TwapRecord {
@@ -86,20 +74,6 @@ func RecordWithUpdatedAccumulators(record types.TwapRecord, t time.Time) types.T
 
 func NewTwapRecord(k types.AmmInterface, ctx sdk.Context, poolId uint64, denom0, denom1 string) (types.TwapRecord, error) {
 	return newTwapRecord(k, ctx, poolId, denom0, denom1)
-}
-
-func TwapLog(x sdk.Dec) sdk.Dec {
-	return twapLog(x)
-}
-
-// twapPow exponentiates 2 to the given exponent.
-// Used as a test-helper for the power function used in geometric twap.
-func TwapPow(exponent sdk.Dec) sdk.Dec {
-	exp2 := osmomath.Exp2(osmomath.BigDecFromSDKDec(exponent.Abs()))
-	if exponent.IsNegative() {
-		return osmomath.OneDec().Quo(exp2).SDKDec()
-	}
-	return exp2.SDKDec()
 }
 
 func GetSpotPrices(

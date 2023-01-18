@@ -5,7 +5,7 @@ import (
 	"math/rand"
 	"time"
 
-	"github.com/petri-labs/mokita/x/lockup/keeper"
+	"github.com/tessornetwork/mokita/x/lockup/keeper"
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 )

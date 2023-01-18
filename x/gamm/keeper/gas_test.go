@@ -4,9 +4,9 @@ import (
 	"fmt"
 	"strconv"
 
-	"github.com/petri-labs/mokita/x/gamm/pool-models/balancer"
-	balancertypes "github.com/petri-labs/mokita/x/gamm/pool-models/balancer"
-	"github.com/petri-labs/mokita/x/gamm/types"
+	"github.com/tessornetwork/mokita/x/gamm/pool-models/balancer"
+	balancertypes "github.com/tessornetwork/mokita/x/gamm/pool-models/balancer"
+	"github.com/tessornetwork/mokita/x/gamm/types"
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 )
@@ -124,7 +124,7 @@ func (suite *KeeperTestSuite) TestRepeatedJoinPoolDistinctDenom() {
 			},
 		}
 		msg := balancer.NewMsgCreateBalancerPool(defaultAddr, defaultPoolParams, poolAssets, "")
-		_, err := suite.App.SwapRouterKeeper.CreatePool(suite.Ctx, msg)
+		_, err := suite.App.GAMMKeeper.CreatePool(suite.Ctx, msg)
 		suite.Require().NoError(err)
 	}
 

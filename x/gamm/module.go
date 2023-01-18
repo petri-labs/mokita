@@ -25,14 +25,14 @@ import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/cosmos/cosmos-sdk/types/module"
 
-	"github.com/petri-labs/mokita/simulation/simtypes"
-	"github.com/petri-labs/mokita/x/gamm/client/cli"
-	"github.com/petri-labs/mokita/x/gamm/keeper"
-	"github.com/petri-labs/mokita/x/gamm/pool-models/balancer"
-	"github.com/petri-labs/mokita/x/gamm/pool-models/stableswap"
-	simulation "github.com/petri-labs/mokita/x/gamm/simulation"
-	"github.com/petri-labs/mokita/x/gamm/types"
-	"github.com/petri-labs/mokita/x/gamm/v2types"
+	"github.com/tessornetwork/mokita/simulation/simtypes"
+	"github.com/tessornetwork/mokita/x/gamm/client/cli"
+	"github.com/tessornetwork/mokita/x/gamm/keeper"
+	"github.com/tessornetwork/mokita/x/gamm/pool-models/balancer"
+	"github.com/tessornetwork/mokita/x/gamm/pool-models/stableswap"
+	simulation "github.com/tessornetwork/mokita/x/gamm/simulation"
+	"github.com/tessornetwork/mokita/x/gamm/types"
+	"github.com/tessornetwork/mokita/x/gamm/v2types"
 )
 
 var (
@@ -174,6 +174,8 @@ func (AppModule) ConsensusVersion() uint64 { return 1 }
 // GenerateGenesisState creates a randomized GenState of the gamm module.
 func (am AppModule) SimulatorGenesisState(simState *module.SimulationState, s *simtypes.SimCtx) {
 	DefaultGen := types.DefaultGenesis()
+	// change the pool creation fee denom from umoki to stake
+	DefaultGen.Params.PoolCreationFee = sdk.NewCoins(simulation.PoolCreationFee)
 	DefaultGenJson := simState.Cdc.MustMarshalJSON(DefaultGen)
 	simState.GenState[types.ModuleName] = DefaultGenJson
 }

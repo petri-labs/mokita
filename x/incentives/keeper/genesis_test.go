@@ -9,10 +9,10 @@ import (
 	"github.com/stretchr/testify/require"
 	tmproto "github.com/tendermint/tendermint/proto/tendermint/types"
 
-	mokiapp "github.com/petri-labs/mokita/app"
+	mokiapp "github.com/tessornetwork/mokita/app"
 
-	"github.com/petri-labs/mokita/x/incentives/types"
-	lockuptypes "github.com/petri-labs/mokita/x/lockup/types"
+	"github.com/tessornetwork/mokita/x/incentives/types"
+	lockuptypes "github.com/tessornetwork/mokita/x/lockup/types"
 )
 
 // TestIncentivesExportGenesis tests export genesis command for the incentives module.

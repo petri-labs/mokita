@@ -3,7 +3,7 @@ package v11
 import (
 	store "github.com/cosmos/cosmos-sdk/store/types"
 
-	"github.com/petri-labs/mokita/app/upgrades"
+	"github.com/tessornetwork/mokita/app/upgrades"
 )
 
 // UpgradeName defines the on-chain upgrade name for the Mokita v11 upgrade.

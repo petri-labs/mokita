@@ -5,9 +5,9 @@ import (
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 
-	"github.com/osmosis-labs/osmosis/osmoutils"
-	"github.com/petri-labs/mokita/x/twap"
-	"github.com/petri-labs/mokita/x/twap/types"
+	"github.com/mokita-labs/mokita/mokiutils"
+	"github.com/tessornetwork/mokita/x/twap"
+	"github.com/tessornetwork/mokita/x/twap/types"
 )
 
 // TestAfterPoolCreatedHook tests if internal tracking logic has been triggered correctly,
@@ -46,7 +46,7 @@ func (s *TestSuite) TestAfterPoolCreatedHook() {
 				s.RunBasicSwap(poolId)
 			}
 
-			denoms := osmoutils.CoinsDenoms(tc.poolCoins)
+			denoms := mokiutils.CoinsDenoms(tc.poolCoins)
 			denomPairs := types.GetAllUniqueDenomPairs(denoms)
 			expectedRecords := []types.TwapRecord{}
 			for _, denomPair := range denomPairs {

@@ -4,7 +4,7 @@ import (
 	"testing"
 
 	proto "github.com/gogo/protobuf/proto"
-	"github.com/petri-labs/mokita/x/pool-incentives/types"
+	"github.com/tessornetwork/mokita/x/pool-incentives/types"
 	"github.com/stretchr/testify/require"
 
 	sdk "github.com/cosmos/cosmos-sdk/types"

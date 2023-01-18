@@ -8,9 +8,9 @@ import (
 	"github.com/cosmos/cosmos-sdk/crypto/keys/secp256k1"
 	authtypes "github.com/cosmos/cosmos-sdk/x/auth/types"
 
-	"github.com/petri-labs/mokita/x/incentives/keeper"
-	"github.com/petri-labs/mokita/x/incentives/types"
-	lockuptypes "github.com/petri-labs/mokita/x/lockup/types"
+	"github.com/tessornetwork/mokita/x/incentives/keeper"
+	"github.com/tessornetwork/mokita/x/incentives/types"
+	lockuptypes "github.com/tessornetwork/mokita/x/lockup/types"
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 )

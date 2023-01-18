@@ -1,7 +1,7 @@
 package txfee_filters
 
 import (
-	gammtypes "github.com/petri-labs/mokita/x/gamm/types"
+	gammtypes "github.com/tessornetwork/mokita/x/gamm/types"
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 )

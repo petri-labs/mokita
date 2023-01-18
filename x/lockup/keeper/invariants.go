@@ -8,7 +8,7 @@ import (
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 
-	"github.com/petri-labs/mokita/x/lockup/types"
+	"github.com/tessornetwork/mokita/x/lockup/types"
 )
 
 // RegisterInvariants registers all governance invariants.

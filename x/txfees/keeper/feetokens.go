@@ -2,8 +2,7 @@ package keeper
 
 import (
 	"github.com/gogo/protobuf/proto"
-
-	"github.com/petri-labs/mokita/x/txfees/types"
+	"github.com/tessornetwork/mokita/x/txfees/types"
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"

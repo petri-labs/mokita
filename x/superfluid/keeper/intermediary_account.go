@@ -3,8 +3,8 @@ package keeper
 import (
 	"github.com/gogo/protobuf/proto"
 
-	lockuptypes "github.com/petri-labs/mokita/x/lockup/types"
-	"github.com/petri-labs/mokita/x/superfluid/types"
+	lockuptypes "github.com/tessornetwork/mokita/x/lockup/types"
+	"github.com/tessornetwork/mokita/x/superfluid/types"
 
 	"github.com/cosmos/cosmos-sdk/store/prefix"
 	sdk "github.com/cosmos/cosmos-sdk/types"

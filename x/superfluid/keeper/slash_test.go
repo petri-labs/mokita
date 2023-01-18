@@ -1,8 +1,8 @@
 package keeper_test
 
 import (
-	lockuptypes "github.com/petri-labs/mokita/x/lockup/types"
-	"github.com/petri-labs/mokita/x/superfluid/keeper"
+	lockuptypes "github.com/tessornetwork/mokita/x/lockup/types"
+	"github.com/tessornetwork/mokita/x/superfluid/keeper"
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	stakingtypes "github.com/cosmos/cosmos-sdk/x/staking/types"

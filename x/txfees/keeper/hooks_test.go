@@ -7,14 +7,13 @@ import (
 	"github.com/cosmos/cosmos-sdk/testutil/testdata"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 
-	gammtypes "github.com/petri-labs/mokita/x/gamm/types"
-	swaproutertypes "github.com/petri-labs/mokita/x/swaprouter/types"
-	"github.com/petri-labs/mokita/x/txfees/types"
+	gammtypes "github.com/tessornetwork/mokita/x/gamm/types"
+	"github.com/tessornetwork/mokita/x/txfees/types"
 )
 
 var defaultPooledAssetAmount = int64(500)
 
-func (suite *KeeperTestSuite) preparePool(denom string) (poolID uint64, pool swaproutertypes.PoolI) {
+func (suite *KeeperTestSuite) preparePool(denom string) (poolID uint64, pool gammtypes.PoolI) {
 	baseDenom, _ := suite.App.TxFeesKeeper.GetBaseDenom(suite.Ctx)
 	poolID = suite.PrepareBalancerPoolWithCoins(
 		sdk.NewInt64Coin(baseDenom, defaultPooledAssetAmount),
@@ -43,7 +42,7 @@ func (suite *KeeperTestSuite) TestTxFeesAfterEpochEnd() {
 		coins      sdk.Coins
 		baseDenom  string
 		denoms     []string
-		poolTypes  []swaproutertypes.PoolI
+		poolTypes  []gammtypes.PoolI
 		swapFee    sdk.Dec
 		expectPass bool
 	}{
@@ -52,7 +51,7 @@ func (suite *KeeperTestSuite) TestTxFeesAfterEpochEnd() {
 			coins:     sdk.Coins{sdk.NewInt64Coin(uion, 10)},
 			baseDenom: baseDenom,
 			denoms:    []string{uion},
-			poolTypes: []swaproutertypes.PoolI{uionPool},
+			poolTypes: []gammtypes.PoolI{uionPool},
 			swapFee:   sdk.MustNewDecFromStr("0"),
 		},
 		{
@@ -60,7 +59,7 @@ func (suite *KeeperTestSuite) TestTxFeesAfterEpochEnd() {
 			coins:     sdk.Coins{sdk.NewInt64Coin(atom, 20), sdk.NewInt64Coin(ust, 30)},
 			baseDenom: baseDenom,
 			denoms:    []string{atom, ust},
-			poolTypes: []swaproutertypes.PoolI{atomPool, ustPool},
+			poolTypes: []gammtypes.PoolI{atomPool, ustPool},
 			swapFee:   sdk.MustNewDecFromStr("0"),
 		},
 	}
@@ -73,10 +72,7 @@ func (suite *KeeperTestSuite) TestTxFeesAfterEpochEnd() {
 		suite.Run(tc.name, func() {
 			for i, coin := range tc.coins {
 				// Get the output amount in moki denom
-				pool, ok := tc.poolTypes[i].(gammtypes.CFMMPoolI)
-				suite.Require().True(ok)
-
-				expectedOutput, err := pool.CalcOutAmtGivenIn(suite.Ctx,
+				expectedOutput, err := tc.poolTypes[i].CalcOutAmtGivenIn(suite.Ctx,
 					sdk.Coins{sdk.Coin{Denom: tc.denoms[i], Amount: coin.Amount}},
 					tc.baseDenom,
 					tc.swapFee)

@@ -7,8 +7,8 @@ import (
 	authtypes "github.com/cosmos/cosmos-sdk/x/auth/types"
 	distrtypes "github.com/cosmos/cosmos-sdk/x/distribution/types"
 
-	incentivestypes "github.com/petri-labs/mokita/x/incentives/types"
-	lockuptypes "github.com/petri-labs/mokita/x/lockup/types"
+	incentivestypes "github.com/tessornetwork/mokita/x/incentives/types"
+	lockuptypes "github.com/tessornetwork/mokita/x/lockup/types"
 )
 
 // AccountKeeper interface contains functions for getting accounts and the module address
@@ -22,8 +22,8 @@ type BankKeeper interface {
 	GetBalance(ctx sdk.Context, addr sdk.AccAddress, denom string) sdk.Coin
 }
 
-// SwapRouterKeeper gets the pool interface from poolID.
-type SwapRouterKeeper interface {
+// GAMMKeeper gets the pool interface from poolID.
+type GAMMKeeper interface {
 	GetNextPoolId(ctx sdk.Context) uint64
 }
 

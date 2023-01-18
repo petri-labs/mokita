@@ -9,15 +9,17 @@ import (
 
 	bankkeeper "github.com/cosmos/cosmos-sdk/x/bank/keeper"
 
+	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
+
 	sdk "github.com/cosmos/cosmos-sdk/types"
-	transfertypes "github.com/cosmos/ibc-go/v4/modules/apps/transfer/types"
-	clienttypes "github.com/cosmos/ibc-go/v4/modules/core/02-client/types"
-	ibctesting "github.com/cosmos/ibc-go/v4/testing"
+	transfertypes "github.com/cosmos/ibc-go/v3/modules/apps/transfer/types"
+	clienttypes "github.com/cosmos/ibc-go/v3/modules/core/02-client/types"
+	ibctesting "github.com/cosmos/ibc-go/v3/testing"
 	"github.com/stretchr/testify/suite"
 
-	"github.com/petri-labs/mokita/app/apptesting"
-	mokitaibctesting "github.com/petri-labs/mokita/x/ibc-rate-limit/testutil"
-	"github.com/petri-labs/mokita/x/ibc-rate-limit/types"
+	"github.com/tessornetwork/mokita/app/apptesting"
+	mokitaibctesting "github.com/tessornetwork/mokita/x/ibc-rate-limit/testutil"
+	"github.com/tessornetwork/mokita/x/ibc-rate-limit/types"
 )
 
 type MiddlewareTestSuite struct {
@@ -138,7 +140,7 @@ func (suite *MiddlewareTestSuite) TestInvalidReceiver() {
 	_, ack, _ := suite.FullSendBToA(msg)
 	suite.Require().Contains(string(ack), "error",
 		"acknowledgment is not an error")
-	suite.Require().Contains(string(ack), fmt.Sprintf("ABCI code: %d", types.ErrBadMessage.ABCICode()),
+	suite.Require().Contains(string(ack), sdkerrors.ErrInvalidAddress.Error(),
 		"acknowledgment error is not of the right type")
 }
 
@@ -212,7 +214,7 @@ func (suite *MiddlewareTestSuite) AssertReceive(success bool, msg sdk.Msg) (stri
 	} else {
 		suite.Require().Contains(string(ack), "error",
 			"acknowledgment is not an error")
-		suite.Require().Contains(string(ack), fmt.Sprintf("ABCI code: %d", types.ErrRateLimitExceeded.ABCICode()),
+		suite.Require().Contains(string(ack), types.ErrRateLimitExceeded.Error(),
 			"acknowledgment error is not of the right type")
 	}
 	return ack, err

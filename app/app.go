@@ -6,11 +6,7 @@ import (
 	"net/http"
 	"os"
 	"path/filepath"
-	"reflect"
 	"strings"
-
-	vestingtypes "github.com/cosmos/cosmos-sdk/x/auth/vesting/types"
-	"github.com/osmosis-labs/osmosis/osmoutils"
 
 	"github.com/CosmWasm/wasmd/x/wasm"
 	"github.com/gorilla/mux"
@@ -43,21 +39,21 @@ import (
 	"github.com/cosmos/cosmos-sdk/x/crisis"
 	upgradetypes "github.com/cosmos/cosmos-sdk/x/upgrade/types"
 
-	"github.com/petri-labs/mokita/app/keepers"
-	"github.com/petri-labs/mokita/app/upgrades"
-	v10 "github.com/petri-labs/mokita/app/upgrades/v10"
-	v11 "github.com/petri-labs/mokita/app/upgrades/v11"
-	v12 "github.com/petri-labs/mokita/app/upgrades/v12"
-	v13 "github.com/petri-labs/mokita/app/upgrades/v13"
-	v14 "github.com/petri-labs/mokita/app/upgrades/v14"
-	v3 "github.com/petri-labs/mokita/app/upgrades/v3"
-	v4 "github.com/petri-labs/mokita/app/upgrades/v4"
-	v5 "github.com/petri-labs/mokita/app/upgrades/v5"
-	v6 "github.com/petri-labs/mokita/app/upgrades/v6"
-	v7 "github.com/petri-labs/mokita/app/upgrades/v7"
-	v8 "github.com/petri-labs/mokita/app/upgrades/v8"
-	v9 "github.com/petri-labs/mokita/app/upgrades/v9"
-	_ "github.com/petri-labs/mokita/client/docs/statik"
+	"github.com/tessornetwork/mokita/app/keepers"
+	"github.com/tessornetwork/mokita/app/upgrades"
+	v10 "github.com/tessornetwork/mokita/app/upgrades/v10"
+	v11 "github.com/tessornetwork/mokita/app/upgrades/v11"
+	v12 "github.com/tessornetwork/mokita/app/upgrades/v12"
+	v13 "github.com/tessornetwork/mokita/app/upgrades/v13"
+	v3 "github.com/tessornetwork/mokita/app/upgrades/v3"
+	v4 "github.com/tessornetwork/mokita/app/upgrades/v4"
+	v5 "github.com/tessornetwork/mokita/app/upgrades/v5"
+	v6 "github.com/tessornetwork/mokita/app/upgrades/v6"
+	v7 "github.com/tessornetwork/mokita/app/upgrades/v7"
+	v8 "github.com/tessornetwork/mokita/app/upgrades/v8"
+	v9 "github.com/tessornetwork/mokita/app/upgrades/v9"
+	_ "github.com/tessornetwork/mokita/client/docs/statik"
+	ibc_hooks "github.com/tessornetwork/mokita/x/ibc-hooks"
 )
 
 const appName = "MokitaApp"
@@ -75,7 +71,7 @@ var (
 	maccPerms = moduleAccountPermissions
 
 	// module accounts that are allowed to receive tokens.
-	allowedReceivingModAcc = map[string]bool{}
+	allowedReceivingModAcc = map[string]bool{ibc_hooks.WasmHookModuleAccountAddr.String(): true}
 
 	// TODO: Refactor wasm items into a wasm.go file
 	// WasmProposalsEnabled enables all x/wasm proposals when it's value is "true"
@@ -95,7 +91,7 @@ var (
 
 	// _ sdksimapp.App = (*MokitaApp)(nil)
 
-	Upgrades = []upgrades.Upgrade{v4.Upgrade, v5.Upgrade, v7.Upgrade, v9.Upgrade, v11.Upgrade, v12.Upgrade, v13.Upgrade, v14.Upgrade}
+	Upgrades = []upgrades.Upgrade{v4.Upgrade, v5.Upgrade, v7.Upgrade, v9.Upgrade, v11.Upgrade, v12.Upgrade, v13.Upgrade}
 	Forks    = []upgrades.Fork{v3.Fork, v6.Fork, v8.Fork, v10.Fork}
 )
 
@@ -147,16 +143,6 @@ func init() {
 	DefaultNodeHome = filepath.Join(userHomeDir, ".mokitad")
 }
 
-// initReusablePackageInjections injects data available within mokita into the reusable packages.
-// This is done to ensure they can be built without depending on at compilation time and thus imported by other chains
-// This should always be called before any other function to avoid inconsistent data
-func initReusablePackageInjections() {
-	// Inject ClawbackVestingAccount account type into osmoutils
-	osmoutils.OsmoUtilsExtraAccountTypes = map[reflect.Type]struct{}{
-		reflect.TypeOf(&vestingtypes.ClawbackVestingAccount{}): {},
-	}
-}
-
 // NewMokitaApp returns a reference to an initialized Mokita.
 func NewMokitaApp(
 	logger log.Logger,
@@ -171,7 +157,6 @@ func NewMokitaApp(
 	wasmOpts []wasm.Option,
 	baseAppOptions ...func(*baseapp.BaseApp),
 ) *MokitaApp {
-	initReusablePackageInjections() // This should run before anything else to make sure the variables are properly initialized
 	encodingConfig := GetEncodingConfig()
 	appCodec := encodingConfig.Marshaler
 	cdc := encodingConfig.Amino
@@ -193,8 +178,10 @@ func NewMokitaApp(
 
 	wasmDir := filepath.Join(homePath, "wasm")
 	wasmConfig, err := wasm.ReadWasmConfig(appOpts)
+
 	// Uncomment this for debugging contracts. In the future this could be made into a param passed by the tests
-	// wasmConfig.ContractDebugMode = true
+	//wasmConfig.ContractDebugMode = true
+
 	if err != nil {
 		panic(fmt.Sprintf("error while reading wasm config: %s", err))
 	}

@@ -258,7 +258,7 @@ The rate limit middleware wraps the `transferIBCModule` and is added as the entr
 The module is also provided to the underlying `transferIBCModule` as its `ICS4Wrapper`; previously, this would have 
 pointed to a channel, which also implements the `ICS4Wrapper` interface.
 
-This integration can be seen in [mokita/app/keepers/keepers.go](https://github.com/petri-labs/mokita/blob/main/app/keepers/keepers.go)
+This integration can be seen in [mokita/app/keepers/keepers.go](https://github.com/mokita-labs/mokita/blob/main/app/keepers/keepers.go)
 
 ## Testing strategy
 

@@ -11,19 +11,20 @@ import (
 	"github.com/grpc-ecosystem/grpc-gateway/runtime"
 	"github.com/spf13/cobra"
 
-	"github.com/osmosis-labs/osmosis/x/ibc-hooks/types"
-
 	cdctypes "github.com/cosmos/cosmos-sdk/codec/types"
 
-	"github.com/osmosis-labs/osmosis/osmoutils"
+	"github.com/mokita-labs/mokita/mokiutils"
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	abci "github.com/tendermint/tendermint/abci/types"
 )
 
+type Ibcmodule struct{}
+
 var (
-	_ module.AppModule      = AppModule{}
-	_ module.AppModuleBasic = AppModuleBasic{}
+	_          module.AppModule      = AppModule{}
+	_          module.AppModuleBasic = AppModuleBasic{}
+	ModuleName                       = "ibchooks"
 )
 
 // AppModuleBasic defines the basic application module used by the mint module.
@@ -33,7 +34,7 @@ var _ module.AppModuleBasic = AppModuleBasic{}
 
 // Name returns the mint module's name.
 func (AppModuleBasic) Name() string {
-	return types.ModuleName
+	return ModuleName
 }
 
 // RegisterLegacyAminoCodec registers the mint module's types on the given LegacyAmino codec.
@@ -74,11 +75,11 @@ func (AppModuleBasic) GetQueryCmd() *cobra.Command {
 type AppModule struct {
 	AppModuleBasic
 
-	authKeeper osmoutils.AccountKeeper
+	authKeeper mokiutils.AccountKeeper
 }
 
 // NewAppModule creates a new AppModule object.
-func NewAppModule(ak osmoutils.AccountKeeper) AppModule {
+func NewAppModule(ak mokiutils.AccountKeeper) AppModule {
 	return AppModule{
 		AppModuleBasic: AppModuleBasic{},
 		authKeeper:     ak,
@@ -87,7 +88,7 @@ func NewAppModule(ak osmoutils.AccountKeeper) AppModule {
 
 // Name returns the mint module's name.
 func (AppModule) Name() string {
-	return types.ModuleName
+	return ModuleName
 }
 
 // RegisterInvariants registers the mint module invariants.
@@ -104,7 +105,7 @@ func (AppModule) QuerierRoute() string {
 // LegacyQuerierHandler returns the x/mint module's sdk.Querier.
 func (am AppModule) LegacyQuerierHandler(legacyQuerierCdc *codec.LegacyAmino) sdk.Querier {
 	return func(sdk.Context, []string, abci.RequestQuery) ([]byte, error) {
-		return nil, fmt.Errorf("legacy querier not supported for the x/%s module", types.ModuleName)
+		return nil, fmt.Errorf("legacy querier not supported for the x/%s module", ModuleName)
 	}
 }
 
@@ -116,6 +117,7 @@ func (am AppModule) RegisterServices(cfg module.Configurator) {
 // InitGenesis performs genesis initialization for the ibc-hooks module. It returns
 // no validator updates.
 func (am AppModule) InitGenesis(ctx sdk.Context, cdc codec.JSONCodec, data json.RawMessage) []abci.ValidatorUpdate {
+	IbcHooksInitGenesis(ctx, am.authKeeper)
 	return []abci.ValidatorUpdate{}
 }
 

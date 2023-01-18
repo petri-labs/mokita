@@ -6,7 +6,7 @@ import (
 
 	paramtypes "github.com/cosmos/cosmos-sdk/x/params/types"
 
-	epochtypes "github.com/petri-labs/mokita/x/epochs/types"
+	epochtypes "github.com/tessornetwork/mokita/x/epochs/types"
 )
 
 // Parameter store keys.

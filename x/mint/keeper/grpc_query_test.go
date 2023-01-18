@@ -3,7 +3,7 @@ package keeper_test
 import (
 	"context"
 
-	"github.com/petri-labs/mokita/x/mint/types"
+	"github.com/tessornetwork/mokita/x/mint/types"
 )
 
 func (suite *KeeperTestSuite) TestGRPCParams() {

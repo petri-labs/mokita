@@ -1,4 +1,4 @@
-package osmoassert
+package mokiassert
 
 import (
 	"fmt"

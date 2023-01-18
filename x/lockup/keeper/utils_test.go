@@ -5,7 +5,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/petri-labs/mokita/x/lockup/types"
+	"github.com/tessornetwork/mokita/x/lockup/types"
 	"github.com/stretchr/testify/require"
 
 	sdk "github.com/cosmos/cosmos-sdk/types"

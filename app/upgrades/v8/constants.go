@@ -1,8 +1,8 @@
 package v8
 
 import (
-	"github.com/petri-labs/mokita/app/upgrades"
-	v8constants "github.com/petri-labs/mokita/app/upgrades/v8/constants"
+	"github.com/tessornetwork/mokita/app/upgrades"
+	v8constants "github.com/tessornetwork/mokita/app/upgrades/v8/constants"
 )
 
 const (

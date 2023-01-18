@@ -6,14 +6,14 @@ import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 
-	"github.com/osmosis-labs/osmosis/osmomath"
-	"github.com/petri-labs/mokita/x/gamm/types"
+	"github.com/mokita-labs/mokita/mokimath"
+	"github.com/tessornetwork/mokita/x/gamm/types"
 )
 
 const errMsgFormatSharesLargerThanMax = "%s resulted shares is larger than the max amount of %s"
 
 // CalcExitPool returns how many tokens should come out, when exiting k LP shares against a "standard" CFMM
-func CalcExitPool(ctx sdk.Context, pool types.CFMMPoolI, exitingShares sdk.Int, exitFee sdk.Dec) (sdk.Coins, error) {
+func CalcExitPool(ctx sdk.Context, pool types.PoolI, exitingShares sdk.Int, exitFee sdk.Dec) (sdk.Coins, error) {
 	totalShares := pool.GetTotalShares()
 	if exitingShares.GTE(totalShares) {
 		return sdk.Coins{}, sdkerrors.Wrapf(types.ErrLimitMaxAmount, errMsgFormatSharesLargerThanMax, exitingShares, totalShares)
@@ -62,7 +62,7 @@ func CalcExitPool(ctx sdk.Context, pool types.CFMMPoolI, exitingShares sdk.Int, 
 //  1. iterate through all the tokens provided as an argument, calculate how much ratio it accounts for the asset in the pool
 //  2. get the minimal share ratio that would work as the benchmark for all tokens.
 //  3. calculate the number of shares that could be joined (total share * min share ratio), return the remaining coins
-func MaximalExactRatioJoin(p types.CFMMPoolI, ctx sdk.Context, tokensIn sdk.Coins) (numShares sdk.Int, remCoins sdk.Coins, err error) {
+func MaximalExactRatioJoin(p types.PoolI, ctx sdk.Context, tokensIn sdk.Coins) (numShares sdk.Int, remCoins sdk.Coins, err error) {
 	coinShareRatios := make([]sdk.Dec, len(tokensIn))
 	minShareRatio := sdk.MaxSortableDec
 	maxShareRatio := sdk.ZeroDec()
@@ -123,9 +123,9 @@ func MaximalExactRatioJoin(p types.CFMMPoolI, ctx sdk.Context, tokensIn sdk.Coin
 // This implementation requires each of pool.GetTotalPoolLiquidity, pool.ExitPool, and pool.SwapExactAmountIn
 // to not update or read from state, and instead only do updates based upon the pool struct.
 func BinarySearchSingleAssetJoin(
-	pool types.CFMMPoolI,
+	pool types.PoolI,
 	tokenIn sdk.Coin,
-	poolWithAddedLiquidityAndShares func(newLiquidity sdk.Coin, newShares sdk.Int) types.CFMMPoolI,
+	poolWithAddedLiquidityAndShares func(newLiquidity sdk.Coin, newShares sdk.Int) types.PoolI,
 ) (numLPShares sdk.Int, err error) {
 	// use dummy context
 	ctx := sdk.Context{}
@@ -154,9 +154,9 @@ func BinarySearchSingleAssetJoin(
 	}
 
 	// We accept an additive tolerance of 1 LP share error and round down
-	errTolerance := osmomath.ErrTolerance{AdditiveTolerance: sdk.OneDec(), MultiplicativeTolerance: sdk.Dec{}, RoundingDir: osmomath.RoundDown}
+	errTolerance := mokimath.ErrTolerance{AdditiveTolerance: sdk.OneDec(), MultiplicativeTolerance: sdk.Dec{}, RoundingDir: mokimath.RoundDown}
 
-	numLPShares, err = osmomath.BinarySearch(
+	numLPShares, err = mokimath.BinarySearch(
 		estimateCoinOutGivenShares,
 		LPShareLowerBound, LPShareUpperBound, tokenIn.Amount, errTolerance, maxIterations)
 	if err != nil {
@@ -167,7 +167,7 @@ func BinarySearchSingleAssetJoin(
 }
 
 // SwapAllCoinsToSingleAsset iterates through each token in the input set and trades it against the same pool sequentially
-func SwapAllCoinsToSingleAsset(pool types.CFMMPoolI, ctx sdk.Context, inTokens sdk.Coins, swapToDenom string,
+func SwapAllCoinsToSingleAsset(pool types.PoolI, ctx sdk.Context, inTokens sdk.Coins, swapToDenom string,
 	swapFee sdk.Dec) (sdk.Int, error) {
 	tokenOutAmt := inTokens.AmountOfNoDenomValidation(swapToDenom)
 	for _, coin := range inTokens {

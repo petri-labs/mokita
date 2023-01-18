@@ -12,8 +12,8 @@ import (
 	"github.com/tendermint/tendermint/libs/log"
 	dbm "github.com/tendermint/tm-db"
 
-	"github.com/petri-labs/mokita/simulation/executor/internal/stats"
-	"github.com/petri-labs/mokita/simulation/simtypes/simlogger"
+	"github.com/tessornetwork/mokita/simulation/executor/internal/stats"
+	"github.com/tessornetwork/mokita/simulation/simtypes/simlogger"
 )
 
 // List of available flags for the simulator

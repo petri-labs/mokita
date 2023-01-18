@@ -6,11 +6,10 @@ import (
 
 	"github.com/stretchr/testify/require"
 
-	"github.com/petri-labs/mokita/x/gamm/pool-models/balancer"
-	"github.com/petri-labs/mokita/x/gamm/pool-models/internal/cfmm_common"
-	"github.com/petri-labs/mokita/x/gamm/pool-models/stableswap"
-	gammtypes "github.com/petri-labs/mokita/x/gamm/types"
-	swaproutertypes "github.com/petri-labs/mokita/x/swaprouter/types"
+	"github.com/tessornetwork/mokita/x/gamm/pool-models/balancer"
+	"github.com/tessornetwork/mokita/x/gamm/pool-models/internal/cfmm_common"
+	"github.com/tessornetwork/mokita/x/gamm/pool-models/stableswap"
+	gammtypes "github.com/tessornetwork/mokita/x/gamm/types"
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 )
@@ -82,7 +81,7 @@ func TestCalcExitPool(t *testing.T) {
 
 	tests := []struct {
 		name          string
-		pool          gammtypes.CFMMPoolI
+		pool          gammtypes.PoolI
 		exitingShares sdk.Int
 		expError      bool
 	}{
@@ -150,14 +149,14 @@ func TestMaximalExactRatioJoin(t *testing.T) {
 
 	tests := []struct {
 		name        string
-		pool        func() swaproutertypes.PoolI
+		pool        func() gammtypes.PoolI
 		tokensIn    sdk.Coins
 		expNumShare sdk.Int
 		expRemCoin  sdk.Coins
 	}{
 		{
 			name: "two asset pool, same tokenIn ratio",
-			pool: func() swaproutertypes.PoolI {
+			pool: func() gammtypes.PoolI {
 				balancerPool, err := balancer.NewBalancerPool(
 					1,
 					balancer.PoolParams{SwapFee: sdk.ZeroDec(), ExitFee: sdk.ZeroDec()},
@@ -174,7 +173,7 @@ func TestMaximalExactRatioJoin(t *testing.T) {
 		},
 		{
 			name: "two asset pool, different tokenIn ratio with pool",
-			pool: func() swaproutertypes.PoolI {
+			pool: func() gammtypes.PoolI {
 				balancerPool, err := balancer.NewBalancerPool(
 					1,
 					balancer.PoolParams{SwapFee: sdk.ZeroDec(), ExitFee: sdk.ZeroDec()},

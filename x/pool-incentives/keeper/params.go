@@ -3,7 +3,7 @@ package keeper
 import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 
-	"github.com/petri-labs/mokita/x/pool-incentives/types"
+	"github.com/tessornetwork/mokita/x/pool-incentives/types"
 )
 
 func (k Keeper) GetParams(ctx sdk.Context) (params types.Params) {

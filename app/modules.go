@@ -5,21 +5,15 @@ import (
 	"github.com/cosmos/cosmos-sdk/client"
 	capabilitykeeper "github.com/cosmos/cosmos-sdk/x/capability/keeper"
 	stakingkeeper "github.com/cosmos/cosmos-sdk/x/staking/keeper"
+	ibctransfertypes "github.com/cosmos/ibc-go/v3/modules/apps/transfer/types"
+	ibc "github.com/cosmos/ibc-go/v3/modules/core"
+	ibchost "github.com/cosmos/ibc-go/v3/modules/core/24-host"
+	ibckeeper "github.com/cosmos/ibc-go/v3/modules/core/keeper"
 
-	ibctransfertypes "github.com/cosmos/ibc-go/v4/modules/apps/transfer/types"
-	ibc "github.com/cosmos/ibc-go/v4/modules/core"
-	ibchost "github.com/cosmos/ibc-go/v4/modules/core/24-host"
-	ibckeeper "github.com/cosmos/ibc-go/v4/modules/core/keeper"
+	ica "github.com/cosmos/ibc-go/v3/modules/apps/27-interchain-accounts"
+	icatypes "github.com/cosmos/ibc-go/v3/modules/apps/27-interchain-accounts/types"
 
-	ibchookstypes "github.com/osmosis-labs/osmosis/x/ibc-hooks/types"
-
-	ica "github.com/cosmos/ibc-go/v4/modules/apps/27-interchain-accounts"
-	icatypes "github.com/cosmos/ibc-go/v4/modules/apps/27-interchain-accounts/types"
-
-	downtimemodule "github.com/petri-labs/mokita/x/downtime-detector/module"
-	downtimetypes "github.com/petri-labs/mokita/x/downtime-detector/types"
-
-	ibc_hooks "github.com/osmosis-labs/osmosis/x/ibc-hooks"
+	ibc_hooks "github.com/tessornetwork/mokita/x/ibc-hooks"
 
 	"github.com/cosmos/cosmos-sdk/types/module"
 	"github.com/cosmos/cosmos-sdk/x/auth"
@@ -51,38 +45,30 @@ import (
 	"github.com/cosmos/cosmos-sdk/x/upgrade"
 	upgradetypes "github.com/cosmos/cosmos-sdk/x/upgrade/types"
 
-	"github.com/osmosis-labs/osmosis/osmoutils/partialord"
-	appparams "github.com/petri-labs/mokita/app/params"
-	_ "github.com/petri-labs/mokita/client/docs/statik"
-	"github.com/petri-labs/mokita/simulation/simtypes"
-	concentratedliquidity "github.com/petri-labs/mokita/x/concentrated-liquidity"
-	concentratedliquiditytypes "github.com/petri-labs/mokita/x/concentrated-liquidity/types"
-	"github.com/petri-labs/mokita/x/epochs"
-	epochstypes "github.com/petri-labs/mokita/x/epochs/types"
-	"github.com/petri-labs/mokita/x/gamm"
-	gammtypes "github.com/petri-labs/mokita/x/gamm/types"
-	"github.com/petri-labs/mokita/x/incentives"
-	incentivestypes "github.com/petri-labs/mokita/x/incentives/types"
-	"github.com/petri-labs/mokita/x/lockup"
-	lockuptypes "github.com/petri-labs/mokita/x/lockup/types"
-	"github.com/petri-labs/mokita/x/mint"
-	minttypes "github.com/petri-labs/mokita/x/mint/types"
-	poolincentives "github.com/petri-labs/mokita/x/pool-incentives"
-	poolincentivestypes "github.com/petri-labs/mokita/x/pool-incentives/types"
-	"github.com/petri-labs/mokita/x/protorev"
-	protorevtypes "github.com/petri-labs/mokita/x/protorev/types"
-	superfluid "github.com/petri-labs/mokita/x/superfluid"
-	superfluidtypes "github.com/petri-labs/mokita/x/superfluid/types"
-	swaprouter "github.com/petri-labs/mokita/x/swaprouter/module"
-	swaproutertypes "github.com/petri-labs/mokita/x/swaprouter/types"
-	"github.com/petri-labs/mokita/x/tokenfactory"
-	tokenfactorytypes "github.com/petri-labs/mokita/x/tokenfactory/types"
-	"github.com/petri-labs/mokita/x/twap/twapmodule"
-	twaptypes "github.com/petri-labs/mokita/x/twap/types"
-	"github.com/petri-labs/mokita/x/txfees"
-	txfeestypes "github.com/petri-labs/mokita/x/txfees/types"
-	valsetpreftypes "github.com/petri-labs/mokita/x/valset-pref/types"
-	valsetprefmodule "github.com/petri-labs/mokita/x/valset-pref/valpref-module"
+	"github.com/mokita-labs/mokita/mokiutils/partialord"
+	appparams "github.com/tessornetwork/mokita/app/params"
+	_ "github.com/tessornetwork/mokita/client/docs/statik"
+	"github.com/tessornetwork/mokita/simulation/simtypes"
+	"github.com/tessornetwork/mokita/x/epochs"
+	epochstypes "github.com/tessornetwork/mokita/x/epochs/types"
+	"github.com/tessornetwork/mokita/x/gamm"
+	gammtypes "github.com/tessornetwork/mokita/x/gamm/types"
+	"github.com/tessornetwork/mokita/x/incentives"
+	incentivestypes "github.com/tessornetwork/mokita/x/incentives/types"
+	"github.com/tessornetwork/mokita/x/lockup"
+	lockuptypes "github.com/tessornetwork/mokita/x/lockup/types"
+	"github.com/tessornetwork/mokita/x/mint"
+	minttypes "github.com/tessornetwork/mokita/x/mint/types"
+	poolincentives "github.com/tessornetwork/mokita/x/pool-incentives"
+	poolincentivestypes "github.com/tessornetwork/mokita/x/pool-incentives/types"
+	superfluid "github.com/tessornetwork/mokita/x/superfluid"
+	superfluidtypes "github.com/tessornetwork/mokita/x/superfluid/types"
+	"github.com/tessornetwork/mokita/x/tokenfactory"
+	tokenfactorytypes "github.com/tessornetwork/mokita/x/tokenfactory/types"
+	"github.com/tessornetwork/mokita/x/twap/twapmodule"
+	twaptypes "github.com/tessornetwork/mokita/x/twap/types"
+	"github.com/tessornetwork/mokita/x/txfees"
+	txfeestypes "github.com/tessornetwork/mokita/x/txfees/types"
 )
 
 // moduleAccountPermissions defines module account permissions
@@ -90,7 +76,7 @@ import (
 var moduleAccountPermissions = map[string][]string{
 	authtypes.FeeCollectorName:               nil,
 	distrtypes.ModuleName:                    nil,
-	ibchookstypes.ModuleName:                 nil,
+	ibc_hooks.ModuleName:                     nil,
 	icatypes.ModuleName:                      nil,
 	minttypes.ModuleName:                     {authtypes.Minter, authtypes.Burner},
 	minttypes.DeveloperVestingModuleAcctName: nil,
@@ -100,7 +86,6 @@ var moduleAccountPermissions = map[string][]string{
 	ibctransfertypes.ModuleName:              {authtypes.Minter, authtypes.Burner},
 	gammtypes.ModuleName:                     {authtypes.Minter, authtypes.Burner},
 	incentivestypes.ModuleName:               {authtypes.Minter, authtypes.Burner},
-	protorevtypes.ModuleName:                 {authtypes.Minter, authtypes.Burner},
 	lockuptypes.ModuleName:                   {authtypes.Minter, authtypes.Burner},
 	poolincentivestypes.ModuleName:           nil,
 	superfluidtypes.ModuleName:               {authtypes.Minter, authtypes.Burner},
@@ -108,7 +93,6 @@ var moduleAccountPermissions = map[string][]string{
 	txfeestypes.NonNativeFeeCollectorName:    nil,
 	wasm.ModuleName:                          {authtypes.Burner},
 	tokenfactorytypes.ModuleName:             {authtypes.Minter, authtypes.Burner},
-	valsetpreftypes.ModuleName:               {authtypes.Staking},
 }
 
 // appModules return modules to initialize module manager.
@@ -135,7 +119,6 @@ func appModules(
 		mint.NewAppModule(appCodec, *app.MintKeeper, app.AccountKeeper, app.BankKeeper),
 		slashing.NewAppModule(appCodec, *app.SlashingKeeper, app.AccountKeeper, app.BankKeeper, *app.StakingKeeper),
 		distr.NewAppModule(appCodec, *app.DistrKeeper, app.AccountKeeper, app.BankKeeper, *app.StakingKeeper),
-		downtimemodule.NewAppModule(*app.DowntimeKeeper),
 		staking.NewAppModule(appCodec, *app.StakingKeeper, app.AccountKeeper, app.BankKeeper),
 		upgrade.NewAppModule(*app.UpgradeKeeper),
 		wasm.NewAppModule(appCodec, app.WasmKeeper, app.StakingKeeper, app.AccountKeeper, app.BankKeeper),
@@ -146,10 +129,7 @@ func appModules(
 		params.NewAppModule(*app.ParamsKeeper),
 		app.RawIcs20TransferAppModule,
 		gamm.NewAppModule(appCodec, *app.GAMMKeeper, app.AccountKeeper, app.BankKeeper),
-		swaprouter.NewAppModule(*app.SwapRouterKeeper, app.GAMMKeeper),
 		twapmodule.NewAppModule(*app.TwapKeeper),
-		concentratedliquidity.NewAppModule(appCodec, *app.ConcentratedLiquidityKeeper),
-		protorev.NewAppModule(appCodec, *app.ProtoRevKeeper, app.AccountKeeper, app.BankKeeper, app.EpochsKeeper, app.GAMMKeeper),
 		txfees.NewAppModule(*app.TxFeesKeeper),
 		incentives.NewAppModule(*app.IncentivesKeeper, app.AccountKeeper, app.BankKeeper, app.EpochsKeeper),
 		lockup.NewAppModule(*app.LockupKeeper, app.AccountKeeper, app.BankKeeper),
@@ -165,7 +145,6 @@ func appModules(
 			app.EpochsKeeper,
 		),
 		tokenfactory.NewAppModule(*app.TokenFactoryKeeper, app.AccountKeeper, app.BankKeeper),
-		valsetprefmodule.NewAppModule(appCodec, *app.ValidatorSetPreferenceKeeper),
 		ibc_hooks.NewAppModule(app.AccountKeeper),
 	}
 }
@@ -188,7 +167,6 @@ func orderBeginBlockers(allModuleNames []string) []string {
 	// IBChost came after staking, before superfluid.
 	// TODO: Come back and delete this line after testing the base change.
 	ord.Sequence(stakingtypes.ModuleName, ibchost.ModuleName, superfluidtypes.ModuleName)
-	// We leave downtime-detector un-constrained.
 	// every remaining module's begin block is a no-op.
 	return ord.TotalOrdering()
 }
@@ -218,7 +196,6 @@ func OrderInitGenesis(allModuleNames []string) []string {
 		authtypes.ModuleName,
 		banktypes.ModuleName,
 		distrtypes.ModuleName,
-		downtimetypes.ModuleName,
 		stakingtypes.ModuleName,
 		slashingtypes.ModuleName,
 		govtypes.ModuleName,
@@ -227,8 +204,6 @@ func OrderInitGenesis(allModuleNames []string) []string {
 		ibchost.ModuleName,
 		icatypes.ModuleName,
 		gammtypes.ModuleName,
-		swaproutertypes.ModuleName,
-		protorevtypes.ModuleName,
 		twaptypes.ModuleName,
 		txfeestypes.ModuleName,
 		genutiltypes.ModuleName,
@@ -240,16 +215,14 @@ func OrderInitGenesis(allModuleNames []string) []string {
 		poolincentivestypes.ModuleName,
 		superfluidtypes.ModuleName,
 		tokenfactorytypes.ModuleName,
-		valsetpreftypes.ModuleName,
 		incentivestypes.ModuleName,
 		epochstypes.ModuleName,
 		lockuptypes.ModuleName,
 		authz.ModuleName,
-		concentratedliquiditytypes.ModuleName,
 		// wasm after ibc transfer
 		wasm.ModuleName,
 		// ibc_hooks after auth keeper
-		ibchookstypes.ModuleName,
+		ibc_hooks.ModuleName,
 	}
 }
 

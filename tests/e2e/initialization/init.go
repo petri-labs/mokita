@@ -6,7 +6,7 @@ import (
 	"path/filepath"
 	"time"
 
-	"github.com/petri-labs/mokita/tests/e2e/util"
+	"github.com/tessornetwork/mokita/tests/e2e/util"
 )
 
 func InitChain(id, dataDir string, nodeConfigs []*NodeConfig, votingPeriod, expeditedVotingPeriod time.Duration, forkHeight int) (*Chain, error) {

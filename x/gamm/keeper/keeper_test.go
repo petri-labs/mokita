@@ -7,11 +7,11 @@ import (
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 
-	"github.com/petri-labs/mokita/app/apptesting"
-	"github.com/petri-labs/mokita/x/gamm/pool-models/balancer"
-	balancertypes "github.com/petri-labs/mokita/x/gamm/pool-models/balancer"
-	"github.com/petri-labs/mokita/x/gamm/pool-models/stableswap"
-	"github.com/petri-labs/mokita/x/gamm/types"
+	"github.com/tessornetwork/mokita/app/apptesting"
+	"github.com/tessornetwork/mokita/x/gamm/pool-models/balancer"
+	balancertypes "github.com/tessornetwork/mokita/x/gamm/pool-models/balancer"
+	"github.com/tessornetwork/mokita/x/gamm/pool-models/stableswap"
+	"github.com/tessornetwork/mokita/x/gamm/types"
 )
 
 type KeeperTestSuite struct {
@@ -37,7 +37,7 @@ func (suite *KeeperTestSuite) prepareCustomBalancerPool(
 ) uint64 {
 	suite.fundAllAccountsWith(balances)
 
-	poolID, err := suite.App.SwapRouterKeeper.CreatePool(
+	poolID, err := suite.App.GAMMKeeper.CreatePool(
 		suite.Ctx,
 		balancer.NewMsgCreateBalancerPool(suite.TestAccs[0], poolParams, poolAssets, ""),
 	)
@@ -54,7 +54,7 @@ func (suite *KeeperTestSuite) prepareCustomStableswapPool(
 ) uint64 {
 	suite.fundAllAccountsWith(balances)
 
-	poolID, err := suite.App.SwapRouterKeeper.CreatePool(
+	poolID, err := suite.App.GAMMKeeper.CreatePool(
 		suite.Ctx,
 		stableswap.NewMsgCreateStableswapPool(suite.TestAccs[0], poolParams, initialLiquidity, scalingFactors, ""),
 	)

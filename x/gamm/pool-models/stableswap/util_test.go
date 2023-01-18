@@ -6,16 +6,14 @@ import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/stretchr/testify/require"
 
-	"github.com/petri-labs/mokita/x/gamm/types"
+	"github.com/tessornetwork/mokita/x/gamm/types"
 )
 
-func createTestPool(t *testing.T, poolLiquidity sdk.Coins, swapFee, exitFee sdk.Dec, scalingFactors []uint64) types.CFMMPoolI {
-	scalingFactors, _ = applyScalingFactorMultiplier(scalingFactors)
-
+func createTestPool(t *testing.T, poolLiquidity sdk.Coins, swapFee, exitFee sdk.Dec, scalingFactors []uint64) types.PoolI {
 	pool, err := NewStableswapPool(1, PoolParams{
 		SwapFee: swapFee,
 		ExitFee: exitFee,
-	}, poolLiquidity, scalingFactors, "", "")
+	}, poolLiquidity, applyScalingFactorMultiplier(scalingFactors), "", "")
 
 	require.NoError(t, err)
 

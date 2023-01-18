@@ -9,11 +9,11 @@ import (
 	"github.com/stretchr/testify/require"
 	coretypes "github.com/tendermint/tendermint/rpc/core/types"
 
-	appparams "github.com/petri-labs/mokita/app/params"
-	"github.com/petri-labs/mokita/tests/e2e/configurer/config"
+	appparams "github.com/tessornetwork/mokita/app/params"
+	"github.com/tessornetwork/mokita/tests/e2e/configurer/config"
 
-	"github.com/petri-labs/mokita/tests/e2e/containers"
-	"github.com/petri-labs/mokita/tests/e2e/initialization"
+	"github.com/tessornetwork/mokita/tests/e2e/containers"
+	"github.com/tessornetwork/mokita/tests/e2e/initialization"
 )
 
 type Config struct {

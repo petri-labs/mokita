@@ -16,18 +16,18 @@ type ImageConfig struct {
 //nolint:deadcode
 const (
 	// Current Git branch mokita repo/version. It is meant to be built locally.
-	// It is used when skipping upgrade by setting MOKISIS_E2E_SKIP_UPGRADE to true).
+	// It is used when skipping upgrade by setting MOKITA_E2E_SKIP_UPGRADE to true).
 	// This image should be pre-built with `make docker-build-debug` either in CI or locally.
 	CurrentBranchMokiRepository = "mokita"
 	CurrentBranchMokiTag        = "debug"
 	// Pre-upgrade mokita repo/tag to pull.
-	// It should be uploaded to Docker Hub. MOKISIS_E2E_SKIP_UPGRADE should be unset
+	// It should be uploaded to Docker Hub. MOKITA_E2E_SKIP_UPGRADE should be unset
 	// for this functionality to be used.
-	previousVersionMokiRepository = "mokilabs/mokita-dev"
-	previousVersionMokiTag        = "13.1.0"
+	previousVersionMokiRepository = "mokilabs/mokita"
+	previousVersionMokiTag        = "12.2"
 	// Pre-upgrade repo/tag for mokita initialization (this should be one version below upgradeVersion)
 	previousVersionInitRepository = "mokilabs/mokita-e2e-init-chain"
-	previousVersionInitTag        = "v13.1.0"
+	previousVersionInitTag        = "v12.2.0"
 	// Hermes repo/version for relayer
 	relayerRepository = "mokilabs/hermes"
 	relayerTag        = "0.13.0"

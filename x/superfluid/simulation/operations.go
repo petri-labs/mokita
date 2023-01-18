@@ -3,13 +3,13 @@ package simulation
 import (
 	"math/rand"
 
-	mokisimtypes "github.com/petri-labs/mokita/simulation/simtypes"
+	mokisimtypes "github.com/tessornetwork/mokita/simulation/simtypes"
 
 	"github.com/cosmos/cosmos-sdk/baseapp"
 
-	lockuptypes "github.com/petri-labs/mokita/x/lockup/types"
-	"github.com/petri-labs/mokita/x/superfluid/keeper"
-	"github.com/petri-labs/mokita/x/superfluid/types"
+	lockuptypes "github.com/tessornetwork/mokita/x/lockup/types"
+	"github.com/tessornetwork/mokita/x/superfluid/keeper"
+	"github.com/tessornetwork/mokita/x/superfluid/types"
 
 	"github.com/cosmos/cosmos-sdk/codec"
 	simappparams "github.com/cosmos/cosmos-sdk/simapp/params"

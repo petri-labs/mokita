@@ -1,9 +1,8 @@
 package mokitaibctesting
 
 import (
-	"crypto/sha256"
 	"fmt"
-	"os"
+	"io/ioutil"
 
 	"github.com/stretchr/testify/require"
 
@@ -11,25 +10,22 @@ import (
 	wasmtypes "github.com/CosmWasm/wasmd/x/wasm/types"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	govtypes "github.com/cosmos/cosmos-sdk/x/gov/types"
-	transfertypes "github.com/cosmos/ibc-go/v4/modules/apps/transfer/types"
+	transfertypes "github.com/cosmos/ibc-go/v3/modules/apps/transfer/types"
+	"github.com/tessornetwork/mokita/x/ibc-rate-limit/types"
 	"github.com/stretchr/testify/suite"
-
-	"github.com/petri-labs/mokita/x/ibc-rate-limit/types"
 )
 
 func (chain *TestChain) StoreContractCode(suite *suite.Suite, path string) {
 	mokitaApp := chain.GetMokitaApp()
 
 	govKeeper := mokitaApp.GovKeeper
-	wasmCode, err := os.ReadFile(path)
+	wasmCode, err := ioutil.ReadFile(path)
 	suite.Require().NoError(err)
 
 	addr := mokitaApp.AccountKeeper.GetModuleAddress(govtypes.ModuleName)
 	src := wasmtypes.StoreCodeProposalFixture(func(p *wasmtypes.StoreCodeProposal) {
 		p.RunAs = addr.String()
 		p.WASMByteCode = wasmCode
-		checksum := sha256.Sum256(wasmCode)
-		p.CodeHash = checksum[:]
 	})
 
 	// when stored
@@ -62,9 +58,10 @@ func (chain *TestChain) InstantiateRLContract(suite *suite.Suite, quotas string)
 	return addr
 }
 
-func (chain *TestChain) InstantiateContract(suite *suite.Suite, msg string, codeID uint64) sdk.AccAddress {
+func (chain *TestChain) InstantiateContract(suite *suite.Suite, msg string) sdk.AccAddress {
 	mokitaApp := chain.GetMokitaApp()
 	contractKeeper := wasmkeeper.NewDefaultPermissionKeeper(mokitaApp.WasmKeeper)
+	codeID := uint64(1)
 	creator := mokitaApp.AccountKeeper.GetModuleAddress(govtypes.ModuleName)
 	addr, _, err := contractKeeper.Instantiate(chain.GetContext(), codeID, creator, creator, []byte(msg), "contract", nil)
 	suite.Require().NoError(err)

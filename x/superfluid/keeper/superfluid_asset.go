@@ -1,8 +1,8 @@
 package keeper
 
 import (
-	"github.com/osmosis-labs/osmosis/osmoutils"
-	"github.com/petri-labs/mokita/x/superfluid/types"
+	"github.com/mokita-labs/mokita/mokiutils"
+	"github.com/tessornetwork/mokita/x/superfluid/types"
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 )
@@ -14,7 +14,7 @@ import (
 //
 // It should eventually begin unwinding all of the synthetic lockups for that asset
 // and queue them for deletion.
-// See https://github.com/petri-labs/mokita/issues/864
+// See https://github.com/mokita-labs/mokita/issues/864
 func (k Keeper) BeginUnwindSuperfluidAsset(ctx sdk.Context, epochNum int64, asset types.SuperfluidAsset) {
 	// Right now set the TWAP to 0, and delete the asset.
 	k.SetMokiEquivalentMultiplier(ctx, epochNum, asset.Denom, sdk.ZeroDec())
@@ -42,7 +42,7 @@ func (k Keeper) AddNewSuperfluidAsset(ctx sdk.Context, asset types.SuperfluidAss
 	// initialize moki equivalent multipliers
 	epochIdentifier := k.GetEpochIdentifier(ctx)
 	currentEpoch := k.ek.GetEpochInfo(ctx, epochIdentifier).CurrentEpoch
-	return osmoutils.ApplyFuncIfNoError(ctx, func(ctx sdk.Context) error {
+	return mokiutils.ApplyFuncIfNoError(ctx, func(ctx sdk.Context) error {
 		k.SetSuperfluidAsset(ctx, asset)
 		err := k.UpdateMokiEquivalentMultipliers(ctx, asset, currentEpoch)
 		return err

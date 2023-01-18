@@ -13,19 +13,17 @@ import (
 	slashingtypes "github.com/cosmos/cosmos-sdk/x/slashing/types"
 	stakingtypes "github.com/cosmos/cosmos-sdk/x/staking/types"
 
-	downtimequerytypes "github.com/petri-labs/mokita/x/downtime-detector/client/queryproto"
-	epochtypes "github.com/petri-labs/mokita/x/epochs/types"
-	gammtypes "github.com/petri-labs/mokita/x/gamm/types"
-	gammv2types "github.com/petri-labs/mokita/x/gamm/v2types"
-	incentivestypes "github.com/petri-labs/mokita/x/incentives/types"
-	lockuptypes "github.com/petri-labs/mokita/x/lockup/types"
-	minttypes "github.com/petri-labs/mokita/x/mint/types"
-	poolincentivestypes "github.com/petri-labs/mokita/x/pool-incentives/types"
-	superfluidtypes "github.com/petri-labs/mokita/x/superfluid/types"
-	swaprouterqueryproto "github.com/petri-labs/mokita/x/swaprouter/client/queryproto"
-	tokenfactorytypes "github.com/petri-labs/mokita/x/tokenfactory/types"
-	twapquerytypes "github.com/petri-labs/mokita/x/twap/client/queryproto"
-	txfeestypes "github.com/petri-labs/mokita/x/txfees/types"
+	epochtypes "github.com/tessornetwork/mokita/x/epochs/types"
+	gammtypes "github.com/tessornetwork/mokita/x/gamm/types"
+	gammv2types "github.com/tessornetwork/mokita/x/gamm/v2types"
+	incentivestypes "github.com/tessornetwork/mokita/x/incentives/types"
+	lockuptypes "github.com/tessornetwork/mokita/x/lockup/types"
+	minttypes "github.com/tessornetwork/mokita/x/mint/types"
+	poolincentivestypes "github.com/tessornetwork/mokita/x/pool-incentives/types"
+	superfluidtypes "github.com/tessornetwork/mokita/x/superfluid/types"
+	tokenfactorytypes "github.com/tessornetwork/mokita/x/tokenfactory/types"
+	twapquerytypes "github.com/tessornetwork/mokita/x/twap/client/queryproto"
+	txfeestypes "github.com/tessornetwork/mokita/x/txfees/types"
 )
 
 // stargateWhitelist keeps whitelist and its deterministic
@@ -35,7 +33,6 @@ import (
 // thread safe sync.Map.
 var stargateWhitelist sync.Map
 
-//nolint:staticcheck
 func init() {
 	// cosmos-sdk queries
 
@@ -87,7 +84,6 @@ func init() {
 	setWhitelistedQuery("/mokita.gamm.v1beta1.Query/PoolType", &gammtypes.QueryPoolTypeResponse{})
 	setWhitelistedQuery("/mokita.gamm.v2.Query/SpotPrice", &gammv2types.QuerySpotPriceResponse{})
 	setWhitelistedQuery("/mokita.gamm.v1beta1.Query/EstimateSwapExactAmountIn", &gammtypes.QuerySwapExactAmountInResponse{})
-	setWhitelistedQuery("/mokita.gamm.v1beta1.Query/EstimateSwapExactAmountOut", &gammtypes.QuerySwapExactAmountOutResponse{})
 
 	// incentives
 	setWhitelistedQuery("/mokita.incentives.Query/ModuleToDistributeCoins", &incentivestypes.ModuleToDistributeCoinsResponse{})
@@ -113,11 +109,6 @@ func init() {
 	setWhitelistedQuery("/mokita.superfluid.Query/AllAssets", &superfluidtypes.AllAssetsResponse{})
 	setWhitelistedQuery("/mokita.superfluid.Query/AssetMultiplier", &superfluidtypes.AssetMultiplierResponse{})
 
-	// swaprouter
-	setWhitelistedQuery("/mokita.swaprouter.v1beta1.Query/NumPools", &swaprouterqueryproto.NumPoolsResponse{})
-	setWhitelistedQuery("/mokita.swaprouter.v1beta1.Query/EstimateSwapExactAmountIn", &swaprouterqueryproto.EstimateSwapExactAmountInResponse{})
-	setWhitelistedQuery("/mokita.swaprouter.v1beta1.Query/EstimateSwapExactAmountOut", &swaprouterqueryproto.EstimateSwapExactAmountOutRequest{})
-
 	// txfees
 	setWhitelistedQuery("/mokita.txfees.v1beta1.Query/FeeTokens", &txfeestypes.QueryFeeTokensResponse{})
 	setWhitelistedQuery("/mokita.txfees.v1beta1.Query/DenomSpotPrice", &txfeestypes.QueryDenomSpotPriceResponse{})
@@ -132,12 +123,7 @@ func init() {
 	// twap
 	setWhitelistedQuery("/mokita.twap.v1beta1.Query/ArithmeticTwap", &twapquerytypes.ArithmeticTwapResponse{})
 	setWhitelistedQuery("/mokita.twap.v1beta1.Query/ArithmeticTwapToNow", &twapquerytypes.ArithmeticTwapToNowResponse{})
-	setWhitelistedQuery("/mokita.twap.v1beta1.Query/GeometricTwap", &twapquerytypes.GeometricTwapResponse{})
-	setWhitelistedQuery("/mokita.twap.v1beta1.Query/GeometricTwapToNow", &twapquerytypes.GeometricTwapToNowResponse{})
 	setWhitelistedQuery("/mokita.twap.v1beta1.Query/Params", &twapquerytypes.ParamsResponse{})
-
-	// downtime-detector
-	setWhitelistedQuery("/mokita.downtimedetector.v1beta1.Query/RecoveredSinceDowntimeOfLength", &downtimequerytypes.RecoveredSinceDowntimeOfLengthResponse{})
 }
 
 // GetWhitelistedQuery returns the whitelisted query at the provided path.

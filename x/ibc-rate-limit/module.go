@@ -14,11 +14,13 @@ import (
 	"github.com/cosmos/cosmos-sdk/client"
 	"github.com/cosmos/cosmos-sdk/codec"
 
-	ibcratelimitcli "github.com/petri-labs/mokita/x/ibc-rate-limit/client/cli"
-	"github.com/petri-labs/mokita/x/ibc-rate-limit/types"
+	ibcratelimitcli "github.com/tessornetwork/mokita/x/ibc-rate-limit/client/cli"
+	"github.com/tessornetwork/mokita/x/ibc-rate-limit/types"
 )
 
-var _ module.AppModuleBasic = AppModuleBasic{}
+var (
+	_ module.AppModuleBasic = AppModuleBasic{}
+)
 
 type AppModuleBasic struct{}
 

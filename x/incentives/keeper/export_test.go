@@ -3,7 +3,7 @@ package keeper
 import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 
-	"github.com/petri-labs/mokita/x/incentives/types"
+	"github.com/tessornetwork/mokita/x/incentives/types"
 )
 
 // AddGaugeRefByKey appends the provided gauge ID into an array associated with the provided key.

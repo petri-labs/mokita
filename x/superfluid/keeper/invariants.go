@@ -5,7 +5,7 @@ import (
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 
-	"github.com/petri-labs/mokita/x/superfluid/types"
+	"github.com/tessornetwork/mokita/x/superfluid/types"
 )
 
 const totalSuperfluidDelegationInvariantName = "total-superfluid-delegation-invariant-name"

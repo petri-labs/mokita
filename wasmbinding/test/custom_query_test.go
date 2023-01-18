@@ -1,10 +1,10 @@
 package wasmbinding
 
 import (
-	"crypto/sha256"
 	"encoding/json"
 	"fmt"
 	"os"
+	"strconv"
 	"testing"
 
 	"github.com/stretchr/testify/require"
@@ -15,9 +15,10 @@ import (
 	"github.com/cosmos/cosmos-sdk/simapp"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 
-	"github.com/petri-labs/mokita/app"
-	"github.com/petri-labs/mokita/wasmbinding/bindings"
-	"github.com/petri-labs/mokita/x/gamm/pool-models/balancer"
+	"github.com/tessornetwork/mokita/app"
+	"github.com/tessornetwork/mokita/wasmbinding"
+	"github.com/tessornetwork/mokita/wasmbinding/bindings"
+	"github.com/tessornetwork/mokita/x/gamm/pool-models/balancer"
 )
 
 // we must pay this many umoki for every pool we create
@@ -60,6 +61,200 @@ func TestQueryFullDenom(t *testing.T) {
 
 	expected := fmt.Sprintf("factory/%s/ustart", reflect.String())
 	require.EqualValues(t, expected, resp.Denom)
+}
+
+func TestQueryPool(t *testing.T) {
+	actor := RandomAccountAddress()
+	mokita, ctx := SetupCustomApp(t, actor)
+
+	fundAccount(t, ctx, mokita, actor, defaultFunds)
+
+	poolFunds := []sdk.Coin{
+		sdk.NewInt64Coin("umoki", 12000000),
+		sdk.NewInt64Coin("ustar", 240000000),
+	}
+	// 2 star to 1 moki
+	starPool := preparePool(t, ctx, mokita, actor, poolFunds)
+
+	pool2Funds := []sdk.Coin{
+		sdk.NewInt64Coin("uatom", 6000000),
+		sdk.NewInt64Coin("umoki", 12000000),
+	}
+	// 2 star to 1 moki
+	atomPool := preparePool(t, ctx, mokita, actor, pool2Funds)
+
+	reflect := instantiateReflectContract(t, ctx, mokita, actor)
+	require.NotEmpty(t, reflect)
+
+	// query pool state
+	query := bindings.MokitaQuery{
+		PoolState: &bindings.PoolState{PoolId: starPool},
+	}
+	resp := bindings.PoolStateResponse{}
+	queryCustom(t, ctx, mokita, reflect, query, &resp)
+	expected := wasmbinding.ConvertSdkCoinsToWasmCoins(poolFunds)
+	require.EqualValues(t, expected, resp.Assets)
+	assertValidShares(t, resp.Shares, starPool)
+
+	// query second pool state
+	query = bindings.MokitaQuery{
+		PoolState: &bindings.PoolState{PoolId: atomPool},
+	}
+	resp = bindings.PoolStateResponse{}
+	queryCustom(t, ctx, mokita, reflect, query, &resp)
+	expected = wasmbinding.ConvertSdkCoinsToWasmCoins(pool2Funds)
+	require.EqualValues(t, expected, resp.Assets)
+	assertValidShares(t, resp.Shares, atomPool)
+}
+
+func TestQuerySpotPrice(t *testing.T) {
+	actor := RandomAccountAddress()
+	mokita, ctx := SetupCustomApp(t, actor)
+	swapFee := 0. // FIXME: Set / support an actual fee
+	epsilon := 1e-6
+
+	fundAccount(t, ctx, mokita, actor, defaultFunds)
+
+	poolFunds := []sdk.Coin{
+		sdk.NewInt64Coin("umoki", 12000000),
+		sdk.NewInt64Coin("ustar", 240000000),
+	}
+	// 20 star to 1 moki
+	starPool := preparePool(t, ctx, mokita, actor, poolFunds)
+
+	reflect := instantiateReflectContract(t, ctx, mokita, actor)
+	require.NotEmpty(t, reflect)
+
+	// query spot price
+	query := bindings.MokitaQuery{
+		SpotPrice: &bindings.SpotPrice{
+			Swap: bindings.Swap{
+				PoolId:   starPool,
+				DenomIn:  "ustar",
+				DenomOut: "umoki",
+			},
+			WithSwapFee: false,
+		},
+	}
+	resp := bindings.SpotPriceResponse{}
+	queryCustom(t, ctx, mokita, reflect, query, &resp)
+
+	price, err := strconv.ParseFloat(resp.Price, 64)
+	require.NoError(t, err)
+
+	umoki, err := poolFunds[0].Amount.ToDec().Float64()
+	require.NoError(t, err)
+	ustar, err := poolFunds[1].Amount.ToDec().Float64()
+	require.NoError(t, err)
+
+	expected := ustar / umoki
+	require.InEpsilonf(t, expected, price, epsilon, fmt.Sprintf("Outside of tolerance (%f)", epsilon))
+
+	// and the reverse conversion (with swap fee)
+	// query spot price
+	query = bindings.MokitaQuery{
+		SpotPrice: &bindings.SpotPrice{
+			Swap: bindings.Swap{
+				PoolId:   starPool,
+				DenomIn:  "umoki",
+				DenomOut: "ustar",
+			},
+			WithSwapFee: true,
+		},
+	}
+	resp = bindings.SpotPriceResponse{}
+	queryCustom(t, ctx, mokita, reflect, query, &resp)
+
+	price, err = strconv.ParseFloat(resp.Price, 32)
+	require.NoError(t, err)
+
+	expected = 1. / expected
+	require.InEpsilonf(t, expected+swapFee, price, epsilon, fmt.Sprintf("Outside of tolerance (%f)", epsilon))
+}
+
+func TestQueryEstimateSwap(t *testing.T) {
+	actor := RandomAccountAddress()
+	mokita, ctx := SetupCustomApp(t, actor)
+	epsilon := 2e-3
+
+	fundAccount(t, ctx, mokita, actor, defaultFunds)
+
+	poolFunds := []sdk.Coin{
+		sdk.NewInt64Coin("umoki", 12000000),
+		sdk.NewInt64Coin("ustar", 240000000),
+	}
+	// 2 star to 1 moki
+	starPool := preparePool(t, ctx, mokita, actor, poolFunds)
+
+	reflect := instantiateReflectContract(t, ctx, mokita, actor)
+	require.NotEmpty(t, reflect)
+
+	// The contract/sender needs to have funds for estimating the price
+	fundAccount(t, ctx, mokita, reflect, defaultFunds)
+
+	// Estimate swap rate
+	umoki, err := poolFunds[0].Amount.ToDec().Float64()
+	require.NoError(t, err)
+	ustar, err := poolFunds[1].Amount.ToDec().Float64()
+	require.NoError(t, err)
+	swapRate := ustar / umoki
+
+	// Query estimate cost (Exact in. No route)
+	amountIn := sdk.NewInt(10000)
+	query := bindings.MokitaQuery{
+		EstimateSwap: &bindings.EstimateSwap{
+			Sender: reflect.String(),
+			First: bindings.Swap{
+				PoolId:   starPool,
+				DenomIn:  "umoki",
+				DenomOut: "ustar",
+			},
+			Route: []bindings.Step{},
+			Amount: bindings.SwapAmount{
+				In: &amountIn,
+			},
+		},
+	}
+	resp := bindings.EstimatePriceResponse{}
+	queryCustom(t, ctx, mokita, reflect, query, &resp)
+	require.NotNil(t, resp.Amount.Out)
+	require.Nil(t, resp.Amount.In)
+	cost, err := (*resp.Amount.Out).ToDec().Float64()
+	require.NoError(t, err)
+
+	amount, err := amountIn.ToDec().Float64()
+	require.NoError(t, err)
+	expected := amount * swapRate // out
+	require.InEpsilonf(t, expected, cost, epsilon, fmt.Sprintf("Outside of tolerance (%f)", epsilon))
+
+	// And the other way around
+	// Query estimate cost (Exact out. No route)
+	amountOut := sdk.NewInt(10000)
+	query = bindings.MokitaQuery{
+		EstimateSwap: &bindings.EstimateSwap{
+			Sender: reflect.String(),
+			First: bindings.Swap{
+				PoolId:   starPool,
+				DenomIn:  "umoki",
+				DenomOut: "ustar",
+			},
+			Route: []bindings.Step{},
+			Amount: bindings.SwapAmount{
+				Out: &amountOut,
+			},
+		},
+	}
+	resp = bindings.EstimatePriceResponse{}
+	queryCustom(t, ctx, mokita, reflect, query, &resp)
+	require.NotNil(t, resp.Amount.In)
+	require.Nil(t, resp.Amount.Out)
+	cost, err = (*resp.Amount.In).ToDec().Float64()
+	require.NoError(t, err)
+
+	amount, err = amountOut.ToDec().Float64()
+	require.NoError(t, err)
+	expected = amount * 1. / swapRate
+	require.InEpsilonf(t, expected, cost, epsilon, fmt.Sprintf("Outside of tolerance (%f)", epsilon))
 }
 
 type ReflectQuery struct {
@@ -110,8 +305,6 @@ func storeReflectCode(t *testing.T, ctx sdk.Context, mokita *app.MokitaApp, addr
 	src := wasmtypes.StoreCodeProposalFixture(func(p *wasmtypes.StoreCodeProposal) {
 		p.RunAs = addr.String()
 		p.WASMByteCode = wasmCode
-		checksum := sha256.Sum256(wasmCode)
-		p.CodeHash = checksum[:]
 	})
 
 	// when stored
@@ -159,7 +352,7 @@ func preparePool(t *testing.T, ctx sdk.Context, mokita *app.MokitaApp, addr sdk.
 	}
 
 	msg := balancer.NewMsgCreateBalancerPool(addr, poolParams, assets, "")
-	poolId, err := mokita.SwapRouterKeeper.CreatePool(ctx, &msg)
+	poolId, err := mokita.GAMMKeeper.CreatePool(ctx, &msg)
 	require.NoError(t, err)
 	return poolId
 }

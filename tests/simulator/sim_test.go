@@ -12,12 +12,12 @@ import (
 
 	"github.com/cosmos/cosmos-sdk/simapp/helpers"
 
-	mokisim "github.com/petri-labs/mokita/simulation/executor"
-	"github.com/petri-labs/mokita/simulation/simtypes/simlogger"
+	mokisim "github.com/tessornetwork/mokita/simulation/executor"
+	"github.com/tessornetwork/mokita/simulation/simtypes/simlogger"
 )
 
 // Profile with:
-// /usr/local/go/bin/go test -benchmem -run=^$ github.com/petri-labs/mokita/simapp -bench ^BenchmarkFullAppSimulation$ -Commit=true -cpuprofile cpu.out
+// /usr/local/go/bin/go test -benchmem -run=^$ github.com/mokita-labs/mokita/simapp -bench ^BenchmarkFullAppSimulation$ -Commit=true -cpuprofile cpu.out
 func BenchmarkFullAppSimulation(b *testing.B) {
 	// -Enabled=true -NumBlocks=1000 -BlockSize=200 \
 	// -Period=1 -Commit=true -Seed=57 -v -timeout 24h

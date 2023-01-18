@@ -8,9 +8,9 @@ import (
 	"github.com/stretchr/testify/require"
 	tmproto "github.com/tendermint/tendermint/proto/tendermint/types"
 
-	mokiapp "github.com/petri-labs/mokita/app"
-	"github.com/petri-labs/mokita/x/lockup"
-	"github.com/petri-labs/mokita/x/lockup/types"
+	mokiapp "github.com/tessornetwork/mokita/app"
+	"github.com/tessornetwork/mokita/x/lockup"
+	"github.com/tessornetwork/mokita/x/lockup/types"
 
 	"github.com/cosmos/cosmos-sdk/simapp"
 	sdk "github.com/cosmos/cosmos-sdk/types"

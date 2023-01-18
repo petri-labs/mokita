@@ -8,8 +8,7 @@ import (
 
 	authzcodec "github.com/cosmos/cosmos-sdk/x/authz/codec"
 
-	types "github.com/petri-labs/mokita/x/gamm/types"
-	swaproutertypes "github.com/petri-labs/mokita/x/swaprouter/types"
+	types "github.com/tessornetwork/mokita/x/gamm/types"
 )
 
 // RegisterLegacyAminoCodec registers the necessary x/gamm interfaces and concrete types
@@ -23,13 +22,8 @@ func RegisterLegacyAminoCodec(cdc *codec.LegacyAmino) {
 
 func RegisterInterfaces(registry codectypes.InterfaceRegistry) {
 	registry.RegisterInterface(
-		"mokita.swaprouter.v1beta1.PoolI",
-		(*swaproutertypes.PoolI)(nil),
-		&Pool{},
-	)
-	registry.RegisterInterface(
-		"mokita.gamm.v1beta1.PoolI", // N.B.: the old proto-path is preserved for backwards-compatibility.
-		(*types.CFMMPoolI)(nil),
+		"mokita.gamm.v1beta1.PoolI",
+		(*types.PoolI)(nil),
 		&Pool{},
 	)
 	registry.RegisterImplementations(

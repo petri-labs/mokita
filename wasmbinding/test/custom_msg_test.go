@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/petri-labs/mokita/x/tokenfactory/types"
+	"github.com/tessornetwork/mokita/x/tokenfactory/types"
 
 	"github.com/stretchr/testify/require"
 
@@ -13,8 +13,8 @@ import (
 	wasmvmtypes "github.com/CosmWasm/wasmvm/types"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 
-	"github.com/petri-labs/mokita/app"
-	"github.com/petri-labs/mokita/wasmbinding/bindings"
+	"github.com/tessornetwork/mokita/app"
+	"github.com/tessornetwork/mokita/wasmbinding/bindings"
 )
 
 func TestCreateDenomMsg(t *testing.T) {
@@ -238,6 +238,381 @@ type BaseState struct {
 	StarPool  uint64
 	AtomPool  uint64
 	RegenPool uint64
+}
+
+func TestSwapMsg(t *testing.T) {
+	// table tests with this setup
+	cases := []struct {
+		name       string
+		msg        func(BaseState) *bindings.SwapMsg
+		expectErr  bool
+		initFunds  sdk.Coin
+		finalFunds []sdk.Coin
+	}{
+		{
+			name: "exact in: simple swap works",
+			msg: func(state BaseState) *bindings.SwapMsg {
+				return &bindings.SwapMsg{
+					First: bindings.Swap{
+						PoolId:   state.StarPool,
+						DenomIn:  "umoki",
+						DenomOut: "ustar",
+					},
+					// Note: you must use empty array, not nil, for valid Rust JSON
+					Route: []bindings.Step{},
+					Amount: bindings.SwapAmountWithLimit{
+						ExactIn: &bindings.ExactIn{
+							Input:     sdk.NewInt(12000000),
+							MinOutput: sdk.NewInt(5000000),
+						},
+					},
+				}
+			},
+			initFunds: sdk.NewInt64Coin("umoki", 13000000),
+			finalFunds: []sdk.Coin{
+				sdk.NewInt64Coin("umoki", 1000000),
+				sdk.NewInt64Coin("ustar", 120000000),
+			},
+		},
+		{
+			name: "exact in: price too low",
+			msg: func(state BaseState) *bindings.SwapMsg {
+				return &bindings.SwapMsg{
+					First: bindings.Swap{
+						PoolId:   state.StarPool,
+						DenomIn:  "umoki",
+						DenomOut: "ustar",
+					},
+					// Note: you must use empty array, not nil, for valid Rust JSON
+					Route: []bindings.Step{},
+					Amount: bindings.SwapAmountWithLimit{
+						ExactIn: &bindings.ExactIn{
+							Input:     sdk.NewInt(12000000),
+							MinOutput: sdk.NewInt(555000000),
+						},
+					},
+				}
+			},
+			initFunds: sdk.NewInt64Coin("umoki", 13000000),
+			expectErr: true,
+		},
+		{
+			name: "exact in: not enough funds to swap",
+			msg: func(state BaseState) *bindings.SwapMsg {
+				return &bindings.SwapMsg{
+					First: bindings.Swap{
+						PoolId:   state.StarPool,
+						DenomIn:  "umoki",
+						DenomOut: "ustar",
+					},
+					// Note: you must use empty array, not nil, for valid Rust JSON
+					Route: []bindings.Step{},
+					Amount: bindings.SwapAmountWithLimit{
+						ExactIn: &bindings.ExactIn{
+							Input:     sdk.NewInt(12000000),
+							MinOutput: sdk.NewInt(5000000),
+						},
+					},
+				}
+			},
+			initFunds: sdk.NewInt64Coin("umoki", 7000000),
+			expectErr: true,
+		},
+		{
+			name: "exact in: invalidPool",
+			msg: func(state BaseState) *bindings.SwapMsg {
+				return &bindings.SwapMsg{
+					First: bindings.Swap{
+						PoolId:   state.StarPool,
+						DenomIn:  "umoki",
+						DenomOut: "uatom",
+					},
+					// Note: you must use empty array, not nil, for valid Rust JSON
+					Route: []bindings.Step{},
+					Amount: bindings.SwapAmountWithLimit{
+						ExactIn: &bindings.ExactIn{
+							Input:     sdk.NewInt(12000000),
+							MinOutput: sdk.NewInt(100000),
+						},
+					},
+				}
+			},
+			initFunds: sdk.NewInt64Coin("umoki", 13000000),
+			expectErr: true,
+		},
+
+		// FIXME: this panics in GAMM module !?! hits a known TODO
+		// https://github.com/mokita-labs/mokita/blob/a380ab2fcd39fb94c2b10411e07daf664911257a/mokimath/math.go#L47-L51
+		//"exact out: panics if too much swapped": {
+		//	msg: func(state BaseState) *bindings.SwapMsg {
+		//		return &bindings.SwapMsg{
+		//			First: bindings.Swap{
+		//				PoolId:   state.StarPool,
+		//				DenomIn:  "umoki",
+		//				DenomOut: "ustar",
+		//			},
+		//			// Note: you must use empty array, not nil, for valid Rust JSON
+		//			Route: []bindings.Step{},
+		//			Amount: bindings.SwapAmountWithLimit{
+		//				ExactOut: &bindings.ExactOut{
+		//					MaxInput: sdk.NewInt(22000000),
+		//					Output:   sdk.NewInt(120000000),
+		//				},
+		//			},
+		//		}
+		//	},
+		//	initFunds: sdk.NewInt64Coin("umoki", 15000000),
+		//	finalFunds: []sdk.Coin{
+		//		sdk.NewInt64Coin("umoki", 3000000),
+		//		sdk.NewInt64Coin("ustar", 120000000),
+		//	},
+		//},
+		{
+			name: "exact out: simple swap works",
+			msg: func(state BaseState) *bindings.SwapMsg {
+				return &bindings.SwapMsg{
+					First: bindings.Swap{
+						PoolId:   state.AtomPool,
+						DenomIn:  "umoki",
+						DenomOut: "uatom",
+					},
+					// Note: you must use empty array, not nil, for valid Rust JSON
+					Route: []bindings.Step{},
+					Amount: bindings.SwapAmountWithLimit{
+						ExactOut: &bindings.ExactOut{
+							// 12 MOKI * 6 ATOM == 18 MOKI * 4 ATOM (+6 MOKI, -2 ATOM)
+							MaxInput: sdk.NewInt(7000000),
+							Output:   sdk.NewInt(2000000),
+						},
+					},
+				}
+			},
+			initFunds: sdk.NewInt64Coin("umoki", 8000000),
+			finalFunds: []sdk.Coin{
+				sdk.NewInt64Coin("uatom", 2000000),
+				sdk.NewInt64Coin("umoki", 2000000),
+			},
+		},
+		{
+			name: "exact in: 2 step multi-hop",
+			msg: func(state BaseState) *bindings.SwapMsg {
+				return &bindings.SwapMsg{
+					First: bindings.Swap{
+						PoolId:   state.StarPool,
+						DenomIn:  "ustar",
+						DenomOut: "umoki",
+					},
+					Route: []bindings.Step{{
+						PoolId:   state.AtomPool,
+						DenomOut: "uatom",
+					}},
+					Amount: bindings.SwapAmountWithLimit{
+						ExactIn: &bindings.ExactIn{
+							Input:     sdk.NewInt(240000000),
+							MinOutput: sdk.NewInt(1999000),
+						},
+					},
+				}
+			},
+			initFunds: sdk.NewInt64Coin("ustar", 240000000),
+			finalFunds: []sdk.Coin{
+				// 240 STAR -> 6 MOKI
+				// 6 MOKI -> 2 ATOM (with minor rounding)
+				sdk.NewInt64Coin("uatom", 1999999),
+			},
+		},
+		{
+			name: "exact out: 2 step multi-hop",
+			msg: func(state BaseState) *bindings.SwapMsg {
+				return &bindings.SwapMsg{
+					First: bindings.Swap{
+						PoolId:   state.AtomPool,
+						DenomIn:  "umoki",
+						DenomOut: "uatom",
+					},
+					Route: []bindings.Step{{
+						PoolId:   state.RegenPool,
+						DenomOut: "uregen",
+					}},
+					Amount: bindings.SwapAmountWithLimit{
+						ExactOut: &bindings.ExactOut{
+							MaxInput: sdk.NewInt(2000000),
+							Output:   sdk.NewInt(12000000 - 12),
+						},
+					},
+				}
+			},
+			initFunds: sdk.NewInt64Coin("umoki", 2000000),
+			finalFunds: []sdk.Coin{
+				// 2 MOKI -> 1.2 ATOM
+				// 1.2 ATOM -> 12 REGEN (with minor rounding)
+				sdk.NewInt64Coin("umoki", 2),
+				sdk.NewInt64Coin("uregen", 12000000-12),
+			},
+		},
+		// FIXME: this panics in GAMM module !?! hits a known TODO
+		// https://github.com/mokita-labs/mokita/blob/a380ab2fcd39fb94c2b10411e07daf664911257a/mokimath/math.go#L47-L51
+		// {
+		// 	name: "exact out: panics on math power stuff",
+		// 	msg: func(state BaseState) *bindings.SwapMsg {
+		// 		return &bindings.SwapMsg{
+		// 			First: bindings.Swap{
+		// 				PoolId:   state.StarPool,
+		// 				DenomIn:  "ustar",
+		// 				DenomOut: "umoki",
+		// 			},
+		// 			Route: []bindings.Step{{
+		// 				PoolId:   state.AtomPool,
+		// 				DenomOut: "uatom",
+		// 			}},
+		// 			Amount: bindings.SwapAmountWithLimit{
+		// 				ExactOut: &bindings.ExactOut{
+		// 					MaxInput: sdk.NewInt(240005000),
+		// 					Output:   sdk.NewInt(2000000),
+		// 				},
+		// 			},
+		// 		}
+		// 	},
+		// 	initFunds: sdk.NewInt64Coin("ustar", 240005000),
+		// 	finalFunds: []sdk.Coin{
+		// 		// 240 STAR -> 6 MOKI
+		// 		// 6 MOKI -> 2 ATOM (with minor rounding)
+		// 		sdk.NewInt64Coin("uatom", 2000000),
+		// 		sdk.NewInt64Coin("ustar", 5000),
+		// 	},
+		// },
+		{
+			name: "exact in: 3 step multi-hop",
+			msg: func(state BaseState) *bindings.SwapMsg {
+				return &bindings.SwapMsg{
+					First: bindings.Swap{
+						PoolId:   state.StarPool,
+						DenomIn:  "ustar",
+						DenomOut: "umoki",
+					},
+					Route: []bindings.Step{{
+						PoolId:   state.AtomPool,
+						DenomOut: "uatom",
+					}, {
+						PoolId:   state.RegenPool,
+						DenomOut: "uregen",
+					}},
+					Amount: bindings.SwapAmountWithLimit{
+						ExactIn: &bindings.ExactIn{
+							Input:     sdk.NewInt(240000000),
+							MinOutput: sdk.NewInt(23900000),
+						},
+					},
+				}
+			},
+			initFunds: sdk.NewInt64Coin("ustar", 240000000),
+			finalFunds: []sdk.Coin{
+				// 240 STAR -> 6 MOKI
+				// 6 MOKI -> 2 ATOM
+				// 2 ATOM -> 24 REGEN (with minor rounding)
+				sdk.NewInt64Coin("uregen", 23999990),
+			},
+		},
+		{
+			name: "exact out: 3 step multi-hop",
+			msg: func(state BaseState) *bindings.SwapMsg {
+				return &bindings.SwapMsg{
+					First: bindings.Swap{
+						PoolId:   state.StarPool,
+						DenomIn:  "ustar",
+						DenomOut: "umoki",
+					},
+					Route: []bindings.Step{{
+						PoolId:   state.AtomPool,
+						DenomOut: "uatom",
+					}, {
+						PoolId:   state.RegenPool,
+						DenomOut: "uregen",
+					}},
+					Amount: bindings.SwapAmountWithLimit{
+						ExactOut: &bindings.ExactOut{
+							MaxInput: sdk.NewInt(50000000),
+							Output:   sdk.NewInt(12000000),
+						},
+					},
+				}
+			},
+			initFunds: sdk.NewInt64Coin("ustar", 50000000),
+			finalFunds: []sdk.Coin{
+				// ~48 STAR -> 2 MOKI
+				// 2 MOKI -> .857 ATOM
+				// .857 ATOM -> 12 REGEN (with minor rounding)
+				sdk.NewInt64Coin("uregen", 12000000),
+				sdk.NewInt64Coin("ustar", 1999971),
+			},
+		},
+	}
+	for _, tc := range cases {
+		tc := tc
+		t.Run(tc.name, func(t *testing.T) {
+			creator := RandomAccountAddress()
+			mokita, ctx := SetupCustomApp(t, creator)
+			state := prepareSwapState(t, ctx, mokita)
+
+			trader := RandomAccountAddress()
+			fundAccount(t, ctx, mokita, trader, []sdk.Coin{tc.initFunds})
+			reflect := instantiateReflectContract(t, ctx, mokita, trader)
+			require.NotEmpty(t, reflect)
+
+			msg := bindings.MokitaMsg{Swap: tc.msg(state)}
+			err := executeCustom(t, ctx, mokita, reflect, trader, msg, tc.initFunds)
+			if tc.expectErr {
+				require.Error(t, err)
+			} else {
+				require.NoError(t, err)
+				balances := mokita.BankKeeper.GetAllBalances(ctx, reflect)
+				// uncomment these to debug any confusing results (show balances, not (*big.Int)(0x140005e51e0))
+				// fmt.Printf("Expected: %s\n", tc.finalFunds)
+				// fmt.Printf("Got: %s\n", balances)
+				require.EqualValues(t, tc.finalFunds, balances)
+			}
+		})
+	}
+}
+
+// test setup for each run through the table test above
+func prepareSwapState(t *testing.T, ctx sdk.Context, mokita *app.MokitaApp) BaseState {
+	actor := RandomAccountAddress()
+
+	swapperFunds := sdk.NewCoins(
+		sdk.NewInt64Coin("uatom", 333000000),
+		sdk.NewInt64Coin("umoki", 555000000+3*poolFee),
+		sdk.NewInt64Coin("uregen", 777000000),
+		sdk.NewInt64Coin("ustar", 999000000),
+	)
+	fundAccount(t, ctx, mokita, actor, swapperFunds)
+
+	// 20 star to 1 moki
+	funds1 := []sdk.Coin{
+		sdk.NewInt64Coin("umoki", 12000000),
+		sdk.NewInt64Coin("ustar", 240000000),
+	}
+	starPool := preparePool(t, ctx, mokita, actor, funds1)
+
+	// 2 moki to 1 atom
+	funds2 := []sdk.Coin{
+		sdk.NewInt64Coin("uatom", 6000000),
+		sdk.NewInt64Coin("umoki", 12000000),
+	}
+	atomPool := preparePool(t, ctx, mokita, actor, funds2)
+
+	// 16 regen to 1 atom
+	funds3 := []sdk.Coin{
+		sdk.NewInt64Coin("uatom", 6000000),
+		sdk.NewInt64Coin("uregen", 96000000),
+	}
+	regenPool := preparePool(t, ctx, mokita, actor, funds3)
+
+	return BaseState{
+		StarPool:  starPool,
+		AtomPool:  atomPool,
+		RegenPool: regenPool,
+	}
 }
 
 type ReflectExec struct {

@@ -8,12 +8,12 @@ import (
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 
-	"github.com/petri-labs/mokita/app/apptesting"
-	"github.com/petri-labs/mokita/x/lockup/types"
+	"github.com/tessornetwork/mokita/app/apptesting"
+	"github.com/tessornetwork/mokita/x/lockup/types"
 
 	"github.com/tendermint/tendermint/crypto/ed25519"
 
-	appParams "github.com/petri-labs/mokita/app/params"
+	appParams "github.com/tessornetwork/mokita/app/params"
 )
 
 func TestMsgLockTokens(t *testing.T) {

@@ -285,8 +285,8 @@ pub mod tests {
     //
 
     const WRAPPED_MOKI_ON_HUB_TRACE: &str = "transfer/channel-141/umoki";
-    const WRAPPED_ATOM_ON_MOKISIS_TRACE: &str = "transfer/channel-0/uatom";
-    const WRAPPED_ATOM_ON_MOKISIS_HASH: &str =
+    const WRAPPED_ATOM_ON_MOKITA_TRACE: &str = "transfer/channel-0/uatom";
+    const WRAPPED_ATOM_ON_MOKITA_HASH: &str =
         "ibc/27394FB092D2ECCD56123C74F36E4C1F926001CEADA9CA97EA622B25F41E5EB2";
     const WRAPPED_MOKI_ON_HUB_HASH: &str =
         "ibc/14F9BC3E44B8A9C1BE1FB08980FAB87034C9905EF17CF2F5008FC085218811CC";
@@ -304,14 +304,14 @@ pub mod tests {
         );
         assert_eq!(
             packet.local_denom(&FlowType::In),
-            WRAPPED_ATOM_ON_MOKISIS_HASH.clone()
+            WRAPPED_ATOM_ON_MOKITA_HASH.clone()
         );
 
         // uatom on mokita sent back to the hub
         let packet = Packet::mock(
             format!("channel-0"),                      // from: mokita
             format!("channel-141"),                    // to: hub
-            WRAPPED_ATOM_ON_MOKISIS_TRACE.to_string(), // unwrapped before reaching the contract
+            WRAPPED_ATOM_ON_MOKITA_TRACE.to_string(), // unwrapped before reaching the contract
             0_u128.into(),
         );
         assert_eq!(packet.local_denom(&FlowType::In), "uatom");
@@ -379,19 +379,19 @@ pub mod tests {
         let packet = Packet::mock(
             format!("channel-0"),                      // from: mokita
             format!("channel-141"),                    // to: hub
-            WRAPPED_ATOM_ON_MOKISIS_TRACE.to_string(), // unwrapped before reaching the contract
+            WRAPPED_ATOM_ON_MOKITA_TRACE.to_string(), // unwrapped before reaching the contract
             0_u128.into(),
         );
         assert_eq!(
             packet.local_denom(&FlowType::Out),
-            WRAPPED_ATOM_ON_MOKISIS_HASH
+            WRAPPED_ATOM_ON_MOKITA_HASH
         );
 
         // receive
         let packet = Packet::mock(
             format!("channel-0"),                      // from: mokita
             format!("channel-141"),                    // to: hub
-            WRAPPED_ATOM_ON_MOKISIS_TRACE.to_string(), // unwrapped before reaching the contract
+            WRAPPED_ATOM_ON_MOKITA_TRACE.to_string(), // unwrapped before reaching the contract
             0_u128.into(),
         );
         assert_eq!(packet.local_denom(&FlowType::In), "uatom");
@@ -409,19 +409,19 @@ pub mod tests {
         let packet = Packet::mock(
             format!("channel-42"),                     // from: mokita
             format!("channel-0"),                      // to: juno
-            WRAPPED_ATOM_ON_MOKISIS_TRACE.to_string(), // unwrapped before reaching the contract
+            WRAPPED_ATOM_ON_MOKITA_TRACE.to_string(), // unwrapped before reaching the contract
             0_u128.into(),
         );
         assert_eq!(
             packet.local_denom(&FlowType::Out),
-            WRAPPED_ATOM_ON_MOKISIS_HASH
+            WRAPPED_ATOM_ON_MOKITA_HASH
         );
 
         // receive
         let packet = Packet::mock(
             format!("channel-42"), // from: mokita
             format!("channel-0"),  // to: juno
-            WRAPPED_ATOM_ON_MOKISIS_TRACE.to_string(),
+            WRAPPED_ATOM_ON_MOKITA_TRACE.to_string(),
             0_u128.into(),
         );
         assert_eq!(
@@ -434,7 +434,7 @@ pub mod tests {
         let packet = Packet::mock(
             format!("channel-0"),  // from: juno
             format!("channel-42"), // to: mokita
-            format!("{}{}", "transfer/channel-0/", WRAPPED_ATOM_ON_MOKISIS_TRACE), // unwrapped before reaching the contract
+            format!("{}{}", "transfer/channel-0/", WRAPPED_ATOM_ON_MOKITA_TRACE), // unwrapped before reaching the contract
             0_u128.into(),
         );
         assert_eq!(
@@ -446,12 +446,12 @@ pub mod tests {
         let packet = Packet::mock(
             format!("channel-0"),  // from: juno
             format!("channel-42"), // to: mokita
-            format!("{}{}", "transfer/channel-0/", WRAPPED_ATOM_ON_MOKISIS_TRACE), // unwrapped before reaching the contract
+            format!("{}{}", "transfer/channel-0/", WRAPPED_ATOM_ON_MOKITA_TRACE), // unwrapped before reaching the contract
             0_u128.into(),
         );
         assert_eq!(
             packet.local_denom(&FlowType::In),
-            WRAPPED_ATOM_ON_MOKISIS_HASH
+            WRAPPED_ATOM_ON_MOKITA_HASH
         );
     }
 

@@ -13,11 +13,11 @@ import (
 	"github.com/stretchr/testify/suite"
 	tmproto "github.com/tendermint/tendermint/proto/tendermint/types"
 
-	"github.com/osmosis-labs/osmosis/osmoutils/osmoassert"
-	"github.com/petri-labs/mokita/app/apptesting"
-	"github.com/petri-labs/mokita/x/mint/keeper"
-	"github.com/petri-labs/mokita/x/mint/types"
-	poolincentivestypes "github.com/petri-labs/mokita/x/pool-incentives/types"
+	"github.com/mokita-labs/mokita/mokiutils/mokiassert"
+	"github.com/tessornetwork/mokita/app/apptesting"
+	"github.com/tessornetwork/mokita/x/mint/keeper"
+	"github.com/tessornetwork/mokita/x/mint/types"
+	poolincentivestypes "github.com/tessornetwork/mokita/x/pool-incentives/types"
 )
 
 type KeeperTestSuite struct {
@@ -119,7 +119,7 @@ func (suite *KeeperTestSuite) TestGetProportions() {
 			mintedCoin: sdk.NewCoin("umoki", sdk.NewInt(54617981)),
 			ratio:      complexRatioDec, // .131/.273
 			// TODO: Should not be truncated. Remove truncation after rounding errors are addressed and resolved.
-			// Ref: https://github.com/petri-labs/mokita/issues/1917
+			// Ref: https://github.com/mokita-labs/mokita/issues/1917
 			expectedCoin: sdk.NewCoin("umoki", sdk.NewInt(54617981).ToDec().Mul(complexRatioDec).TruncateInt()),
 		},
 		{
@@ -381,7 +381,7 @@ func (suite *KeeperTestSuite) TestDistributeToModule() {
 	for name, tc := range tests {
 		suite.Run(name, func() {
 			suite.Setup()
-			osmoassert.ConditionalPanic(suite.T(), tc.expectPanic, func() {
+			mokiassert.ConditionalPanic(suite.T(), tc.expectPanic, func() {
 				mintKeeper := suite.App.MintKeeper
 				bankKeeper := suite.App.BankKeeper
 				accountKeeper := suite.App.AccountKeeper
@@ -391,7 +391,7 @@ func (suite *KeeperTestSuite) TestDistributeToModule() {
 				suite.MintCoins(sdk.NewCoins(tc.preMintCoin))
 
 				// TODO: Should not be truncated. Remove truncation after rounding errors are addressed and resolved.
-				// Ref: https://github.com/petri-labs/mokita/issues/1917
+				// Ref: https://github.com/mokita-labs/mokita/issues/1917
 				expectedDistributed := tc.mintedCoin.Amount.ToDec().Mul(tc.proportion).TruncateInt()
 				oldMintModuleBalanceAmount := bankKeeper.GetBalance(ctx, accountKeeper.GetModuleAddress(types.ModuleName), tc.mintedCoin.Denom).Amount
 				oldRecepientModuleBalanceAmount := bankKeeper.GetBalance(ctx, accountKeeper.GetModuleAddress(tc.recepientModule), tc.mintedCoin.Denom).Amount
@@ -617,7 +617,7 @@ func (suite *KeeperTestSuite) TestDistributeDeveloperRewards() {
 		suite.Run(name, func() {
 			suite.Setup()
 
-			osmoassert.ConditionalPanic(suite.T(), tc.expectPanic, func() {
+			mokiassert.ConditionalPanic(suite.T(), tc.expectPanic, func() {
 				mintKeeper := suite.App.MintKeeper
 				bankKeeper := suite.App.BankKeeper
 				accountKeeper := suite.App.AccountKeeper
@@ -627,7 +627,7 @@ func (suite *KeeperTestSuite) TestDistributeDeveloperRewards() {
 				suite.Require().NoError(mintKeeper.MintCoins(ctx, sdk.NewCoins(tc.preMintCoin)))
 
 				// TODO: Should not be truncated. Remove truncation after rounding errors are addressed and resolved.
-				// Ref: https://github.com/petri-labs/mokita/issues/1917
+				// Ref: https://github.com/mokita-labs/mokita/issues/1917
 				expectedDistributed := tc.mintedCoin.Amount.ToDec().Mul(tc.proportion).TruncateInt()
 
 				oldMintModuleBalanceAmount := bankKeeper.GetBalance(ctx, accountKeeper.GetModuleAddress(types.ModuleName), tc.mintedCoin.Denom).Amount
@@ -674,7 +674,7 @@ func (suite *KeeperTestSuite) TestDistributeDeveloperRewards() {
 				// Updated balances.
 
 				// Burn from mint module account. We over-allocate.
-				// To be fixed: https://github.com/petri-labs/mokita/issues/2025
+				// To be fixed: https://github.com/mokita-labs/mokita/issues/2025
 				suite.Require().Equal(oldMintModuleBalanceAmount.Sub(expectedDistributed).Int64(), actualMintModuleBalance.Amount.Int64())
 
 				// Allocate to community pool when no addresses are provided.
@@ -684,13 +684,13 @@ func (suite *KeeperTestSuite) TestDistributeDeveloperRewards() {
 					return
 				}
 
-				// TODO: these should be equal, slightly off due to known rounding issues: https://github.com/petri-labs/mokita/issues/1917
+				// TODO: these should be equal, slightly off due to known rounding issues: https://github.com/mokita-labs/mokita/issues/1917
 				// suite.Require().Equal(oldDeveloperVestingModuleBalanceAmount.Sub(expectedDistributed).Int64(), actualDeveloperVestingModuleBalanceAmount.Int64())
 
 				expectedDistributedCommunityPool := sdk.NewInt(0)
 
 				for i, weightedAddress := range tc.recepientAddresses {
-					// TODO: truncation should not occur: https://github.com/petri-labs/mokita/issues/1917
+					// TODO: truncation should not occur: https://github.com/mokita-labs/mokita/issues/1917
 					expectedAllocation := expectedDistributed.ToDec().Mul(tc.recepientAddresses[i].Weight).TruncateInt()
 
 					if weightedAddress.Address == keeper.EmptyWeightedAddressReceiver {

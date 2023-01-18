@@ -1,7 +1,7 @@
 package v10
 
 import (
-	"github.com/petri-labs/mokita/app/upgrades"
+	"github.com/tessornetwork/mokita/app/upgrades"
 )
 
 // Last executed block on the v9 code was 4713064.

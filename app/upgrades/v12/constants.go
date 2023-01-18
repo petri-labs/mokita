@@ -1,8 +1,8 @@
 package v12
 
 import (
-	"github.com/petri-labs/mokita/app/upgrades"
-	twaptypes "github.com/petri-labs/mokita/x/twap/types"
+	"github.com/tessornetwork/mokita/app/upgrades"
+	twaptypes "github.com/tessornetwork/mokita/x/twap/types"
 
 	store "github.com/cosmos/cosmos-sdk/store/types"
 )

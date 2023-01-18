@@ -5,6 +5,9 @@ import (
 )
 
 const (
+	MinPoolAssets = 2
+	MaxPoolAssets = 8
+
 	OneShareExponent = 18
 	// Raise 10 to the power of SigFigsExponent to determine number of significant figures.
 	// i.e. SigFigExponent = 8 is 10^8 which is 100000000. This gives 8 significant figures.
@@ -34,9 +37,6 @@ var (
 	// Other tests depend on being equal to MaxSpotPrice,
 	// but don't directly import it due to import issues.
 	MaxSpotPrice = sdk.NewDec(2).Power(128).Sub(sdk.OneDec())
-	// MinSpotPrice is the minimum supported spot price. Anything less than this will error.
-	// It is limited by sdk.Dec's precision.
-	MinSpotPrice = sdk.SmallestDec()
 
 	// MultihopSwapFeeMultiplierForMokiPools if a swap fees multiplier for trades consists of just two MOKI pools during a single transaction.
 	MultihopSwapFeeMultiplierForMokiPools = sdk.NewDecWithPrec(5, 1) // 0.5

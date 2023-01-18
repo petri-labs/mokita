@@ -5,7 +5,7 @@ import (
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 
-	"github.com/petri-labs/mokita/app/keepers"
+	"github.com/tessornetwork/mokita/app/keepers"
 )
 
 func RunForkLogic(ctx sdk.Context, appKeepers *keepers.AppKeepers) {

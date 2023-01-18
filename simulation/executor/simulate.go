@@ -21,9 +21,9 @@ import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/cosmos/cosmos-sdk/types/simulation"
 
-	"github.com/petri-labs/mokita/simulation/executor/internal/executortypes"
-	"github.com/petri-labs/mokita/simulation/executor/internal/stats"
-	"github.com/petri-labs/mokita/simulation/simtypes"
+	"github.com/tessornetwork/mokita/simulation/executor/internal/executortypes"
+	"github.com/tessornetwork/mokita/simulation/executor/internal/stats"
+	"github.com/tessornetwork/mokita/simulation/simtypes"
 )
 
 const AverageBlockTime = 6 * time.Second

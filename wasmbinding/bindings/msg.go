@@ -15,6 +15,8 @@ type MokitaMsg struct {
 	/// that they are the admin of.
 	/// Currently, the burn from address must be the admin contract.
 	BurnTokens *BurnTokens `json:"burn_tokens,omitempty"`
+	/// Swap over one or more pools
+	Swap *SwapMsg `json:"swap,omitempty"`
 }
 
 // CreateDenom creates a new factory denom, of denomination:
@@ -45,4 +47,10 @@ type BurnTokens struct {
 	Amount sdk.Int `json:"amount"`
 	// BurnFromAddress must be set to "" for now.
 	BurnFromAddress string `json:"burn_from_address"`
+}
+
+type SwapMsg struct {
+	First  Swap                `json:"first"`
+	Route  []Step              `json:"route"`
+	Amount SwapAmountWithLimit `json:"amount"`
 }

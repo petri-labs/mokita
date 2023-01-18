@@ -35,11 +35,11 @@ on:
 
 env:
   GOLANG_VERSION: 1.18
-  GENESIS_URL: https://github.com/osmosis-labs/networks/raw/main/osmosis-1/genesis.json
+  GENESIS_URL: https://github.com/mokita-labs/networks/raw/main/mokita-1/genesis.json
   ADDRBOOK_URL: https://dl2.quicksync.io/json/addrbook.mokita.json
-  SNAPSHOT_BUCKET: https://snapshots.osmosis.zone
-  RPC_ENDPOINT: https://rpc.osmosis.zone
-  LCD_ENDPOINT: https://lcd.osmosis.zone
+  SNAPSHOT_BUCKET: https://snapshots.mokita.zone
+  RPC_ENDPOINT: https://rpc.mokita.zone
+  LCD_ENDPOINT: https://lcd.mokita.zone
   DELTA_HALT_HEIGHT: 50
 
 jobs:
@@ -56,7 +56,7 @@ jobs:
         name: Get mainnet major version
         id: mainnet_version
         run:  |
-          # Find current major version via rpc.osmosis.zone/abci_info
+          # Find current major version via rpc.mokita.zone/abci_info
           RPC_ABCI_INFO=$(curl -s --retry 5 --retry-delay 5 --connect-timeout 30 -H "Accept: application/json" ${{ env.RPC_ENDPOINT }}/abci_info)
           MAINNET_MAJOR_VERSION=$(echo $RPC_ABCI_INFO | dasel --plain -r json  'result.response.version' | cut -f 1 -d '.')
 
@@ -164,7 +164,7 @@ jobs:
 
           # Edit config.toml
           dasel put string -f $CONFIG_FOLDER/config.toml '.tx_index.indexer' null
-          dasel put string -f $CONFIG_FOLDER/config.toml '.p2p.persistent_peers' 'b59016320a74525f92dbc3348521c64f2bf3f006@p2p.archive.osmosis.zone:26656'
+          dasel put string -f $CONFIG_FOLDER/config.toml '.p2p.persistent_peers' 'b59016320a74525f92dbc3348521c64f2bf3f006@p2p.archive.mokita.zone:26656'
           dasel put string -f $CONFIG_FOLDER/config.toml 'seeds' ''
 
           # Edit app.toml

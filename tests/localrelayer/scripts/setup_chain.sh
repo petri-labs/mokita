@@ -14,8 +14,8 @@ VALIDATOR_MNEMONIC=${VALIDATOR_MNEMONIC:-$DEFAULT_VALIDATOR_MNEMONIC}
 FAUCET_MNEMONIC=${FAUCET_MNEMONIC:-$DEFAULT_FAUCET_MNEMONIC}
 RELAYER_MNEMONIC=${RELAYER_MNEMONIC:-$DEFAULT_RELAYER_MNEMONIC}
 
-MOKISIS_HOME=$HOME/.mokitad
-CONFIG_FOLDER=$MOKISIS_HOME/config
+MOKITA_HOME=$HOME/.mokitad
+CONFIG_FOLDER=$MOKITA_HOME/config
 
 install_prerequisites () {
     apk add dasel
@@ -70,24 +70,24 @@ add_genesis_accounts () {
     
     # Validator
     echo "⚖️ Add validator account"
-    echo $VALIDATOR_MNEMONIC | mokitad keys add $VALIDATOR_MONIKER --recover --keyring-backend=test --home $MOKISIS_HOME
-    VALIDATOR_ACCOUNT=$(mokitad keys show -a $VALIDATOR_MONIKER --keyring-backend test --home $MOKISIS_HOME)
-    mokitad add-genesis-account $VALIDATOR_ACCOUNT 100000000000umoki,100000000000uion,100000000000stake --home $MOKISIS_HOME
+    echo $VALIDATOR_MNEMONIC | mokitad keys add $VALIDATOR_MONIKER --recover --keyring-backend=test --home $MOKITA_HOME
+    VALIDATOR_ACCOUNT=$(mokitad keys show -a $VALIDATOR_MONIKER --keyring-backend test --home $MOKITA_HOME)
+    mokitad add-genesis-account $VALIDATOR_ACCOUNT 100000000000umoki,100000000000uion,100000000000stake --home $MOKITA_HOME
     
     # Faucet
     echo "🚰 Add faucet account"
-    echo $FAUCET_MNEMONIC | mokitad keys add faucet --recover --keyring-backend=test --home $MOKISIS_HOME
-    FAUCET_ACCOUNT=$(mokitad keys show -a faucet --keyring-backend test --home $MOKISIS_HOME)
-    mokitad add-genesis-account $FAUCET_ACCOUNT 100000000000umoki,100000000000uion,100000000000stake --home $MOKISIS_HOME
+    echo $FAUCET_MNEMONIC | mokitad keys add faucet --recover --keyring-backend=test --home $MOKITA_HOME
+    FAUCET_ACCOUNT=$(mokitad keys show -a faucet --keyring-backend test --home $MOKITA_HOME)
+    mokitad add-genesis-account $FAUCET_ACCOUNT 100000000000umoki,100000000000uion,100000000000stake --home $MOKITA_HOME
 
     # Relayer
     echo "🔗 Add relayer account"
-    echo $RELAYER_MNEMONIC | mokitad keys add relayer --recover --keyring-backend=test --home $MOKISIS_HOME
-    RELAYER_ACCOUNT=$(mokitad keys show -a relayer --keyring-backend test --home $MOKISIS_HOME)
-    mokitad add-genesis-account $RELAYER_ACCOUNT 1000000000umoki,1000000000uion,1000000000stake --home $MOKISIS_HOME
+    echo $RELAYER_MNEMONIC | mokitad keys add relayer --recover --keyring-backend=test --home $MOKITA_HOME
+    RELAYER_ACCOUNT=$(mokitad keys show -a relayer --keyring-backend test --home $MOKITA_HOME)
+    mokitad add-genesis-account $RELAYER_ACCOUNT 1000000000umoki,1000000000uion,1000000000stake --home $MOKITA_HOME
     
-    mokitad gentx $VALIDATOR_MONIKER 500000000umoki --keyring-backend=test --chain-id=$CHAIN_ID --home $MOKISIS_HOME
-    mokitad collect-gentxs --home $MOKISIS_HOME
+    mokitad gentx $VALIDATOR_MONIKER 500000000umoki --keyring-backend=test --chain-id=$CHAIN_ID --home $MOKITA_HOME
+    mokitad collect-gentxs --home $MOKITA_HOME
 }
 
 edit_config () {
@@ -102,11 +102,11 @@ if [[ ! -d $CONFIG_FOLDER ]]
 then
     install_prerequisites
     echo "🧪 Creating Mokita home for $VALIDATOR_MONIKER"
-    echo $VALIDATOR_MNEMONIC | mokitad init -o --chain-id=$CHAIN_ID --home $MOKISIS_HOME --recover $VALIDATOR_MONIKER
+    echo $VALIDATOR_MNEMONIC | mokitad init -o --chain-id=$CHAIN_ID --home $MOKITA_HOME --recover $VALIDATOR_MONIKER
     edit_genesis
     add_genesis_accounts
     edit_config
 fi
 
 echo "🏁 Starting $CHAIN_ID..."
-mokitad start --home $MOKISIS_HOME
+mokitad start --home $MOKITA_HOME

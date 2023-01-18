@@ -3,9 +3,9 @@ package keeper_test
 import (
 	"time"
 
-	gammtypes "github.com/petri-labs/mokita/x/gamm/types"
-	"github.com/petri-labs/mokita/x/lockup/keeper"
-	"github.com/petri-labs/mokita/x/lockup/types"
+	gammtypes "github.com/tessornetwork/mokita/x/gamm/types"
+	"github.com/tessornetwork/mokita/x/lockup/keeper"
+	"github.com/tessornetwork/mokita/x/lockup/types"
 
 	"github.com/cosmos/cosmos-sdk/simapp"
 	sdk "github.com/cosmos/cosmos-sdk/types"

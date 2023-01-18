@@ -3,8 +3,8 @@ package types
 import (
 	time "time"
 
-	epochstypes "github.com/petri-labs/mokita/x/epochs/types"
-	lockuptypes "github.com/petri-labs/mokita/x/lockup/types"
+	epochstypes "github.com/tessornetwork/mokita/x/epochs/types"
+	lockuptypes "github.com/tessornetwork/mokita/x/lockup/types"
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 )

@@ -13,8 +13,8 @@ import (
 	tmproto "github.com/tendermint/tendermint/proto/tendermint/types"
 	tmtypes "github.com/tendermint/tendermint/types"
 
-	"github.com/petri-labs/mokita/simulation/executor/internal/stats"
-	"github.com/petri-labs/mokita/simulation/simtypes"
+	"github.com/tessornetwork/mokita/simulation/executor/internal/stats"
+	"github.com/tessornetwork/mokita/simulation/simtypes"
 )
 
 type simState struct {

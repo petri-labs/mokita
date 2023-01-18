@@ -10,8 +10,8 @@ import (
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 	"github.com/gogo/protobuf/proto"
 
-	"github.com/osmosis-labs/osmosis/osmoutils/sumtree"
-	"github.com/petri-labs/mokita/x/lockup/types"
+	"github.com/mokita-labs/mokita/mokiutils/sumtree"
+	"github.com/tessornetwork/mokita/x/lockup/types"
 )
 
 // WithdrawAllMaturedLocks withdraws every lock thats in the process of unlocking, and has finished unlocking by

@@ -2,17 +2,17 @@ package v13_test
 
 import (
 	"fmt"
-	ibchookstypes "github.com/osmosis-labs/osmosis/x/ibc-hooks/types"
 	"testing"
 
-	ibcratelimittypes "github.com/petri-labs/mokita/x/ibc-rate-limit/types"
+	ibcratelimittypes "github.com/tessornetwork/mokita/x/ibc-rate-limit/types"
 
 	"github.com/cosmos/cosmos-sdk/store/prefix"
 	upgradetypes "github.com/cosmos/cosmos-sdk/x/upgrade/types"
 	"github.com/stretchr/testify/suite"
 	abci "github.com/tendermint/tendermint/abci/types"
 
-	"github.com/petri-labs/mokita/app/apptesting"
+	"github.com/tessornetwork/mokita/app/apptesting"
+	ibc_hooks "github.com/tessornetwork/mokita/x/ibc-hooks"
 )
 
 type UpgradeTestSuite struct {
@@ -54,31 +54,26 @@ func (suite *UpgradeTestSuite) TestUpgrade() {
 		{
 			"Test that the upgrade succeeds",
 			func() {
-				// The module doesn't need an account anymore, but when the upgrade happened we did:
-				//acc := suite.App.AccountKeeper.GetAccount(suite.Ctx, ibc_hooks.WasmHookModuleAccountAddr)
-				//suite.App.AccountKeeper.RemoveAccount(suite.Ctx, acc)
-
+				acc := suite.App.AccountKeeper.GetAccount(suite.Ctx, ibc_hooks.WasmHookModuleAccountAddr)
+				suite.App.AccountKeeper.RemoveAccount(suite.Ctx, acc)
 				// Because of SDK version map bug, we can't do the following, and instaed do a massive hack
 				// vm := suite.App.UpgradeKeeper.GetModuleVersionMap(suite.Ctx)
-				// delete(vm, ibchookstypes.ModuleName)
+				// delete(vm, ibc_hooks.ModuleName)
 				// OR
-				// vm[ibchookstypes.ModuleName] = 0
+				// vm[ibc_hooks.ModuleName] = 0
 				// suite.App.UpgradeKeeper.SetModuleVersionMap(suite.Ctx, vm)
 				upgradeStoreKey := suite.App.AppKeepers.GetKey(upgradetypes.StoreKey)
 				store := suite.Ctx.KVStore(upgradeStoreKey)
 				versionStore := prefix.NewStore(store, []byte{upgradetypes.VersionMapByte})
-				versionStore.Delete([]byte(ibchookstypes.ModuleName))
+				versionStore.Delete([]byte(ibc_hooks.ModuleName))
 
-				// Same comment as above: this was the case when the upgrade happened, but we don't have accounts anymore
-				//hasAcc := suite.App.AccountKeeper.HasAccount(suite.Ctx, ibc_hooks.WasmHookModuleAccountAddr)
-				//suite.Require().False(hasAcc)
-
+				hasAcc := suite.App.AccountKeeper.HasAccount(suite.Ctx, ibc_hooks.WasmHookModuleAccountAddr)
+				suite.Require().False(hasAcc)
 			},
 			func() { dummyUpgrade(suite) },
 			func() {
-				// Same comment as pre-upgrade. We had an account, but now we don't anymore
-				//hasAcc := suite.App.AccountKeeper.HasAccount(suite.Ctx, ibc_hooks.WasmHookModuleAccountAddr)
-				//suite.Require().True(hasAcc)
+				hasAcc := suite.App.AccountKeeper.HasAccount(suite.Ctx, ibc_hooks.WasmHookModuleAccountAddr)
+				suite.Require().True(hasAcc)
 			},
 		},
 		{

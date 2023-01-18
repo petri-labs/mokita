@@ -7,7 +7,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/petri-labs/mokita/tests/e2e/initialization"
+	"github.com/tessornetwork/mokita/tests/e2e/initialization"
 )
 
 func main() {

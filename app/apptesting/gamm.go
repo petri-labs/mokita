@@ -3,11 +3,11 @@ package apptesting
 import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 
-	"github.com/osmosis-labs/osmosis/osmomath"
-	gammkeeper "github.com/petri-labs/mokita/x/gamm/keeper"
-	"github.com/petri-labs/mokita/x/gamm/pool-models/balancer"
-	"github.com/petri-labs/mokita/x/gamm/pool-models/stableswap"
-	gammtypes "github.com/petri-labs/mokita/x/gamm/types"
+	"github.com/mokita-labs/mokita/mokimath"
+	gammkeeper "github.com/tessornetwork/mokita/x/gamm/keeper"
+	"github.com/tessornetwork/mokita/x/gamm/pool-models/balancer"
+	"github.com/tessornetwork/mokita/x/gamm/pool-models/stableswap"
+	gammtypes "github.com/tessornetwork/mokita/x/gamm/types"
 )
 
 var DefaultAcctFunds sdk.Coins = sdk.NewCoins(
@@ -109,7 +109,7 @@ func (s *KeeperTestHelper) PrepareBasicStableswapPool() uint64 {
 	}
 
 	msg := stableswap.NewMsgCreateStableswapPool(s.TestAccs[0], params, DefaultStableswapLiquidity, []uint64{}, "")
-	poolId, err := s.App.SwapRouterKeeper.CreatePool(s.Ctx, msg)
+	poolId, err := s.App.GAMMKeeper.CreatePool(s.Ctx, msg)
 	s.NoError(err)
 	return poolId
 }
@@ -124,15 +124,15 @@ func (s *KeeperTestHelper) PrepareImbalancedStableswapPool() uint64 {
 	}
 
 	msg := stableswap.NewMsgCreateStableswapPool(s.TestAccs[0], params, ImbalancedStableswapLiquidity, []uint64{1, 1, 1}, "")
-	poolId, err := s.App.SwapRouterKeeper.CreatePool(s.Ctx, msg)
+	poolId, err := s.App.GAMMKeeper.CreatePool(s.Ctx, msg)
 	s.NoError(err)
 	return poolId
 }
 
 // PrepareBalancerPoolWithPoolParams sets up a Balancer pool with poolParams.
-// Uses default pool assets.
 func (s *KeeperTestHelper) PrepareBalancerPoolWithPoolParams(poolParams balancer.PoolParams) uint64 {
 	s.FundAcc(s.TestAccs[0], DefaultAcctFunds)
+
 	return s.PrepareCustomBalancerPool(DefaultPoolAssets, poolParams)
 }
 
@@ -146,7 +146,7 @@ func (s *KeeperTestHelper) PrepareCustomBalancerPool(assets []balancer.PoolAsset
 	s.FundAcc(s.TestAccs[0], fundCoins)
 
 	msg := balancer.NewMsgCreateBalancerPool(s.TestAccs[0], params, assets, "")
-	poolId, err := s.App.SwapRouterKeeper.CreatePool(s.Ctx, msg)
+	poolId, err := s.App.GAMMKeeper.CreatePool(s.Ctx, msg)
 	s.NoError(err)
 	return poolId
 }
@@ -169,7 +169,7 @@ func (s *KeeperTestHelper) PrepareCustomBalancerPoolFromCoins(coins sdk.Coins, p
 // Modify spotprice of a pool to target spotprice
 func (s *KeeperTestHelper) ModifySpotPrice(poolID uint64, targetSpotPrice sdk.Dec, baseDenom string) {
 	var quoteDenom string
-	int64Max := int64(^uint64(0) >> 1)
+	var int64Max = int64(^uint64(0) >> 1)
 
 	s.Require().Positive(targetSpotPrice)
 	s.Require().Greater(gammtypes.MaxSpotPrice, targetSpotPrice)
@@ -275,7 +275,7 @@ func (s *KeeperTestHelper) RunBasicJoin(poolId uint64) {
 	s.Require().NoError(err)
 }
 
-func (s *KeeperTestHelper) CalcAmoutOfTokenToGetTargetPrice(ctx sdk.Context, pool gammtypes.CFMMPoolI, targetSpotPrice sdk.Dec, baseDenom, quoteDenom string) (amountTrade sdk.Dec) {
+func (s *KeeperTestHelper) CalcAmoutOfTokenToGetTargetPrice(ctx sdk.Context, pool gammtypes.PoolI, targetSpotPrice sdk.Dec, baseDenom, quoteDenom string) (amountTrade sdk.Dec) {
 	blPool, ok := pool.(*balancer.Pool)
 	s.Require().True(ok)
 	quoteAsset, _ := blPool.GetPoolAsset(quoteDenom)
@@ -294,7 +294,7 @@ func (s *KeeperTestHelper) CalcAmoutOfTokenToGetTargetPrice(ctx sdk.Context, poo
 	ratioPrice := targetSpotPrice.Quo(spotPriceNow)
 	ratioWeight := (baseAsset.Weight.ToDec()).Quo(baseAsset.Weight.ToDec().Add(quoteAsset.Weight.ToDec()))
 
-	amountTrade = quoteAsset.Token.Amount.ToDec().Mul(osmomath.Pow(ratioPrice, ratioWeight).Sub(sdk.OneDec()))
+	amountTrade = quoteAsset.Token.Amount.ToDec().Mul(mokimath.Pow(ratioPrice, ratioWeight).Sub(sdk.OneDec()))
 
 	return amountTrade
 }

@@ -8,16 +8,30 @@ import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 
-	"github.com/osmosis-labs/osmosis/osmomath"
-	"github.com/petri-labs/mokita/x/gamm/pool-models/internal/cfmm_common"
-	"github.com/petri-labs/mokita/x/gamm/types"
-	swaproutertypes "github.com/petri-labs/mokita/x/swaprouter/types"
+	"github.com/mokita-labs/mokita/mokimath"
+	"github.com/tessornetwork/mokita/x/gamm/pool-models/internal/cfmm_common"
+	"github.com/tessornetwork/mokita/x/gamm/types"
 )
 
-var (
-	_ swaproutertypes.PoolI = &Pool{}
-	_ types.CFMMPoolI       = &Pool{}
-)
+var _ types.PoolI = &Pool{}
+
+type unsortedPoolLiqError struct {
+	ActualLiquidity sdk.Coins
+}
+
+func (e unsortedPoolLiqError) Error() string {
+	return fmt.Sprintf(`unsorted initial pool liquidity: %s. 
+	Please sort and make sure scaling factor order matches initial liquidity coin order`, e.ActualLiquidity)
+}
+
+type liquidityAndScalingFactorCountMismatchError struct {
+	LiquidityCount     int
+	ScalingFactorCount int
+}
+
+func (e liquidityAndScalingFactorCountMismatchError) Error() string {
+	return fmt.Sprintf("liquidity count (%d) must match scaling factor count (%d)", e.LiquidityCount, e.ScalingFactorCount)
+}
 
 // NewStableswapPool returns a stableswap pool
 // Invariants that are assumed to be satisfied and not checked:
@@ -34,20 +48,17 @@ func NewStableswapPool(poolId uint64,
 		}
 	}
 
-	scalingFactors, err := applyScalingFactorMultiplier(scalingFactors)
-	if err != nil {
+	scalingFactors = applyScalingFactorMultiplier(scalingFactors)
+
+	if err := validateScalingFactors(scalingFactors, len(initialLiquidity)); err != nil {
 		return Pool{}, err
 	}
 
-	if err = validateScalingFactors(scalingFactors, len(initialLiquidity)); err != nil {
+	if err := validatePoolLiquidity(initialLiquidity, scalingFactors); err != nil {
 		return Pool{}, err
 	}
 
-	if err = validatePoolLiquidity(initialLiquidity, scalingFactors); err != nil {
-		return Pool{}, err
-	}
-
-	if err = types.ValidateFutureGovernor(futureGovernor); err != nil {
+	if err := types.ValidateFutureGovernor(futureGovernor); err != nil {
 		return Pool{}, err
 	}
 
@@ -111,14 +122,8 @@ func (p Pool) GetScalingFactors() []uint64 {
 }
 
 // CONTRACT: scaling factors follow the same index with pool liquidity denoms
-func (p Pool) GetScalingFactorByDenom(denom string) uint64 {
-	for i, coin := range p.PoolLiquidity {
-		if denom == coin.Denom {
-			return p.ScalingFactors[i]
-		}
-	}
-
-	return 0
+func (p Pool) GetScalingFactorByLiquidityIndex(liquidityIndex int) uint64 {
+	return p.ScalingFactors[liquidityIndex]
 }
 
 func (p Pool) NumAssets() int {
@@ -127,21 +132,36 @@ func (p Pool) NumAssets() int {
 
 // scaleCoin returns the BigDec amount of the
 // input token after scaling it by the token's scaling factor
-func (p Pool) scaleCoin(input sdk.Coin, roundingDirection osmomath.RoundingDirection) (osmomath.BigDec, error) {
-	scalingFactor := p.GetScalingFactorByDenom(input.Denom)
-	scaledAmount, err := osmomath.DivIntByU64ToBigDec(input.Amount, scalingFactor, roundingDirection)
+func (p Pool) scaleCoin(input sdk.Coin, roundingDirection mokimath.RoundingDirection) (mokimath.BigDec, error) {
+	liquidityIndexes := p.getLiquidityIndexMap()
+	scalingFactor := p.GetScalingFactorByLiquidityIndex(liquidityIndexes[input.Denom])
+	scaledAmount, err := mokimath.DivIntByU64ToBigDec(input.Amount, scalingFactor, roundingDirection)
 	if err != nil {
-		return osmomath.BigDec{}, err
+		return mokimath.BigDec{}, err
 	}
 	return scaledAmount, nil
 }
 
 // getDescaledPoolAmt descales the passed in amount
 // by the scaling factor of the passed in denom
-func (p Pool) getDescaledPoolAmt(denom string, amount osmomath.BigDec) sdk.Dec {
-	scalingFactor := p.GetScalingFactorByDenom(denom)
+func (p Pool) getDescaledPoolAmt(denom string, amount mokimath.BigDec) sdk.Dec {
+	liquidityIndexes := p.getLiquidityIndexMap()
+	liquidityIndex := liquidityIndexes[denom]
+
+	scalingFactor := p.GetScalingFactorByLiquidityIndex(liquidityIndex)
 
 	return amount.MulInt64(int64(scalingFactor)).SDKDec()
+}
+
+// getLiquidityIndexMap creates a map of denoms to its index in pool liquidity.
+// As always, the caller must not iterate over the map.
+func (p Pool) getLiquidityIndexMap() map[string]int {
+	poolLiquidity := p.PoolLiquidity
+	liquidityIndexMap := make(map[string]int, poolLiquidity.Len())
+	for i, coin := range poolLiquidity {
+		liquidityIndexMap[coin.Denom] = i
+	}
+	return liquidityIndexMap
 }
 
 // scaledSortedPoolReserves sorts and scales passed in pool reserves such that the denom
@@ -150,7 +170,7 @@ func (p Pool) getDescaledPoolAmt(denom string, amount osmomath.BigDec) sdk.Dec {
 // deterministic.
 //
 // Returns reserve amounts as an array of type BigDec.
-func (p Pool) scaledSortedPoolReserves(first string, second string, round osmomath.RoundingDirection) ([]osmomath.BigDec, error) {
+func (p Pool) scaledSortedPoolReserves(first string, second string, round mokimath.RoundingDirection) ([]mokimath.BigDec, error) {
 	reorderedLiquidity, reorderedScalingFactors, err := p.reorderReservesAndScalingFactors(first, second)
 	if err != nil {
 		return nil, err
@@ -160,7 +180,7 @@ func (p Pool) scaledSortedPoolReserves(first string, second string, round osmoma
 		return nil, err
 	}
 
-	return osmomath.DivCoinAmtsByU64ToBigDec(reorderedLiquidity, reorderedScalingFactors, round)
+	return mokimath.DivCoinAmtsByU64ToBigDec(reorderedLiquidity, reorderedScalingFactors, round)
 }
 
 // reorderReservesAndScalingFactors takes the pool liquidity and scaling factors, and reorders them s.t.
@@ -307,8 +327,8 @@ func (p *Pool) SwapInAmtGivenOut(ctx sdk.Context, tokenOut sdk.Coins, tokenInDen
 
 // SpotPrice calculates the approximate amount of `baseDenom` one would receive for
 // an input dx of `quoteDenom` (to simplify calculations, we approximate dx = 1)
-func (p Pool) SpotPrice(ctx sdk.Context, quoteAssetDenom string, baseAssetDenom string) (sdk.Dec, error) {
-	return p.spotPrice(quoteAssetDenom, baseAssetDenom)
+func (p Pool) SpotPrice(ctx sdk.Context, baseAssetDenom string, quoteAssetDenom string) (sdk.Dec, error) {
+	return p.spotPrice(baseAssetDenom, quoteAssetDenom)
 }
 
 func (p Pool) Copy() Pool {
@@ -394,16 +414,13 @@ func (p *Pool) SetScalingFactors(ctx sdk.Context, scalingFactors []uint64, sende
 		return types.ErrNotScalingFactorGovernor
 	}
 
-	scalingFactors, err := applyScalingFactorMultiplier(scalingFactors)
-	if err != nil {
+	scalingFactors = applyScalingFactorMultiplier(scalingFactors)
+
+	if err := validateScalingFactors(scalingFactors, p.PoolLiquidity.Len()); err != nil {
 		return err
 	}
 
-	if err = validateScalingFactors(scalingFactors, p.PoolLiquidity.Len()); err != nil {
-		return err
-	}
-
-	if err = validatePoolLiquidity(p.PoolLiquidity, scalingFactors); err != nil {
+	if err := validatePoolLiquidity(p.PoolLiquidity, scalingFactors); err != nil {
 		return err
 	}
 
@@ -425,7 +442,7 @@ func validateScalingFactors(scalingFactors []uint64, numAssets int) error {
 	}
 
 	for _, scalingFactor := range scalingFactors {
-		if int64(scalingFactor) <= 0 {
+		if scalingFactor == 0 || int64(scalingFactor) <= 0 {
 			return types.ErrInvalidScalingFactors
 		}
 	}
@@ -438,12 +455,12 @@ func validatePoolLiquidity(liquidity sdk.Coins, scalingFactors []uint64) error {
 	liquidityCount := len(liquidity)
 	scalingFactorCount := len(scalingFactors)
 	if liquidityCount != scalingFactorCount {
-		return types.LiquidityAndScalingFactorCountMismatchError{LiquidityCount: liquidityCount, ScalingFactorCount: scalingFactorCount}
+		return liquidityAndScalingFactorCountMismatchError{LiquidityCount: liquidityCount, ScalingFactorCount: scalingFactorCount}
 	}
 
-	if liquidityCount < types.MinNumOfAssetsInPool {
+	if liquidityCount < types.MinPoolAssets {
 		return types.ErrTooFewPoolAssets
-	} else if liquidityCount > types.MaxNumOfAssetsInPool {
+	} else if liquidityCount > types.MaxPoolAssets {
 		return types.ErrTooManyPoolAssets
 	}
 
@@ -453,7 +470,7 @@ func validatePoolLiquidity(liquidity sdk.Coins, scalingFactors []uint64) error {
 
 	for i, asset := range liquidity {
 		if asset != liquidityCopy[i] {
-			return types.UnsortedPoolLiqError{ActualLiquidity: liquidity}
+			return unsortedPoolLiqError{ActualLiquidity: liquidity}
 		}
 
 		scaledAmount := asset.Amount.Quo(sdk.NewInt(int64(scalingFactors[i])))
@@ -467,15 +484,11 @@ func validatePoolLiquidity(liquidity sdk.Coins, scalingFactors []uint64) error {
 	return nil
 }
 
-func applyScalingFactorMultiplier(scalingFactors []uint64) ([]uint64, error) {
+func applyScalingFactorMultiplier(scalingFactors []uint64) []uint64 {
 	newScalingFactors := make([]uint64, len(scalingFactors))
-	for i, scalingFactor := range scalingFactors {
-		newScalingFactors[i] = scalingFactor * types.ScalingFactorMultiplier
-
-		if newScalingFactors[i] < scalingFactor {
-			return nil, types.ErrInvalidScalingFactors
-		}
+	for i := range scalingFactors {
+		newScalingFactors[i] = scalingFactors[i] * types.ScalingFactorMultiplier
 	}
 
-	return newScalingFactors, nil
+	return newScalingFactors
 }

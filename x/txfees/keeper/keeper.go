@@ -8,16 +8,18 @@ import (
 	"github.com/cosmos/cosmos-sdk/store/prefix"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 
-	"github.com/petri-labs/mokita/x/txfees/types"
+	"github.com/tessornetwork/mokita/x/txfees/types"
 )
 
 type Keeper struct {
 	storeKey sdk.StoreKey
 
-	accountKeeper       types.AccountKeeper
-	bankKeeper          types.BankKeeper
-	poolManager         types.PoolManager
-	spotPriceCalculator types.SpotPriceCalculator
+	accountKeeper             types.AccountKeeper
+	bankKeeper                types.BankKeeper
+	gammKeeper                types.GammKeeper
+	spotPriceCalculator       types.SpotPriceCalculator
+	feeCollectorName          string
+	nonNativeFeeCollectorName string
 }
 
 var _ types.TxFeesKeeper = (*Keeper)(nil)
@@ -26,15 +28,19 @@ func NewKeeper(
 	accountKeeper types.AccountKeeper,
 	bankKeeper types.BankKeeper,
 	storeKey sdk.StoreKey,
-	poolManager types.PoolManager,
+	gammKeeper types.GammKeeper,
 	spotPriceCalculator types.SpotPriceCalculator,
+	feeCollectorName string,
+	nonNativeFeeCollectorName string,
 ) Keeper {
 	return Keeper{
-		accountKeeper:       accountKeeper,
-		bankKeeper:          bankKeeper,
-		storeKey:            storeKey,
-		poolManager:         poolManager,
-		spotPriceCalculator: spotPriceCalculator,
+		accountKeeper:             accountKeeper,
+		bankKeeper:                bankKeeper,
+		storeKey:                  storeKey,
+		gammKeeper:                gammKeeper,
+		spotPriceCalculator:       spotPriceCalculator,
+		feeCollectorName:          feeCollectorName,
+		nonNativeFeeCollectorName: nonNativeFeeCollectorName,
 	}
 }
 

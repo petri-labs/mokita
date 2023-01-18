@@ -9,8 +9,8 @@ import (
 	"github.com/tendermint/tendermint/crypto/secp256k1"
 	tmproto "github.com/tendermint/tendermint/proto/tendermint/types"
 
-	"github.com/petri-labs/mokita/app"
-	lockuptypes "github.com/petri-labs/mokita/x/lockup/types"
+	"github.com/tessornetwork/mokita/app"
+	lockuptypes "github.com/tessornetwork/mokita/x/lockup/types"
 
 	"github.com/cosmos/cosmos-sdk/simapp"
 	sdk "github.com/cosmos/cosmos-sdk/types"

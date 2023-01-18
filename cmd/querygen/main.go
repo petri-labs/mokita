@@ -9,7 +9,7 @@ import (
 
 	"github.com/pkg/errors"
 
-	"github.com/petri-labs/mokita/cmd/querygen/templates"
+	"github.com/tessornetwork/mokita/cmd/querygen/templates"
 )
 
 var grpcTemplate template.Template

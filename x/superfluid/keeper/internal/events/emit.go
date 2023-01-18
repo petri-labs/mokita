@@ -5,8 +5,8 @@ import (
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 
-	"github.com/osmosis-labs/osmosis/osmoutils"
-	"github.com/petri-labs/mokita/x/superfluid/types"
+	"github.com/mokita-labs/mokita/mokiutils"
+	"github.com/tessornetwork/mokita/x/superfluid/types"
 )
 
 func EmitSetSuperfluidAssetEvent(ctx sdk.Context, denom string, assetType types.SuperfluidAssetType) {
@@ -57,7 +57,7 @@ func EmitSuperfluidDelegateEvent(ctx sdk.Context, lockId uint64, valAddress stri
 func newSuperfluidDelegateEvent(lockId uint64, valAddress string) sdk.Event {
 	return sdk.NewEvent(
 		types.TypeEvtSuperfluidDelegate,
-		sdk.NewAttribute(types.AttributeLockId, osmoutils.Uint64ToString(lockId)),
+		sdk.NewAttribute(types.AttributeLockId, mokiutils.Uint64ToString(lockId)),
 		sdk.NewAttribute(types.AttributeValidator, valAddress),
 	)
 }

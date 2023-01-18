@@ -39,7 +39,7 @@ func NewKeeperlessMsgBasedAction[M sdk.Msg](actionName string, msgGenerator func
 	// TODO: This likely won't work, and we need to instead make a mock sim ctx and ctx to get this.
 	// TODO: Also do we even want this? Isn't the goal to write simulation event hooks based on Name
 	// var sampleMsg M
-	// msgName := osmoutils.GetType(sampleMsg)
+	// msgName := mokiutils.GetType(sampleMsg)
 	return msgBasedAction{name: actionName, frequency: Common, msgGenerator: wrappedMsgGen}
 }
 

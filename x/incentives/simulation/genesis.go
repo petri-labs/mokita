@@ -7,7 +7,7 @@ import (
 
 	"github.com/cosmos/cosmos-sdk/types/module"
 
-	"github.com/petri-labs/mokita/x/incentives/types"
+	"github.com/tessornetwork/mokita/x/incentives/types"
 )
 
 // Simulation parameter constants.

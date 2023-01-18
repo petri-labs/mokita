@@ -4,17 +4,17 @@ import (
 	"encoding/json"
 	"strings"
 
-	"github.com/osmosis-labs/osmosis/osmoutils"
+	"github.com/mokita-labs/mokita/mokiutils"
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 	capabilitytypes "github.com/cosmos/cosmos-sdk/x/capability/types"
-	transfertypes "github.com/cosmos/ibc-go/v4/modules/apps/transfer/types"
-	channeltypes "github.com/cosmos/ibc-go/v4/modules/core/04-channel/types"
-	porttypes "github.com/cosmos/ibc-go/v4/modules/core/05-port/types"
-	"github.com/cosmos/ibc-go/v4/modules/core/exported"
+	transfertypes "github.com/cosmos/ibc-go/v3/modules/apps/transfer/types"
+	channeltypes "github.com/cosmos/ibc-go/v3/modules/core/04-channel/types"
+	porttypes "github.com/cosmos/ibc-go/v3/modules/core/05-port/types"
+	"github.com/cosmos/ibc-go/v3/modules/core/exported"
 
-	"github.com/petri-labs/mokita/x/ibc-rate-limit/types"
+	"github.com/tessornetwork/mokita/x/ibc-rate-limit/types"
 )
 
 type IBCModule struct {
@@ -38,7 +38,7 @@ func (im *IBCModule) OnChanOpenInit(ctx sdk.Context,
 	channelCap *capabilitytypes.Capability,
 	counterparty channeltypes.Counterparty,
 	version string,
-) (string, error) {
+) error {
 	return im.app.OnChanOpenInit(
 		ctx,
 		order,
@@ -125,7 +125,7 @@ func (im *IBCModule) OnRecvPacket(
 	relayer sdk.AccAddress,
 ) exported.Acknowledgement {
 	if err := ValidateReceiverAddress(packet); err != nil {
-		return osmoutils.NewEmitErrorAcknowledgement(ctx, types.ErrBadMessage, err.Error())
+		return channeltypes.NewErrorAcknowledgement(err.Error())
 	}
 
 	contract := im.ics4Middleware.GetParams(ctx)
@@ -137,10 +137,10 @@ func (im *IBCModule) OnRecvPacket(
 	err := CheckAndUpdateRateLimits(ctx, im.ics4Middleware.ContractKeeper, "recv_packet", contract, packet)
 	if err != nil {
 		if strings.Contains(err.Error(), "rate limit exceeded") {
-			return osmoutils.NewEmitErrorAcknowledgement(ctx, types.ErrRateLimitExceeded)
+			return channeltypes.NewErrorAcknowledgement(types.ErrRateLimitExceeded.Error())
 		}
 		fullError := sdkerrors.Wrap(types.ErrContractError, err.Error())
-		return osmoutils.NewEmitErrorAcknowledgement(ctx, fullError)
+		return channeltypes.NewErrorAcknowledgement(fullError.Error())
 	}
 
 	// if this returns an Acknowledgement that isn't successful, all state changes are discarded
@@ -154,12 +154,7 @@ func (im *IBCModule) OnAcknowledgementPacket(
 	acknowledgement []byte,
 	relayer sdk.AccAddress,
 ) error {
-	var ack channeltypes.Acknowledgement
-	if err := json.Unmarshal(acknowledgement, &ack); err != nil {
-		return sdkerrors.Wrapf(sdkerrors.ErrUnknownRequest, "cannot unmarshal ICS-20 transfer packet acknowledgement: %v", err)
-	}
-
-	if osmoutils.IsAckError(acknowledgement) {
+	if mokiutils.IsAckError(acknowledgement) {
 		err := im.RevertSentPacket(ctx, packet) // If there is an error here we should still handle the ack
 		if err != nil {
 			ctx.EventManager().EmitEvent(
@@ -236,8 +231,4 @@ func (im *IBCModule) WriteAcknowledgement(
 	ack exported.Acknowledgement,
 ) error {
 	return im.ics4Middleware.WriteAcknowledgement(ctx, chanCap, packet, ack)
-}
-
-func (im *IBCModule) GetAppVersion(ctx sdk.Context, portID, channelID string) (string, bool) {
-	return im.ics4Middleware.GetAppVersion(ctx, portID, channelID)
 }

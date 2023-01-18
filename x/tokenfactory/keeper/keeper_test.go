@@ -7,9 +7,9 @@ import (
 	"github.com/stretchr/testify/suite"
 	tmproto "github.com/tendermint/tendermint/proto/tendermint/types"
 
-	"github.com/petri-labs/mokita/app/apptesting"
-	"github.com/petri-labs/mokita/x/tokenfactory/keeper"
-	"github.com/petri-labs/mokita/x/tokenfactory/types"
+	"github.com/tessornetwork/mokita/app/apptesting"
+	"github.com/tessornetwork/mokita/x/tokenfactory/keeper"
+	"github.com/tessornetwork/mokita/x/tokenfactory/types"
 )
 
 type KeeperTestSuite struct {

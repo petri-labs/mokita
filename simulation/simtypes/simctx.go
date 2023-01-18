@@ -7,10 +7,10 @@ import (
 	"math/rand"
 
 	"github.com/cosmos/cosmos-sdk/baseapp"
-	"github.com/cosmos/cosmos-sdk/codec"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/cosmos/cosmos-sdk/types/simulation"
-	stakingkeeper "github.com/cosmos/cosmos-sdk/x/staking/keeper"
+
+	"github.com/cosmos/cosmos-sdk/codec"
 )
 
 // TODO: Contemplate name better
@@ -86,10 +86,6 @@ func (sim SimCtx) AccountKeeper() AccountKeeper {
 
 func (sim SimCtx) BankKeeper() BankKeeper {
 	return sim.app.GetBankKeeper()
-}
-
-func (sim SimCtx) StakingKeeper() stakingkeeper.Keeper {
-	return sim.app.GetStakingKeeper()
 }
 
 // randManager is built to give API's for randomness access

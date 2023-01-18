@@ -23,12 +23,12 @@ import (
 	"github.com/spf13/cobra"
 	abci "github.com/tendermint/tendermint/abci/types"
 
-	"github.com/petri-labs/mokita/simulation/simtypes"
-	simulation "github.com/petri-labs/mokita/x/tokenfactory/simulation"
+	"github.com/tessornetwork/mokita/simulation/simtypes"
+	simulation "github.com/tessornetwork/mokita/x/tokenfactory/simulation"
 
-	"github.com/petri-labs/mokita/x/tokenfactory/client/cli"
-	"github.com/petri-labs/mokita/x/tokenfactory/keeper"
-	"github.com/petri-labs/mokita/x/tokenfactory/types"
+	"github.com/tessornetwork/mokita/x/tokenfactory/client/cli"
+	"github.com/tessornetwork/mokita/x/tokenfactory/keeper"
+	"github.com/tessornetwork/mokita/x/tokenfactory/types"
 )
 
 var (

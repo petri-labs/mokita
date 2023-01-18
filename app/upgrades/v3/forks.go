@@ -5,7 +5,7 @@ import (
 	govkeeper "github.com/cosmos/cosmos-sdk/x/gov/keeper"
 	stakingkeeper "github.com/cosmos/cosmos-sdk/x/staking/keeper"
 
-	"github.com/petri-labs/mokita/app/keepers"
+	"github.com/tessornetwork/mokita/app/keepers"
 )
 
 // RunForkLogic executes height-gated on-chain fork logic for the Mokita v3

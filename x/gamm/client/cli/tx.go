@@ -10,25 +10,25 @@ import (
 	"github.com/spf13/cobra"
 	flag "github.com/spf13/pflag"
 
-	"github.com/osmosis-labs/osmosis/osmoutils/osmocli"
-	"github.com/petri-labs/mokita/x/gamm/pool-models/balancer"
-	"github.com/petri-labs/mokita/x/gamm/pool-models/stableswap"
-	"github.com/petri-labs/mokita/x/gamm/types"
+	"github.com/mokita-labs/mokita/mokiutils/mokicli"
+	"github.com/tessornetwork/mokita/x/gamm/pool-models/balancer"
+	"github.com/tessornetwork/mokita/x/gamm/pool-models/stableswap"
+	"github.com/tessornetwork/mokita/x/gamm/types"
 
 	"github.com/cosmos/cosmos-sdk/client"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 )
 
 func NewTxCmd() *cobra.Command {
-	txCmd := osmocli.TxIndexCmd(types.ModuleName)
-	osmocli.AddTxCmd(txCmd, NewJoinPoolCmd)
-	osmocli.AddTxCmd(txCmd, NewExitPoolCmd)
-	osmocli.AddTxCmd(txCmd, NewSwapExactAmountInCmd)
-	osmocli.AddTxCmd(txCmd, NewSwapExactAmountOutCmd)
-	osmocli.AddTxCmd(txCmd, NewJoinSwapExternAmountIn)
-	osmocli.AddTxCmd(txCmd, NewJoinSwapShareAmountOut)
-	osmocli.AddTxCmd(txCmd, NewExitSwapExternAmountOut)
-	osmocli.AddTxCmd(txCmd, NewExitSwapShareAmountIn)
+	txCmd := mokicli.TxIndexCmd(types.ModuleName)
+	mokicli.AddTxCmd(txCmd, NewJoinPoolCmd)
+	mokicli.AddTxCmd(txCmd, NewExitPoolCmd)
+	mokicli.AddTxCmd(txCmd, NewSwapExactAmountInCmd)
+	mokicli.AddTxCmd(txCmd, NewSwapExactAmountOutCmd)
+	mokicli.AddTxCmd(txCmd, NewJoinSwapExternAmountIn)
+	mokicli.AddTxCmd(txCmd, NewJoinSwapShareAmountOut)
+	mokicli.AddTxCmd(txCmd, NewExitSwapExternAmountOut)
+	mokicli.AddTxCmd(txCmd, NewExitSwapShareAmountIn)
 	txCmd.AddCommand(
 		NewCreatePoolCmd().BuildCommandCustomFn(),
 		NewStableSwapAdjustScalingFactorsCmd(),
@@ -40,8 +40,8 @@ var poolIdFlagOverride = map[string]string{
 	"poolid": FlagPoolId,
 }
 
-func NewCreatePoolCmd() *osmocli.TxCliDesc {
-	desc := osmocli.TxCliDesc{
+func NewCreatePoolCmd() *mokicli.TxCliDesc {
+	desc := mokicli.TxCliDesc{
 		Use:   "create-pool [flags]",
 		Short: "create a new pool and provide the liquidity to it",
 		Long: `Must provide path to a pool JSON file (--pool-file) describing the pool to be created
@@ -65,7 +65,7 @@ For stableswap (demonstrating need for a 1:1000 scaling factor, see doc)
 `,
 		NumArgs:          0,
 		ParseAndBuildMsg: BuildCreatePoolCmd,
-		Flags: osmocli.FlagDesc{
+		Flags: mokicli.FlagDesc{
 			RequiredFlags: []*flag.FlagSet{FlagSetCreatePoolFile()},
 			OptionalFlags: []*flag.FlagSet{FlagSetCreatePoolType()},
 		},
@@ -73,97 +73,97 @@ For stableswap (demonstrating need for a 1:1000 scaling factor, see doc)
 	return &desc
 }
 
-func NewJoinPoolCmd() (*osmocli.TxCliDesc, *types.MsgJoinPool) {
-	return &osmocli.TxCliDesc{
+func NewJoinPoolCmd() (*mokicli.TxCliDesc, *types.MsgJoinPool) {
+	return &mokicli.TxCliDesc{
 		Use:   "join-pool",
 		Short: "join a new pool and provide the liquidity to it",
 		CustomFlagOverrides: map[string]string{
 			"poolid":         FlagPoolId,
 			"ShareOutAmount": FlagShareAmountOut,
 		},
-		CustomFieldParsers: map[string]osmocli.CustomFieldParserFn{
-			"TokenInMaxs": osmocli.FlagOnlyParser(maxAmountsInParser),
+		CustomFieldParsers: map[string]mokicli.CustomFieldParserFn{
+			"TokenInMaxs": mokicli.FlagOnlyParser(maxAmountsInParser),
 		},
-		Flags: osmocli.FlagDesc{RequiredFlags: []*flag.FlagSet{FlagSetJoinPool()}},
+		Flags: mokicli.FlagDesc{RequiredFlags: []*flag.FlagSet{FlagSetJoinPool()}},
 	}, &types.MsgJoinPool{}
 }
 
-func NewExitPoolCmd() (*osmocli.TxCliDesc, *types.MsgExitPool) {
-	return &osmocli.TxCliDesc{
+func NewExitPoolCmd() (*mokicli.TxCliDesc, *types.MsgExitPool) {
+	return &mokicli.TxCliDesc{
 		Use:   "exit-pool",
 		Short: "exit a new pool and withdraw the liquidity from it",
 		CustomFlagOverrides: map[string]string{
 			"poolid":        FlagPoolId,
 			"ShareInAmount": FlagShareAmountIn,
 		},
-		CustomFieldParsers: map[string]osmocli.CustomFieldParserFn{
-			"TokenOutMins": osmocli.FlagOnlyParser(minAmountsOutParser),
+		CustomFieldParsers: map[string]mokicli.CustomFieldParserFn{
+			"TokenOutMins": mokicli.FlagOnlyParser(minAmountsOutParser),
 		},
-		Flags: osmocli.FlagDesc{RequiredFlags: []*flag.FlagSet{FlagSetExitPool()}},
+		Flags: mokicli.FlagDesc{RequiredFlags: []*flag.FlagSet{FlagSetExitPool()}},
 	}, &types.MsgExitPool{}
 }
 
-func NewSwapExactAmountInCmd() (*osmocli.TxCliDesc, *types.MsgSwapExactAmountIn) {
-	return &osmocli.TxCliDesc{
+func NewSwapExactAmountInCmd() (*mokicli.TxCliDesc, *types.MsgSwapExactAmountIn) {
+	return &mokicli.TxCliDesc{
 		Use:   "swap-exact-amount-in [token-in] [token-out-min-amount]",
 		Short: "swap exact amount in",
-		CustomFieldParsers: map[string]osmocli.CustomFieldParserFn{
-			"Routes": osmocli.FlagOnlyParser(swapAmountInRoutes),
+		CustomFieldParsers: map[string]mokicli.CustomFieldParserFn{
+			"Routes": mokicli.FlagOnlyParser(swapAmountInRoutes),
 		},
-		Flags: osmocli.FlagDesc{RequiredFlags: []*flag.FlagSet{FlagSetMultihopSwapRoutes()}},
+		Flags: mokicli.FlagDesc{RequiredFlags: []*flag.FlagSet{FlagSetMultihopSwapRoutes()}},
 	}, &types.MsgSwapExactAmountIn{}
 }
 
-func NewSwapExactAmountOutCmd() (*osmocli.TxCliDesc, *types.MsgSwapExactAmountOut) {
+func NewSwapExactAmountOutCmd() (*mokicli.TxCliDesc, *types.MsgSwapExactAmountOut) {
 	// Can't get rid of this parser without a break, because the args are out of order.
-	return &osmocli.TxCliDesc{
+	return &mokicli.TxCliDesc{
 		Use:              "swap-exact-amount-out [token-out] [token-in-max-amount]",
 		Short:            "swap exact amount out",
 		NumArgs:          2,
 		ParseAndBuildMsg: NewBuildSwapExactAmountOutMsg,
-		Flags:            osmocli.FlagDesc{RequiredFlags: []*flag.FlagSet{FlagSetMultihopSwapRoutes()}},
+		Flags:            mokicli.FlagDesc{RequiredFlags: []*flag.FlagSet{FlagSetMultihopSwapRoutes()}},
 	}, &types.MsgSwapExactAmountOut{}
 }
 
-func NewJoinSwapExternAmountIn() (*osmocli.TxCliDesc, *types.MsgJoinSwapExternAmountIn) {
-	return &osmocli.TxCliDesc{
+func NewJoinSwapExternAmountIn() (*mokicli.TxCliDesc, *types.MsgJoinSwapExternAmountIn) {
+	return &mokicli.TxCliDesc{
 		Use:                 "join-swap-extern-amount-in [token-in] [share-out-min-amount]",
 		Short:               "join swap extern amount in",
 		CustomFlagOverrides: poolIdFlagOverride,
-		Flags:               osmocli.FlagDesc{RequiredFlags: []*flag.FlagSet{FlagSetJustPoolId()}},
+		Flags:               mokicli.FlagDesc{RequiredFlags: []*flag.FlagSet{FlagSetJustPoolId()}},
 	}, &types.MsgJoinSwapExternAmountIn{}
 }
 
-func NewJoinSwapShareAmountOut() (*osmocli.TxCliDesc, *types.MsgJoinSwapShareAmountOut) {
-	return &osmocli.TxCliDesc{
-		Use:                 "join-swap-share-amount-out [token-in-denom] [token-in-max-amount] [share-out-amount]",
+func NewJoinSwapShareAmountOut() (*mokicli.TxCliDesc, *types.MsgJoinSwapShareAmountOut) {
+	return &mokicli.TxCliDesc{
+		Use:                 "join-swap-share-amount-out [token-in-denom] [share-out-amount] [token-in-max-amount] ",
 		Short:               "join swap share amount out",
 		CustomFlagOverrides: poolIdFlagOverride,
-		Flags:               osmocli.FlagDesc{RequiredFlags: []*flag.FlagSet{FlagSetJustPoolId()}},
+		Flags:               mokicli.FlagDesc{RequiredFlags: []*flag.FlagSet{FlagSetJustPoolId()}},
 	}, &types.MsgJoinSwapShareAmountOut{}
 }
 
-func NewExitSwapExternAmountOut() (*osmocli.TxCliDesc, *types.MsgExitSwapExternAmountOut) {
-	return &osmocli.TxCliDesc{
+func NewExitSwapExternAmountOut() (*mokicli.TxCliDesc, *types.MsgExitSwapExternAmountOut) {
+	return &mokicli.TxCliDesc{
 		Use:                 "exit-swap-extern-amount-out [token-out] [share-in-max-amount]",
 		Short:               "exit swap extern amount out",
 		CustomFlagOverrides: poolIdFlagOverride,
-		Flags:               osmocli.FlagDesc{RequiredFlags: []*flag.FlagSet{FlagSetJustPoolId()}},
+		Flags:               mokicli.FlagDesc{RequiredFlags: []*flag.FlagSet{FlagSetJustPoolId()}},
 	}, &types.MsgExitSwapExternAmountOut{}
 }
 
-func NewExitSwapShareAmountIn() (*osmocli.TxCliDesc, *types.MsgExitSwapShareAmountIn) {
-	return &osmocli.TxCliDesc{
+func NewExitSwapShareAmountIn() (*mokicli.TxCliDesc, *types.MsgExitSwapShareAmountIn) {
+	return &mokicli.TxCliDesc{
 		Use:                 "exit-swap-share-amount-in [token-out-denom] [share-in-amount] [token-out-min-amount]",
 		Short:               "exit swap share amount in",
 		CustomFlagOverrides: poolIdFlagOverride,
-		Flags:               osmocli.FlagDesc{RequiredFlags: []*flag.FlagSet{FlagSetJustPoolId()}},
+		Flags:               mokicli.FlagDesc{RequiredFlags: []*flag.FlagSet{FlagSetJustPoolId()}},
 	}, &types.MsgExitSwapShareAmountIn{}
 }
 
 // TODO: Change these flags to args. Required flags don't make that much sense.
 func NewStableSwapAdjustScalingFactorsCmd() *cobra.Command {
-	cmd := osmocli.TxCliDesc{
+	cmd := mokicli.TxCliDesc{
 		Use:              "adjust-scaling-factors --pool-id=[pool-id] --scaling-factors=[scaling-factors]",
 		Short:            "adjust scaling factors",
 		Example:          "mokitad adjust-scaling-factors --pool-id=1 --scaling-factors=\"100, 100\"",

@@ -6,10 +6,10 @@ import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/tendermint/tendermint/crypto/ed25519"
 
-	"github.com/petri-labs/mokita/x/gamm/pool-models/balancer"
-	minttypes "github.com/petri-labs/mokita/x/mint/types"
-	"github.com/petri-labs/mokita/x/superfluid/keeper/gov"
-	"github.com/petri-labs/mokita/x/superfluid/types"
+	"github.com/tessornetwork/mokita/x/gamm/pool-models/balancer"
+	minttypes "github.com/tessornetwork/mokita/x/mint/types"
+	"github.com/tessornetwork/mokita/x/superfluid/keeper/gov"
+	"github.com/tessornetwork/mokita/x/superfluid/types"
 )
 
 func (suite *KeeperTestSuite) createGammPool(denoms []string) uint64 {
@@ -33,7 +33,7 @@ func (suite *KeeperTestSuite) createGammPool(denoms []string) uint64 {
 		SwapFee: sdk.NewDecWithPrec(1, 2),
 		ExitFee: sdk.ZeroDec(),
 	}, poolAssets, "")
-	poolId, err := suite.App.SwapRouterKeeper.CreatePool(suite.Ctx, msg)
+	poolId, err := suite.App.GAMMKeeper.CreatePool(suite.Ctx, msg)
 	suite.Require().NoError(err)
 
 	return poolId

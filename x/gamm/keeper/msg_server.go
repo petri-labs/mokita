@@ -6,10 +6,9 @@ import (
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 
-	"github.com/petri-labs/mokita/x/gamm/pool-models/balancer"
-	"github.com/petri-labs/mokita/x/gamm/pool-models/stableswap"
-	"github.com/petri-labs/mokita/x/gamm/types"
-	swaproutertypes "github.com/petri-labs/mokita/x/swaprouter/types"
+	"github.com/tessornetwork/mokita/x/gamm/pool-models/balancer"
+	"github.com/tessornetwork/mokita/x/gamm/pool-models/stableswap"
+	"github.com/tessornetwork/mokita/x/gamm/types"
 )
 
 type msgServer struct {
@@ -67,10 +66,10 @@ func (server msgServer) StableSwapAdjustScalingFactors(goCtx context.Context, ms
 // CreatePool attempts to create a pool returning the newly created pool ID or an error upon failure.
 // The pool creation fee is used to fund the community pool.
 // It will create a dedicated module account for the pool and sends the initial liquidity to the created module account.
-func (server msgServer) CreatePool(goCtx context.Context, msg swaproutertypes.CreatePoolMsg) (poolId uint64, err error) {
+func (server msgServer) CreatePool(goCtx context.Context, msg types.CreatePoolMsg) (poolId uint64, err error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
-	poolId, err = server.keeper.poolManager.CreatePool(ctx, msg)
+	poolId, err = server.keeper.CreatePool(ctx, msg)
 	if err != nil {
 		return 0, err
 	}
@@ -163,10 +162,7 @@ func (server msgServer) SwapExactAmountIn(goCtx context.Context, msg *types.MsgS
 		return nil, err
 	}
 
-	// TODO: remove this redundancy after making routes be shared between x/gamm and x/swaprouter.
-	swaprouterRoutes := types.ConvertAmountInRoutes(msg.Routes)
-
-	tokenOutAmount, err := server.keeper.poolManager.RouteExactAmountIn(ctx, sender, swaprouterRoutes, msg.TokenIn, msg.TokenOutMinAmount)
+	tokenOutAmount, err := server.keeper.MultihopSwapExactAmountIn(ctx, sender, msg.Routes, msg.TokenIn, msg.TokenOutMinAmount)
 	if err != nil {
 		return nil, err
 	}
@@ -191,10 +187,7 @@ func (server msgServer) SwapExactAmountOut(goCtx context.Context, msg *types.Msg
 		return nil, err
 	}
 
-	// TODO: remove this redundancy after making routes be shared between x/gamm and x/swaprouter.
-	swaprouterRoutes := types.ConvertAmountOutRoutes(msg.Routes)
-
-	tokenInAmount, err := server.keeper.poolManager.RouteExactAmountOut(ctx, sender, swaprouterRoutes, msg.TokenInMaxAmount, msg.TokenOut)
+	tokenInAmount, err := server.keeper.MultihopSwapExactAmountOut(ctx, sender, msg.Routes, msg.TokenInMaxAmount, msg.TokenOut)
 	if err != nil {
 		return nil, err
 	}

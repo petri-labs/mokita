@@ -6,8 +6,8 @@ import (
 
 	"github.com/tendermint/tendermint/libs/log"
 
-	"github.com/osmosis-labs/osmosis/osmoutils"
-	"github.com/petri-labs/mokita/x/incentives/types"
+	"github.com/mokita-labs/mokita/mokiutils"
+	"github.com/tessornetwork/mokita/x/incentives/types"
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	paramtypes "github.com/cosmos/cosmos-sdk/x/params/types"
@@ -62,13 +62,13 @@ func (k Keeper) Logger(ctx sdk.Context) log.Logger {
 func (k Keeper) SetLockableDurations(ctx sdk.Context, lockableDurations []time.Duration) {
 	store := ctx.KVStore(k.storeKey)
 	info := types.LockableDurationsInfo{LockableDurations: lockableDurations}
-	osmoutils.MustSet(store, types.LockableDurationsKey, &info)
+	mokiutils.MustSet(store, types.LockableDurationsKey, &info)
 }
 
 // GetLockableDurations returns all incentivized lockable durations.
 func (k Keeper) GetLockableDurations(ctx sdk.Context) []time.Duration {
 	store := ctx.KVStore(k.storeKey)
 	info := types.LockableDurationsInfo{}
-	osmoutils.MustGet(store, types.LockableDurationsKey, &info)
+	mokiutils.MustGet(store, types.LockableDurationsKey, &info)
 	return info.LockableDurations
 }

@@ -1,8 +1,8 @@
 package superfluid
 
 import (
-	"github.com/petri-labs/mokita/x/superfluid/keeper"
-	"github.com/petri-labs/mokita/x/superfluid/types"
+	"github.com/tessornetwork/mokita/x/superfluid/keeper"
+	"github.com/tessornetwork/mokita/x/superfluid/types"
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 )

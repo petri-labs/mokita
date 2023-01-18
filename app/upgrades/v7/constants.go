@@ -3,8 +3,8 @@ package v7
 import (
 	"github.com/CosmWasm/wasmd/x/wasm"
 
-	"github.com/petri-labs/mokita/app/upgrades"
-	superfluidtypes "github.com/petri-labs/mokita/x/superfluid/types"
+	"github.com/tessornetwork/mokita/app/upgrades"
+	superfluidtypes "github.com/tessornetwork/mokita/x/superfluid/types"
 
 	store "github.com/cosmos/cosmos-sdk/store/types"
 )

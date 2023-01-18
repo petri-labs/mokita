@@ -5,8 +5,8 @@ import (
 
 	"github.com/stretchr/testify/require"
 
-	appparams "github.com/petri-labs/mokita/app/params"
-	"github.com/petri-labs/mokita/x/tokenfactory/types"
+	appparams "github.com/tessornetwork/mokita/app/params"
+	"github.com/tessornetwork/mokita/x/tokenfactory/types"
 )
 
 func TestDeconstructDenom(t *testing.T) {

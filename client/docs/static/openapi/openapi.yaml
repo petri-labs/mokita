@@ -47753,7 +47753,7 @@ components:
 
         RPC method.
 servers:
-  - url: https://lcd.osmosis.zone
+  - url: https://lcd.mokita.zone
     description: Mokita mainnet node
-  - url: https://lcd-test.osmosis.zone
+  - url: https://lcd-test.mokita.zone
     description: Mokita testnet node

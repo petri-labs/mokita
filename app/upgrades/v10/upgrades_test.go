@@ -6,8 +6,8 @@ import (
 
 	"github.com/stretchr/testify/suite"
 
-	"github.com/petri-labs/mokita/app/apptesting"
-	v10 "github.com/petri-labs/mokita/app/upgrades/v10"
+	"github.com/tessornetwork/mokita/app/apptesting"
+	v10 "github.com/tessornetwork/mokita/app/upgrades/v10"
 )
 
 type UpgradeTestSuite struct {

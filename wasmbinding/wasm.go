@@ -9,20 +9,24 @@ import (
 
 	bankkeeper "github.com/cosmos/cosmos-sdk/x/bank/keeper"
 
-	tokenfactorykeeper "github.com/petri-labs/mokita/x/tokenfactory/keeper"
+	gammkeeper "github.com/tessornetwork/mokita/x/gamm/keeper"
+	tokenfactorykeeper "github.com/tessornetwork/mokita/x/tokenfactory/keeper"
+	twap "github.com/tessornetwork/mokita/x/twap"
 )
 
 func RegisterCustomPlugins(
+	gammKeeper *gammkeeper.Keeper,
 	bank *bankkeeper.BaseKeeper,
+	twap *twap.Keeper,
 	tokenFactory *tokenfactorykeeper.Keeper,
 ) []wasmkeeper.Option {
-	wasmQueryPlugin := NewQueryPlugin(tokenFactory)
+	wasmQueryPlugin := NewQueryPlugin(gammKeeper, twap, tokenFactory)
 
 	queryPluginOpt := wasmkeeper.WithQueryPlugins(&wasmkeeper.QueryPlugins{
 		Custom: CustomQuerier(wasmQueryPlugin),
 	})
 	messengerDecoratorOpt := wasmkeeper.WithMessageHandlerDecorator(
-		CustomMessageDecorator(bank, tokenFactory),
+		CustomMessageDecorator(gammKeeper, bank, tokenFactory),
 	)
 
 	return []wasm.Option{

@@ -28,13 +28,13 @@ import (
 	"github.com/cosmos/cosmos-sdk/types/module"
 	stakingtypes "github.com/cosmos/cosmos-sdk/x/staking/types"
 
-	"github.com/petri-labs/mokita/simulation/simtypes"
-	"github.com/petri-labs/mokita/x/lockup/client/cli"
-	"github.com/petri-labs/mokita/x/lockup/client/rest"
-	"github.com/petri-labs/mokita/x/lockup/keeper"
+	"github.com/tessornetwork/mokita/simulation/simtypes"
+	"github.com/tessornetwork/mokita/x/lockup/client/cli"
+	"github.com/tessornetwork/mokita/x/lockup/client/rest"
+	"github.com/tessornetwork/mokita/x/lockup/keeper"
 
-	simulation "github.com/petri-labs/mokita/x/lockup/simulation"
-	"github.com/petri-labs/mokita/x/lockup/types"
+	simulation "github.com/tessornetwork/mokita/x/lockup/simulation"
+	"github.com/tessornetwork/mokita/x/lockup/types"
 )
 
 var (

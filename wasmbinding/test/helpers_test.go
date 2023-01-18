@@ -13,7 +13,7 @@ import (
 	"github.com/cosmos/cosmos-sdk/simapp"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 
-	"github.com/petri-labs/mokita/app"
+	"github.com/tessornetwork/mokita/app"
 )
 
 func CreateTestInput() (*app.MokitaApp, sdk.Context) {

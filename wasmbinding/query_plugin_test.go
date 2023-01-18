@@ -19,15 +19,15 @@ import (
 	"github.com/tendermint/tendermint/crypto/ed25519"
 	tmproto "github.com/tendermint/tendermint/proto/tendermint/types"
 
-	"github.com/petri-labs/mokita/app/apptesting"
-	"github.com/petri-labs/mokita/x/gamm/pool-models/balancer"
-	gammv2types "github.com/petri-labs/mokita/x/gamm/v2types"
+	"github.com/tessornetwork/mokita/app/apptesting"
+	"github.com/tessornetwork/mokita/x/gamm/pool-models/balancer"
+	gammv2types "github.com/tessornetwork/mokita/x/gamm/v2types"
 
-	"github.com/petri-labs/mokita/app"
-	epochtypes "github.com/petri-labs/mokita/x/epochs/types"
-	lockuptypes "github.com/petri-labs/mokita/x/lockup/types"
+	"github.com/tessornetwork/mokita/app"
+	epochtypes "github.com/tessornetwork/mokita/x/epochs/types"
+	lockuptypes "github.com/tessornetwork/mokita/x/lockup/types"
 
-	"github.com/petri-labs/mokita/wasmbinding"
+	"github.com/tessornetwork/mokita/wasmbinding"
 )
 
 type StargateTestSuite struct {
@@ -80,7 +80,7 @@ func (suite *StargateTestSuite) TestStargateQuerier() {
 				msg := balancer.NewMsgCreateBalancerPool(sender,
 					balancer.NewPoolParams(sdk.ZeroDec(), sdk.ZeroDec(), nil),
 					apptesting.DefaultPoolAssets, "")
-				_, err = suite.app.SwapRouterKeeper.CreatePool(suite.ctx, msg)
+				_, err = suite.app.GAMMKeeper.CreatePool(suite.ctx, msg)
 				suite.NoError(err)
 			},
 			requestData: func() []byte {

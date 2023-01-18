@@ -7,10 +7,10 @@ import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	stakingtypes "github.com/cosmos/cosmos-sdk/x/staking/types"
 
-	"github.com/petri-labs/mokita/x/gamm/pool-models/balancer"
-	gammtypes "github.com/petri-labs/mokita/x/gamm/types"
-	"github.com/petri-labs/mokita/x/superfluid/keeper"
-	"github.com/petri-labs/mokita/x/superfluid/types"
+	"github.com/tessornetwork/mokita/x/gamm/pool-models/balancer"
+	gammtypes "github.com/tessornetwork/mokita/x/gamm/types"
+	"github.com/tessornetwork/mokita/x/superfluid/keeper"
+	"github.com/tessornetwork/mokita/x/superfluid/types"
 )
 
 var (
@@ -96,7 +96,6 @@ func (suite *KeeperTestSuite) TestUnpool() {
 			superfluidKeeper := suite.App.SuperfluidKeeper
 			lockupKeeper := suite.App.LockupKeeper
 			stakingKeeper := suite.App.StakingKeeper
-			swaprouterKeeper := suite.App.SwapRouterKeeper
 
 			// generate one delegator Addr, one gamm pool
 			delAddrs := CreateRandomAccounts(2)
@@ -116,7 +115,7 @@ func (suite *KeeperTestSuite) TestUnpool() {
 				ExitFee: sdk.NewDec(0),
 			}, defaultPoolAssets, defaultFutureGovernor)
 
-			poolId, err := swaprouterKeeper.CreatePool(ctx, msg)
+			poolId, err := gammKeeper.CreatePool(ctx, msg)
 			suite.Require().NoError(err)
 
 			// join pool

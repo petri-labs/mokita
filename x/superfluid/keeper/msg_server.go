@@ -7,11 +7,11 @@ import (
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 
-	gammtypes "github.com/petri-labs/mokita/x/gamm/types"
-	lockuptypes "github.com/petri-labs/mokita/x/lockup/types"
+	gammtypes "github.com/tessornetwork/mokita/x/gamm/types"
+	lockuptypes "github.com/tessornetwork/mokita/x/lockup/types"
 
-	"github.com/petri-labs/mokita/x/superfluid/keeper/internal/events"
-	"github.com/petri-labs/mokita/x/superfluid/types"
+	"github.com/tessornetwork/mokita/x/superfluid/keeper/internal/events"
+	"github.com/tessornetwork/mokita/x/superfluid/types"
 )
 
 type msgServer struct {

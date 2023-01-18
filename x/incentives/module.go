@@ -27,11 +27,11 @@ import (
 	simtypes "github.com/cosmos/cosmos-sdk/types/simulation"
 	stakingtypes "github.com/cosmos/cosmos-sdk/x/staking/types"
 
-	"github.com/petri-labs/mokita/x/incentives/client/cli"
-	"github.com/petri-labs/mokita/x/incentives/keeper"
-	"github.com/petri-labs/mokita/x/incentives/simulation"
-	"github.com/petri-labs/mokita/x/incentives/types"
-	"github.com/petri-labs/mokita/x/mint/client/rest"
+	"github.com/tessornetwork/mokita/x/incentives/client/cli"
+	"github.com/tessornetwork/mokita/x/incentives/keeper"
+	"github.com/tessornetwork/mokita/x/incentives/simulation"
+	"github.com/tessornetwork/mokita/x/incentives/types"
+	"github.com/tessornetwork/mokita/x/mint/client/rest"
 )
 
 var (

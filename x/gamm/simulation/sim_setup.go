@@ -1,8 +1,8 @@
 package gammsimulation
 
 import (
-	"github.com/petri-labs/mokita/simulation/simtypes"
-	"github.com/petri-labs/mokita/x/gamm/keeper"
+	"github.com/tessornetwork/mokita/simulation/simtypes"
+	"github.com/tessornetwork/mokita/x/gamm/keeper"
 )
 
 func DefaultActions(keeper keeper.Keeper) []simtypes.Action {

@@ -3,8 +3,8 @@ package keeper
 import (
 	"time"
 
-	"github.com/osmosis-labs/osmosis/osmoutils"
-	lockuptypes "github.com/petri-labs/mokita/x/lockup/types"
+	"github.com/mokita-labs/mokita/mokiutils"
+	lockuptypes "github.com/tessornetwork/mokita/x/lockup/types"
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 )
@@ -61,7 +61,7 @@ func (k Keeper) slashSynthLock(ctx sdk.Context, synthLock *lockuptypes.Synthetic
 	lock, _ := k.lk.GetLockByID(ctx, synthLock.UnderlyingLockId)
 	slashAmt := lock.Coins[0].Amount.ToDec().Mul(slashFactor).TruncateInt()
 	slashCoins := sdk.NewCoins(sdk.NewCoin(lock.Coins[0].Denom, slashAmt))
-	_ = osmoutils.ApplyFuncIfNoError(ctx, func(cacheCtx sdk.Context) error {
+	_ = mokiutils.ApplyFuncIfNoError(ctx, func(cacheCtx sdk.Context) error {
 		// These tokens get moved to the community pool.
 		_, err := k.lk.SlashTokensFromLockByID(cacheCtx, lock.ID, slashCoins)
 		return err

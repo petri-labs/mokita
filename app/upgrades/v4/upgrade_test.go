@@ -11,8 +11,8 @@ import (
 	abci "github.com/tendermint/tendermint/abci/types"
 	tmproto "github.com/tendermint/tendermint/proto/tendermint/types"
 
-	"github.com/petri-labs/mokita/app"
-	v4 "github.com/petri-labs/mokita/app/upgrades/v4"
+	"github.com/tessornetwork/mokita/app"
+	v4 "github.com/tessornetwork/mokita/app/upgrades/v4"
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	upgradetypes "github.com/cosmos/cosmos-sdk/x/upgrade/types"

@@ -7,7 +7,7 @@ SDK_PACK := $(shell go list -m github.com/cosmos/cosmos-sdk | sed  's/ /\@/g')
 GO_VERSION := $(shell cat go.mod | grep -E 'go [0-9].[0-9]+' | cut -d ' ' -f 2)
 DOCKER := $(shell which docker)
 BUILDDIR ?= $(CURDIR)/build
-E2E_UPGRADE_VERSION := "v14"
+E2E_UPGRADE_VERSION := "v13"
 
 
 GO_MAJOR_VERSION = $(shell go version | cut -c 14- | cut -d' ' -f1 | cut -d'.' -f1)
@@ -41,9 +41,9 @@ ifeq ($(LEDGER_ENABLED),true)
   endif
 endif
 
-ifeq (cleveldb,$(findstring cleveldb,$(MOKISIS_BUILD_OPTIONS)))
+ifeq (cleveldb,$(findstring cleveldb,$(MOKITA_BUILD_OPTIONS)))
   build_tags += gcc
-else ifeq (rocksdb,$(findstring rocksdb,$(MOKISIS_BUILD_OPTIONS)))
+else ifeq (rocksdb,$(findstring rocksdb,$(MOKITA_BUILD_OPTIONS)))
   build_tags += gcc
 endif
 build_tags += $(BUILD_TAGS)
@@ -62,12 +62,12 @@ ldflags = -X github.com/cosmos/cosmos-sdk/version.Name=mokita \
 		  -X github.com/cosmos/cosmos-sdk/version.Commit=$(COMMIT) \
 		  -X "github.com/cosmos/cosmos-sdk/version.BuildTags=$(build_tags_comma_sep)"
 
-ifeq (cleveldb,$(findstring cleveldb,$(MOKISIS_BUILD_OPTIONS)))
+ifeq (cleveldb,$(findstring cleveldb,$(MOKITA_BUILD_OPTIONS)))
   ldflags += -X github.com/cosmos/cosmos-sdk/types.DBBackend=cleveldb
-else ifeq (rocksdb,$(findstring rocksdb,$(MOKISIS_BUILD_OPTIONS)))
+else ifeq (rocksdb,$(findstring rocksdb,$(MOKITA_BUILD_OPTIONS)))
   ldflags += -X github.com/cosmos/cosmos-sdk/types.DBBackend=rocksdb
 endif
-ifeq (,$(findstring nostrip,$(MOKISIS_BUILD_OPTIONS)))
+ifeq (,$(findstring nostrip,$(MOKITA_BUILD_OPTIONS)))
   ldflags += -w -s
 endif
 ifeq ($(LINK_STATICALLY),true)
@@ -78,7 +78,7 @@ ldflags := $(strip $(ldflags))
 
 BUILD_FLAGS := -tags "$(build_tags)" -ldflags '$(ldflags)'
 # check for nostrip option
-ifeq (,$(findstring nostrip,$(MOKISIS_BUILD_OPTIONS)))
+ifeq (,$(findstring nostrip,$(MOKITA_BUILD_OPTIONS)))
   BUILD_FLAGS += -trimpath
 endif
 
@@ -207,7 +207,7 @@ docs:
 .PHONY: docs
 
 protoVer=v0.8
-protoImageName=osmolabs/osmo-proto-gen:$(protoVer)
+protoImageName=mokilabs/moki-proto-gen:$(protoVer)
 containerProtoGen=cosmos-sdk-proto-gen-$(protoVer)
 containerProtoFmt=cosmos-sdk-proto-fmt-$(protoVer)
 
@@ -282,19 +282,19 @@ test-e2e: e2e-setup test-e2e-ci
 # does not do any validation about the state of the Docker environment
 # As a result, avoid using this locally.
 test-e2e-ci:
-	@VERSION=$(VERSION) MOKISIS_E2E=True MOKISIS_E2E_DEBUG_LOG=False MOKISIS_E2E_UPGRADE_VERSION=$(E2E_UPGRADE_VERSION)  go test -mod=readonly -timeout=25m -v $(PACKAGES_E2E)
+	@VERSION=$(VERSION) MOKITA_E2E=True MOKITA_E2E_DEBUG_LOG=False MOKITA_E2E_UPGRADE_VERSION=$(E2E_UPGRADE_VERSION)  go test -mod=readonly -timeout=25m -v $(PACKAGES_E2E)
 
 # test-e2e-debug runs a full e2e test suite but does
 # not attempt to delete Docker resources at the end.
 test-e2e-debug: e2e-setup
-	@VERSION=$(VERSION) MOKISIS_E2E=True MOKISIS_E2E_DEBUG_LOG=True MOKISIS_E2E_UPGRADE_VERSION=$(E2E_UPGRADE_VERSION) MOKISIS_E2E_SKIP_CLEANUP=True go test -mod=readonly -timeout=25m -v $(PACKAGES_E2E) -count=1
+	@VERSION=$(VERSION) MOKITA_E2E=True MOKITA_E2E_DEBUG_LOG=True MOKITA_E2E_UPGRADE_VERSION=$(E2E_UPGRADE_VERSION) MOKITA_E2E_SKIP_CLEANUP=True go test -mod=readonly -timeout=25m -v $(PACKAGES_E2E) -count=1
 
 # test-e2e-short runs the e2e test with only short tests.
 # Does not delete any of the containers after running.
 # Deletes any existing containers before running.
 # Does not use Go cache.
 test-e2e-short: e2e-setup
-	@VERSION=$(VERSION) MOKISIS_E2E=True MOKISIS_E2E_DEBUG_LOG=True MOKISIS_E2E_SKIP_UPGRADE=True MOKISIS_E2E_SKIP_IBC=True MOKISIS_E2E_SKIP_STATE_SYNC=True MOKISIS_E2E_SKIP_CLEANUP=True go test -mod=readonly -timeout=25m -v $(PACKAGES_E2E) -count=1
+	@VERSION=$(VERSION) MOKITA_E2E=True MOKITA_E2E_DEBUG_LOG=True MOKITA_E2E_SKIP_UPGRADE=True MOKITA_E2E_SKIP_IBC=True MOKITA_E2E_SKIP_STATE_SYNC=True MOKITA_E2E_SKIP_CLEANUP=True go test -mod=readonly -timeout=25m -v $(PACKAGES_E2E) -count=1
 
 test-mutation:
 	@bash scripts/mutation-test.sh $(MODULES)
@@ -308,10 +308,6 @@ build-e2e-script:
 
 docker-build-debug:
 	@DOCKER_BUILDKIT=1 docker build -t mokita:${COMMIT} --build-arg BASE_IMG_TAG=debug -f Dockerfile .
-	@DOCKER_BUILDKIT=1 docker tag mokita:${COMMIT} mokita:debug
-
-docker-build-debug-alpine:
-	@DOCKER_BUILDKIT=1 docker build -t mokita:${COMMIT} --build-arg BASE_IMG_TAG=debug --build-arg RUNNER_IMAGE=$(RUNNER_BASE_IMAGE_ALPINE) -f Dockerfile .
 	@DOCKER_BUILDKIT=1 docker tag mokita:${COMMIT} mokita:debug
 
 docker-build-e2e-init-chain:

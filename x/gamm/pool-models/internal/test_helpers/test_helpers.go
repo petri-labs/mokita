@@ -12,9 +12,9 @@ import (
 	tmtypes "github.com/tendermint/tendermint/proto/tendermint/types"
 	dbm "github.com/tendermint/tm-db"
 
-	"github.com/osmosis-labs/osmosis/osmomath"
-	sdkrand "github.com/petri-labs/mokita/simulation/simtypes/random"
-	"github.com/petri-labs/mokita/x/gamm/types"
+	"github.com/mokita-labs/mokita/mokimath"
+	sdkrand "github.com/tessornetwork/mokita/simulation/simtypes/random"
+	"github.com/tessornetwork/mokita/x/gamm/types"
 )
 
 // CfmmCommonTestSuite is the common test suite struct of Constant Function Market Maker,
@@ -35,12 +35,12 @@ func (suite *CfmmCommonTestSuite) CreateTestContext() sdk.Context {
 func TestCalculateAmountOutAndIn_InverseRelationship(
 	t *testing.T,
 	ctx sdk.Context,
-	pool types.CFMMPoolI,
+	pool types.PoolI,
 	assetInDenom string,
 	assetOutDenom string,
 	initialCalcOut int64,
 	swapFee sdk.Dec,
-	errTolerance osmomath.ErrTolerance,
+	errTolerance mokimath.ErrTolerance,
 ) {
 	initialOut := sdk.NewInt64Coin(assetOutDenom, initialCalcOut)
 	initialOutCoins := sdk.NewCoins(initialOut)
@@ -68,7 +68,7 @@ func TestCalculateAmountOutAndIn_InverseRelationship(
 		require.True(t, actual.GT(expected))
 	} else {
 		if expected.Sub(actual).Abs().GT(sdk.OneDec()) {
-			compRes := errTolerance.CompareBigDec(osmomath.BigDecFromSDKDec(expected), osmomath.BigDecFromSDKDec(actual))
+			compRes := errTolerance.CompareBigDec(mokimath.BigDecFromSDKDec(expected), mokimath.BigDecFromSDKDec(actual))
 			require.True(t, compRes == 0, "expected %s, actual %s, not within error tolerance %v",
 				expected, actual, errTolerance)
 		}
@@ -79,7 +79,7 @@ func TestSlippageRelationWithLiquidityIncrease(
 	testname string,
 	t *testing.T,
 	ctx sdk.Context,
-	createPoolWithLiquidity func(sdk.Context, sdk.Coins) types.CFMMPoolI,
+	createPoolWithLiquidity func(sdk.Context, sdk.Coins) types.PoolI,
 	initLiquidity sdk.Coins,
 ) {
 	TestSlippageRelationOutGivenIn(testname, t, ctx, createPoolWithLiquidity, initLiquidity)
@@ -90,7 +90,7 @@ func TestSlippageRelationOutGivenIn(
 	testname string,
 	t *testing.T,
 	ctx sdk.Context,
-	createPoolWithLiquidity func(sdk.Context, sdk.Coins) types.CFMMPoolI,
+	createPoolWithLiquidity func(sdk.Context, sdk.Coins) types.PoolI,
 	initLiquidity sdk.Coins,
 ) {
 	r := rand.New(rand.NewSource(100))
@@ -123,7 +123,7 @@ func TestSlippageRelationInGivenOut(
 	testname string,
 	t *testing.T,
 	ctx sdk.Context,
-	createPoolWithLiquidity func(sdk.Context, sdk.Coins) types.CFMMPoolI,
+	createPoolWithLiquidity func(sdk.Context, sdk.Coins) types.PoolI,
 	initLiquidity sdk.Coins,
 ) {
 	r := rand.New(rand.NewSource(100))
@@ -164,7 +164,7 @@ func TestSlippageRelationInGivenOut(
 }
 
 // returns true if the pool can accommodate an InGivenOut swap with `tokenOut` amount out, false otherwise
-func isWithinBounds(ctx sdk.Context, pool types.CFMMPoolI, tokenOut sdk.Coins, tokenInDenom string, swapFee sdk.Dec) (b bool) {
+func isWithinBounds(ctx sdk.Context, pool types.PoolI, tokenOut sdk.Coins, tokenInDenom string, swapFee sdk.Dec) (b bool) {
 	b = true
 	defer func() {
 		if r := recover(); r != nil {

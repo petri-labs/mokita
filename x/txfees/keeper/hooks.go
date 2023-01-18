@@ -3,9 +3,9 @@ package keeper
 import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 
-	"github.com/osmosis-labs/osmosis/osmoutils"
-	epochstypes "github.com/petri-labs/mokita/x/epochs/types"
-	txfeestypes "github.com/petri-labs/mokita/x/txfees/types"
+	"github.com/mokita-labs/mokita/mokiutils"
+	epochstypes "github.com/tessornetwork/mokita/x/epochs/types"
+	txfeestypes "github.com/tessornetwork/mokita/x/txfees/types"
 )
 
 func (k Keeper) BeforeEpochStart(ctx sdk.Context, epochIdentifier string, epochNumber int64) error {
@@ -28,13 +28,13 @@ func (k Keeper) AfterEpochEnd(ctx sdk.Context, epochIdentifier string, epochNumb
 		}
 
 		// Do the swap of this fee token denom to base denom.
-		_ = osmoutils.ApplyFuncIfNoError(ctx, func(cacheCtx sdk.Context) error {
+		_ = mokiutils.ApplyFuncIfNoError(ctx, func(cacheCtx sdk.Context) error {
 			// We allow full slippage. Theres not really an effective way to bound slippage until TWAP's land,
 			// but even then the point is a bit moot.
 			// The only thing that could be done is a costly griefing attack to reduce the amount of moki given as tx fees.
 			// However the idea of the txfees FeeToken gating is that the pool is sufficiently liquid for that base token.
 			minAmountOut := sdk.ZeroInt()
-			_, err := k.poolManager.SwapExactAmountIn(cacheCtx, nonNativeFeeAddr, feetoken.PoolID, coinBalance, baseDenom, minAmountOut)
+			_, err := k.gammKeeper.SwapExactAmountIn(cacheCtx, nonNativeFeeAddr, feetoken.PoolID, coinBalance, baseDenom, minAmountOut)
 			return err
 		})
 	}
@@ -42,7 +42,7 @@ func (k Keeper) AfterEpochEnd(ctx sdk.Context, epochIdentifier string, epochNumb
 	// Get all of the txfee payout denom in the module account
 	baseDenomCoins := sdk.NewCoins(k.bankKeeper.GetBalance(ctx, nonNativeFeeAddr, baseDenom))
 
-	_ = osmoutils.ApplyFuncIfNoError(ctx, func(cacheCtx sdk.Context) error {
+	_ = mokiutils.ApplyFuncIfNoError(ctx, func(cacheCtx sdk.Context) error {
 		err := k.bankKeeper.SendCoinsFromModuleToModule(ctx, txfeestypes.NonNativeFeeCollectorName, txfeestypes.FeeCollectorName, baseDenomCoins)
 		return err
 	})

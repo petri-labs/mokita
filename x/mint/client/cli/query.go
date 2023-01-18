@@ -6,8 +6,8 @@ import (
 
 	"github.com/spf13/cobra"
 
-	"github.com/osmosis-labs/osmosis/osmoutils/osmocli"
-	"github.com/petri-labs/mokita/x/mint/types"
+	"github.com/mokita-labs/mokita/mokiutils/mokicli"
+	"github.com/tessornetwork/mokita/x/mint/types"
 
 	"github.com/cosmos/cosmos-sdk/client"
 	"github.com/cosmos/cosmos-sdk/client/flags"
@@ -15,7 +15,7 @@ import (
 
 // GetQueryCmd returns the cli query commands for the minting module.
 func GetQueryCmd() *cobra.Command {
-	cmd := osmocli.QueryIndexCmd(types.ModuleName)
+	cmd := mokicli.QueryIndexCmd(types.ModuleName)
 	cmd.AddCommand(
 		GetCmdQueryParams(),
 		GetCmdQueryEpochProvisions(),

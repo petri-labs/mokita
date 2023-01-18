@@ -18,10 +18,10 @@ import (
 	"github.com/stretchr/testify/require"
 	tmabcitypes "github.com/tendermint/tendermint/abci/types"
 
-	"github.com/petri-labs/mokita/tests/e2e/util"
-	epochstypes "github.com/petri-labs/mokita/x/epochs/types"
-	superfluidtypes "github.com/petri-labs/mokita/x/superfluid/types"
-	twapqueryproto "github.com/petri-labs/mokita/x/twap/client/queryproto"
+	"github.com/tessornetwork/mokita/tests/e2e/util"
+	epochstypes "github.com/tessornetwork/mokita/x/epochs/types"
+	superfluidtypes "github.com/tessornetwork/mokita/x/superfluid/types"
+	twapqueryproto "github.com/tessornetwork/mokita/x/twap/client/queryproto"
 )
 
 func (n *NodeConfig) QueryGRPCGateway(path string, parameters ...string) ([]byte, error) {
@@ -187,6 +187,7 @@ func (n *NodeConfig) QueryArithmeticTwapToNow(poolId uint64, baseAsset, quoteAss
 		return sdk.Dec{}, err
 	}
 
+	// nolint: staticcheck
 	var response twapqueryproto.ArithmeticTwapToNowResponse
 	err = util.Cdc.UnmarshalJSON(bz, &response)
 	require.NoError(n.t, err) // this error should not happen
@@ -208,51 +209,11 @@ func (n *NodeConfig) QueryArithmeticTwap(poolId uint64, baseAsset, quoteAsset st
 		return sdk.Dec{}, err
 	}
 
+	// nolint: staticcheck
 	var response twapqueryproto.ArithmeticTwapResponse
 	err = util.Cdc.UnmarshalJSON(bz, &response)
 	require.NoError(n.t, err) // this error should not happen
 	return response.ArithmeticTwap, nil
-}
-
-func (n *NodeConfig) QueryGeometricTwapToNow(poolId uint64, baseAsset, quoteAsset string, startTime time.Time) (sdk.Dec, error) {
-	path := "mokita/twap/v1beta1/GeometricTwapToNow"
-
-	bz, err := n.QueryGRPCGateway(
-		path,
-		"pool_id", strconv.FormatInt(int64(poolId), 10),
-		"base_asset", baseAsset,
-		"quote_asset", quoteAsset,
-		"start_time", startTime.Format(time.RFC3339Nano),
-	)
-	if err != nil {
-		return sdk.Dec{}, err
-	}
-
-	var response twapqueryproto.GeometricTwapToNowResponse
-	err = util.Cdc.UnmarshalJSON(bz, &response)
-	require.NoError(n.t, err)
-	return response.GeometricTwap, nil
-}
-
-func (n *NodeConfig) QueryGeometricTwap(poolId uint64, baseAsset, quoteAsset string, startTime time.Time, endTime time.Time) (sdk.Dec, error) {
-	path := "mokita/twap/v1beta1/GeometricTwap"
-
-	bz, err := n.QueryGRPCGateway(
-		path,
-		"pool_id", strconv.FormatInt(int64(poolId), 10),
-		"base_asset", baseAsset,
-		"quote_asset", quoteAsset,
-		"start_time", startTime.Format(time.RFC3339Nano),
-		"end_time", endTime.Format(time.RFC3339Nano),
-	)
-	if err != nil {
-		return sdk.Dec{}, err
-	}
-
-	var response twapqueryproto.GeometricTwapResponse
-	err = util.Cdc.UnmarshalJSON(bz, &response)
-	require.NoError(n.t, err)
-	return response.GeometricTwap, nil
 }
 
 // QueryHashFromBlock gets block hash at a specific height. Otherwise, error.

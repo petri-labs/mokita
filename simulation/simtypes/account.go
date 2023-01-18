@@ -7,7 +7,7 @@ import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/cosmos/cosmos-sdk/types/simulation"
 
-	sdkrand "github.com/petri-labs/mokita/simulation/simtypes/random"
+	sdkrand "github.com/tessornetwork/mokita/simulation/simtypes/random"
 )
 
 func (sim *SimCtx) RandomSimAccount() simulation.Account {

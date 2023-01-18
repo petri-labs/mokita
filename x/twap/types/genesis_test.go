@@ -28,7 +28,6 @@ var (
 		P1LastSpotPrice:             sdk.OneDec(),
 		P0ArithmeticTwapAccumulator: sdk.OneDec(),
 		P1ArithmeticTwapAccumulator: sdk.OneDec(),
-		GeometricTwapAccumulator:    sdk.OneDec(),
 	}
 )
 
@@ -56,7 +55,6 @@ func TestGenesisState_Validate(t *testing.T) {
 					P1LastSpotPrice:             sdk.OneDec(),
 					P0ArithmeticTwapAccumulator: sdk.OneDec(),
 					P1ArithmeticTwapAccumulator: sdk.OneDec(),
-					GeometricTwapAccumulator:    sdk.OneDec(),
 				},
 				{
 					PoolId:                      basePoolId,
@@ -68,7 +66,6 @@ func TestGenesisState_Validate(t *testing.T) {
 					P1LastSpotPrice:             sdk.OneDec(),
 					P0ArithmeticTwapAccumulator: sdk.OneDec(),
 					P1ArithmeticTwapAccumulator: sdk.OneDec(),
-					GeometricTwapAccumulator:    sdk.OneDec(),
 				},
 			})
 	)
@@ -292,23 +289,6 @@ func TestTWAPRecord_Validate(t *testing.T) {
 					P0LastSpotPrice:             sdk.OneDec(),
 					P1LastSpotPrice:             sdk.OneDec(),
 					P0ArithmeticTwapAccumulator: sdk.OneDec(),
-				}
-				return r
-			}(),
-			expectedErr: true,
-		},
-		"invalid geometric accum: nil": {
-			twapRecord: func() TwapRecord {
-				r := TwapRecord{
-					PoolId:                      basePoolId,
-					Asset0Denom:                 denom0,
-					Asset1Denom:                 denom1,
-					Height:                      3,
-					Time:                        tPlusOne.Add(time.Second),
-					P0LastSpotPrice:             sdk.OneDec(),
-					P1LastSpotPrice:             sdk.OneDec(),
-					P0ArithmeticTwapAccumulator: sdk.OneDec(),
-					P1ArithmeticTwapAccumulator: sdk.OneDec(),
 				}
 				return r
 			}(),

@@ -1,20 +1,20 @@
 package v9
 
 import (
-	"github.com/petri-labs/mokita/app/upgrades"
+	"github.com/tessornetwork/mokita/app/upgrades"
 
 	store "github.com/cosmos/cosmos-sdk/store/types"
 
-	icahosttypes "github.com/cosmos/ibc-go/v4/modules/apps/27-interchain-accounts/host/types"
+	icahosttypes "github.com/cosmos/ibc-go/v3/modules/apps/27-interchain-accounts/host/types"
 
-	tokenfactorytypes "github.com/petri-labs/mokita/x/tokenfactory/types"
+	tokenfactorytypes "github.com/tessornetwork/mokita/x/tokenfactory/types"
 )
 
 // UpgradeName defines the on-chain upgrade name for the Mokita v9 upgrade.
 const UpgradeName = "v9"
 
 // The historic name of the claims module, which is removed in this release.
-// Cross-check against https://github.com/petri-labs/mokita/blob/v7.2.0/x/claim/types/keys.go#L5
+// Cross-check against https://github.com/mokita-labs/mokita/blob/v7.2.0/x/claim/types/keys.go#L5
 const ClaimsModuleName = "claim"
 
 var Upgrade = upgrades.Upgrade{

@@ -11,9 +11,9 @@ import (
 	"github.com/gogo/protobuf/proto"
 	db "github.com/tendermint/tm-db"
 
-	epochtypes "github.com/petri-labs/mokita/x/epochs/types"
-	"github.com/petri-labs/mokita/x/incentives/types"
-	lockuptypes "github.com/petri-labs/mokita/x/lockup/types"
+	epochtypes "github.com/tessornetwork/mokita/x/epochs/types"
+	"github.com/tessornetwork/mokita/x/incentives/types"
+	lockuptypes "github.com/tessornetwork/mokita/x/lockup/types"
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 )
