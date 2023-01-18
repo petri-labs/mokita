@@ -41,8 +41,7 @@ service Query {
   }
   // Returns scheduled gauges that have not yet occured
   rpc UpcomingGauges(UpcomingGaugesRequest) returns (UpcomingGaugesResponse) {
-    option (google.api.http).get =
-        "/mokita/incentives/v1beta1/upcoming_gauges";
+    option (google.api.http).get = "/mokita/incentives/v1beta1/upcoming_gauges";
   }
   // UpcomingGaugesPerDenom returns scheduled gauges that have not yet occured
   // by denom

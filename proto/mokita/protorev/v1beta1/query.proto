@@ -56,8 +56,7 @@ service Query {
   // is currently arbitraging
   rpc GetProtoRevTokenPairArbRoutes(QueryGetProtoRevTokenPairArbRoutesRequest)
       returns (QueryGetProtoRevTokenPairArbRoutesResponse) {
-    option (google.api.http).get =
-        "/mokita/v13/protorev/token_pair_arb_routes";
+    option (google.api.http).get = "/mokita/v13/protorev/token_pair_arb_routes";
   }
 }
 

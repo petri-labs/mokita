@@ -20,8 +20,7 @@ service Query {
   // DenomSpotPrice returns all spot prices by each registered token denom.
   rpc DenomSpotPrice(QueryDenomSpotPriceRequest)
       returns (QueryDenomSpotPriceResponse) {
-    option (google.api.http).get =
-        "/mokita/txfees/v1beta1/spot_price_by_denom";
+    option (google.api.http).get = "/mokita/txfees/v1beta1/spot_price_by_denom";
   }
 
   // Returns the poolID for a specified denom input.
