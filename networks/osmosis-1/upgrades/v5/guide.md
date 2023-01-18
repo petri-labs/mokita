@@ -102,7 +102,7 @@ To prepare for the upgrade, you need to create some folders, and build
 and install the new binary.
 
     mkdir -p ~/.mokitad/cmokivisor/upgrades/v5/bin
-    git clone https://github.com/mokita-labs/mokita
+    git clone https://github.com/tessornetwork/mokita
     cd mokita
     git checkout v5.0.0
     make build

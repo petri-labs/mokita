@@ -342,7 +342,7 @@ func TestSwapMsg(t *testing.T) {
 		},
 
 		// FIXME: this panics in GAMM module !?! hits a known TODO
-		// https://github.com/mokita-labs/mokita/blob/a380ab2fcd39fb94c2b10411e07daf664911257a/mokimath/math.go#L47-L51
+		// https://github.com/tessornetwork/mokita/blob/a380ab2fcd39fb94c2b10411e07daf664911257a/osmomath/math.go#L47-L51
 		//"exact out: panics if too much swapped": {
 		//	msg: func(state BaseState) *bindings.SwapMsg {
 		//		return &bindings.SwapMsg{
@@ -451,7 +451,7 @@ func TestSwapMsg(t *testing.T) {
 			},
 		},
 		// FIXME: this panics in GAMM module !?! hits a known TODO
-		// https://github.com/mokita-labs/mokita/blob/a380ab2fcd39fb94c2b10411e07daf664911257a/mokimath/math.go#L47-L51
+		// https://github.com/tessornetwork/mokita/blob/a380ab2fcd39fb94c2b10411e07daf664911257a/osmomath/math.go#L47-L51
 		// {
 		// 	name: "exact out: panics on math power stuff",
 		// 	msg: func(state BaseState) *bindings.SwapMsg {

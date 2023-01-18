@@ -119,7 +119,7 @@ the following formula:
 
 `(tokenBalanceIn / tokenWeightIn) / (tokenBalanceOut / tokenWeightOut)`
 
-[Spot price](https://github.com/mokita-labs/mokita/blob/main/x/gamm/keeper/swap.go)
+[Spot price](https://github.com/tessornetwork/mokita/blob/main/x/gamm/keeper/swap.go)
 
 #### Multi-Hop
 
@@ -134,7 +134,7 @@ the swap fees on each hop would be automatically halved.
 Example: for converting `ATOM -> MOKI -> LUNA` using two pools with swap fees `0.3% + 0.2%`,
 instead `0.15% + 0.1%` fees will be aplied. 
 
-[Multi-Hop](https://github.com/mokita-labs/mokita/blob/main/x/gamm/keeper/multihop.go)
+[Multi-Hop](https://github.com/tessornetwork/mokita/blob/main/x/gamm/keeper/multihop.go)
 
 ## Weights
 
@@ -204,39 +204,39 @@ The `x/gamm` module supports the following message types:
 
 ### MsgCreateBalancerPool
 
-[MsgCreateBalancerPool](https://github.com/mokita-labs/mokita/blob/v7.1.0/proto/mokita/gamm/pool-models/balancer/tx.proto#L16-L26)
+[MsgCreateBalancerPool](https://github.com/tessornetwork/mokita/blob/v7.1.0/proto/mokita/gamm/pool-models/balancer/tx.proto#L16-L26)
 
 ### MsgJoinPool
 
-[MsgJoinPool](https://github.com/mokita-labs/mokita/blob/v7.1.0/proto/mokita/gamm/v1beta1/tx.proto#L27-L39)
+[MsgJoinPool](https://github.com/tessornetwork/mokita/blob/v7.1.0/proto/mokita/gamm/v1beta1/tx.proto#L27-L39)
 
 ### MsgExitPool
 
-[MsgExitPool](https://github.com/mokita-labs/mokita/blob/v7.1.0/proto/mokita/gamm/v1beta1/tx.proto#L44-L57)
+[MsgExitPool](https://github.com/tessornetwork/mokita/blob/v7.1.0/proto/mokita/gamm/v1beta1/tx.proto#L44-L57)
 
 ### MsgSwapExactAmountIn
 
-[MsgSwapExactAmountIn](https://github.com/mokita-labs/mokita/blob/v7.1.0/proto/mokita/gamm/v1beta1/tx.proto#L68-L80)
+[MsgSwapExactAmountIn](https://github.com/tessornetwork/mokita/blob/v7.1.0/proto/mokita/gamm/v1beta1/tx.proto#L68-L80)
 
 ### MsgSwapExactAmountOut
 
-[MsgSwapExactAmountOut](https://github.com/mokita-labs/mokita/blob/v7.1.0/proto/mokita/gamm/v1beta1/tx.proto#L90-L102)
+[MsgSwapExactAmountOut](https://github.com/tessornetwork/mokita/blob/v7.1.0/proto/mokita/gamm/v1beta1/tx.proto#L90-L102)
 
 ### MsgJoinSwapExternAmountIn
 
-[MsgJoinSwapExternAmountIn](https://github.com/mokita-labs/mokita/blob/v7.1.0/proto/mokita/gamm/v1beta1/tx.proto#L107-L119)
+[MsgJoinSwapExternAmountIn](https://github.com/tessornetwork/mokita/blob/v7.1.0/proto/mokita/gamm/v1beta1/tx.proto#L107-L119)
 
 #### MsgJoinSwapShareAmountOut
 
-[MsgJoinSwapShareAmountOut](https://github.com/mokita-labs/mokita/blob/v7.1.0/proto/mokita/gamm/v1beta1/tx.proto#L124-L138)
+[MsgJoinSwapShareAmountOut](https://github.com/tessornetwork/mokita/blob/v7.1.0/proto/mokita/gamm/v1beta1/tx.proto#L124-L138)
 
 #### MsgExitSwapShareAmountIn
 
-[MsgExitSwapShareAmountIn](https://github.com/mokita-labs/mokita/blob/v7.1.0/proto/mokita/gamm/v1beta1/tx.proto#L143-L158)
+[MsgExitSwapShareAmountIn](https://github.com/tessornetwork/mokita/blob/v7.1.0/proto/mokita/gamm/v1beta1/tx.proto#L143-L158)
 
 #### MsgExitSwapExternAmountOut
 
-[MsgExitSwapExternAmountOut](https://github.com/mokita-labs/mokita/blob/v7.1.0/proto/mokita/gamm/v1beta1/tx.proto#L163-L175)
+[MsgExitSwapExternAmountOut](https://github.com/tessornetwork/mokita/blob/v7.1.0/proto/mokita/gamm/v1beta1/tx.proto#L163-L175)
 
 ## Transactions
 

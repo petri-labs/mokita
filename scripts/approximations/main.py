@@ -25,8 +25,8 @@ num_points_plot = 100000
 # function to approximate
 approximated_fn = lambda x: sp.Pow(sp.E, x)
 
-# fixed point precision used in Mokita `mokimath` package.
-mokimath_precision = 36
+# fixed point precision used in Mokita `osmomath` package.
+osmomath_precision = 36
 
 # flag controlling whether to plot each approximation.
 # Plots if true.
@@ -167,18 +167,18 @@ def main():
 
 # This script isolates the 13-parameter Chebyshev Rational approximation of e^x
 # We are planning to use it in production. Therefore, we need to peform coefficient
-# truncations to 36 decimal points (the max mokimath supported precision).
+# truncations to 36 decimal points (the max osmomath supported precision).
 def exponent_approximation_choice():
     # Equispaced x coordinates to be used for plotting every approximation.
     x_coordinates = approximations.linspace(x_start, x_end, num_points_plot)
-    x_coordinates = [sp.Float(sp.N(coef, mokimath_precision + 1), mokimath_precision + 1) for coef in x_coordinates]
+    x_coordinates = [sp.Float(sp.N(coef, osmomath_precision + 1), osmomath_precision + 1) for coef in x_coordinates]
 
     # Chebyshev Rational Approximation to get the coefficients.
     coef_numerator, coef_denominator = approximations.chebyshev_rational_approx(approximated_fn, x_start, x_end, num_parameters)
 
-    # Truncate the coefficients to mokimath precision.
-    coef_numerator = [sp.Float(sp.N(coef, mokimath_precision + 1), mokimath_precision + 1) for coef in coef_numerator]
-    coef_denominator = [sp.Float(sp.N(coef, mokimath_precision + 1), mokimath_precision + 1) for coef in coef_denominator]
+    # Truncate the coefficients to osmomath precision.
+    coef_numerator = [sp.Float(sp.N(coef, osmomath_precision + 1), osmomath_precision + 1) for coef in coef_numerator]
+    coef_denominator = [sp.Float(sp.N(coef, osmomath_precision + 1), osmomath_precision + 1) for coef in coef_denominator]
 
     # Evaluate approximation.
     y_chebyshev_rational = rational.evaluate(x_coordinates, coef_numerator, coef_denominator)

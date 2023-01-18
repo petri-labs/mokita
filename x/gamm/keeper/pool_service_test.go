@@ -6,7 +6,7 @@ import (
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 
-	"github.com/mokita-labs/mokita/mokiutils/mokiassert"
+	"github.com/osmosis-labs/osmosis/osmoutils/osmoassert"
 	"github.com/tessornetwork/mokita/x/gamm/pool-models/balancer"
 	balancertypes "github.com/tessornetwork/mokita/x/gamm/pool-models/balancer"
 	"github.com/tessornetwork/mokita/x/gamm/types"
@@ -359,7 +359,7 @@ func (suite *KeeperTestSuite) TestSpotPriceOverflow() {
 			suite.Require().NoError(err)
 			var poolSpotPrice sdk.Dec
 			var poolErr error
-			mokiassert.ConditionalPanic(suite.T(), tc.panics, func() {
+			osmoassert.ConditionalPanic(suite.T(), tc.panics, func() {
 				poolSpotPrice, poolErr = pool.SpotPrice(suite.Ctx, tc.baseAssetDenom, tc.quoteAssetDenom)
 			})
 			keeperSpotPrice, keeperErr := suite.App.GAMMKeeper.CalculateSpotPrice(suite.Ctx, poolId, tc.baseAssetDenom, tc.quoteAssetDenom)
@@ -780,7 +780,7 @@ func (suite *KeeperTestSuite) TestJoinSwapExactAmountInConsistency() {
 		// TODO: Uncomment or remove this following test case once the referenced
 		// issue is resolved.
 		//
-		// Ref: https://github.com/mokita-labs/mokita/issues/1196
+		// Ref: https://github.com/tessornetwork/mokita/issues/1196
 		// {
 		// 	name:              "single coin with positive swap fee and zero exit fee",
 		// 	poolSwapFee:       sdk.NewDecWithPrec(1, 2),

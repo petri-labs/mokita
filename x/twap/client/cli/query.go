@@ -9,7 +9,7 @@ import (
 	"github.com/cosmos/cosmos-sdk/client/flags"
 	"github.com/spf13/cobra"
 
-	"github.com/mokita-labs/mokita/mokiutils/mokicli"
+	"github.com/osmosis-labs/osmosis/osmoutils/osmocli"
 	gammtypes "github.com/tessornetwork/mokita/x/gamm/types"
 	"github.com/tessornetwork/mokita/x/twap/client/queryproto"
 	"github.com/tessornetwork/mokita/x/twap/types"
@@ -17,7 +17,7 @@ import (
 
 // GetQueryCmd returns the cli query commands for this module.
 func GetQueryCmd() *cobra.Command {
-	cmd := mokicli.QueryIndexCmd(types.ModuleName)
+	cmd := osmocli.QueryIndexCmd(types.ModuleName)
 	cmd.AddCommand(GetQueryTwapCommand())
 
 	return cmd
@@ -28,7 +28,7 @@ func GetQueryTwapCommand() *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "twap [poolid] [base denom] [start time] [end time]",
 		Short: "Query twap",
-		Long: mokicli.FormatLongDescDirect(`Query twap for pool. Start time must be unix time. End time can be unix time or duration.
+		Long: osmocli.FormatLongDescDirect(`Query twap for pool. Start time must be unix time. End time can be unix time or duration.
 
 Example:
 {{.CommandPrefix}} twap 1 umoki 1667088000 24h
@@ -88,7 +88,7 @@ Example:
 func twapQueryParseArgs(args []string) (poolId uint64, baseDenom string, startTime time.Time, endTime time.Time, err error) {
 	// boilerplate parse fields
 	// <UINT PARSE>
-	poolId, err = mokicli.ParseUint(args[0], "poolId")
+	poolId, err = osmocli.ParseUint(args[0], "poolId")
 	if err != nil {
 		return
 	}
@@ -97,14 +97,14 @@ func twapQueryParseArgs(args []string) (poolId uint64, baseDenom string, startTi
 	baseDenom = strings.TrimSpace(args[1])
 
 	// <UNIX TIME PARSE>
-	startTime, err = mokicli.ParseUnixTime(args[2], "start time")
+	startTime, err = osmocli.ParseUnixTime(args[2], "start time")
 	if err != nil {
 		return
 	}
 
 	// END TIME PARSE: ONEOF {<UNIX TIME PARSE>, <DURATION>}
 	// try parsing in unix time, if failed try parsing in duration
-	endTime, err = mokicli.ParseUnixTime(args[3], "end time")
+	endTime, err = osmocli.ParseUnixTime(args[3], "end time")
 	if err != nil {
 		// TODO if we don't use protoreflect:
 		// make better error combiner, rather than just returning last error

@@ -32,7 +32,7 @@ func CreateUpgradeHandler(
 	return func(ctx sdk.Context, plan upgradetypes.Plan, fromVM module.VersionMap) (module.VersionMap, error) {
 		// Although the app version was already set during the v9 upgrade, our v10 was a fork and
 		// v11 was decided to be limited to the "gauge creation minimum fee" change only:
-		// https://github.com/mokita-labs/mokita/pull/2202
+		// https://github.com/osmosis-labs/osmosis/pull/2202
 		//
 		// As a result, the upgrade handler was not executed to increment the app version.
 		// This change helps to correctly set the app version for v12.

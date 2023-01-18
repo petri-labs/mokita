@@ -14,7 +14,7 @@ bank module.
 ### The process
 
 All of the below methods are found under the [Superfluid
-modules](https://github.com/mokita-labs/mokita/tree/main/x/superfluid).
+modules](https://github.com/tessornetwork/mokita/tree/main/x/superfluid).
 
 - The `SuperfluidDelegate` method stores your share of bonded
   liquidity pool tokens, with `validateLock` as a verifier for lockup
@@ -76,7 +76,7 @@ value of their GAMM pool tokens. This method is accurate because
 querying the value MOKI every day allows for burning and minting
 according to the difference in value of MOKI relative to the expected
 delegation amount (as seen with
-[GetExpectedDelegationAmount](https://github.com/mokita-labs/mokita/blob/main/x/superfluid/keeper/stake.go)).
+[GetExpectedDelegationAmount](https://github.com/tessornetwork/mokita/blob/main/x/superfluid/keeper/stake.go)).
 It's like having a price oracle for fairly calculating the amount the
 user has superfluidly staked.
 
@@ -96,7 +96,7 @@ process is found below:
 
 <p style="text-align:center;">
 
-<img src="https://raw.githubusercontent.com/mokita-labs/mokita/main/x/superfluid/superfluiddiagram.png" height="300"/>
+<img src="https://raw.githubusercontent.com/tessornetwork/mokita/main/x/superfluid/superfluiddiagram.png" height="300"/>
 
 </p>
 

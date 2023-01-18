@@ -7,8 +7,8 @@ import (
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 	banktypes "github.com/cosmos/cosmos-sdk/x/bank/types"
 
-	"github.com/mokita-labs/mokita/mokimath"
-	"github.com/mokita-labs/mokita/mokiutils"
+	"github.com/osmosis-labs/osmosis/osmomath"
+	"github.com/osmosis-labs/osmosis/osmoutils"
 	"github.com/tessornetwork/mokita/x/gamm/types"
 )
 
@@ -52,7 +52,7 @@ func (k Keeper) CalculateSpotPrice(
 	}
 
 	// we want to round this to `SpotPriceSigFigs` of precision
-	spotPrice = mokimath.SigFigRound(spotPrice, types.SpotPriceSigFigs)
+	spotPrice = osmomath.SigFigRound(spotPrice, types.SpotPriceSigFigs)
 	return spotPrice, err
 }
 
@@ -139,7 +139,7 @@ func (k Keeper) CreatePool(ctx sdk.Context, msg types.CreatePoolMsg) (uint64, er
 	}
 
 	// create and save the pool's module account to the account keeper
-	if err := mokiutils.CreateModuleAccount(ctx, k.accountKeeper, pool.GetAddress()); err != nil {
+	if err := osmoutils.CreateModuleAccount(ctx, k.accountKeeper, pool.GetAddress()); err != nil {
 		return 0, fmt.Errorf("creating pool module account for id %d: %w", poolId, err)
 	}
 

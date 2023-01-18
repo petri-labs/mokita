@@ -8,7 +8,7 @@ import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 
-	"github.com/mokita-labs/mokita/mokiutils"
+	"github.com/osmosis-labs/osmosis/osmoutils"
 	"github.com/tessornetwork/mokita/x/gamm/pool-models/balancer"
 	"github.com/tessornetwork/mokita/x/gamm/pool-models/stableswap"
 	"github.com/tessornetwork/mokita/x/gamm/types"
@@ -210,7 +210,7 @@ func (k Keeper) GetPoolDenoms(ctx sdk.Context, poolId uint64) ([]string, error) 
 		return nil, err
 	}
 
-	denoms := mokiutils.CoinsDenoms(pool.GetTotalPoolLiquidity(ctx))
+	denoms := osmoutils.CoinsDenoms(pool.GetTotalPoolLiquidity(ctx))
 	return denoms, err
 }
 

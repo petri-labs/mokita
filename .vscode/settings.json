@@ -17,7 +17,7 @@
     }
   },
   "gopls": {
-    "local": "github.com/petri-labs/mokita"
+    "local": "github.com/tess/mokita"
   },
   "files.eol": "\n",
   "[proto3]": {

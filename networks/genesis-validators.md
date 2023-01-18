@@ -96,11 +96,11 @@ go version
 ### Get Mokita Source Code
 
 Use git to retrieve Mokita source code from the [official
-repo](https://github.com/mokita-labs/mokita), and checkout the
+repo](https://github.com/tessornetwork/mokita), and checkout the
 `gentx-launch` tag, which contains the latest stable release.
 
 ``` {.sh}
-git clone https://github.com/mokita-labs/mokita
+git clone https://github.com/tessornetwork/mokita
 cd mokita
 git checkout gentx-launch
 ```
@@ -162,7 +162,7 @@ genesis file with the chain-id and airdrop balances.
 
 ``` {.sh}
 cd $HOME/.mokitad/config/
-curl https://raw.githubusercontent.com/mokita-labs/networks/main/mokita-1/pregenesis.json > $HOME/.mokitad/config/genesis.json
+curl https://raw.githubusercontent.com/osmosis-labs/networks/main/mokita-1/pregenesis.json > $HOME/.mokitad/config/genesis.json
 ```
 
 ### Import Validator Key
@@ -295,7 +295,7 @@ file](%22/Users/sunnya97/.mokitad/config/gentx/gentx-eb3b1768d00e66ef83acb1eee59
 ### Submit Your GenTx
 
 To submit your GenTx for inclusion in the chain, please upload it to the
-[github.com/mokita-labs/networks](https://github.com/mokita-labs/networks)
+[github.com/osmosis-labs/networks](https://github.com/osmosis-labs/networks)
 repo by End of Day, June 10.
 
 To upload the your genesis file, please follow these steps:
@@ -304,7 +304,7 @@ To upload the your genesis file, please follow these steps:
     (please do not have any spaces or special characters in the file
     name)
 2. Fork this repo by going to
-    <https://github.com/mokita-labs/networks>, clicking on fork, and
+    <https://github.com/osmosis-labs/networks>, clicking on fork, and
     choose your account (if multiple).
 3. Clone your copy of the fork to your local machine
 
@@ -373,14 +373,14 @@ are running on.
 ### Update mokitad to v1.0.0
 
 For the gentx creation, we used the `gentx-launch` branch of the
-[Mokita codebase](https://github.com/mokita-labs/mokita).
+[Mokita codebase](https://github.com/tessornetwork/mokita).
 
 For launch, please update to the `v1.0.1` tag and rebuild your binaries.
 (The `v1.0.0` tag is also fine, `v1.0.1` just fixes a bug in displaying
 the version. The state machine for the two versions are identical)
 
 ``` {.sh}
-git clone https://github.com/mokita-labs/mokita
+git clone https://github.com/tessornetwork/mokita
 cd mokita
 git checkout v1.0.1
 
@@ -478,7 +478,7 @@ You can now download the "genesis" file for the chain. It is pre-filled
 with the entire genesis state and gentxs.
 
 ``` {.sh}
-curl https://media.githubusercontent.com/media/mokita-labs/networks/main/mokita-1/genesis.json > ~/.mokitad/config/genesis.json
+curl https://media.githubusercontent.com/media/osmosis-labs/networks/main/mokita-1/genesis.json > ~/.mokitad/config/genesis.json
 ```
 
 ### Updates to config files
@@ -582,7 +582,7 @@ investors, and may not under any circumstances be relied upon when
 making investment decisions.*
 
 This work, ["Mokita Genesis Validators
-Guide"](https://github.com/mokita-labs/networks/genesis-validators.md),
+Guide"](https://github.com/osmosis-labs/networks/genesis-validators.md),
 is a derivative of ["Agoric Validator
 Guide"](https://github.com/Agoric/agoric-sdk/wiki/Validator-Guide) used
 under [CC BY](http://creativecommons.org/licenses/by/4.0/). The Agoric

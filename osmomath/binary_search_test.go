@@ -1,4 +1,4 @@
-package mokimath
+package osmomath
 
 import (
 	"fmt"

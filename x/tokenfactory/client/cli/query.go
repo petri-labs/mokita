@@ -9,27 +9,27 @@ import (
 	// "github.com/cosmos/cosmos-sdk/client/flags"
 	// sdk "github.com/cosmos/cosmos-sdk/types"
 
-	"github.com/mokita-labs/mokita/mokiutils/mokicli"
+	"github.com/osmosis-labs/osmosis/osmoutils/osmocli"
 	"github.com/tessornetwork/mokita/x/tokenfactory/types"
 )
 
 // GetQueryCmd returns the cli query commands for this module
 func GetQueryCmd() *cobra.Command {
-	cmd := mokicli.QueryIndexCmd(types.ModuleName)
+	cmd := osmocli.QueryIndexCmd(types.ModuleName)
 
-	mokicli.AddQueryCmd(cmd, types.NewQueryClient, GetCmdDenomAuthorityMetadata)
-	mokicli.AddQueryCmd(cmd, types.NewQueryClient, GetCmdDenomAuthorityMetadata)
+	osmocli.AddQueryCmd(cmd, types.NewQueryClient, GetCmdDenomAuthorityMetadata)
+	osmocli.AddQueryCmd(cmd, types.NewQueryClient, GetCmdDenomAuthorityMetadata)
 
 	cmd.AddCommand(
-		mokicli.GetParams[*types.QueryParamsRequest](
+		osmocli.GetParams[*types.QueryParamsRequest](
 			types.ModuleName, types.NewQueryClient),
 	)
 
 	return cmd
 }
 
-func GetCmdDenomAuthorityMetadata() (*mokicli.QueryDescriptor, *types.QueryDenomAuthorityMetadataRequest) {
-	return &mokicli.QueryDescriptor{
+func GetCmdDenomAuthorityMetadata() (*osmocli.QueryDescriptor, *types.QueryDenomAuthorityMetadataRequest) {
+	return &osmocli.QueryDescriptor{
 		Use:   "denom-authority-metadata [denom] [flags]",
 		Short: "Get the authority metadata for a specific denom",
 		Long: `{{.Short}}{{.ExampleHeader}}
@@ -37,8 +37,8 @@ func GetCmdDenomAuthorityMetadata() (*mokicli.QueryDescriptor, *types.QueryDenom
 	}, &types.QueryDenomAuthorityMetadataRequest{}
 }
 
-func GetCmdDenomsFromCreator() (*mokicli.QueryDescriptor, *types.QueryDenomsFromCreatorRequest) {
-	return &mokicli.QueryDescriptor{
+func GetCmdDenomsFromCreator() (*osmocli.QueryDescriptor, *types.QueryDenomsFromCreatorRequest) {
+	return &osmocli.QueryDescriptor{
 		Use:   "denoms-from-creator [creator address] [flags]",
 		Short: "Returns a list of all tokens created by a specific creator address",
 		Long: `{{.Short}}{{.ExampleHeader}}

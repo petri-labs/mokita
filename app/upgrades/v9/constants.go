@@ -14,7 +14,7 @@ import (
 const UpgradeName = "v9"
 
 // The historic name of the claims module, which is removed in this release.
-// Cross-check against https://github.com/mokita-labs/mokita/blob/v7.2.0/x/claim/types/keys.go#L5
+// Cross-check against https://github.com/tessornetwork/mokita/blob/v7.2.0/x/claim/types/keys.go#L5
 const ClaimsModuleName = "claim"
 
 var Upgrade = upgrades.Upgrade{

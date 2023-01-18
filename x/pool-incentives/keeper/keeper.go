@@ -6,7 +6,7 @@ import (
 
 	"github.com/tendermint/tendermint/libs/log"
 
-	"github.com/mokita-labs/mokita/mokiutils"
+	"github.com/osmosis-labs/osmosis/osmoutils"
 	gammtypes "github.com/tessornetwork/mokita/x/gamm/types"
 	incentivestypes "github.com/tessornetwork/mokita/x/incentives/types"
 	lockuptypes "github.com/tessornetwork/mokita/x/lockup/types"
@@ -122,13 +122,13 @@ func (k Keeper) GetPoolIdFromGaugeId(ctx sdk.Context, gaugeId uint64, lockableDu
 func (k Keeper) SetLockableDurations(ctx sdk.Context, lockableDurations []time.Duration) {
 	store := ctx.KVStore(k.storeKey)
 	info := types.LockableDurationsInfo{LockableDurations: lockableDurations}
-	mokiutils.MustSet(store, types.LockableDurationsKey, &info)
+	osmoutils.MustSet(store, types.LockableDurationsKey, &info)
 }
 
 func (k Keeper) GetLockableDurations(ctx sdk.Context) []time.Duration {
 	store := ctx.KVStore(k.storeKey)
 	info := types.LockableDurationsInfo{}
-	mokiutils.MustGet(store, types.LockableDurationsKey, &info)
+	osmoutils.MustGet(store, types.LockableDurationsKey, &info)
 	return info.LockableDurations
 }
 

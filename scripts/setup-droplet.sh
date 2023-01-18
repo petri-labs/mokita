@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-export REPO=https://github.com/mokita-labs/mokita.git
+export REPO=https://github.com/tessornetwork/mokita.git
 export BRANCH=main
 export NODE=mokitad
 export CLI=mokitad

@@ -7,7 +7,7 @@ import (
 
 	distributiontypes "github.com/cosmos/cosmos-sdk/x/distribution/types"
 
-	"github.com/mokita-labs/mokita/mokiutils"
+	"github.com/osmosis-labs/osmosis/osmoutils"
 	gammtypes "github.com/tessornetwork/mokita/x/gamm/types"
 	incentivestypes "github.com/tessornetwork/mokita/x/incentives/types"
 	lockuptypes "github.com/tessornetwork/mokita/x/lockup/types"
@@ -19,7 +19,7 @@ func (k Keeper) AfterEpochEnd(ctx sdk.Context, epochIdentifier string, _ int64) 
 }
 
 func (k Keeper) AfterEpochStartBeginBlock(ctx sdk.Context) {
-	// cref [#830](https://github.com/mokita-labs/mokita/issues/830),
+	// cref [#830](https://github.com/tessornetwork/mokita/issues/830),
 	// the supplied epoch number is wrong at time of commit. hence we get from the info.
 	curEpoch := k.ek.GetEpochInfo(ctx, k.GetEpochIdentifier(ctx)).CurrentEpoch
 
@@ -62,7 +62,7 @@ func (k Keeper) MoveSuperfluidDelegationRewardToGauges(ctx sdk.Context) {
 
 		// To avoid unexpected issues on WithdrawDelegationRewards and AddToGaugeRewards
 		// we use cacheCtx and apply the changes later
-		_ = mokiutils.ApplyFuncIfNoError(ctx, func(cacheCtx sdk.Context) error {
+		_ = osmoutils.ApplyFuncIfNoError(ctx, func(cacheCtx sdk.Context) error {
 			_, err := k.ck.WithdrawDelegationRewards(cacheCtx, addr, valAddr)
 			if errors.Is(err, distributiontypes.ErrEmptyDelegationDistInfo) {
 				ctx.Logger().Debug("no swaps occurred in this pool between last epoch and this epoch")
@@ -72,7 +72,7 @@ func (k Keeper) MoveSuperfluidDelegationRewardToGauges(ctx sdk.Context) {
 		})
 
 		// Send delegation rewards to gauges
-		_ = mokiutils.ApplyFuncIfNoError(ctx, func(cacheCtx sdk.Context) error {
+		_ = osmoutils.ApplyFuncIfNoError(ctx, func(cacheCtx sdk.Context) error {
 			// Note! We only send the bond denom (moki), to avoid attack vectors where people
 			// send many different denoms to the intermediary account, and make a resource exhaustion attack on end block.
 			bondDenom := k.sk.BondDenom(cacheCtx)

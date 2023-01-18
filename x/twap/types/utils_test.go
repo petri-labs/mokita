@@ -6,7 +6,7 @@ import (
 
 	"github.com/stretchr/testify/require"
 
-	"github.com/mokita-labs/mokita/mokiutils/mokiassert"
+	"github.com/osmosis-labs/osmosis/osmoutils/osmoassert"
 	"github.com/tessornetwork/mokita/x/gamm/types"
 )
 
@@ -29,7 +29,7 @@ func TestGetAllUniqueDenomPairs(t *testing.T) {
 	}
 	for name, tt := range tests {
 		t.Run(name, func(t *testing.T) {
-			mokiassert.ConditionalPanic(t, tt.panics, func() {
+			osmoassert.ConditionalPanic(t, tt.panics, func() {
 				pairs := GetAllUniqueDenomPairs(tt.denoms)
 				require.Equal(t, pairs, tt.wantedPairs)
 			})

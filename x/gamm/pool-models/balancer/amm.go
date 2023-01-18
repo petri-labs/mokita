@@ -6,7 +6,7 @@ import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 
-	"github.com/mokita-labs/mokita/mokimath"
+	"github.com/osmosis-labs/osmosis/osmomath"
 	"github.com/tessornetwork/mokita/x/gamm/types"
 )
 
@@ -105,7 +105,7 @@ func solveConstantFunctionInvariant(
 	y := tokenBalanceFixedBefore.Quo(tokenBalanceFixedAfter)
 
 	// amountY = balanceY * (1 - (y ^ weightRatio))
-	yToWeightRatio := mokimath.Pow(y, weightRatio)
+	yToWeightRatio := osmomath.Pow(y, weightRatio)
 	paranthetical := sdk.OneDec().Sub(yToWeightRatio)
 	amountY := tokenBalanceUnknownBefore.Mul(paranthetical)
 	return amountY

@@ -31,4 +31,4 @@ go mod tidy -compat=1.18
 
 # TODO: Uncomment once ORM/Pulsar support is needed.
 #
-# Ref: https://github.com/mokita-labs/mokita/pull/1589
+# Ref: https://github.com/osmosis-labs/osmosis/pull/1589

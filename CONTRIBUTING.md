@@ -8,11 +8,11 @@ Contributions come in the form of writing documentation, raising issues / PRs, a
 
 ## First steps
 
-The first step is to find an issue you want to fix. To identify issues we think are good for first-time contributors, we add the **good first issue** label. [You can see a list of issues to contribute here](https://github.com/mokita-labs/mokita/contribute).
+The first step is to find an issue you want to fix. To identify issues we think are good for first-time contributors, we add the **good first issue** label. [You can see a list of issues to contribute here](https://github.com/tessornetwork/mokita/contribute).
 
 We recommend setting up your IDE as per our [recommended IDE setup](https://docs.mokita.zone/developing/mokita-core/ide-guide.html) before proceeding.
 
-If you have a feature request, please use the [feature-request repo](https://github.com/mokita-labs/feature-requests). We also welcome you to [make an issue](https://github.com/mokita-labs/mokita/issues/new/choose) for anything of substance, or posting an issue if you want to work on it.
+If you have a feature request, please use the [feature-request repo](https://github.com/osmosis-labs/feature-requests). We also welcome you to [make an issue](https://github.com/tessornetwork/mokita/issues/new/choose) for anything of substance, or posting an issue if you want to work on it.
 
 Once you find an existing issue that you want to work on or if you have a new issue to create, continue below.
 
@@ -20,7 +20,7 @@ Once you find an existing issue that you want to work on or if you have a new is
 
 To contribute a change proposal, use the following workflow:
 
-1. [Fork the repository](https://github.com/mokita-labs/mokita).
+1. [Fork the repository](https://github.com/tessornetwork/mokita).
 2. [Add an upstream](https://docs.github.com/en/github/collaborating-with-pull-requests/working-with-forks/syncing-a-fork) so that you can update your fork.
 3. Clone your fork to your computer.
 4. Create a branch and name it appropriately.
@@ -76,7 +76,7 @@ To simplify (and speed up) the process of writing unit tests that fit our standa
 
 Note: this section assumes you already have the Go plugin for Vscode installed. Please refer to our [IDE setup docs](https://docs.mokita.zone/developing/mokita-core/ide-guide.html) if you haven't done any IDE setup yet.
 
-Copy the `templates` folder into your `.vscode` folder from our main repo [here](https://github.com/mokita-labs/mokita/tree/main/.vscode). This folder has our custom templates for generating tests that fit our testing standards as accurately as possible.
+Copy the `templates` folder into your `.vscode` folder from our main repo [here](https://github.com/tessornetwork/mokita/tree/main/.vscode). This folder has our custom templates for generating tests that fit our testing standards as accurately as possible.
 
 Then, go to your `settings.json` file in your `.vscode` folder and add the following to it:
 
@@ -254,7 +254,7 @@ The file `e2e_setup_test.go` defines the testing suite and contains the core boo
 
 The file `e2e_test.go` contains the actual end-to-end integration tests that utilize the testing suite.
 
-Additionally, there is an ability to disable certain components of the e2e suite. This can be done by setting the environment variables. See the [E2E test docs](https://github.com/mokita-labs/mokita/blob/main/tests/e2e/README.md)  or more details.
+Additionally, there is an ability to disable certain components of the e2e suite. This can be done by setting the environment variables. See the [E2E test docs](https://github.com/tessornetwork/mokita/blob/main/tests/e2e/README.md)  or more details.
 
 To get started:
 
@@ -279,16 +279,16 @@ Vendor is a folder that go automatically makes if you run go mod vendor, which c
 Commit & push to the Cosmos-SDK fork in a new branch (see above steps for more details), and then you can grab the commit hash to do:
 
 ```sh
-go get github.com/mokita-labs/cosmos-sdk@{my commit hash}
+go get github.com/osmosis-labs/cosmos-sdk@{my commit hash}
 ```
 
 You get something like:
 
 ```sh
-go get: github.com/mokita-labs/cosmos-sdk@v0.33.2 updating to
-github.com/mokita-labs/cosmos-sdk@v0.42.10-0.20210829064313-2c87644925da: parsing go.mod:
+go get: github.com/osmosis-labs/cosmos-sdk@v0.33.2 updating to
+github.com/osmosis-labs/cosmos-sdk@v0.42.10-0.20210829064313-2c87644925da: parsing go.mod:
 module declares its path as: github.com/cosmos/cosmos-sdk
-but was required as: github.com/mokita-labs/cosmos-sdk
+but was required as: github.com/osmosis-labs/cosmos-sdk
 ```
 
 Then you can copy paste the `v0.42.10-0.20210829064313-2c87644925da` part and replace the corresponding section of go.mod
@@ -327,7 +327,7 @@ You can also feel free to do `make format` if you're getting errors related to `
 
 There are several steps that go into a major release
 
-- The GitHub release is created via this [GitHub workflow](https://github.com/mokita-labs/mokita/blob/main/.github/workflows/release.yml). The workflow is manually triggered from the [mokita-ci repository](https://github.com/mokita-labs/mokita-ci). The workflow uses the `make build-reproducible` command to create the `mokitad` binaries using the default [Makefile](https://github.com/mokita-labs/mokita/blob/main/Makefile#L99).
+- The GitHub release is created via this [GitHub workflow](https://github.com/tessornetwork/mokita/blob/main/.github/workflows/release.yml). The workflow is manually triggered from the [mokita-ci repository](https://github.com/tessornetwork/mokita-ci). The workflow uses the `make build-reproducible` command to create the `mokitad` binaries using the default [Makefile](https://github.com/tessornetwork/mokita/blob/main/Makefile#L99).
 
 - Make a PR to main, with a cmokivisor config, generated in tandem with the binaries from tool.
   - Should be its own PR, as it may get denied for Fork upgrades.
@@ -339,7 +339,7 @@ There are several steps that go into a major release
 - Do a PR if that commit has conflicts
 
 - (Eventually) Make a PR that adds a version handler for the next upgrade
-  - [Add v10 upgrade boilerplate #1649](https://github.com/mokita-labs/mokita/pull/1649/files)
+  - [Add v10 upgrade boilerplate #1649](https://github.com/osmosis-labs/osmosis/pull/1649/files)
 
 - Update chain JSON schema's recommended versions in `chain.schema.json` located in the root directory.
 
@@ -446,7 +446,7 @@ This is an error code that is returned by the transaction flow. In the case of
 success, it is `0`. On a general error, it is `1`. Additionally, each module
 defines its custom error codes. For example, `x/mint` currently has the
 following:
-<https://github.com/mokita-labs/mokita/blob/8ef2f1845d9c7dd3f422d3f1953e36e5cf112e73/x/mint/types/errors.go#L8-L10>
+<https://github.com/tessornetwork/mokita/blob/8ef2f1845d9c7dd3f422d3f1953e36e5cf112e73/x/mint/types/errors.go#L8-L10>
 
 As a result, it is important to avoid changing custom error codes or change
 the semantics of what is valid logic in thransaction flows.
@@ -599,5 +599,5 @@ We communicate with various integrators if they'd like release-blocking QA testi
 [1]:https://github.com/cosmos/cosmos-sdk/blob/d11196aad04e57812dbc5ac6248d35375e6603af/baseapp/abci.go#L293-L303
 [2]:https://github.com/tendermint/tendermint/blob/9f76e8da150414ce73eed2c4f248947b657c7587/proto/tendermint/types/types.proto#L70-L77
 [3]:https://github.com/tendermint/tendermint/blob/main/types/results.go#L47-L54
-[4]:https://github.com/mokita-labs/cosmos-sdk/blob/5c9a51c277d067e0ec5cf48df30a85fae95bcd14/store/rootmulti/store.go#L430
-[5]:https://github.com/mokita-labs/cosmos-sdk/blob/5c9a51c277d067e0ec5cf48df30a85fae95bcd14/store/types/commit_info.go#L40
+[4]:https://github.com/osmosis-labs/cosmos-sdk/blob/5c9a51c277d067e0ec5cf48df30a85fae95bcd14/store/rootmulti/store.go#L430
+[5]:https://github.com/osmosis-labs/cosmos-sdk/blob/5c9a51c277d067e0ec5cf48df30a85fae95bcd14/store/types/commit_info.go#L40

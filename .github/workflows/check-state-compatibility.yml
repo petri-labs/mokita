@@ -35,7 +35,7 @@ on:
 
 env:
   GOLANG_VERSION: 1.18
-  GENESIS_URL: https://github.com/mokita-labs/networks/raw/main/mokita-1/genesis.json
+  GENESIS_URL: https://github.com/osmosis-labs/networks/raw/main/mokita-1/genesis.json
   ADDRBOOK_URL: https://dl2.quicksync.io/json/addrbook.mokita.json
   SNAPSHOT_BUCKET: https://snapshots.mokita.zone
   RPC_ENDPOINT: https://rpc.mokita.zone
@@ -81,7 +81,7 @@ jobs:
 
   check_state_compatibility:
     # DO NOT CHANGE THIS: please read the note above
-    if: ${{ github.event.pull_request.head.repo.full_name == 'petri-labs/mokita' && needs.compare_versions.outputs.should_i_run == 'true' }}
+    if: ${{ github.event.pull_request.head.repo.full_name == 'tessornetwork/mokita' && needs.compare_versions.outputs.should_i_run == 'true' }}
     needs: compare_versions
     runs-on: self-hosted
     steps:

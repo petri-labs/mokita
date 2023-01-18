@@ -8,7 +8,7 @@ import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 
-	"github.com/mokita-labs/mokita/mokimath"
+	"github.com/osmosis-labs/osmosis/osmomath"
 	"github.com/tessornetwork/mokita/x/gamm/pool-models/internal/cfmm_common"
 	"github.com/tessornetwork/mokita/x/gamm/types"
 )
@@ -132,19 +132,19 @@ func (p Pool) NumAssets() int {
 
 // scaleCoin returns the BigDec amount of the
 // input token after scaling it by the token's scaling factor
-func (p Pool) scaleCoin(input sdk.Coin, roundingDirection mokimath.RoundingDirection) (mokimath.BigDec, error) {
+func (p Pool) scaleCoin(input sdk.Coin, roundingDirection osmomath.RoundingDirection) (osmomath.BigDec, error) {
 	liquidityIndexes := p.getLiquidityIndexMap()
 	scalingFactor := p.GetScalingFactorByLiquidityIndex(liquidityIndexes[input.Denom])
-	scaledAmount, err := mokimath.DivIntByU64ToBigDec(input.Amount, scalingFactor, roundingDirection)
+	scaledAmount, err := osmomath.DivIntByU64ToBigDec(input.Amount, scalingFactor, roundingDirection)
 	if err != nil {
-		return mokimath.BigDec{}, err
+		return osmomath.BigDec{}, err
 	}
 	return scaledAmount, nil
 }
 
 // getDescaledPoolAmt descales the passed in amount
 // by the scaling factor of the passed in denom
-func (p Pool) getDescaledPoolAmt(denom string, amount mokimath.BigDec) sdk.Dec {
+func (p Pool) getDescaledPoolAmt(denom string, amount osmomath.BigDec) sdk.Dec {
 	liquidityIndexes := p.getLiquidityIndexMap()
 	liquidityIndex := liquidityIndexes[denom]
 
@@ -170,7 +170,7 @@ func (p Pool) getLiquidityIndexMap() map[string]int {
 // deterministic.
 //
 // Returns reserve amounts as an array of type BigDec.
-func (p Pool) scaledSortedPoolReserves(first string, second string, round mokimath.RoundingDirection) ([]mokimath.BigDec, error) {
+func (p Pool) scaledSortedPoolReserves(first string, second string, round osmomath.RoundingDirection) ([]osmomath.BigDec, error) {
 	reorderedLiquidity, reorderedScalingFactors, err := p.reorderReservesAndScalingFactors(first, second)
 	if err != nil {
 		return nil, err
@@ -180,7 +180,7 @@ func (p Pool) scaledSortedPoolReserves(first string, second string, round mokima
 		return nil, err
 	}
 
-	return mokimath.DivCoinAmtsByU64ToBigDec(reorderedLiquidity, reorderedScalingFactors, round)
+	return osmomath.DivCoinAmtsByU64ToBigDec(reorderedLiquidity, reorderedScalingFactors, round)
 }
 
 // reorderReservesAndScalingFactors takes the pool liquidity and scaling factors, and reorders them s.t.

@@ -26,7 +26,7 @@ func CtxWithStoreKeys(keys []sdk.StoreKey, header tmproto.Header, isCheckTx bool
 }
 
 func DefaultCtxWithStoreKeys(storeKeys []sdk.StoreKey) sdk.Context {
-	header := tmproto.Header{Height: 1, ChainID: "mokiutils-test-1", Time: time.Now().UTC()}
+	header := tmproto.Header{Height: 1, ChainID: "osmoutils-test-1", Time: time.Now().UTC()}
 	deliverTx := false
 	return CtxWithStoreKeys(storeKeys, header, deliverTx)
 }

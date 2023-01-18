@@ -10,7 +10,7 @@ import (
 // upgrade.
 func RunForkLogic(ctx sdk.Context, appKeepers *keepers.AppKeepers) {
 	// Only proceed with v8 for mainnet, testnets need not adjust their pool incentives or unbonding.
-	// https://github.com/mokita-labs/mokita/issues/1609
+	// https://github.com/tessornetwork/mokita/issues/1609
 	if ctx.ChainID() != "mokita-1" {
 		return
 	}

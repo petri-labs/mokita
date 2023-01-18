@@ -67,7 +67,7 @@ To prepare for the upgrade, you need to create some folders, and build
 and install the new binary.
 
     mkdir -p ~/.mokitad/cmokivisor/upgrades/v4/bin
-    git clone https://github.com/mokita-labs/mokita
+    git clone https://github.com/tessornetwork/mokita
     cd mokita
     git checkout v4.0.0
     make build

@@ -25,7 +25,7 @@ func (pa PoolAsset) validateWeight() error {
 	}
 
 	// TODO: add validation for asset weight overflow:
-	// https://github.com/mokita-labs/mokita/issues/1958
+	// https://github.com/tessornetwork/mokita/issues/1958
 
 	return nil
 }

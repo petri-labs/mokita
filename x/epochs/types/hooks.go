@@ -5,7 +5,7 @@ import (
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 
-	"github.com/mokita-labs/mokita/mokiutils"
+	"github.com/osmosis-labs/osmosis/osmoutils"
 )
 
 type EpochHooks interface {
@@ -50,7 +50,7 @@ func panicCatchingEpochHook(
 		return hookFn(ctx, epochIdentifier, epochNumber)
 	}
 	// TODO: Thread info for which hook this is, may be dependent on larger hook system refactoring
-	err := mokiutils.ApplyFuncIfNoError(ctx, wrappedHookFn)
+	err := osmoutils.ApplyFuncIfNoError(ctx, wrappedHookFn)
 	if err != nil {
 		ctx.Logger().Error(fmt.Sprintf("error in epoch hook %v", err))
 	}

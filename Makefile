@@ -207,7 +207,7 @@ docs:
 .PHONY: docs
 
 protoVer=v0.8
-protoImageName=mokilabs/moki-proto-gen:$(protoVer)
+protoImageName=osmolabs/osmo-proto-gen:$(protoVer)
 containerProtoGen=cosmos-sdk-proto-gen-$(protoVer)
 containerProtoFmt=cosmos-sdk-proto-fmt-$(protoVer)
 

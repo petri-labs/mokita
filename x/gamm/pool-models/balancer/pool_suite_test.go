@@ -11,7 +11,7 @@ import (
 	"github.com/stretchr/testify/require"
 	"github.com/stretchr/testify/suite"
 
-	"github.com/mokita-labs/mokita/mokiutils/mokiassert"
+	"github.com/osmosis-labs/osmosis/osmoutils/osmoassert"
 	"github.com/tessornetwork/mokita/app/apptesting"
 	v10 "github.com/tessornetwork/mokita/app/upgrades/v10"
 	"github.com/tessornetwork/mokita/x/gamm/pool-models/balancer"
@@ -838,7 +838,7 @@ func (suite *KeeperTestSuite) TestCalcJoinPoolShares() {
 			require.True(t, ok)
 
 			assertPoolStateNotModified(t, balancerPool, func() {
-				mokiassert.ConditionalPanic(t, tc.expectPanic, sut)
+				osmoassert.ConditionalPanic(t, tc.expectPanic, sut)
 			})
 		})
 	}
@@ -877,7 +877,7 @@ func (suite *KeeperTestSuite) TestJoinPool() {
 				}
 			}
 
-			mokiassert.ConditionalPanic(t, tc.expectPanic, sut)
+			osmoassert.ConditionalPanic(t, tc.expectPanic, sut)
 		})
 	}
 }
@@ -972,7 +972,7 @@ func (suite *KeeperTestSuite) TestJoinPoolNoSwap() {
 				}
 			}
 
-			mokiassert.ConditionalPanic(t, tc.expectPanic, sut)
+			osmoassert.ConditionalPanic(t, tc.expectPanic, sut)
 		})
 	}
 }

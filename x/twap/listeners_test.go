@@ -5,7 +5,7 @@ import (
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 
-	"github.com/mokita-labs/mokita/mokiutils"
+	"github.com/osmosis-labs/osmosis/osmoutils"
 	"github.com/tessornetwork/mokita/x/twap"
 	"github.com/tessornetwork/mokita/x/twap/types"
 )
@@ -46,7 +46,7 @@ func (s *TestSuite) TestAfterPoolCreatedHook() {
 				s.RunBasicSwap(poolId)
 			}
 
-			denoms := mokiutils.CoinsDenoms(tc.poolCoins)
+			denoms := osmoutils.CoinsDenoms(tc.poolCoins)
 			denomPairs := types.GetAllUniqueDenomPairs(denoms)
 			expectedRecords := []types.TwapRecord{}
 			for _, denomPair := range denomPairs {

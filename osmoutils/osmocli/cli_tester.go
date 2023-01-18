@@ -1,4 +1,4 @@
-package mokicli
+package osmocli
 
 import (
 	"strings"

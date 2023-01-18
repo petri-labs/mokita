@@ -9,8 +9,8 @@ import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/stretchr/testify/require"
 
-	"github.com/mokita-labs/mokita/mokiutils"
-	"github.com/mokita-labs/mokita/mokiutils/mokiassert"
+	"github.com/osmosis-labs/osmosis/osmoutils"
+	"github.com/osmosis-labs/osmosis/osmoutils/osmoassert"
 	gammtypes "github.com/tessornetwork/mokita/x/gamm/types"
 	"github.com/tessornetwork/mokita/x/twap"
 	"github.com/tessornetwork/mokita/x/twap/types"
@@ -711,7 +711,7 @@ func TestComputeArithmeticTwapWithSpotPriceError(t *testing.T) {
 		t.Run(name, func(t *testing.T) {
 			actualTwap, err := twap.ComputeArithmeticTwap(test.startRecord, test.endRecord, test.quoteAsset)
 			require.Equal(t, test.expTwap, actualTwap)
-			mokiassert.ConditionalError(t, test.expErr, err)
+			osmoassert.ConditionalError(t, test.expErr, err)
 		})
 	}
 }
@@ -1093,7 +1093,7 @@ func (s *TestSuite) TestUpdateRecords() {
 				},
 				// The new record added.
 				// TODO: it should not be possible to add a record between existing records.
-				// https://github.com/mokita-labs/mokita/issues/2686
+				// https://github.com/tessornetwork/mokita/issues/2686
 				{
 					spotPriceA:   sdk.OneDec(),
 					spotPriceB:   sdk.OneDec().Add(sdk.OneDec()),
@@ -1390,7 +1390,7 @@ func (s *TestSuite) TestAfterCreatePool() {
 			s.Require().Equal(tc.poolId, poolId)
 			s.Require().NoError(err)
 
-			denoms := mokiutils.CoinsDenoms(tc.poolCoins)
+			denoms := osmoutils.CoinsDenoms(tc.poolCoins)
 			denomPairs := types.GetAllUniqueDenomPairs(denoms)
 			expectedRecords := []types.TwapRecord{}
 			for _, denomPair := range denomPairs {

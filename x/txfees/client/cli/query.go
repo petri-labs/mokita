@@ -3,13 +3,13 @@ package cli
 import (
 	"github.com/spf13/cobra"
 
-	"github.com/mokita-labs/mokita/mokiutils/mokicli"
+	"github.com/osmosis-labs/osmosis/osmoutils/osmocli"
 	"github.com/tessornetwork/mokita/x/txfees/types"
 )
 
 // GetQueryCmd returns the cli query commands for this module.
 func GetQueryCmd() *cobra.Command {
-	cmd := mokicli.QueryIndexCmd(types.ModuleName)
+	cmd := osmocli.QueryIndexCmd(types.ModuleName)
 
 	cmd.AddCommand(
 		GetCmdFeeTokens(),
@@ -21,7 +21,7 @@ func GetQueryCmd() *cobra.Command {
 }
 
 func GetCmdFeeTokens() *cobra.Command {
-	return mokicli.SimpleQueryCmd[*types.QueryFeeTokensRequest](
+	return osmocli.SimpleQueryCmd[*types.QueryFeeTokensRequest](
 		"fee-tokens",
 		"Query the list of non-basedenom fee tokens and their associated pool ids",
 		`{{.Short}}{{.ExampleHeader}}
@@ -32,7 +32,7 @@ func GetCmdFeeTokens() *cobra.Command {
 }
 
 func GetCmdDenomPoolID() *cobra.Command {
-	return mokicli.SimpleQueryCmd[*types.QueryDenomPoolIdRequest](
+	return osmocli.SimpleQueryCmd[*types.QueryDenomPoolIdRequest](
 		"denom-pool-id",
 		"Query the pool id associated with a specific whitelisted fee token",
 		`{{.Short}}{{.ExampleHeader}}
@@ -43,7 +43,7 @@ func GetCmdDenomPoolID() *cobra.Command {
 }
 
 func GetCmdBaseDenom() *cobra.Command {
-	return mokicli.SimpleQueryCmd[*types.QueryBaseDenomRequest](
+	return osmocli.SimpleQueryCmd[*types.QueryBaseDenomRequest](
 		"base-denom",
 		"Query the base fee denom",
 		`{{.Short}}{{.ExampleHeader}}

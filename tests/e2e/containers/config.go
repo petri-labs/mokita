@@ -23,13 +23,13 @@ const (
 	// Pre-upgrade mokita repo/tag to pull.
 	// It should be uploaded to Docker Hub. MOKITA_E2E_SKIP_UPGRADE should be unset
 	// for this functionality to be used.
-	previousVersionMokiRepository = "mokilabs/mokita"
+	previousVersionMokiRepository = "tessornetwork/mokita"
 	previousVersionMokiTag        = "12.2"
 	// Pre-upgrade repo/tag for mokita initialization (this should be one version below upgradeVersion)
-	previousVersionInitRepository = "mokilabs/mokita-e2e-init-chain"
+	previousVersionInitRepository = "tessornetwork/mokita-e2e-init-chain"
 	previousVersionInitTag        = "v12.2.0"
 	// Hermes repo/version for relayer
-	relayerRepository = "mokilabs/hermes"
+	relayerRepository = "osmolabs/hermes"
 	relayerTag        = "0.13.0"
 )
 

@@ -12,7 +12,7 @@ import (
 	govcli "github.com/cosmos/cosmos-sdk/x/gov/client/cli"
 	govtypes "github.com/cosmos/cosmos-sdk/x/gov/types"
 
-	"github.com/mokita-labs/mokita/mokiutils"
+	"github.com/osmosis-labs/osmosis/osmoutils"
 	"github.com/tessornetwork/mokita/x/pool-incentives/types"
 )
 
@@ -27,12 +27,12 @@ func NewCmdSubmitUpdatePoolIncentivesProposal() *cobra.Command {
 				return err
 			}
 
-			gaugeIds, err := mokiutils.ParseUint64SliceFromString(args[0], ",")
+			gaugeIds, err := osmoutils.ParseUint64SliceFromString(args[0], ",")
 			if err != nil {
 				return err
 			}
 
-			weights, err := mokiutils.ParseSdkIntFromString(args[1], ",")
+			weights, err := osmoutils.ParseSdkIntFromString(args[1], ",")
 			if err != nil {
 				return err
 			}
@@ -55,7 +55,7 @@ func NewCmdSubmitUpdatePoolIncentivesProposal() *cobra.Command {
 
 			from := clientCtx.GetFromAddress()
 
-			proposal, err := mokiutils.ParseProposalFlags(cmd.Flags())
+			proposal, err := osmoutils.ParseProposalFlags(cmd.Flags())
 			if err != nil {
 				return fmt.Errorf("failed to parse proposal: %w", err)
 			}
@@ -99,12 +99,12 @@ func NewCmdSubmitReplacePoolIncentivesProposal() *cobra.Command {
 				return err
 			}
 
-			gaugeIds, err := mokiutils.ParseUint64SliceFromString(args[0], ",")
+			gaugeIds, err := osmoutils.ParseUint64SliceFromString(args[0], ",")
 			if err != nil {
 				return err
 			}
 
-			weights, err := mokiutils.ParseSdkIntFromString(args[1], ",")
+			weights, err := osmoutils.ParseSdkIntFromString(args[1], ",")
 			if err != nil {
 				return err
 			}
@@ -127,7 +127,7 @@ func NewCmdSubmitReplacePoolIncentivesProposal() *cobra.Command {
 
 			from := clientCtx.GetFromAddress()
 
-			proposal, err := mokiutils.ParseProposalFlags(cmd.Flags())
+			proposal, err := osmoutils.ParseProposalFlags(cmd.Flags())
 			if err != nil {
 				return fmt.Errorf("failed to parse proposal: %w", err)
 			}

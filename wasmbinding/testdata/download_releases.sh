@@ -16,7 +16,7 @@ for contract in hackatom reflect; do
 done
 
 tag="$1"
-url="https://github.com/mokita-labs/mokita-bindings/releases/download/$tag/moki_reflect.wasm"
+url="https://github.com/tessornetwork/mokita-bindings/releases/download/$tag/moki_reflect.wasm"
 echo "Downloading $url ..."
 wget -O "moki_reflect.wasm" "$url"
 

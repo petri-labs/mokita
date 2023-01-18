@@ -1,11 +1,11 @@
 # This workflow pushes new mokita docker images on:
 #
 # 1. Every new tag containing a release candidate (e.g. `v1.2.3-rc4`).
-#     `mokilabs/mokita-dev:1.2.3-rc4` is pushed.      
+#     `tessornetwork/mokita-dev:1.2.3-rc4` is pushed.      
 # 2. Every new commit to the main branch
-#     `mokilabs/mokita-dev:main-{SHORT_SHA}-$(date +%s)` is pushed.
+#     `tessornetwork/mokita-dev:main-{SHORT_SHA}-$(date +%s)` is pushed.
 # 3. Every new commit to a development branch vN.x (e.g. `v1.x`)
-#     `mokilabs/mokita-dev-v1.x:{SHORT_SHA}-$(date +%s)` is pushed.
+#     `tessornetwork/mokita-dev-v1.x:{SHORT_SHA}-$(date +%s)` is pushed.
 #
 # Note: $(date +%s) is used to sort the tags in the docker registry.
 #
@@ -24,7 +24,7 @@ on:
   
 env:
   RUNNER_BASE_IMAGE_ALPINE: alpine:3.16
-  DOCKER_IMAGE_REPOSITORY: mokilabs/mokita-dev
+  DOCKER_IMAGE_REPOSITORY: tessornetwork/mokita-dev
 
 jobs:
   docker:

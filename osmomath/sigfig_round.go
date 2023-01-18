@@ -1,4 +1,4 @@
-package mokimath
+package osmomath
 
 import sdk "github.com/cosmos/cosmos-sdk/types"
 

@@ -5,7 +5,7 @@ import (
 )
 
 // MokitaQuery contains mokita custom queries.
-// See https://github.com/mokita-labs/mokita-bindings/blob/main/packages/bindings/src/query.rs
+// See https://github.com/tessornetwork/mokita-bindings/blob/main/packages/bindings/src/query.rs
 type MokitaQuery struct {
 	/// Given a subdenom minted by a contract via `MokitaMsg::MintTokens`,
 	/// returns the full denom as used by `BankMsg::Send`.

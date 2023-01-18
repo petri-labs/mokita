@@ -2,22 +2,22 @@
 #
 # On every new `vX.Y.Z` tag the following images are pushed:
 #
-# mokilabs/mokita:X.Y.Z    # is pushed
-# mokilabs/mokita:X.Y      # is updated to X.Y.Z
-# mokilabs/mokita:X        # is updated to X.Y.Z
-# mokilabs/mokita:latest   # is updated to X.Y.Z
+# tessornetwork/mokita:X.Y.Z    # is pushed
+# tessornetwork/mokita:X.Y      # is updated to X.Y.Z
+# tessornetwork/mokita:X        # is updated to X.Y.Z
+# tessornetwork/mokita:latest   # is updated to X.Y.Z
 #
 # On every new `vX.Y.0` tag the following images are pushed:
 #
-# mokilabs/mokita-e2e-init-chain:X.Y.0    # is pushed
-# mokilabs/mokita-e2e-init-chain:X.Y      # is updated to X.Y.0
-# mokilabs/mokita-e2e-init-chain:X        # is updated to X.Y.0
+# tessornetwork/mokita-e2e-init-chain:X.Y.0    # is pushed
+# tessornetwork/mokita-e2e-init-chain:X.Y      # is updated to X.Y.0
+# tessornetwork/mokita-e2e-init-chain:X        # is updated to X.Y.0
 # The same mokitad binary is copied in different base runner images:
 #
-# - `mokilabs/mokita:X.Y.Z`             uses `gcr.io/distroless/static-debian11`
-# - `mokilabs/mokita:X.Y.Z-distroless`  uses `gcr.io/distroless/static-debian11`
-# - `mokilabs/mokita:X.Y.Z-nonroot`     uses `gcr.io/distroless/static-debian11:nonroot`
-# - `mokilabs/mokita:X.Y.Z-alpine`      uses `alpine:3.16` 
+# - `tessornetwork/mokita:X.Y.Z`             uses `gcr.io/distroless/static-debian11`
+# - `tessornetwork/mokita:X.Y.Z-distroless`  uses `gcr.io/distroless/static-debian11`
+# - `tessornetwork/mokita:X.Y.Z-nonroot`     uses `gcr.io/distroless/static-debian11:nonroot`
+# - `tessornetwork/mokita:X.Y.Z-alpine`      uses `alpine:3.16` 
 #
 # All the images above have support for linux/amd64 and linux/arm64.
 #
@@ -32,7 +32,7 @@ on:
     - 'v[0-9]+.[0-9]+.[0-9]+' # ignore rc
   
 env:
-  DOCKER_REPOSITORY: mokilabs/mokita
+  DOCKER_REPOSITORY: tessornetwork/mokita
   RUNNER_BASE_IMAGE_DISTROLESS: gcr.io/distroless/static-debian11
   RUNNER_BASE_IMAGE_NONROOT: gcr.io/distroless/static-debian11:nonroot
   RUNNER_BASE_IMAGE_ALPINE: alpine:3.16
@@ -181,6 +181,6 @@ jobs:
           build-args: |
             E2E_SCRIPT_NAME=chain
           tags: |
-            mokilabs/mokita-e2e-init-chain:${{ env.MAJOR_VERSION }}
-            mokilabs/mokita-e2e-init-chain:${{ env.MAJOR_VERSION }}.${{ env.MINOR_VERSION }}
-            mokilabs/mokita-e2e-init-chain:${{ env.MAJOR_VERSION }}.${{ env.MINOR_VERSION }}.${{ env.PATCH_VERSION }}
+            tessornetwork/mokita-e2e-init-chain:${{ env.MAJOR_VERSION }}
+            tessornetwork/mokita-e2e-init-chain:${{ env.MAJOR_VERSION }}.${{ env.MINOR_VERSION }}
+            tessornetwork/mokita-e2e-init-chain:${{ env.MAJOR_VERSION }}.${{ env.MINOR_VERSION }}.${{ env.PATCH_VERSION }}

@@ -1,6 +1,6 @@
 # TXfee filters
 
-See <https://github.com/mokita-labs/mokita/issues/738>
+See <https://github.com/tessornetwork/mokita/issues/738>
 
 Want to move towards that, right now this is a stepping stone for that.
 We currently define a filter for recognizing if a tx is an arb

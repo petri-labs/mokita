@@ -52,7 +52,7 @@ func ReadYmlFile(filepath string) (QueryYml, error) {
 	return query, nil
 }
 
-// input is of form github.com/mokita-labs/mokita/vXX/{PATH}
+// input is of form github.com/tessornetwork/mokita/vXX/{PATH}
 // returns PATH
 func ParseFilePathFromImportPath(importPath string) string {
 	splits := strings.Split(importPath, "/")

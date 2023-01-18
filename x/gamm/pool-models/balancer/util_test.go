@@ -12,7 +12,7 @@ import (
 	tmtypes "github.com/tendermint/tendermint/proto/tendermint/types"
 	dbm "github.com/tendermint/tm-db"
 
-	"github.com/mokita-labs/mokita/mokimath"
+	"github.com/osmosis-labs/osmosis/osmomath"
 	"github.com/tessornetwork/mokita/x/gamm/pool-models/balancer"
 	"github.com/tessornetwork/mokita/x/gamm/types"
 )
@@ -43,7 +43,7 @@ func assertExpectedSharesErrRatio(t *testing.T, expectedShares, actualShares sdk
 	allowedErrRatioDec, err := sdk.NewDecFromStr(allowedErrRatio)
 	require.NoError(t, err)
 
-	errTolerance := mokimath.ErrTolerance{
+	errTolerance := osmomath.ErrTolerance{
 		MultiplicativeTolerance: allowedErrRatioDec,
 	}
 

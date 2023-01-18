@@ -5,7 +5,7 @@ import (
 
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 
-	"github.com/mokita-labs/mokita/mokiutils"
+	"github.com/osmosis-labs/osmosis/osmoutils"
 	lockuptypes "github.com/tessornetwork/mokita/x/lockup/types"
 	"github.com/tessornetwork/mokita/x/superfluid/types"
 
@@ -312,7 +312,7 @@ func (k Keeper) mintMokiTokensAndDelegate(ctx sdk.Context, mokiAmount sdk.Int, i
 		return err
 	}
 
-	err = mokiutils.ApplyFuncIfNoError(ctx, func(cacheCtx sdk.Context) error {
+	err = osmoutils.ApplyFuncIfNoError(ctx, func(cacheCtx sdk.Context) error {
 		bondDenom := k.sk.BondDenom(cacheCtx)
 		coins := sdk.Coins{sdk.NewCoin(bondDenom, mokiAmount)}
 		err = k.bk.MintCoins(cacheCtx, types.ModuleName, coins)
@@ -357,7 +357,7 @@ func (k Keeper) forceUndelegateAndBurnMokiTokens(ctx sdk.Context,
 	} else if err != nil {
 		return err
 	}
-	err = mokiutils.ApplyFuncIfNoError(ctx, func(cacheCtx sdk.Context) error {
+	err = osmoutils.ApplyFuncIfNoError(ctx, func(cacheCtx sdk.Context) error {
 		undelegatedCoins, err := k.sk.InstantUndelegate(cacheCtx, intermediaryAcc.GetAccAddress(), valAddr, shares)
 		if err != nil {
 			return err
