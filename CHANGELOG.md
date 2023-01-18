@@ -83,7 +83,7 @@ This release's main features are utility helpers for smart contract developers. 
 * [#3693](https://github.com/petri-labs/mokita/pull/3693) Add `EstimateSwapExactAmountOut` query to stargate whitelist
 * [#3731](https://github.com/petri-labs/mokita/pull/3731) BigDec Power functions with decimal exponent.
 * [#3847](https://github.com/petri-labs/mokita/pull/3847) GeometricTwap and GeometricTwapToNow queries added to Stargate whitelist.
-* [#3899](https://github.com/petri-labs/mokita/pull/3899) Fixed osmoutils so its importable by chains that don't use the mokita CmokisSDK fork 
+* [#3899](https://github.com/petri-labs/mokita/pull/3899) Fixed osmoutils so its importable by chains that don't use the mokita CosmosSDK fork 
   
 ### API breaks
 
@@ -651,7 +651,7 @@ Upgrade instructions for node operators can be found [here](https://github.com/p
 ## Features
 
 * [\#637](https://github.com/petri-labs/mokita/pull/637) Add [Bech32IBC](https://github.com/osmosis-labs/bech32-ibc/)
-* [\#610](https://github.com/petri-labs/mokita/pull/610) Upgrade to Cmokis SDK v0.44.x
+* [\#610](https://github.com/petri-labs/mokita/pull/610) Upgrade to Cosmos SDK v0.44.x
   * Numerous large updates, such as making module accounts be 32 bytes, Rosetta support, etc.
   * Adds & integrates the [Authz module](https://github.com/cosmos/cosmos-sdk/tree/master/x/authz/spec)
     See: [SDK v0.43.0 Release Notes](https://github.com/cosmos/cosmos-sdk/releases/tag/v0.43.0) For more details

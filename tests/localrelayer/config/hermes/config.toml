@@ -30,7 +30,7 @@ port = 3001
 
 [[chains]]
 id = 'localmokita-b'
-type = 'CmokisSdk'
+type = 'CosmosSdk'
 rpc_addr = 'http://localmokita-b:26657'
 grpc_addr = 'http://localmokita-b:9090'
 websocket_addr = 'ws://localmokita-b:26657/websocket'
@@ -69,7 +69,7 @@ derivation = 'cosmos'
 
 [[chains]]
 id = 'localmokita-a'
-type = 'CmokisSdk'
+type = 'CosmosSdk'
 rpc_addr = 'http://localmokita-a:26657'
 grpc_addr = 'http://localmokita-a:9090'
 websocket_addr = 'ws://localmokita-a:26657/websocket'

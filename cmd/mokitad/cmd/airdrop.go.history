@@ -53,8 +53,8 @@ type SnapshotAccount struct {
 	MokiPercent      sdk.Dec `json:"moki_ownership_percent"` // MokiPercent = MokiNormalizedBalance / TotalMokiSupply
 }
 
-// setCmokisBech32Prefixes set config for cosmos address system
-func setCmokisBech32Prefixes() {
+// setCosmosBech32Prefixes set config for cosmos address system
+func setCosmosBech32Prefixes() {
 	defaultConfig := sdk.NewConfig()
 	config := sdk.GetConfig()
 	config.SetBech32PrefixForAccount(defaultConfig.GetBech32AccountAddrPrefix(), defaultConfig.GetBech32AccountPubPrefix())
@@ -102,7 +102,7 @@ Example:
 
 			var genStateV036 GenesisStateV036
 
-			setCmokisBech32Prefixes()
+			setCosmosBech32Prefixes()
 			err = aminoCodec.UnmarshalJSON(byteValue, &genStateV036)
 			if err != nil {
 				return err
