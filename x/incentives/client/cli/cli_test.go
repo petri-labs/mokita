@@ -6,7 +6,7 @@ import (
 	"github.com/cosmos/cosmos-sdk/types/query"
 
 	"github.com/osmosis-labs/osmosis/osmoutils"
-	"github.com/osmosis-labs/osmosis/osmoutils/mokicli"
+	"github.com/osmosis-labs/osmosis/osmoutils/osmocli"
 	"github.com/petri-labs/mokita/x/incentives/types"
 )
 

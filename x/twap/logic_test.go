@@ -11,7 +11,7 @@ import (
 
 	"github.com/osmosis-labs/osmosis/osmomath"
 	"github.com/osmosis-labs/osmosis/osmoutils"
-	"github.com/osmosis-labs/osmosis/osmoutils/mokiassert"
+	"github.com/osmosis-labs/osmosis/osmoutils/osmoassert"
 	gammtypes "github.com/petri-labs/mokita/x/gamm/types"
 	"github.com/petri-labs/mokita/x/twap"
 	"github.com/petri-labs/mokita/x/twap/types"

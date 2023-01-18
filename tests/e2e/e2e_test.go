@@ -16,7 +16,7 @@ import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	coretypes "github.com/tendermint/tendermint/rpc/core/types"
 
-	"github.com/osmosis-labs/osmosis/osmoutils/mokiassert"
+	"github.com/osmosis-labs/osmosis/osmoutils/osmoassert"
 	appparams "github.com/petri-labs/mokita/app/params"
 	"github.com/petri-labs/mokita/tests/e2e/configurer/config"
 	"github.com/petri-labs/mokita/tests/e2e/initialization"

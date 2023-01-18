@@ -13,7 +13,7 @@ import (
 	"github.com/stretchr/testify/suite"
 	tmproto "github.com/tendermint/tendermint/proto/tendermint/types"
 
-	"github.com/osmosis-labs/osmosis/osmoutils/mokiassert"
+	"github.com/osmosis-labs/osmosis/osmoutils/osmoassert"
 	"github.com/petri-labs/mokita/app/apptesting"
 	"github.com/petri-labs/mokita/x/mint/keeper"
 	"github.com/petri-labs/mokita/x/mint/types"

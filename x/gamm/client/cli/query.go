@@ -15,7 +15,7 @@ import (
 	flag "github.com/spf13/pflag"
 	"gopkg.in/yaml.v2"
 
-	"github.com/osmosis-labs/osmosis/osmoutils/mokicli"
+	"github.com/osmosis-labs/osmosis/osmoutils/osmocli"
 	"github.com/petri-labs/mokita/x/gamm/pool-models/balancer"
 	"github.com/petri-labs/mokita/x/gamm/types"
 )

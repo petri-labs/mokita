@@ -10,7 +10,7 @@ import (
 	"github.com/tendermint/tendermint/crypto/ed25519"
 
 	"github.com/osmosis-labs/osmosis/osmomath"
-	"github.com/osmosis-labs/osmosis/osmoutils/mokiassert"
+	"github.com/osmosis-labs/osmosis/osmoutils/osmoassert"
 	"github.com/petri-labs/mokita/x/gamm/pool-models/internal/cfmm_common"
 	"github.com/petri-labs/mokita/x/gamm/types"
 )

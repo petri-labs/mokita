@@ -4,7 +4,7 @@ import (
 	"github.com/spf13/cobra"
 	"github.com/spf13/pflag"
 
-	"github.com/osmosis-labs/osmosis/osmoutils/mokicli"
+	"github.com/osmosis-labs/osmosis/osmoutils/osmocli"
 	"github.com/petri-labs/mokita/x/lockup/types"
 )
 
