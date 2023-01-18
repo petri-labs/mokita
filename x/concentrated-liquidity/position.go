@@ -3,7 +3,7 @@ package concentrated_liquidity
 import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 
-	"github.com/petri-labs/mokita/mokiutils"
+	"github.com/petri-labs/mokita/osmoutils"
 	"github.com/petri-labs/mokita/x/concentrated-liquidity/model"
 	types "github.com/petri-labs/mokita/x/concentrated-liquidity/types"
 )
@@ -72,7 +72,7 @@ func (k Keeper) getPosition(ctx sdk.Context, poolId uint64, owner sdk.AccAddress
 	positionStruct := &model.Position{}
 	key := types.KeyPosition(poolId, owner, lowerTick, upperTick)
 
-	found, err := mokiutils.Get(store, key, positionStruct)
+	found, err := osmoutils.Get(store, key, positionStruct)
 	if err != nil {
 		return nil, err
 	}
@@ -92,5 +92,5 @@ func (k Keeper) setPosition(ctx sdk.Context,
 ) {
 	store := ctx.KVStore(k.storeKey)
 	key := types.KeyPosition(poolId, owner, lowerTick, upperTick)
-	mokiutils.MustSet(store, key, position)
+	osmoutils.MustSet(store, key, position)
 }

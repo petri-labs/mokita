@@ -6,7 +6,7 @@ import (
 
 	"github.com/stretchr/testify/require"
 
-	"github.com/petri-labs/mokita/mokiutils/mokiassert"
+	"github.com/petri-labs/mokita/osmoutils/mokiassert"
 	"github.com/petri-labs/mokita/x/gamm/types"
 )
 

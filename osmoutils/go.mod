@@ -1,4 +1,4 @@
-module github.com/petri-labs/mokita/mokiutils
+module github.com/petri-labs/mokita/osmoutils
 
 go 1.18
 

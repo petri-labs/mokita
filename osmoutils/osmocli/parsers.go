@@ -11,13 +11,13 @@ import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/spf13/pflag"
 
-	"github.com/petri-labs/mokita/mokiutils"
+	"github.com/petri-labs/mokita/osmoutils"
 )
 
 // Parses arguments 1-1 from args
 // makes an exception, where it allows Pagination to come from flags.
 func ParseFieldsFromFlagsAndArgs[reqP any](flagAdvice FlagAdvice, flags *pflag.FlagSet, args []string) (reqP, error) {
-	req := mokiutils.MakeNew[reqP]()
+	req := osmoutils.MakeNew[reqP]()
 	v := reflect.ValueOf(req).Elem()
 	t := v.Type()
 
@@ -40,14 +40,14 @@ func ParseFieldsFromFlagsAndArgs[reqP any](flagAdvice FlagAdvice, flags *pflag.F
 }
 
 func ParseNumFields[reqP any]() int {
-	req := mokiutils.MakeNew[reqP]()
+	req := osmoutils.MakeNew[reqP]()
 	v := reflect.ValueOf(req).Elem()
 	t := v.Type()
 	return t.NumField()
 }
 
 func ParseExpectedQueryFnName[reqP any]() string {
-	req := mokiutils.MakeNew[reqP]()
+	req := osmoutils.MakeNew[reqP]()
 	v := reflect.ValueOf(req).Elem()
 	s := v.Type().String()
 	// handle some non-std queries
@@ -62,7 +62,7 @@ func ParseExpectedQueryFnName[reqP any]() string {
 }
 
 func ParseHasPagination[reqP any]() bool {
-	req := mokiutils.MakeNew[reqP]()
+	req := osmoutils.MakeNew[reqP]()
 	t := reflect.ValueOf(req).Elem().Type()
 	for i := 0; i < t.NumField(); i++ {
 		fType := t.Field(i)

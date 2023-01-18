@@ -6,7 +6,7 @@ import (
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 
-	"github.com/petri-labs/mokita/mokiutils"
+	"github.com/petri-labs/mokita/osmoutils"
 	"github.com/petri-labs/mokita/x/concentrated-liquidity/model"
 	types "github.com/petri-labs/mokita/x/concentrated-liquidity/types"
 	swaproutertypes "github.com/petri-labs/mokita/x/swaprouter/types"
@@ -50,7 +50,7 @@ func (k Keeper) getPoolById(ctx sdk.Context, poolId uint64) (types.ConcentratedP
 	store := ctx.KVStore(k.storeKey)
 	pool := model.Pool{}
 	key := types.KeyPool(poolId)
-	found, err := mokiutils.Get(store, key, &pool)
+	found, err := osmoutils.Get(store, key, &pool)
 	if err != nil {
 		panic(err)
 	}
@@ -65,7 +65,7 @@ func (k Keeper) poolExists(ctx sdk.Context, poolId uint64) bool {
 	store := ctx.KVStore(k.storeKey)
 	pool := model.Pool{}
 	key := types.KeyPool(poolId)
-	found, err := mokiutils.Get(store, key, &pool)
+	found, err := osmoutils.Get(store, key, &pool)
 	if err != nil {
 		panic(err)
 	}
@@ -80,7 +80,7 @@ func (k Keeper) setPool(ctx sdk.Context, pool types.ConcentratedPoolExtension) e
 	}
 	store := ctx.KVStore(k.storeKey)
 	key := types.KeyPool(pool.GetId())
-	mokiutils.MustSet(store, key, poolModel)
+	osmoutils.MustSet(store, key, poolModel)
 	return nil
 }
 

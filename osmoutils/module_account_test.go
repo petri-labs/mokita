@@ -1,4 +1,4 @@
-package mokiutils_test
+package osmoutils_test
 
 import (
 	"github.com/cosmos/cosmos-sdk/crypto/keys/secp256k1"
@@ -6,8 +6,8 @@ import (
 	"github.com/cosmos/cosmos-sdk/types/address"
 	authtypes "github.com/cosmos/cosmos-sdk/x/auth/types"
 
-	"github.com/petri-labs/mokita/mokiutils"
-	"github.com/petri-labs/mokita/mokiutils/mokiassert"
+	"github.com/petri-labs/mokita/osmoutils"
+	"github.com/petri-labs/mokita/osmoutils/mokiassert"
 )
 
 func (s *TestSuite) TestCreateModuleAccount() {
@@ -59,7 +59,7 @@ func (s *TestSuite) TestCreateModuleAccount() {
 			for _, priorAcc := range tc.priorAccounts {
 				s.accountKeeper.SetAccount(s.ctx, priorAcc)
 			}
-			err := mokiutils.CreateModuleAccount(s.ctx, s.accountKeeper, tc.moduleAccAddr)
+			err := osmoutils.CreateModuleAccount(s.ctx, s.accountKeeper, tc.moduleAccAddr)
 			mokiassert.ConditionalError(s.T(), tc.expErr, err)
 		})
 	}

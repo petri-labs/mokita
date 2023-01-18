@@ -5,7 +5,7 @@ import (
 
 	"github.com/tendermint/tendermint/libs/log"
 
-	"github.com/petri-labs/mokita/mokiutils"
+	"github.com/petri-labs/mokita/osmoutils"
 	"github.com/petri-labs/mokita/x/mint/types"
 	poolincentivestypes "github.com/petri-labs/mokita/x/pool-incentives/types"
 
@@ -91,14 +91,14 @@ func (k *Keeper) SetHooks(h types.MintHooks) *Keeper {
 
 // GetMinter gets the minter.
 func (k Keeper) GetMinter(ctx sdk.Context) (minter types.Minter) {
-	mokiutils.MustGet(ctx.KVStore(k.storeKey), types.MinterKey, &minter)
+	osmoutils.MustGet(ctx.KVStore(k.storeKey), types.MinterKey, &minter)
 	return
 }
 
 // SetMinter sets the minter.
 func (k Keeper) SetMinter(ctx sdk.Context, minter types.Minter) {
 	store := ctx.KVStore(k.storeKey)
-	mokiutils.MustSet(store, types.MinterKey, &minter)
+	osmoutils.MustSet(store, types.MinterKey, &minter)
 }
 
 // GetParams returns the total set of minting parameters.

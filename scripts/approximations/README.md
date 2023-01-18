@@ -32,7 +32,7 @@ In `main.py`, there is also an `exponent_approximation_choice` script.
 This is a shorter and simpler version of `main` that isolates the 13-parameter
 Chebyshev Rational approximation of e^x. We are planning to use it in production.
 Therefore, we need to perform coefficient truncations to 36 decimal points
-(the max `mokimath` supported precision). This truncation is applied
+(the max `osmomath` supported precision). This truncation is applied
 to `exponent_approximation_choice` but not `main`.
 
 ## Configuration

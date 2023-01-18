@@ -76,21 +76,21 @@ This release's main features are utility helpers for smart contract developers. 
 * [#2387](https://github.com/petri-labs/mokita/pull/3838) Upgrade to IBC v4.2.0, and as a requirement for it wasmd to 0.30.0
 * [#3609](https://github.com/petri-labs/mokita/pull/3609) Add Downtime-detection module.
 * [#2788](https://github.com/petri-labs/mokita/pull/2788) Add logarithm base 2 implementation.
-* [#3677](https://github.com/petri-labs/mokita/pull/3677) Add methods for cloning and mutative multiplication on mokimath.BigDec.
-* [#3676](https://github.com/petri-labs/mokita/pull/3676) implement `PowerInteger` function on `mokimath.BigDec` 
-* [#3678](https://github.com/petri-labs/mokita/pull/3678) implement mutative `PowerIntegerMut` function on `mokimath.BigDec`.
+* [#3677](https://github.com/petri-labs/mokita/pull/3677) Add methods for cloning and mutative multiplication on osmomath.BigDec.
+* [#3676](https://github.com/petri-labs/mokita/pull/3676) implement `PowerInteger` function on `osmomath.BigDec` 
+* [#3678](https://github.com/petri-labs/mokita/pull/3678) implement mutative `PowerIntegerMut` function on `osmomath.BigDec`.
 * [#3708](https://github.com/petri-labs/mokita/pull/3708) `Exp2` function to compute 2^decimal.
 * [#3693](https://github.com/petri-labs/mokita/pull/3693) Add `EstimateSwapExactAmountOut` query to stargate whitelist
 * [#3731](https://github.com/petri-labs/mokita/pull/3731) BigDec Power functions with decimal exponent.
 * [#3847](https://github.com/petri-labs/mokita/pull/3847) GeometricTwap and GeometricTwapToNow queries added to Stargate whitelist.
-* [#3899](https://github.com/petri-labs/mokita/pull/3899) Fixed mokiutils so its importable by chains that don't use the mokita CmokisSDK fork 
+* [#3899](https://github.com/petri-labs/mokita/pull/3899) Fixed osmoutils so its importable by chains that don't use the mokita CmokisSDK fork 
   
 ### API breaks
 
-* [#3763](https://github.com/petri-labs/mokita/pull/3763) Move binary search and error tolerance code from `mokiutils` into `mokimath`
-* [#3817](https://github.com/petri-labs/mokita/pull/3817) Move mokiassert from `app/apptesting/mokiassert` to `mokiutils/mokiassert`.
-* [#3771](https://github.com/petri-labs/mokita/pull/3771) Move mokimath into its own go.mod
-* [#3827](https://github.com/petri-labs/mokita/pull/3827) Move mokiutils into its own go.mod
+* [#3763](https://github.com/petri-labs/mokita/pull/3763) Move binary search and error tolerance code from `osmoutils` into `osmomath`
+* [#3817](https://github.com/petri-labs/mokita/pull/3817) Move mokiassert from `app/apptesting/mokiassert` to `osmoutils/mokiassert`.
+* [#3771](https://github.com/petri-labs/mokita/pull/3771) Move osmomath into its own go.mod
+* [#3827](https://github.com/petri-labs/mokita/pull/3827) Move osmoutils into its own go.mod
 
 ### Bug fixes
 
@@ -108,8 +108,8 @@ Additionally, the swagger files for v13 have been updated to improve compatibili
 
 * [#3611](https://github.com/petri-labs/mokita/pull/3611),[#3647](https://github.com/petri-labs/mokita/pull/3647) Introduce mokicli, to automate thousands of lines of CLI boilerplate
 * [#3634](https://github.com/petri-labs/mokita/pull/3634) (Makefile) Ensure correct golang version in make build and make install. (Thank you @jhernandezb )
-* [#3712](https://github.com/petri-labs/mokita/pull/3712) replace `mokimath.BigDec` `Power` with `PowerInteger` 
-* [#3711](https://github.com/petri-labs/mokita/pull/3711) Use Dec instead of Int for additive `ErrTolerace` in `mokiutils`.
+* [#3712](https://github.com/petri-labs/mokita/pull/3712) replace `osmomath.BigDec` `Power` with `PowerInteger` 
+* [#3711](https://github.com/petri-labs/mokita/pull/3711) Use Dec instead of Int for additive `ErrTolerace` in `osmoutils`.
 
 
 ## v13.0.0

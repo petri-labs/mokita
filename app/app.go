@@ -10,7 +10,7 @@ import (
 	"strings"
 
 	vestingtypes "github.com/cosmos/cosmos-sdk/x/auth/vesting/types"
-	"github.com/petri-labs/mokita/mokiutils"
+	"github.com/petri-labs/mokita/osmoutils"
 
 	"github.com/CosmWasm/wasmd/x/wasm"
 	"github.com/gorilla/mux"
@@ -151,8 +151,8 @@ func init() {
 // This is done to ensure they can be built without depending on at compilation time and thus imported by other chains
 // This should always be called before any other function to avoid inconsistent data
 func initReusablePackageInjections() {
-	// Inject ClawbackVestingAccount account type into mokiutils
-	mokiutils.MokiUtilsExtraAccountTypes = map[reflect.Type]struct{}{
+	// Inject ClawbackVestingAccount account type into osmoutils
+	osmoutils.OsmoUtilsExtraAccountTypes = map[reflect.Type]struct{}{
 		reflect.TypeOf(&vestingtypes.ClawbackVestingAccount{}): {},
 	}
 }

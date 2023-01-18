@@ -7,7 +7,7 @@ import (
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 
-	"github.com/petri-labs/mokita/mokimath"
+	"github.com/petri-labs/mokita/osmomath"
 	"github.com/petri-labs/mokita/x/twap/types"
 )
 
@@ -273,5 +273,5 @@ func twapLog(price sdk.Dec) sdk.Dec {
 		panic("twap: cannot take logarithm of zero")
 	}
 
-	return mokimath.BigDecFromSDKDec(price).LogBase2().SDKDec()
+	return osmomath.BigDecFromSDKDec(price).LogBase2().SDKDec()
 }

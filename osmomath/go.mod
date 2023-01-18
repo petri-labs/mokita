@@ -1,4 +1,4 @@
-module github.com/petri-labs/mokita/mokimath
+module github.com/petri-labs/mokita/osmomath
 
 go 1.18
 

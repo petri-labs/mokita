@@ -7,7 +7,7 @@ import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 
-	"github.com/petri-labs/mokita/mokiutils"
+	"github.com/petri-labs/mokita/osmoutils"
 	gammtypes "github.com/petri-labs/mokita/x/gamm/types"
 	"github.com/petri-labs/mokita/x/swaprouter/types"
 )
@@ -67,7 +67,7 @@ func (k Keeper) CreatePool(ctx sdk.Context, msg types.CreatePoolMsg) (uint64, er
 	}
 
 	// create and save the pool's module account to the account keeper
-	if err := mokiutils.CreateModuleAccount(ctx, k.accountKeeper, pool.GetAddress()); err != nil {
+	if err := osmoutils.CreateModuleAccount(ctx, k.accountKeeper, pool.GetAddress()); err != nil {
 		return 0, fmt.Errorf("creating pool module account for id %d: %w", poolId, err)
 	}
 
@@ -111,7 +111,7 @@ func (k Keeper) getNextPoolIdAndIncrement(ctx sdk.Context) uint64 {
 
 func (k Keeper) SetPoolRoute(ctx sdk.Context, poolId uint64, poolType types.PoolType) {
 	store := ctx.KVStore(k.storeKey)
-	mokiutils.MustSet(store, types.FormatModuleRouteKey(poolId), &types.ModuleRoute{PoolType: poolType})
+	osmoutils.MustSet(store, types.FormatModuleRouteKey(poolId), &types.ModuleRoute{PoolType: poolType})
 }
 
 // GetPoolModule returns the swap module for the given pool ID.
@@ -126,7 +126,7 @@ func (k Keeper) GetPoolModule(ctx sdk.Context, poolId uint64) (types.SwapI, erro
 	store := ctx.KVStore(k.storeKey)
 
 	moduleRoute := &types.ModuleRoute{}
-	found, err := mokiutils.Get(store, types.FormatModuleRouteKey(poolId), moduleRoute)
+	found, err := osmoutils.Get(store, types.FormatModuleRouteKey(poolId), moduleRoute)
 	if err != nil {
 		return nil, err
 	}

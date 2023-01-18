@@ -5,12 +5,12 @@ import (
 
 	"github.com/cosmos/cosmos-sdk/types/query"
 
-	"github.com/petri-labs/mokita/mokiutils"
-	"github.com/petri-labs/mokita/mokiutils/mokicli"
+	"github.com/petri-labs/mokita/osmoutils"
+	"github.com/petri-labs/mokita/osmoutils/mokicli"
 	"github.com/petri-labs/mokita/x/incentives/types"
 )
 
-var testAddresses = mokiutils.CreateRandomAccounts(3)
+var testAddresses = osmoutils.CreateRandomAccounts(3)
 
 func TestGetCmdGauges(t *testing.T) {
 	desc, _ := GetCmdGauges()

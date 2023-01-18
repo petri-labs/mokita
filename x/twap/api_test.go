@@ -8,7 +8,7 @@ import (
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 
-	"github.com/petri-labs/mokita/mokimath"
+	"github.com/petri-labs/mokita/osmomath"
 	sdkrand "github.com/petri-labs/mokita/simulation/simtypes/random"
 	"github.com/petri-labs/mokita/x/gamm/pool-models/balancer"
 	"github.com/petri-labs/mokita/x/twap"
@@ -904,11 +904,11 @@ func (s *TestSuite) TestGeometricTwapToNow_BalancerPool_Randomized() {
 			twap, err := app.TwapKeeper.GetGeometricTwapToNow(ctx, 1, denom0, denom1, oldTime)
 			s.Require().NoError(err)
 
-			mokimath.ErrTolerance{
+			osmomath.ErrTolerance{
 				MultiplicativeTolerance: sdk.SmallestDec(),
 			}.CompareBigDec(
-				mokimath.BigDecFromSDKDec(spotPrice),
-				mokimath.BigDecFromSDKDec(twap),
+				osmomath.BigDecFromSDKDec(spotPrice),
+				osmomath.BigDecFromSDKDec(twap),
 			)
 		})
 	}

@@ -1,4 +1,4 @@
-package mokiutils
+package osmoutils
 
 import (
 	"encoding/json"

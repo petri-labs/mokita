@@ -7,7 +7,7 @@ import (
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	stakingtypes "github.com/cosmos/cosmos-sdk/x/staking/types"
-	"github.com/petri-labs/mokita/mokimath"
+	"github.com/petri-labs/mokita/osmomath"
 	"github.com/petri-labs/mokita/x/valset-pref/types"
 )
 
@@ -307,7 +307,7 @@ func (k Keeper) IsPreferenceValid(ctx sdk.Context, preferences []types.Validator
 	var weightsRoundedValPrefList []types.ValidatorPreference
 	for _, val := range preferences {
 		// round up weights
-		valWeightStr := mokimath.SigFigRound(val.Weight, sdk.NewDec(10).Power(2).TruncateInt())
+		valWeightStr := osmomath.SigFigRound(val.Weight, sdk.NewDec(10).Power(2).TruncateInt())
 
 		_, _, err := k.GetValidatorInfo(ctx, val.ValOperAddress)
 		if err != nil {

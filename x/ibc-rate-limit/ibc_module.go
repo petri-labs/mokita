@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"strings"
 
-	"github.com/petri-labs/mokita/mokiutils"
+	"github.com/petri-labs/mokita/osmoutils"
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
@@ -125,7 +125,7 @@ func (im *IBCModule) OnRecvPacket(
 	relayer sdk.AccAddress,
 ) exported.Acknowledgement {
 	if err := ValidateReceiverAddress(packet); err != nil {
-		return mokiutils.NewEmitErrorAcknowledgement(ctx, types.ErrBadMessage, err.Error())
+		return osmoutils.NewEmitErrorAcknowledgement(ctx, types.ErrBadMessage, err.Error())
 	}
 
 	contract := im.ics4Middleware.GetParams(ctx)
@@ -137,10 +137,10 @@ func (im *IBCModule) OnRecvPacket(
 	err := CheckAndUpdateRateLimits(ctx, im.ics4Middleware.ContractKeeper, "recv_packet", contract, packet)
 	if err != nil {
 		if strings.Contains(err.Error(), "rate limit exceeded") {
-			return mokiutils.NewEmitErrorAcknowledgement(ctx, types.ErrRateLimitExceeded)
+			return osmoutils.NewEmitErrorAcknowledgement(ctx, types.ErrRateLimitExceeded)
 		}
 		fullError := sdkerrors.Wrap(types.ErrContractError, err.Error())
-		return mokiutils.NewEmitErrorAcknowledgement(ctx, fullError)
+		return osmoutils.NewEmitErrorAcknowledgement(ctx, fullError)
 	}
 
 	// if this returns an Acknowledgement that isn't successful, all state changes are discarded
@@ -159,7 +159,7 @@ func (im *IBCModule) OnAcknowledgementPacket(
 		return sdkerrors.Wrapf(sdkerrors.ErrUnknownRequest, "cannot unmarshal ICS-20 transfer packet acknowledgement: %v", err)
 	}
 
-	if mokiutils.IsAckError(acknowledgement) {
+	if osmoutils.IsAckError(acknowledgement) {
 		err := im.RevertSentPacket(ctx, packet) // If there is an error here we should still handle the ack
 		if err != nil {
 			ctx.EventManager().EmitEvent(

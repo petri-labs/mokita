@@ -481,7 +481,7 @@ the appropriate `SwapExactAmountIn` method.
 ```go
 // x/swaprouter/router.go RouteExactAmountIn(...)
 
-moduleRouteBytes := mokiutils.MustGet(swaproutertypes.FormatModuleRouteIndex(poolId))
+moduleRouteBytes := osmoutils.MustGet(swaproutertypes.FormatModuleRouteIndex(poolId))
 moduleRoute, _ := swaproutertypes.ModuleRouteFromBytes(moduleRouteBytes)
 
 swapModule := k.routes[moduleRoute.PoolType]

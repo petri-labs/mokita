@@ -3,7 +3,7 @@ package partialord
 import (
 	"sort"
 
-	"github.com/petri-labs/mokita/mokiutils/partialord/internal/dag"
+	"github.com/petri-labs/mokita/osmoutils/partialord/internal/dag"
 )
 
 type PartialOrdering struct {

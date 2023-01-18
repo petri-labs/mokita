@@ -4,7 +4,7 @@ import (
 	"math/rand"
 	"testing"
 
-	"github.com/petri-labs/mokita/mokimath"
+	"github.com/petri-labs/mokita/osmomath"
 )
 
 func BenchmarkCFMM(b *testing.B) {
@@ -20,26 +20,26 @@ func BenchmarkBinarySearchMultiAsset(b *testing.B) {
 	}
 }
 
-func runCalcCFMM(solve func(mokimath.BigDec, mokimath.BigDec, []mokimath.BigDec, mokimath.BigDec) mokimath.BigDec) {
-	xReserve := mokimath.NewBigDec(rand.Int63n(100000) + 50000)
-	yReserve := mokimath.NewBigDec(rand.Int63n(100000) + 50000)
-	yIn := mokimath.NewBigDec(rand.Int63n(100000))
-	solve(xReserve, yReserve, []mokimath.BigDec{}, yIn)
+func runCalcCFMM(solve func(osmomath.BigDec, osmomath.BigDec, []osmomath.BigDec, osmomath.BigDec) osmomath.BigDec) {
+	xReserve := osmomath.NewBigDec(rand.Int63n(100000) + 50000)
+	yReserve := osmomath.NewBigDec(rand.Int63n(100000) + 50000)
+	yIn := osmomath.NewBigDec(rand.Int63n(100000))
+	solve(xReserve, yReserve, []osmomath.BigDec{}, yIn)
 }
 
-func runCalcTwoAsset(solve func(mokimath.BigDec, mokimath.BigDec, mokimath.BigDec) mokimath.BigDec) {
-	xReserve := mokimath.NewBigDec(rand.Int63n(100000) + 50000)
-	yReserve := mokimath.NewBigDec(rand.Int63n(100000) + 50000)
-	yIn := mokimath.NewBigDec(rand.Int63n(100000))
+func runCalcTwoAsset(solve func(osmomath.BigDec, osmomath.BigDec, osmomath.BigDec) osmomath.BigDec) {
+	xReserve := osmomath.NewBigDec(rand.Int63n(100000) + 50000)
+	yReserve := osmomath.NewBigDec(rand.Int63n(100000) + 50000)
+	yIn := osmomath.NewBigDec(rand.Int63n(100000))
 	solve(xReserve, yReserve, yIn)
 }
 
-func runCalcMultiAsset(solve func(mokimath.BigDec, mokimath.BigDec, mokimath.BigDec, mokimath.BigDec) mokimath.BigDec) {
-	xReserve := mokimath.NewBigDec(rand.Int63n(100000) + 50000)
-	yReserve := mokimath.NewBigDec(rand.Int63n(100000) + 50000)
-	mReserve := mokimath.NewBigDec(rand.Int63n(100000) + 50000)
-	nReserve := mokimath.NewBigDec(rand.Int63n(100000) + 50000)
+func runCalcMultiAsset(solve func(osmomath.BigDec, osmomath.BigDec, osmomath.BigDec, osmomath.BigDec) osmomath.BigDec) {
+	xReserve := osmomath.NewBigDec(rand.Int63n(100000) + 50000)
+	yReserve := osmomath.NewBigDec(rand.Int63n(100000) + 50000)
+	mReserve := osmomath.NewBigDec(rand.Int63n(100000) + 50000)
+	nReserve := osmomath.NewBigDec(rand.Int63n(100000) + 50000)
 	w := mReserve.Mul(mReserve).Add(nReserve.Mul(nReserve))
-	yIn := mokimath.NewBigDec(rand.Int63n(100000))
+	yIn := osmomath.NewBigDec(rand.Int63n(100000))
 	solve(xReserve, yReserve, w, yIn)
 }

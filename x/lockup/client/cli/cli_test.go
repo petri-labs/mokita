@@ -6,12 +6,12 @@ import (
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 
-	"github.com/petri-labs/mokita/mokiutils"
-	"github.com/petri-labs/mokita/mokiutils/mokicli"
+	"github.com/petri-labs/mokita/osmoutils"
+	"github.com/petri-labs/mokita/osmoutils/mokicli"
 	"github.com/petri-labs/mokita/x/lockup/types"
 )
 
-var testAddresses = mokiutils.CreateRandomAccounts(3)
+var testAddresses = osmoutils.CreateRandomAccounts(3)
 
 func TestLockTokensCmd(t *testing.T) {
 	desc, _ := NewLockTokensCmd()

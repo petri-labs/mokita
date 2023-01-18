@@ -3,7 +3,7 @@ package math
 import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 
-	"github.com/petri-labs/mokita/mokimath"
+	"github.com/petri-labs/mokita/osmomath"
 )
 
 // liquidity0 takes an amount of asset0 in the pool as well as the sqrtpCur and the nextPrice
@@ -17,9 +17,9 @@ func Liquidity0(amount sdk.Int, sqrtPriceA, sqrtPriceB sdk.Dec) sdk.Dec {
 
 	// We convert to BigDec to avoid precision loss when calculating liquidity. Without doing this,
 	// our liquidity calculations will be off from our theoretical calculations within our tests.
-	amountBigDec := mokimath.BigDecFromSDKDec(amount.ToDec())
-	sqrtPriceABigDec := mokimath.BigDecFromSDKDec(sqrtPriceA)
-	sqrtPriceBBigDec := mokimath.BigDecFromSDKDec(sqrtPriceB)
+	amountBigDec := osmomath.BigDecFromSDKDec(amount.ToDec())
+	sqrtPriceABigDec := osmomath.BigDecFromSDKDec(sqrtPriceA)
+	sqrtPriceBBigDec := osmomath.BigDecFromSDKDec(sqrtPriceB)
 
 	product := sqrtPriceABigDec.Mul(sqrtPriceBBigDec)
 	diff := sqrtPriceBBigDec.Sub(sqrtPriceABigDec)
@@ -37,9 +37,9 @@ func Liquidity1(amount sdk.Int, sqrtPriceA, sqrtPriceB sdk.Dec) sdk.Dec {
 
 	// We convert to BigDec to avoid precision loss when calculating liquidity. Without doing this,
 	// our liquidity calculations will be off from our theoretical calculations within our tests.
-	amountBigDec := mokimath.BigDecFromSDKDec(amount.ToDec())
-	sqrtPriceABigDec := mokimath.BigDecFromSDKDec(sqrtPriceA)
-	sqrtPriceBBigDec := mokimath.BigDecFromSDKDec(sqrtPriceB)
+	amountBigDec := osmomath.BigDecFromSDKDec(amount.ToDec())
+	sqrtPriceABigDec := osmomath.BigDecFromSDKDec(sqrtPriceA)
+	sqrtPriceBBigDec := osmomath.BigDecFromSDKDec(sqrtPriceB)
 
 	diff := sqrtPriceBBigDec.Sub(sqrtPriceABigDec)
 	return amountBigDec.Quo(diff).SDKDec()

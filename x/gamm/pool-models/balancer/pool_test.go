@@ -9,8 +9,8 @@ import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/stretchr/testify/require"
 
-	"github.com/petri-labs/mokita/mokimath"
-	"github.com/petri-labs/mokita/mokiutils/mokiassert"
+	"github.com/petri-labs/mokita/osmomath"
+	"github.com/petri-labs/mokita/osmoutils/mokiassert"
 	"github.com/petri-labs/mokita/x/gamm/pool-models/balancer"
 	"github.com/petri-labs/mokita/x/gamm/pool-models/internal/test_helpers"
 	"github.com/petri-labs/mokita/x/gamm/types"
@@ -568,7 +568,7 @@ func (suite *BalancerTestSuite) TestBalancerCalculateAmountOutAndIn_InverseRelat
 				pool := createTestPool(suite.T(), swapFeeDec, exitFeeDec, poolAssetOut, poolAssetIn)
 				suite.Require().NotNil(pool)
 
-				errTolerance := mokimath.ErrTolerance{
+				errTolerance := osmomath.ErrTolerance{
 					AdditiveTolerance: sdk.OneDec(), MultiplicativeTolerance: sdk.Dec{}}
 				sut := func() {
 					test_helpers.TestCalculateAmountOutAndIn_InverseRelationship(suite.T(), ctx, pool, poolAssetIn.Token.Denom, poolAssetOut.Token.Denom, tc.initialCalcOut, swapFeeDec, errTolerance)

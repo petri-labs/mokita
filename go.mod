@@ -17,8 +17,8 @@ require (
 	github.com/mattn/go-sqlite3 v1.14.16
 	github.com/ory/dockertest/v3 v3.9.1
 	github.com/osmosis-labs/go-mutesting v0.0.0-20221208041716-b43bcd97b3b3
-	github.com/petri-labs/mokita/mokimath v0.0.0-20230105183030-bccf5202f260
-	github.com/petri-labs/mokita/mokiutils v0.0.0-20230105184425-1e6fcd979d99
+	github.com/petri-labs/mokita/osmomath v0.0.0-20230105183030-bccf5202f260
+	github.com/petri-labs/mokita/osmoutils v0.0.0-20230105184425-1e6fcd979d99
 	github.com/petri-labs/mokita/x/ibc-hooks v0.0.0-20230106090955-07448a793aaa
 	github.com/pkg/errors v0.9.1
 	github.com/rakyll/statik v0.1.7

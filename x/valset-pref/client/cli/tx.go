@@ -9,8 +9,8 @@ import (
 	"github.com/spf13/pflag"
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
-	"github.com/petri-labs/mokita/mokiutils"
-	"github.com/petri-labs/mokita/mokiutils/mokicli"
+	"github.com/petri-labs/mokita/osmoutils"
+	"github.com/petri-labs/mokita/osmoutils/mokicli"
 	"github.com/petri-labs/mokita/x/valset-pref/types"
 )
 
@@ -59,7 +59,7 @@ func NewMsgSetValidatorSetPreference(clientCtx client.Context, args []string, fs
 	var valAddrs []string
 	valAddrs = append(valAddrs, strings.Split(args[1], ",")...)
 
-	weights, err := mokiutils.ParseSdkDecFromString(args[2], ",")
+	weights, err := osmoutils.ParseSdkDecFromString(args[2], ",")
 	if err != nil {
 		return nil, err
 	}

@@ -12,7 +12,7 @@ import (
 	tmjson "github.com/tendermint/tendermint/libs/json"
 	tmtypes "github.com/tendermint/tendermint/types"
 
-	"github.com/petri-labs/mokita/mokiutils"
+	"github.com/petri-labs/mokita/osmoutils"
 	appparams "github.com/petri-labs/mokita/app/params"
 	gammtypes "github.com/petri-labs/mokita/x/gamm/types"
 	lockuptypes "github.com/petri-labs/mokita/x/lockup/types"
@@ -176,7 +176,7 @@ Example:
 			}
 			selectBondedPoolIDs := []uint64{}
 			if selectPoolIdsStr != "" {
-				selectBondedPoolIDs, err = mokiutils.ParseUint64SliceFromString(selectPoolIdsStr, ",")
+				selectBondedPoolIDs, err = osmoutils.ParseUint64SliceFromString(selectPoolIdsStr, ",")
 				if err != nil {
 					return err
 				}

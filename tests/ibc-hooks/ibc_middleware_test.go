@@ -9,7 +9,7 @@ import (
 
 	wasmkeeper "github.com/CosmWasm/wasmd/x/wasm/keeper"
 
-	"github.com/petri-labs/mokita/mokiutils"
+	"github.com/petri-labs/mokita/osmoutils"
 	"github.com/petri-labs/mokita/x/gamm/pool-models/balancer"
 	gammtypes "github.com/petri-labs/mokita/x/gamm/types"
 	minttypes "github.com/petri-labs/mokita/x/mint/types"
@@ -225,7 +225,7 @@ func (suite *HooksTestSuite) TestFundsAreTransferredToTheContract() {
 	addr := suite.chainA.InstantiateContract(&suite.Suite, "{}", 1)
 
 	// Check that the contract has no funds
-	localDenom := mokiutils.MustExtractDenomFromPacketOnRecv(suite.makeMockPacket("", "", 0))
+	localDenom := osmoutils.MustExtractDenomFromPacketOnRecv(suite.makeMockPacket("", "", 0))
 	balance := suite.chainA.GetMokitaApp().BankKeeper.GetBalance(suite.chainA.GetContext(), addr, localDenom)
 	suite.Require().Equal(sdk.NewInt(0), balance.Amount)
 
@@ -251,7 +251,7 @@ func (suite *HooksTestSuite) TestFundsAreReturnedOnFailedContractExec() {
 	addr := suite.chainA.InstantiateContract(&suite.Suite, "{}", 1)
 
 	// Check that the contract has no funds
-	localDenom := mokiutils.MustExtractDenomFromPacketOnRecv(suite.makeMockPacket("", "", 0))
+	localDenom := osmoutils.MustExtractDenomFromPacketOnRecv(suite.makeMockPacket("", "", 0))
 	balance := suite.chainA.GetMokitaApp().BankKeeper.GetBalance(suite.chainA.GetContext(), addr, localDenom)
 	suite.Require().Equal(sdk.NewInt(0), balance.Amount)
 
@@ -319,7 +319,7 @@ func (suite *HooksTestSuite) TestFundTracking() {
 	addr := suite.chainA.InstantiateContract(&suite.Suite, `{"count": 0}`, 1)
 
 	// Check that the contract has no funds
-	localDenom := mokiutils.MustExtractDenomFromPacketOnRecv(suite.makeMockPacket("", "", 0))
+	localDenom := osmoutils.MustExtractDenomFromPacketOnRecv(suite.makeMockPacket("", "", 0))
 	balance := suite.chainA.GetMokitaApp().BankKeeper.GetBalance(suite.chainA.GetContext(), addr, localDenom)
 	suite.Require().Equal(sdk.NewInt(0), balance.Amount)
 

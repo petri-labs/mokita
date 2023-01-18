@@ -6,7 +6,7 @@ import (
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 
-	"github.com/petri-labs/mokita/mokiutils/accum"
+	"github.com/petri-labs/mokita/osmoutils/accum"
 )
 
 const (
