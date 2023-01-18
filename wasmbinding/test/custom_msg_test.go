@@ -29,14 +29,14 @@ func TestCreateDenomMsg(t *testing.T) {
 	reflectAmount := sdk.NewCoins(sdk.NewCoin(types.DefaultParams().DenomCreationFee[0].Denom, types.DefaultParams().DenomCreationFee[0].Amount.MulRaw(100)))
 	fundAccount(t, ctx, mokita, reflect, reflectAmount)
 
-	msg := bindings.MokisisMsg{CreateDenom: &bindings.CreateDenom{
+	msg := bindings.MokitaMsg{CreateDenom: &bindings.CreateDenom{
 		Subdenom: "SUN",
 	}}
 	err := executeCustom(t, ctx, mokita, reflect, lucky, msg, sdk.Coin{})
 	require.NoError(t, err)
 
 	// query the denom and see if it matches
-	query := bindings.MokisisQuery{
+	query := bindings.MokitaQuery{
 		FullDenom: &bindings.FullDenom{
 			CreatorAddr: reflect.String(),
 			Subdenom:    "SUN",
@@ -65,7 +65,7 @@ func TestMintMsg(t *testing.T) {
 	require.Empty(t, balances)
 
 	// Create denom for minting
-	msg := bindings.MokisisMsg{CreateDenom: &bindings.CreateDenom{
+	msg := bindings.MokitaMsg{CreateDenom: &bindings.CreateDenom{
 		Subdenom: "SUN",
 	}}
 	err := executeCustom(t, ctx, mokita, reflect, lucky, msg, sdk.Coin{})
@@ -74,7 +74,7 @@ func TestMintMsg(t *testing.T) {
 
 	amount, ok := sdk.NewIntFromString("808010808")
 	require.True(t, ok)
-	msg = bindings.MokisisMsg{MintTokens: &bindings.MintTokens{
+	msg = bindings.MokitaMsg{MintTokens: &bindings.MintTokens{
 		Denom:         sunDenom,
 		Amount:        amount,
 		MintToAddress: lucky.String(),
@@ -89,7 +89,7 @@ func TestMintMsg(t *testing.T) {
 	require.Contains(t, coin.Denom, "factory/")
 
 	// query the denom and see if it matches
-	query := bindings.MokisisQuery{
+	query := bindings.MokitaQuery{
 		FullDenom: &bindings.FullDenom{
 			CreatorAddr: reflect.String(),
 			Subdenom:    "SUN",
@@ -111,7 +111,7 @@ func TestMintMsg(t *testing.T) {
 	require.Contains(t, coin.Denom, "factory/")
 
 	// query the denom and see if it matches
-	query = bindings.MokisisQuery{
+	query = bindings.MokitaQuery{
 		FullDenom: &bindings.FullDenom{
 			CreatorAddr: reflect.String(),
 			Subdenom:    "SUN",
@@ -124,7 +124,7 @@ func TestMintMsg(t *testing.T) {
 
 	// now mint another amount / denom
 	// create it first
-	msg = bindings.MokisisMsg{CreateDenom: &bindings.CreateDenom{
+	msg = bindings.MokitaMsg{CreateDenom: &bindings.CreateDenom{
 		Subdenom: "MOON",
 	}}
 	err = executeCustom(t, ctx, mokita, reflect, lucky, msg, sdk.Coin{})
@@ -132,7 +132,7 @@ func TestMintMsg(t *testing.T) {
 	moonDenom := fmt.Sprintf("factory/%s/%s", reflect.String(), msg.CreateDenom.Subdenom)
 
 	amount = amount.SubRaw(1)
-	msg = bindings.MokisisMsg{MintTokens: &bindings.MintTokens{
+	msg = bindings.MokitaMsg{MintTokens: &bindings.MintTokens{
 		Denom:         moonDenom,
 		Amount:        amount,
 		MintToAddress: lucky.String(),
@@ -147,7 +147,7 @@ func TestMintMsg(t *testing.T) {
 	require.Contains(t, coin.Denom, "factory/")
 
 	// query the denom and see if it matches
-	query = bindings.MokisisQuery{
+	query = bindings.MokitaQuery{
 		FullDenom: &bindings.FullDenom{
 			CreatorAddr: reflect.String(),
 			Subdenom:    "MOON",
@@ -164,7 +164,7 @@ func TestMintMsg(t *testing.T) {
 	require.Contains(t, coin.Denom, "factory/")
 
 	// query the denom and see if it matches
-	query = bindings.MokisisQuery{
+	query = bindings.MokitaQuery{
 		FullDenom: &bindings.FullDenom{
 			CreatorAddr: reflect.String(),
 			Subdenom:    "SUN",
@@ -193,7 +193,7 @@ func TestBurnMsg(t *testing.T) {
 	require.Empty(t, balances)
 
 	// Create denom for minting
-	msg := bindings.MokisisMsg{CreateDenom: &bindings.CreateDenom{
+	msg := bindings.MokitaMsg{CreateDenom: &bindings.CreateDenom{
 		Subdenom: "SUN",
 	}}
 	err := executeCustom(t, ctx, mokita, reflect, lucky, msg, sdk.Coin{})
@@ -203,7 +203,7 @@ func TestBurnMsg(t *testing.T) {
 	amount, ok := sdk.NewIntFromString("808010808")
 	require.True(t, ok)
 
-	msg = bindings.MokisisMsg{MintTokens: &bindings.MintTokens{
+	msg = bindings.MokitaMsg{MintTokens: &bindings.MintTokens{
 		Denom:         sunDenom,
 		Amount:        amount,
 		MintToAddress: lucky.String(),
@@ -212,7 +212,7 @@ func TestBurnMsg(t *testing.T) {
 	require.NoError(t, err)
 
 	// can't burn from different address
-	msg = bindings.MokisisMsg{BurnTokens: &bindings.BurnTokens{
+	msg = bindings.MokitaMsg{BurnTokens: &bindings.BurnTokens{
 		Denom:           sunDenom,
 		Amount:          amount,
 		BurnFromAddress: lucky.String(),
@@ -225,7 +225,7 @@ func TestBurnMsg(t *testing.T) {
 	err = mokita.BankKeeper.SendCoins(ctx, lucky, reflect, luckyBalance)
 	require.NoError(t, err)
 
-	msg = bindings.MokisisMsg{BurnTokens: &bindings.BurnTokens{
+	msg = bindings.MokitaMsg{BurnTokens: &bindings.BurnTokens{
 		Denom:           sunDenom,
 		Amount:          amount,
 		BurnFromAddress: reflect.String(),
@@ -253,7 +253,7 @@ type ReflectSubMsgs struct {
 	Msgs []wasmvmtypes.SubMsg `json:"msgs"`
 }
 
-func executeCustom(t *testing.T, ctx sdk.Context, mokita *app.MokisisApp, contract sdk.AccAddress, sender sdk.AccAddress, msg bindings.MokisisMsg, funds sdk.Coin) error {
+func executeCustom(t *testing.T, ctx sdk.Context, mokita *app.MokitaApp, contract sdk.AccAddress, sender sdk.AccAddress, msg bindings.MokitaMsg, funds sdk.Coin) error {
 	customBz, err := json.Marshal(msg)
 	require.NoError(t, err)
 	reflectMsg := ReflectExec{

@@ -210,8 +210,8 @@ func (uc *UpgradeConfigurer) runForkUpgrade() error {
 func (uc *UpgradeConfigurer) upgradeContainers(chainConfig *chain.Config, propHeight int64) error {
 	// upgrade containers to the locally compiled daemon
 	uc.t.Logf("starting upgrade for chain-id: %s...", chainConfig.Id)
-	uc.containerManager.MokisisRepository = containers.CurrentBranchMokiRepository
-	uc.containerManager.MokisisTag = containers.CurrentBranchMokiTag
+	uc.containerManager.MokitaRepository = containers.CurrentBranchMokiRepository
+	uc.containerManager.MokitaTag = containers.CurrentBranchMokiTag
 
 	for _, node := range chainConfig.NodeConfigs {
 		if err := node.Run(); err != nil {

@@ -99,12 +99,12 @@ var (
 
 // New returns a new Configurer depending on the values of its parameters.
 // - If only isIBCEnabled, we want to have 2 chains initialized at the current
-// Git branch version of Mokisis codebase.
+// Git branch version of Mokita codebase.
 // - If only isUpgradeEnabled, that is invalid and an error is returned.
 // - If both isIBCEnabled and isUpgradeEnabled, we want 2 chains with IBC initialized
-// at the previous Mokisis version.
+// at the previous Mokita version.
 // - If !isIBCEnabled and !isUpgradeEnabled, we only need one chain at the current
-// Git branch version of the Mokisis code.
+// Git branch version of the Mokita code.
 func New(t *testing.T, isIBCEnabled, isDebugLogEnabled bool, upgradeSettings UpgradeSettings) (Configurer, error) {
 	containerManager, err := containers.NewManager(upgradeSettings.IsEnabled, upgradeSettings.ForkHeight > 0, isDebugLogEnabled)
 	if err != nil {

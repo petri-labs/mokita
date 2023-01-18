@@ -10,7 +10,7 @@ import (
 	tokenfactorytypes "github.com/petri-labs/mokita/x/tokenfactory/types"
 )
 
-// UpgradeName defines the on-chain upgrade name for the Mokisis v9 upgrade.
+// UpgradeName defines the on-chain upgrade name for the Mokita v9 upgrade.
 const UpgradeName = "v9"
 
 // The historic name of the claims module, which is removed in this release.

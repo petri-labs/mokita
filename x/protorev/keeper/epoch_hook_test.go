@@ -14,11 +14,11 @@ import (
 // moki and atom stores.
 func (suite *KeeperTestSuite) TestEpochHook() {
 	// All of the pools initialized in the setup function are available in keeper_test.go
-	// akash <-> types.MokisisDenomination
-	// juno <-> types.MokisisDenomination
-	// ethereum <-> types.MokisisDenomination
-	// bitcoin <-> types.MokisisDenomination
-	// canto <-> types.MokisisDenomination
+	// akash <-> types.MokitaDenomination
+	// juno <-> types.MokitaDenomination
+	// ethereum <-> types.MokitaDenomination
+	// bitcoin <-> types.MokitaDenomination
+	// canto <-> types.MokitaDenomination
 	// and so on...
 	expectedToSee := make(map[string]Pool)
 	for _, pool := range suite.pools {
@@ -32,7 +32,7 @@ func (suite *KeeperTestSuite) TestEpochHook() {
 			pool.Amount2 = pool.PoolAssets[1].Token.Amount
 		}
 
-		if pool.Asset1 == types.MokisisDenomination || pool.Asset2 == types.MokisisDenomination || pool.Asset1 == types.AtomDenomination || pool.Asset2 == types.AtomDenomination {
+		if pool.Asset1 == types.MokitaDenomination || pool.Asset2 == types.MokitaDenomination || pool.Asset1 == types.AtomDenomination || pool.Asset2 == types.AtomDenomination {
 			// create a key that is a combination of asset1 and asset2 in alphabetical order
 			key := fmt.Sprintf("%s-%s", pool.Asset1, pool.Asset2)
 			if pool.Asset1 > pool.Asset2 {
@@ -54,7 +54,7 @@ func (suite *KeeperTestSuite) TestEpochHook() {
 	for _, pool := range expectedToSee {
 		foundEitherOne := false
 		// Check if there is a match with moki
-		if otherDenom, match := types.CheckMokiAtomDenomMatch(pool.Asset1, pool.Asset2, types.MokisisDenomination); match {
+		if otherDenom, match := types.CheckMokiAtomDenomMatch(pool.Asset1, pool.Asset2, types.MokitaDenomination); match {
 			poolId, err := suite.App.AppKeepers.ProtoRevKeeper.GetMokiPool(suite.Ctx, otherDenom)
 
 			// pool ID must exist

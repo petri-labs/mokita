@@ -1,4 +1,4 @@
-# Mokisis Upgrades
+# Mokita Upgrades
 
 This folder contains sub-folders for every mokita upgrade. (Both state
 migrations, and hard forks) It also defines upgrade & hard fork structs,

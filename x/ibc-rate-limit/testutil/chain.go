@@ -82,7 +82,7 @@ func SignAndDeliver(
 
 // Move epochs to the future to avoid issues with minting
 func (chain *TestChain) MoveEpochsToTheFuture() error {
-	epochsKeeper := chain.GetMokisisApp().EpochsKeeper
+	epochsKeeper := chain.GetMokitaApp().EpochsKeeper
 	ctx := chain.GetContext()
 	for _, epoch := range epochsKeeper.AllEpochInfos(ctx) {
 		epoch.StartTime = ctx.BlockTime().Add(time.Hour * 24 * 30)
@@ -95,8 +95,8 @@ func (chain *TestChain) MoveEpochsToTheFuture() error {
 	return nil
 }
 
-// GetMokisisApp returns the current chain's app as an MokisisApp
-func (chain *TestChain) GetMokisisApp() *app.MokisisApp {
-	v, _ := chain.App.(*app.MokisisApp)
+// GetMokitaApp returns the current chain's app as an MokitaApp
+func (chain *TestChain) GetMokitaApp() *app.MokitaApp {
+	v, _ := chain.App.(*app.MokitaApp)
 	return v
 }

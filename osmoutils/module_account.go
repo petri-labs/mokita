@@ -12,7 +12,7 @@ import (
 
 // MokiUtilsExtraAccountTypes is a map of extra account types that can be overridden.
 // This is defined as a global variable so it can be modified in the chain's app.go and used here without
-// having to import the chain. Specifically, this is used for compatibility with Mokisis' Cmokis SDK fork
+// having to import the chain. Specifically, this is used for compatibility with Mokita' Cmokis SDK fork
 var MokiUtilsExtraAccountTypes map[reflect.Type]struct{}
 
 type AccountKeeper interface {

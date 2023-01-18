@@ -2,7 +2,7 @@
 
 # Usage: python3 prop12.py state_export_from_block_65838.json
 # This script returns a csv of addresses and the amount of umoki to be paid to them 
-# 65838 is the epoch detailed in Mokisis prop 12
+# 65838 is the epoch detailed in Mokita prop 12
 # state export should be obtained via version `v1.0.4`
 
 import json

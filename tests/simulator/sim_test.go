@@ -59,8 +59,8 @@ func fullAppSimulation(tb testing.TB, is_testing bool) {
 	_, _, simErr := mokisim.SimulateFromSeed(
 		tb,
 		os.Stdout,
-		MokisisAppCreator(logger, db),
-		MokisisInitFns,
+		MokitaAppCreator(logger, db),
+		MokitaInitFns,
 		config,
 	)
 
@@ -112,8 +112,8 @@ func TestAppStateDeterminism(t *testing.T) {
 			lastCommitId, _, simErr := mokisim.SimulateFromSeed(
 				t,
 				os.Stdout,
-				MokisisAppCreator(logger, db),
-				MokisisInitFns,
+				MokitaAppCreator(logger, db),
+				MokitaInitFns,
 				config,
 			)
 

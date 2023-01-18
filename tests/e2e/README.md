@@ -6,11 +6,11 @@
 
 The `e2e` package defines an integration testing suite used for full
 end-to-end testing functionality. This package is decoupled from
-depending on the Mokisis codebase. It initializes the chains for testing
+depending on the Mokita codebase. It initializes the chains for testing
 via Docker files. As a result, the test suite may provide the desired
-Mokisis version to Docker containers during the initialization. This
+Mokita version to Docker containers during the initialization. This
 design allows for the opportunity of testing chain upgrades in the
-future by providing an older Mokisis version to the container,
+future by providing an older Mokita version to the container,
 performing the chain upgrade, and running the latest test suite. When
 testing a normal upgrade, the e2e test suite submits an upgrade proposal at
 an upgrade height, ensures the upgrade happens at the desired height, and
@@ -45,7 +45,7 @@ Conceptually, we can split the e2e setup into 2 parts:
     by calling `chain.Init(...)` method in the `configurer/current.go`.
 
     If with the upgrade, the same `chain.Init(...)` function is run inside a Docker container
-    of the previous Mokisis version, inside `configurer/upgrade.go`. This is
+    of the previous Mokita version, inside `configurer/upgrade.go`. This is
     needed to initialize chain configs and the genesis of the previous version that
     we are upgrading from.
 
@@ -77,16 +77,16 @@ Conceptually, we can split the e2e setup into 2 parts:
     are as follows:
     
     - If only `isIBCEnabled`, we want to have 2 chains initialized at the
-    current branch version of Mokisis codebase
+    current branch version of Mokita codebase
 
     - If only `isUpgradeEnabled`, that's invalid (we can decouple upgrade
      testing from IBC in a future PR)
 
     - If both `isIBCEnabled` and `isUpgradeEnabled`, we want 2 chain
-    with IBC initialized at the previous Mokisis version
+    with IBC initialized at the previous Mokita version
 
     - If none are true, we only need one chain at the current branch version
-    of the Mokisis code
+    of the Mokita code
 
 2. Setting up e2e components
 
@@ -98,12 +98,12 @@ Conceptually, we can split the e2e setup into 2 parts:
     - IBC testing
         - 2 chains are created connected by Hermes relayer
         - Upgrade Testing
-        - 2 chains of the older Mokisis version are created, and
+        - 2 chains of the older Mokita version are created, and
         connected by Hermes relayer
     - Upgrade testing
         - CLI commands are run to create an upgrade proposal and approve it
         - Old version containers are stopped and the upgrade binary is added
-        - Current branch Mokisis version is spun up to continue with testing
+        - Current branch Mokita version is spun up to continue with testing
     - State Sync Testing (WIP)
         - An additional full node is created after a chain has started.
         - This node is meant to state sync with the rest of the system.
@@ -116,7 +116,7 @@ Conceptually, we can split the e2e setup into 2 parts:
 
 The `initialization` package introduces the logic necessary for initializing a
 chain by creating a genesis file and all required configuration files
-such as the `app.toml`. This package directly depends on the Mokisis
+such as the `app.toml`. This package directly depends on the Mokita
 codebase.
 
 ## `upgrade` Package
@@ -144,7 +144,7 @@ in the `chain` package.
 
 Please refer to `tests/e2e/initialization/README.md`
 
-### To build the debug Mokisis image
+### To build the debug Mokita image
 
 ```sh
     make docker-build-e2e-debug

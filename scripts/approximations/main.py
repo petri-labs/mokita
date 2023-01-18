@@ -25,7 +25,7 @@ num_points_plot = 10000
 # function to approximate
 approximated_fn = lambda x: sp.Pow(2, x)
 
-# fixed point precision used in Mokisis `mokimath` package.
+# fixed point precision used in Mokita `mokimath` package.
 mokimath_precision = 36
 
 # flag controlling whether to plot each approximation.

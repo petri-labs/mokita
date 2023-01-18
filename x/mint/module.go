@@ -1,8 +1,8 @@
 /*
 The `mint` module is responsible for creating tokens in a
 flexible way to reward validators, incentivize providing pool
-liquidity, provide funds for Mokisis governance,
-and pay developers to maintain and improve Mokisis.
+liquidity, provide funds for Mokita governance,
+and pay developers to maintain and improve Mokita.
   - Denom minting; reduction and reserve ratio settings
   - Token distribution proportions
   - Epoch start distribution settings

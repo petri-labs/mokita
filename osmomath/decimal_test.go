@@ -1134,7 +1134,7 @@ func (s *decimalTestSuite) TestPowerInteger() {
 			expectedResult: mokimath.MustNewDecFromStr("85070591730234615865843651857942052864"),
 		},
 
-		// sdk.Dec test vectors copied from mokita-labs/cosmos-sdk:
+		// sdk.Dec test vectors copied from osmosis-labs/cosmos-sdk:
 
 		"1.0 ^ (10) => 1.0": {
 			base:     mokimath.OneDec(),

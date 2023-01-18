@@ -9,8 +9,8 @@ import (
 // AtomDenomination stores the native denom name for Atom on chain used for route building
 var AtomDenomination string = "ibc/27394FB092D2ECCD56123C74F36E4C1F926001CEADA9CA97EA622B25F41E5EB2"
 
-// MokisisDenomination stores the native denom name for Mokisis on chain used for route building
-var MokisisDenomination string = "umoki"
+// MokitaDenomination stores the native denom name for Mokita on chain used for route building
+var MokitaDenomination string = "umoki"
 
 // MaxInputAmount is the upper bound index for finding the optimal in amount when determining route profitability (2 ^ 14) = 16,384
 var MaxInputAmount = sdk.NewInt(16_384)

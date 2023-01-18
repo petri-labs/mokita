@@ -21,9 +21,9 @@ INTERVAL=1500
 
 # GET TRUST HASH AND TRUST HEIGHT
 
-LATEST_HEIGHT=$(curl -s https://rpc-test.mokita.zone/block | jq -r .result.block.header.height);
+LATEST_HEIGHT=$(curl -s https://rpc-test.osmosis.zone/block | jq -r .result.block.header.height);
 BLOCK_HEIGHT=$(($LATEST_HEIGHT-$INTERVAL))
-TRUST_HASH=$(curl -s "https://rpc-test.mokita.zone/block?height=$BLOCK_HEIGHT" | jq -r .result.block_id.hash)
+TRUST_HASH=$(curl -s "https://rpc-test.osmosis.zone/block?height=$BLOCK_HEIGHT" | jq -r .result.block_id.hash)
 
 
 # TELL USER WHAT WE ARE DOING
@@ -34,7 +34,7 @@ echo "TRUST HASH: $TRUST_HASH"
 # export state sync vars
 export MOKISISD_P2P_MAX_NUM_OUTBOUND_PEERS=200
 export MOKISISD_STATESYNC_ENABLE=true
-export MOKISISD_STATESYNC_RPC_SERVERS="https://rpc-test.mokita.zone:443,https://rpc-test.mokita.zone:443"
+export MOKISISD_STATESYNC_RPC_SERVERS="https://rpc-test.osmosis.zone:443,https://rpc-test.osmosis.zone:443"
 export MOKISISD_P2P_SEEDS="0f9a9c694c46bd28ad9ad6126e923993fc6c56b1@137.184.181.105:26656"
 export MOKISISD_P2P_PERSISTENT_PEERS="4ab030b7fd75ed895c48bcc899b99c17a396736b@137.184.190.127:26656,3dbffa30baab16cc8597df02945dcee0aa0a4581@143.198.139.33:26656"
 export MOKISISD_STATESYNC_TRUST_HEIGHT=$BLOCK_HEIGHT

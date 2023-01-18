@@ -39,7 +39,7 @@ func (m *CustomMessenger) DispatchMsg(ctx sdk.Context, contractAddr sdk.AccAddre
 	if msg.Custom != nil {
 		// only handle the happy path where this is really creating / minting / swapping ...
 		// leave everything else for the wrapped version
-		var contractMsg bindings.MokisisMsg
+		var contractMsg bindings.MokitaMsg
 		if err := json.Unmarshal(msg.Custom, &contractMsg); err != nil {
 			return nil, nil, sdkerrors.Wrap(err, "mokita msg")
 		}

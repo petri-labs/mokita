@@ -1,8 +1,8 @@
-# LocalMokisis
+# LocalMokita
 
-LocalMokisis is a complete Mokisis testnet containerized with Docker and orchestrated with a simple docker-compose file. LocalMokisis comes preconfigured with opinionated, sensible defaults for a standard testing environment.
+LocalMokita is a complete Mokita testnet containerized with Docker and orchestrated with a simple docker-compose file. LocalMokita comes preconfigured with opinionated, sensible defaults for a standard testing environment.
 
-LocalMokisis comes in two flavors:
+LocalMokita comes in two flavors:
 
 1. No initial state: brand new testnet with no initial state. 
 2. With mainnet state: creates a testnet from a mainnet state export
@@ -21,13 +21,13 @@ sudo apt install docker.io -y
 sudo apt install docker-compose -y
 ```
 
-## 1. LocalMokisis - No Initial State
+## 1. LocalMokita - No Initial State
 
-The following commands must be executed from the root folder of the Mokisis repository.
+The following commands must be executed from the root folder of the Mokita repository.
 
 1. Make any change to the mokita code that you want to test
 
-2. Initialize LocalMokisis:
+2. Initialize LocalMokita:
 
 ```bash
 make localnet-init
@@ -38,7 +38,7 @@ The command:
 - Builds a local docker image with the latest changes
 - Cleans the `$HOME/.mokitad` folder
 
-3. Start LocalMokisis:
+3. Start LocalMokita:
 
 ```bash
 make localnet-start
@@ -46,7 +46,7 @@ make localnet-start
 
 > Note
 >
-> You can also start LocalMokisis in detach mode with:
+> You can also start LocalMokita in detach mode with:
 >
 > `make localnet-startd`
 
@@ -59,7 +59,7 @@ make localnet-keys
 - These keys are added to your `--keyring-backend test`
 - If the keys are already on your keyring, you will get an `"Error: aborted"`
 - Ensure you use the name of the account as listed in the table below, as well as ensure you append the `--keyring-backend test` to your txs
-- Example: `mokitad tx bank send lo-test2 moki1cyyzpxplxdzkeea7kwsydadg87357qnahakaks --keyring-backend test --chain-id LocalMokisis`
+- Example: `mokitad tx bank send lo-test2 moki1cyyzpxplxdzkeea7kwsydadg87357qnahakaks --keyring-backend test --chain-id LocalMokita`
 
 5. You can stop chain, keeping the state with
 
@@ -73,9 +73,9 @@ make localnet-stop
 make localnet-clean
 ```
 
-## 2. LocalMokisis - With Mainnet State
+## 2. LocalMokita - With Mainnet State
 
-Running LocalMokisis with mainnet state is resource intensive and can take a bit of time.
+Running LocalMokita with mainnet state is resource intensive and can take a bit of time.
 It is recommended to only use this method if you are testing a new feature that must be thoroughly tested before pushing to production.
 
 A few things to note before getting started. The below method will only work if you are using the same version as mainnet. In other words,
@@ -86,10 +86,10 @@ Additionally, this process requires 64GB of RAM. If you do not have 64GB of RAM,
 
 ### Create a mainnet state export
 
-1. Set up a node on mainnet (easiest to use the [get.mokita.zone](https://get.mokita.zone) tool). This will be the node you use to run the state exported testnet, so ensure it has at least 64GB of RAM.
+1. Set up a node on mainnet (easiest to use the [get.osmosis.zone](https://get.osmosis.zone) tool). This will be the node you use to run the state exported testnet, so ensure it has at least 64GB of RAM.
 
 ```sh
-curl -sL https://get.mokita.zone/install > i.py && python3 i.py
+curl -sL https://get.osmosis.zone/install > i.py && python3 i.py
 ```
 
 2. Once the installer is done, ensure your node is hitting blocks.
@@ -99,7 +99,7 @@ source ~/.profile
 journalctl -u mokitad.service -f
 ```
 
-3. Stop your Mokisis daemon
+3. Stop your Mokita daemon
 
 ```sh
 systemctl stop mokitad.service
@@ -114,12 +114,12 @@ mokitad export 2> state_export.json
 
 After a while (~15 minutes), this will create a file called `state_export.json` which is a snapshot of the current mainnet state.
 
-### Use the state export in LocalMokisis
+### Use the state export in LocalMokita
 
-1. Copy the `state_export.json` to the `LocalMokisis/state_export` folder within the mokita repo
+1. Copy the `state_export.json` to the `LocalMokita/state_export` folder within the mokita repo
 
 ```sh
-cp $HOME/state_export.json $HOME/mokita/tests/LocalMokisis/state_export/
+cp $HOME/state_export.json $HOME/mokita/tests/LocalMokita/state_export/
 ```
 
 6. Ensure you have docker and docker-compose installed:
@@ -145,7 +145,7 @@ The command:
 - Builds a local docker image with the latest changes
 - Cleans the `$HOME/.mokitad` folder
 
-3. Start LocalMokisis:
+3. Start LocalMokita:
 
 ```bash
 make localnet-state-export-start
@@ -153,7 +153,7 @@ make localnet-state-export-start
 
 > Note
 >
-> You can also start LocalMokisis in detach mode with:
+> You can also start LocalMokita in detach mode with:
 >
 > `make localnet-state-export-startd`
 
@@ -204,9 +204,9 @@ Note: At some point, all the validators (except yours) will get jailed at the sa
 When this happens, it may take a little bit of time to process. Once all validators are jailed, you will continue to hit blocks as you did before.
 If you are only running the validator for a short time (< 24 hours) you will not experience this.
 
-## LocalMokisis Accounts
+## LocalMokita Accounts
 
-LocalMokisis is pre-configured with one validator and 9 accounts with ION and MOKI balances.
+LocalMokita is pre-configured with one validator and 9 accounts with ION and MOKI balances.
 
 | Account   | Address                                                                                                | Mnemonic                                                                                                                                                                   |
 | --------- | ------------------------------------------------------------------------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |

@@ -250,7 +250,7 @@ func (suite *MiddlewareTestSuite) TestReceiveTransferNoContract() {
 }
 
 func (suite *MiddlewareTestSuite) initializeEscrow() (totalEscrow, expectedSed sdk.Int) {
-	mokitaApp := suite.chainA.GetMokisisApp()
+	mokitaApp := suite.chainA.GetMokitaApp()
 	supply := mokitaApp.BankKeeper.GetSupplyWithOffset(suite.chainA.GetContext(), sdk.DefaultBondDenom)
 
 	// Move some funds from chainA to chainB so that there is something in escrow
@@ -284,7 +284,7 @@ func (suite *MiddlewareTestSuite) fullSendTest(native bool) map[string]string {
 		denom = denomTrace.IBCDenom()
 	}
 
-	mokitaApp := suite.chainA.GetMokisisApp()
+	mokitaApp := suite.chainA.GetMokitaApp()
 
 	// This is the first one. Inside the tests. It works as expected.
 	channelValue := CalculateChannelValue(suite.chainA.GetContext(), denom, mokitaApp.BankKeeper)
@@ -376,7 +376,7 @@ func (suite *MiddlewareTestSuite) fullRecvTest(native bool) {
 		sendDenom = denomTrace.IBCDenom()
 	}
 
-	mokitaApp := suite.chainA.GetMokisisApp()
+	mokitaApp := suite.chainA.GetMokitaApp()
 
 	channelValue := CalculateChannelValue(suite.chainA.GetContext(), localDenom, mokitaApp.BankKeeper)
 
@@ -439,7 +439,7 @@ func (suite *MiddlewareTestSuite) TestFailedSendTransfer() {
 	suite.chainA.RegisterRateLimitingContract(addr)
 
 	// Get the escrowed amount
-	mokitaApp := suite.chainA.GetMokisisApp()
+	mokitaApp := suite.chainA.GetMokitaApp()
 	// ToDo: This is what we eventually want here, but using the full supply temporarily for performance reasons. See CalculateChannelValue
 	// escrowAddress := transfertypes.GetEscrowAddress("transfer", "channel-0")
 	// escrowed := mokitaApp.BankKeeper.GetBalance(suite.chainA.GetContext(), escrowAddress, sdk.DefaultBondDenom)
@@ -505,7 +505,7 @@ func (suite *MiddlewareTestSuite) TestUnsetRateLimitingContract() {
 	// Unset the contract param
 	params, err := types.NewParams("")
 	suite.Require().NoError(err)
-	mokitaApp := suite.chainA.GetMokisisApp()
+	mokitaApp := suite.chainA.GetMokitaApp()
 	paramSpace, ok := mokitaApp.AppKeepers.ParamsKeeper.GetSubspace(types.ModuleName)
 	suite.Require().True(ok)
 	// N.B.: this panics if validation fails.

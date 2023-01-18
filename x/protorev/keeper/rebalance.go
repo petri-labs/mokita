@@ -28,7 +28,7 @@ func (k Keeper) IterateRoutes(ctx sdk.Context, routes []swaproutertypes.SwapAmou
 		}
 
 		// If arb doesn't start and end with umoki, then we convert the profit to umoki, and compare profits in terms of umoki
-		if inputCoin.Denom != types.MokisisDenomination {
+		if inputCoin.Denom != types.MokitaDenomination {
 			umokiProfit, err := k.ConvertProfits(ctx, inputCoin, profit)
 			if err != nil {
 				k.Logger(ctx).Error("Error converting profits: ", err)
@@ -65,7 +65,7 @@ func (k Keeper) ConvertProfits(ctx sdk.Context, inputCoin sdk.Coin, profit sdk.I
 	// Calculate the amount of umoki that we can get if we swapped the
 	// profited amount of the orignal asset through the highest umoki liquidity pool
 	conversionTokenOut, err := conversionPool.CalcOutAmtGivenIn(ctx, sdk.NewCoins(sdk.NewCoin(inputCoin.Denom, profit)),
-		types.MokisisDenomination, conversionPool.GetSwapFee(ctx))
+		types.MokitaDenomination, conversionPool.GetSwapFee(ctx))
 	if err != nil {
 		return profit, err
 	}

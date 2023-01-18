@@ -1,8 +1,8 @@
 # Mint
 
 The `mint` module is responsible for creating tokens in a flexible way to reward
-validators, incentivize providing pool liquidity, provide funds for Mokisis governance,
-and pay developers to maintain and improve Mokisis.
+validators, incentivize providing pool liquidity, provide funds for Mokita governance,
+and pay developers to maintain and improve Mokita.
 
 The module is also responsible for reducing the token creation and distribution by a set period
 until it reaches its maximum supply (see `reduction_factor` and `reduction_period_in_epochs`)
@@ -21,7 +21,7 @@ The module uses time basis epochs supported by the `epochs` module.
 ## Concepts
 
 The `x/mint` module is designed to handle the regular printing of new
-tokens within a chain. The design taken within Mokisis is to
+tokens within a chain. The design taken within Mokita is to
 
 - Mint new tokens once per epoch (default one week)
 - To have a "Reductioning factor" every period, which reduces the number of
@@ -113,7 +113,7 @@ Below are all the network parameters for the `mint` module:
 - **`reduction_factor`** - What the total token issuance factor will reduce by after the reduction period passes (if set to 66.66%, token issuance will reduce by 1/3)
 - **`distribution_proportions`** - Categories in which the specified proportion of newly released tokens are distributed to
   - **`staking`** - Proportion of minted funds to incentivize staking MOKI
-  - **`pool_incentives`** - Proportion of minted funds to incentivize pools on Mokisis
+  - **`pool_incentives`** - Proportion of minted funds to incentivize pools on Mokita
   - **`developer_rewards`** - Proportion of minted funds to pay developers for their past and future work
   - **`community_pool`** - Proportion of minted funds to be set aside for the community pool
 - **`weighted_developer_rewards_receivers`** - Addresses that developer rewards will go to. The weight attached to an address is the percent of the developer rewards that the specific address will receive

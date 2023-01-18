@@ -60,7 +60,7 @@ import (
 	_ "github.com/petri-labs/mokita/client/docs/statik"
 )
 
-const appName = "MokisisApp"
+const appName = "MokitaApp"
 
 var (
 	// DefaultNodeHome default home directories for the application daemon
@@ -93,7 +93,7 @@ var (
 	// EmptyWasmOpts defines a type alias for a list of wasm options.
 	EmptyWasmOpts []wasm.Option
 
-	// _ sdksimapp.App = (*MokisisApp)(nil)
+	// _ sdksimapp.App = (*MokitaApp)(nil)
 
 	Upgrades = []upgrades.Upgrade{v4.Upgrade, v5.Upgrade, v7.Upgrade, v9.Upgrade, v11.Upgrade, v12.Upgrade, v13.Upgrade, v14.Upgrade}
 	Forks    = []upgrades.Fork{v3.Fork, v6.Fork, v8.Fork, v10.Fork}
@@ -121,10 +121,10 @@ func GetWasmEnabledProposals() []wasm.ProposalType {
 	return proposals
 }
 
-// MokisisApp extends an ABCI application, but with most of its parameters exported.
+// MokitaApp extends an ABCI application, but with most of its parameters exported.
 // They are exported for convenience in creating helper functions, as object
 // capabilities aren't needed for testing.
-type MokisisApp struct {
+type MokitaApp struct {
 	*baseapp.BaseApp
 	keepers.AppKeepers
 
@@ -157,8 +157,8 @@ func initReusablePackageInjections() {
 	}
 }
 
-// NewMokisisApp returns a reference to an initialized Mokisis.
-func NewMokisisApp(
+// NewMokitaApp returns a reference to an initialized Mokita.
+func NewMokitaApp(
 	logger log.Logger,
 	db dbm.DB,
 	traceStore io.Writer,
@@ -170,7 +170,7 @@ func NewMokisisApp(
 	wasmEnabledProposals []wasm.ProposalType,
 	wasmOpts []wasm.Option,
 	baseAppOptions ...func(*baseapp.BaseApp),
-) *MokisisApp {
+) *MokitaApp {
 	initReusablePackageInjections() // This should run before anything else to make sure the variables are properly initialized
 	encodingConfig := GetEncodingConfig()
 	appCodec := encodingConfig.Marshaler
@@ -182,7 +182,7 @@ func NewMokisisApp(
 	bApp.SetVersion(version.Version)
 	bApp.SetInterfaceRegistry(interfaceRegistry)
 
-	app := &MokisisApp{
+	app := &MokitaApp{
 		AppKeepers:        keepers.AppKeepers{},
 		BaseApp:           bApp,
 		cdc:               cdc,
@@ -322,26 +322,26 @@ func MakeCodecs() (codec.Codec, *codec.LegacyAmino) {
 	return config.Marshaler, config.Amino
 }
 
-func (app *MokisisApp) GetBaseApp() *baseapp.BaseApp {
+func (app *MokitaApp) GetBaseApp() *baseapp.BaseApp {
 	return app.BaseApp
 }
 
 // Name returns the name of the App.
-func (app *MokisisApp) Name() string { return app.BaseApp.Name() }
+func (app *MokitaApp) Name() string { return app.BaseApp.Name() }
 
 // BeginBlocker application updates every begin block.
-func (app *MokisisApp) BeginBlocker(ctx sdk.Context, req abci.RequestBeginBlock) abci.ResponseBeginBlock {
+func (app *MokitaApp) BeginBlocker(ctx sdk.Context, req abci.RequestBeginBlock) abci.ResponseBeginBlock {
 	BeginBlockForks(ctx, app)
 	return app.mm.BeginBlock(ctx, req)
 }
 
 // EndBlocker application updates every end block.
-func (app *MokisisApp) EndBlocker(ctx sdk.Context, req abci.RequestEndBlock) abci.ResponseEndBlock {
+func (app *MokitaApp) EndBlocker(ctx sdk.Context, req abci.RequestEndBlock) abci.ResponseEndBlock {
 	return app.mm.EndBlock(ctx, req)
 }
 
 // InitChainer application update at chain initialization.
-func (app *MokisisApp) InitChainer(ctx sdk.Context, req abci.RequestInitChain) abci.ResponseInitChain {
+func (app *MokitaApp) InitChainer(ctx sdk.Context, req abci.RequestInitChain) abci.ResponseInitChain {
 	var genesisState GenesisState
 	if err := tmjson.Unmarshal(req.AppStateBytes, &genesisState); err != nil {
 		panic(err)
@@ -353,7 +353,7 @@ func (app *MokisisApp) InitChainer(ctx sdk.Context, req abci.RequestInitChain) a
 }
 
 // LoadHeight loads a particular height.
-func (app *MokisisApp) LoadHeight(height int64) error {
+func (app *MokitaApp) LoadHeight(height int64) error {
 	return app.LoadVersion(height)
 }
 
@@ -361,30 +361,30 @@ func (app *MokisisApp) LoadHeight(height int64) error {
 //
 // NOTE: This is solely to be used for testing purposes as it may be desirable
 // for modules to register their own custom testing types.
-func (app *MokisisApp) LegacyAmino() *codec.LegacyAmino {
+func (app *MokitaApp) LegacyAmino() *codec.LegacyAmino {
 	return app.cdc
 }
 
-// AppCodec returns Mokisis' app codec.
+// AppCodec returns Mokita' app codec.
 //
 // NOTE: This is solely to be used for testing purposes as it may be desirable
 // for modules to register their own custom testing types.
-func (app *MokisisApp) AppCodec() codec.Codec {
+func (app *MokitaApp) AppCodec() codec.Codec {
 	return app.appCodec
 }
 
-// InterfaceRegistry returns Mokisis' InterfaceRegistry.
-func (app *MokisisApp) InterfaceRegistry() types.InterfaceRegistry {
+// InterfaceRegistry returns Mokita' InterfaceRegistry.
+func (app *MokitaApp) InterfaceRegistry() types.InterfaceRegistry {
 	return app.interfaceRegistry
 }
 
-func (app *MokisisApp) ModuleManager() module.Manager {
+func (app *MokitaApp) ModuleManager() module.Manager {
 	return *app.mm
 }
 
 // RegisterAPIRoutes registers all application module routes with the provided
 // API server.
-func (app *MokisisApp) RegisterAPIRoutes(apiSvr *api.Server, apiConfig config.APIConfig) {
+func (app *MokitaApp) RegisterAPIRoutes(apiSvr *api.Server, apiConfig config.APIConfig) {
 	clientCtx := apiSvr.ClientCtx
 	rpc.RegisterRoutes(clientCtx, apiSvr.Router)
 	// Register legacy tx routes.
@@ -405,18 +405,18 @@ func (app *MokisisApp) RegisterAPIRoutes(apiSvr *api.Server, apiConfig config.AP
 }
 
 // RegisterTxService implements the Application.RegisterTxService method.
-func (app *MokisisApp) RegisterTxService(clientCtx client.Context) {
+func (app *MokitaApp) RegisterTxService(clientCtx client.Context) {
 	authtx.RegisterTxService(app.BaseApp.GRPCQueryRouter(), clientCtx, app.BaseApp.Simulate, app.interfaceRegistry)
 }
 
 // RegisterTendermintService implements the Application.RegisterTendermintService
 // method.
-func (app *MokisisApp) RegisterTendermintService(clientCtx client.Context) {
+func (app *MokitaApp) RegisterTendermintService(clientCtx client.Context) {
 	tmservice.RegisterTendermintService(app.BaseApp.GRPCQueryRouter(), clientCtx, app.interfaceRegistry)
 }
 
 // configure store loader that checks if version == upgradeHeight and applies store upgrades
-func (app *MokisisApp) setupUpgradeStoreLoaders() {
+func (app *MokitaApp) setupUpgradeStoreLoaders() {
 	upgradeInfo, err := app.UpgradeKeeper.ReadUpgradeInfoFromDisk()
 	if err != nil {
 		panic(fmt.Sprintf("failed to read upgrade info from disk %s", err))
@@ -433,7 +433,7 @@ func (app *MokisisApp) setupUpgradeStoreLoaders() {
 	}
 }
 
-func (app *MokisisApp) setupUpgradeHandlers() {
+func (app *MokitaApp) setupUpgradeHandlers() {
 	for _, upgrade := range Upgrades {
 		app.UpgradeKeeper.SetUpgradeHandler(
 			upgrade.UpgradeName,

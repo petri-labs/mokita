@@ -26,10 +26,10 @@ func getDefaultGenesisStateBytes() []byte {
 	return defaultGenesisBz
 }
 
-// Setup initializes a new MokisisApp.
-func Setup(isCheckTx bool) *MokisisApp {
+// Setup initializes a new MokitaApp.
+func Setup(isCheckTx bool) *MokitaApp {
 	db := dbm.NewMemDB()
-	app := NewMokisisApp(log.NewNopLogger(), db, nil, true, map[int64]bool{}, DefaultNodeHome, 0, simapp.EmptyAppOptions{}, GetWasmEnabledProposals(), EmptyWasmOpts)
+	app := NewMokitaApp(log.NewNopLogger(), db, nil, true, map[int64]bool{}, DefaultNodeHome, 0, simapp.EmptyAppOptions{}, GetWasmEnabledProposals(), EmptyWasmOpts)
 	if !isCheckTx {
 		stateBytes := getDefaultGenesisStateBytes()
 
@@ -45,15 +45,15 @@ func Setup(isCheckTx bool) *MokisisApp {
 	return app
 }
 
-// SetupTestingAppWithLevelDb initializes a new MokisisApp intended for testing,
+// SetupTestingAppWithLevelDb initializes a new MokitaApp intended for testing,
 // with LevelDB as a db.
-func SetupTestingAppWithLevelDb(isCheckTx bool) (app *MokisisApp, cleanupFn func()) {
+func SetupTestingAppWithLevelDb(isCheckTx bool) (app *MokitaApp, cleanupFn func()) {
 	dir := "mokita_testing"
 	db, err := sdk.NewLevelDB("mokita_leveldb_testing", dir)
 	if err != nil {
 		panic(err)
 	}
-	app = NewMokisisApp(log.NewNopLogger(), db, nil, true, map[int64]bool{}, DefaultNodeHome, 5, simapp.EmptyAppOptions{}, GetWasmEnabledProposals(), EmptyWasmOpts)
+	app = NewMokitaApp(log.NewNopLogger(), db, nil, true, map[int64]bool{}, DefaultNodeHome, 5, simapp.EmptyAppOptions{}, GetWasmEnabledProposals(), EmptyWasmOpts)
 	if !isCheckTx {
 		genesisState := NewDefaultGenesisState()
 		stateBytes, err := json.MarshalIndent(genesisState, "", " ")

@@ -43,7 +43,7 @@ This is achieved by using an accumulator. In the case of an arithmetic TWAP, we 
 $$a_n = \sum_{i=0}^{n-1} p_i (t_{i+1} - t_i)$$
 If we maintain such an accumulator for every pool, with `t_0 = pool_creation_time` to `t_n = current_block_time`, we can easily compute the TWAP for any interval. The TWAP for the time interval of price points `t_i` to `t_j` is then $twap = \frac{a_j - a_i}{t_j - t_i}$, which is constant time given the accumulator values.
 
-In Mokisis, we maintain accumulator records for every pool, for the last 48 hours.
+In Mokita, we maintain accumulator records for every pool, for the last 48 hours.
 We also maintain within each accumulator record in state, the latest spot price.
 This allows us to interpolate accumulation records between times.
 Namely, if I want the twap from `t=10s` to `t=15s`, but the time records are at `9s, 13s, 17s`, this is fine.
@@ -113,9 +113,9 @@ computation of the TWAP, which is done via the geometric mean.
 
 ## Store layout
 
-We maintain TWAP accumulation records for every AMM pool on Mokisis. 
+We maintain TWAP accumulation records for every AMM pool on Mokita. 
 
-Because Mokisis supports multi-asset pools, a complicating factor is that we have to store a record for every asset pair in the pool.
+Because Mokita supports multi-asset pools, a complicating factor is that we have to store a record for every asset pair in the pool.
 For every pool, at a given point in time, we make one twap record entry per unique pair of denoms in the pool. If a pool has `k` denoms, the number of unique pairs is `k * (k - 1) / 2`.
 All public API's for the module will sort the input denoms to the canonical representation, so the caller does not need to worry about this. (The canonical representation is the denoms in lexicographical order)
 
@@ -220,12 +220,12 @@ The pre-release testing methodology planned for the twap module is:
   - API
     - Unit tests for the public API, under foreseeable setup conditions
 - [ ] End to end migration tests
-  - Tests that migration of Mokisis pools created prior to the TWAP upgrade, get TWAPs recorded starting at the v11 upgrade.
-- [ ] Integration into the Mokisis simulator
+  - Tests that migration of Mokita pools created prior to the TWAP upgrade, get TWAPs recorded starting at the v11 upgrade.
+- [ ] Integration into the Mokita simulator
   - The mokita simulator, simulates building up complex state machine states, in random ways not seen before. We plan on, in a property check, maintaining expected TWAPs for short time ranges, and seeing that the keeper query will return the same value as what we get off of the raw price history for short history intervals.
   - Not currently deemed release blocking, but planned: Integration for gas tracking, to ensure gas of reads/writes does not grow with time.
 - [ ] Mutation testing usage
-  - integration of the TWAP module into [go mutation testing](https://github.com/mokita-labs/go-mutesting): 
+  - integration of the TWAP module into [go mutation testing](https://github.com/osmosis-labs/go-mutesting): 
     - We've seen with the `tokenfactory` module that it succeeds at surfacing behavior for untested logic.
         e.g. if you delete a line, or change the direction of a conditional, mutation tests show if regular Go tests catch it.
     - We expect to get this to a state, where after mutation testing is ran, the only items it mutates, that is not caught in a test, is: Deleting `return err`, or `panic` lines, in the situation where that error return or panic isn't reachable.

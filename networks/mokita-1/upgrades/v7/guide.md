@@ -112,5 +112,5 @@ Please note, this does not automatically update your
 
 ## Further Help
 
-If you need more help, please go to <https://docs.mokita.zone> or join
+If you need more help, please go to <https://docs.osmosis.zone> or join
 our discord at <https://discord.gg/pAxjcFnAFH>.

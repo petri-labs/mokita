@@ -27,31 +27,31 @@ func (suite *KeeperTestSuite) TestGetNumberOfTrades() {
 // TestGetProfitsByDenom tests GetProfitsByDenom, UpdateProfitsByDenom, and GetAllProfits
 func (suite *KeeperTestSuite) TestGetProfitsByDenom() {
 	// Should be zero by default
-	profits, err := suite.App.AppKeepers.ProtoRevKeeper.GetProfitsByDenom(suite.Ctx, types.MokisisDenomination)
+	profits, err := suite.App.AppKeepers.ProtoRevKeeper.GetProfitsByDenom(suite.Ctx, types.MokitaDenomination)
 	suite.Require().Error(err)
-	suite.Require().Equal(sdk.NewCoin(types.MokisisDenomination, sdk.ZeroInt()), profits)
+	suite.Require().Equal(sdk.NewCoin(types.MokitaDenomination, sdk.ZeroInt()), profits)
 
 	// Pseudo execute a trade
-	err = suite.App.AppKeepers.ProtoRevKeeper.UpdateProfitsByDenom(suite.Ctx, types.MokisisDenomination, sdk.NewInt(9000))
+	err = suite.App.AppKeepers.ProtoRevKeeper.UpdateProfitsByDenom(suite.Ctx, types.MokitaDenomination, sdk.NewInt(9000))
 	suite.Require().NoError(err)
 
 	// Check the updated result
-	profits, err = suite.App.AppKeepers.ProtoRevKeeper.GetProfitsByDenom(suite.Ctx, types.MokisisDenomination)
+	profits, err = suite.App.AppKeepers.ProtoRevKeeper.GetProfitsByDenom(suite.Ctx, types.MokitaDenomination)
 	suite.Require().NoError(err)
-	suite.Require().Equal(sdk.NewCoin(types.MokisisDenomination, sdk.NewInt(9000)), profits)
+	suite.Require().Equal(sdk.NewCoin(types.MokitaDenomination, sdk.NewInt(9000)), profits)
 
 	// Pseudo execute a second trade
-	err = suite.App.AppKeepers.ProtoRevKeeper.UpdateProfitsByDenom(suite.Ctx, types.MokisisDenomination, sdk.NewInt(5000))
+	err = suite.App.AppKeepers.ProtoRevKeeper.UpdateProfitsByDenom(suite.Ctx, types.MokitaDenomination, sdk.NewInt(5000))
 	suite.Require().NoError(err)
 
 	// Check the updated result after the second trade
-	profits, err = suite.App.AppKeepers.ProtoRevKeeper.GetProfitsByDenom(suite.Ctx, types.MokisisDenomination)
+	profits, err = suite.App.AppKeepers.ProtoRevKeeper.GetProfitsByDenom(suite.Ctx, types.MokitaDenomination)
 	suite.Require().NoError(err)
-	suite.Require().Equal(sdk.NewCoin(types.MokisisDenomination, sdk.NewInt(14000)), profits)
+	suite.Require().Equal(sdk.NewCoin(types.MokitaDenomination, sdk.NewInt(14000)), profits)
 
 	// Check the result of GetAllProfits
 	allProfits := suite.App.AppKeepers.ProtoRevKeeper.GetAllProfits(suite.Ctx)
-	suite.Require().Equal([]*sdk.Coin{{Denom: types.MokisisDenomination, Amount: sdk.NewInt(14000)}}, allProfits)
+	suite.Require().Equal([]*sdk.Coin{{Denom: types.MokitaDenomination, Amount: sdk.NewInt(14000)}}, allProfits)
 
 	// Pseudo execute a third trade in a different denom
 	err = suite.App.AppKeepers.ProtoRevKeeper.UpdateProfitsByDenom(suite.Ctx, types.AtomDenomination, sdk.NewInt(1000))
@@ -59,7 +59,7 @@ func (suite *KeeperTestSuite) TestGetProfitsByDenom() {
 
 	// Check the result of GetAllProfits
 	allProfits = suite.App.AppKeepers.ProtoRevKeeper.GetAllProfits(suite.Ctx)
-	suite.Require().Equal([]*sdk.Coin{{Denom: types.AtomDenomination, Amount: sdk.NewInt(1000)}, {Denom: types.MokisisDenomination, Amount: sdk.NewInt(14000)}}, allProfits)
+	suite.Require().Equal([]*sdk.Coin{{Denom: types.AtomDenomination, Amount: sdk.NewInt(1000)}, {Denom: types.MokitaDenomination, Amount: sdk.NewInt(14000)}}, allProfits)
 }
 
 // TestGetTradesByRoute tests GetTradesByRoute, IncrementTradesByRoute, and GetAllRoutes
@@ -113,22 +113,22 @@ func (suite *KeeperTestSuite) TestGetProfitsByRoute() {
 	suite.Require().Equal([]*sdk.Coin{}, profits)
 
 	// Check the profits for a route that has not been executed
-	profit, err := suite.App.AppKeepers.ProtoRevKeeper.GetProfitsByRoute(suite.Ctx, []uint64{1, 2, 3}, types.MokisisDenomination)
+	profit, err := suite.App.AppKeepers.ProtoRevKeeper.GetProfitsByRoute(suite.Ctx, []uint64{1, 2, 3}, types.MokitaDenomination)
 	suite.Require().Error(err)
-	suite.Require().Equal(sdk.NewCoin(types.MokisisDenomination, sdk.ZeroInt()), profit)
+	suite.Require().Equal(sdk.NewCoin(types.MokitaDenomination, sdk.ZeroInt()), profit)
 
 	// Pseudo execute a trade
-	err = suite.App.AppKeepers.ProtoRevKeeper.UpdateProfitsByRoute(suite.Ctx, []uint64{1, 2, 3}, types.MokisisDenomination, sdk.NewInt(1000))
+	err = suite.App.AppKeepers.ProtoRevKeeper.UpdateProfitsByRoute(suite.Ctx, []uint64{1, 2, 3}, types.MokitaDenomination, sdk.NewInt(1000))
 	suite.Require().NoError(err)
 
 	// Check the updated result
-	profit, err = suite.App.AppKeepers.ProtoRevKeeper.GetProfitsByRoute(suite.Ctx, []uint64{1, 2, 3}, types.MokisisDenomination)
+	profit, err = suite.App.AppKeepers.ProtoRevKeeper.GetProfitsByRoute(suite.Ctx, []uint64{1, 2, 3}, types.MokitaDenomination)
 	suite.Require().NoError(err)
-	suite.Require().Equal(sdk.NewCoin(types.MokisisDenomination, sdk.NewInt(1000)), profit)
+	suite.Require().Equal(sdk.NewCoin(types.MokitaDenomination, sdk.NewInt(1000)), profit)
 
 	// Check the result of GetAllProfitsByRoute
 	profits = suite.App.AppKeepers.ProtoRevKeeper.GetAllProfitsByRoute(suite.Ctx, []uint64{1, 2, 3})
-	suite.Require().Equal([]*sdk.Coin{{Denom: types.MokisisDenomination, Amount: sdk.NewInt(1000)}}, profits)
+	suite.Require().Equal([]*sdk.Coin{{Denom: types.MokitaDenomination, Amount: sdk.NewInt(1000)}}, profits)
 }
 
 // TestUpdateStatistics tests UpdateStatistics which is a wrapper for much of the statistics keeper
@@ -137,7 +137,7 @@ func (suite *KeeperTestSuite) TestUpdateStatistics() {
 	// Psuedo execute a trade
 	err := suite.App.AppKeepers.ProtoRevKeeper.UpdateStatistics(suite.Ctx,
 		swaproutertypes.SwapAmountInRoutes{{TokenOutDenom: "", PoolId: 1}, {TokenOutDenom: "", PoolId: 2}, {TokenOutDenom: "", PoolId: 3}},
-		sdk.NewCoin(types.MokisisDenomination, sdk.NewInt(800)),
+		sdk.NewCoin(types.MokitaDenomination, sdk.NewInt(800)),
 		sdk.NewInt(1000),
 	)
 	suite.Require().NoError(err)
@@ -148,9 +148,9 @@ func (suite *KeeperTestSuite) TestUpdateStatistics() {
 	suite.Require().Equal(sdk.NewInt(1), trades)
 
 	// Check the result of GetProfitsByRoute
-	profit, err := suite.App.AppKeepers.ProtoRevKeeper.GetProfitsByRoute(suite.Ctx, []uint64{1, 2, 3}, types.MokisisDenomination)
+	profit, err := suite.App.AppKeepers.ProtoRevKeeper.GetProfitsByRoute(suite.Ctx, []uint64{1, 2, 3}, types.MokitaDenomination)
 	suite.Require().NoError(err)
-	suite.Require().Equal(sdk.NewCoin(types.MokisisDenomination, sdk.NewInt(200)), profit)
+	suite.Require().Equal(sdk.NewCoin(types.MokitaDenomination, sdk.NewInt(200)), profit)
 
 	// Check the result of GetAllRoutes
 	routes, err := suite.App.AppKeepers.ProtoRevKeeper.GetAllRoutes(suite.Ctx)
@@ -160,7 +160,7 @@ func (suite *KeeperTestSuite) TestUpdateStatistics() {
 	// Psuedo execute a second trade
 	err = suite.App.AppKeepers.ProtoRevKeeper.UpdateStatistics(suite.Ctx,
 		swaproutertypes.SwapAmountInRoutes{{TokenOutDenom: "", PoolId: 2}, {TokenOutDenom: "", PoolId: 3}, {TokenOutDenom: "", PoolId: 4}},
-		sdk.NewCoin(types.MokisisDenomination, sdk.NewInt(850)),
+		sdk.NewCoin(types.MokitaDenomination, sdk.NewInt(850)),
 		sdk.NewInt(1100),
 	)
 	suite.Require().NoError(err)
@@ -171,9 +171,9 @@ func (suite *KeeperTestSuite) TestUpdateStatistics() {
 	suite.Require().Equal(sdk.NewInt(1), trades)
 
 	// Check the result of GetProfitsByRoute
-	profit, err = suite.App.AppKeepers.ProtoRevKeeper.GetProfitsByRoute(suite.Ctx, []uint64{2, 3, 4}, types.MokisisDenomination)
+	profit, err = suite.App.AppKeepers.ProtoRevKeeper.GetProfitsByRoute(suite.Ctx, []uint64{2, 3, 4}, types.MokitaDenomination)
 	suite.Require().NoError(err)
-	suite.Require().Equal(sdk.NewCoin(types.MokisisDenomination, sdk.NewInt(250)), profit)
+	suite.Require().Equal(sdk.NewCoin(types.MokitaDenomination, sdk.NewInt(250)), profit)
 
 	// Check the result of GetAllRoutes
 	routes, err = suite.App.AppKeepers.ProtoRevKeeper.GetAllRoutes(suite.Ctx)

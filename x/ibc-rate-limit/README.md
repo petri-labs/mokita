@@ -11,7 +11,7 @@ This is done in exchange for a potential (one-way) bridge liveness tradeoff, in 
 
 The architecture of this package is a minimal go package which implements an [IBC Middleware](https://github.com/cosmos/ibc-go/blob/f57170b1d4dd202a3c6c1c61dcf302b6a9546405/docs/ibc/middleware/develop.md) that wraps the [ICS20 transfer](https://ibc.cosmos.network/main/apps/transfer/overview.html) app, and calls into a cosmwasm contract.
 The cosmwasm contract then has all of the actual IBC rate limiting logic.
-The Cosmwasm code can be found in the [`contracts`](./contracts/) package, with bytecode findable in the [`bytecode`](./bytecode/) folder. The cosmwasm VM usage allows Mokisis chain governance to choose to change this safety control with no hard forks, via a parameter change proposal, a great mitigation for faster threat adaptavity.
+The Cosmwasm code can be found in the [`contracts`](./contracts/) package, with bytecode findable in the [`bytecode`](./bytecode/) folder. The cosmwasm VM usage allows Mokita chain governance to choose to change this safety control with no hard forks, via a parameter change proposal, a great mitigation for faster threat adaptavity.
 
 The status of the module is being in a state suitable for some initial governance settable rate limits for high value bridged assets.
 Its not in its long term / end state for all channels by any means, but does act as a strong protection we
@@ -26,9 +26,9 @@ The motivation of IBC-rate-limit comes from the empirical observations of blockc
 - [Wormhole Bridge Hack ($326 million)](https://rekt.news/wormhole-rekt/)
 - [Nomad Bridge Hack ($190 million)](https://rekt.news/nomad-rekt/)
 - [Harmony Bridge Hack ($100 million)](https://rekt.news/harmony-rekt/) - (Would require rate limit + monitoring)
-- [Dragonberry IBC bug](https://forum.cosmos.network/t/ibc-security-advisory-dragonberry/7702) (can't yet disclose amount at risk, but was saved due to being found first by altruistic Mokisis core developers)
+- [Dragonberry IBC bug](https://forum.cosmos.network/t/ibc-security-advisory-dragonberry/7702) (can't yet disclose amount at risk, but was saved due to being found first by altruistic Mokita core developers)
 
-In the presence of a software bug on Mokisis, IBC itself, or on a counterparty chain, we would like to prevent the bridge from being fully depegged.
+In the presence of a software bug on Mokita, IBC itself, or on a counterparty chain, we would like to prevent the bridge from being fully depegged.
 This stems from the idea that a 30% asset depeg is ~infinitely better than a 100% depeg.
 Its _crazy_ that today these complex bridged assets can instantly go to 0 in event of bug.
 The goal of a rate limit is to raise an alert that something has potentially gone wrong, allowing validators and developers to have time to analyze, react, and protect larger portions of user funds.
@@ -50,9 +50,9 @@ We do all of our rate limits based on the _net flow_ of assets on a channel pair
 We currently envision creating two kinds of rate limits:
 
 * Per denomination rate limits
-   - allows safety statements like "Only 30% of Stars on Mokisis can flow out in one day" or "The amount of Atom on Mokisis can at most double per day".
+   - allows safety statements like "Only 30% of Stars on Mokita can flow out in one day" or "The amount of Atom on Mokita can at most double per day".
 * Per channel rate limits
-   - Limit the total inflow and outflow on a given IBC channel, based on "USDC" equivalent, using Mokisis as the price oracle.
+   - Limit the total inflow and outflow on a given IBC channel, based on "USDC" equivalent, using Mokita as the price oracle.
 
 We currently only implement per denomination rate limits for non-native assets. We do not yet implement channel based rate limits.
 
@@ -99,11 +99,11 @@ It does get more complex when the counterparty chain is itself a DEX, but this i
 
 ### Outflow parameterization
 
-The "Outflow" side of a rate limit is protection against a bug on Mokisis OR IBC.
+The "Outflow" side of a rate limit is protection against a bug on Mokita OR IBC.
 This has potential for much more user-frustrating issues, if set too low.
 E.g. if theres some event that causes many people to suddenly withdraw many STARS or many USDC.
 
-So this parameterization has to contend with being a tradeoff of withdrawal liveness in high volatility periods vs being a crucial safety rail, in event of on-Mokisis bug.
+So this parameterization has to contend with being a tradeoff of withdrawal liveness in high volatility periods vs being a crucial safety rail, in event of on-Mokita bug.
 
 TODO: Better fill out
 
@@ -191,8 +191,8 @@ All of these messages receive the packet from the chain and extract the necessar
 
 To determine if a packet should be rate limited, we need:
 
-* Channel: The channel on the Mokisis side: `packet.SourceChannel` for sends, and `packet.DestinationChannel` for receives. 
-* Denom: The denom of the token being transferred as known on the Mokisis side (more on that bellow)
+* Channel: The channel on the Mokita side: `packet.SourceChannel` for sends, and `packet.DestinationChannel` for receives. 
+* Denom: The denom of the token being transferred as known on the Mokita side (more on that bellow)
 * Channel Value: The total value of the chanel denominated in `Denom` (i.e.: channel-17 is worth 10k moki).  
 * Funds: the amount being transferred
 
@@ -201,7 +201,7 @@ The contract also supports quotas on a custom channel called "any" that is check
 transfer channel or the "any" channel have a quota that has been filled, the transaction will be rate limited.
 
 #### Notes on Denom
-We always use the the denom as represented on Mokisis. For native assets that is the local denom, and for non-native 
+We always use the the denom as represented on Mokita. For native assets that is the local denom, and for non-native 
 assets it's the "ibc" prefix and the sha256 hash of the denom trace (`ibc/...`).
 
 ##### Sends
@@ -230,16 +230,16 @@ If the chain is the source for the denom, there are two possibilities:
 
 #### Notes on Channel Value
 We have iterated on different strategies for calculating the channel value. Our preferred strategy is the following:
-* For non-native tokens (`ibc/...`), the channel value should be the supply of those tokens in Mokisis
+* For non-native tokens (`ibc/...`), the channel value should be the supply of those tokens in Mokita
 * For native tokens, the channel value should be the total amount of tokens in escrow across all ibc channels
 
-The later ensures the limits are lower and represent the amount of native tokens that exist outside Mokisis. This is 
+The later ensures the limits are lower and represent the amount of native tokens that exist outside Mokita. This is 
 beneficial as we assume the majority of native tokens exist on the native chain and the amount "normal" ibc transfers is 
 proportional to the tokens that have left the chain. 
 
 This strategy cannot be implemented at the moment because IBC does not track the amount of tokens in escrow across 
 all channels ([github issue](https://github.com/cosmos/ibc-go/issues/2664)). Instead, we use the current supply on 
-Mokisis for all denoms (i.e.: treat native and non-native tokens the same way). Once that ticket is fixed, we will 
+Mokita for all denoms (i.e.: treat native and non-native tokens the same way). Once that ticket is fixed, we will 
 update this strategy.
 
 ##### Caching
@@ -304,4 +304,4 @@ Not yet highlighted
    * Could imagine tieng it into looking at AMM volatility, or off-chain oracles
       * but these are both things we should be wary of security bugs in.
       * Maybe [constraint based programming with tracking of provenance](https://youtu.be/HB5TrK7A4pI?t=2852) as a solution
-* Analyze changing denom-based rate limits, to just overall withdrawal amount for Mokisis
+* Analyze changing denom-based rate limits, to just overall withdrawal amount for Mokita

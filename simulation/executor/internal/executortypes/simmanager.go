@@ -109,7 +109,7 @@ func (m Manager) legacyActions(seed int64, cdc codec.JSONCodec) []simtypes.Actio
 	// second pass generate actions
 	actions := []simtypes.ActionsWithMetadata{}
 	for _, moduleName := range m.moduleManager.OrderInitGenesis {
-		// wasmd simulation has txfee assumptions that don't work with Mokisis.
+		// wasmd simulation has txfee assumptions that don't work with Mokita.
 		// TODO: Make an issue / PR on their repo
 		if moduleName == "wasm" {
 			continue
@@ -148,7 +148,7 @@ func (m Manager) Actions(seed int64, cdc codec.JSONCodec) []simtypes.ActionsWith
 // and I want to move on to the more interesting goals of this simulation refactor.
 // We do need to come back and un-screw up alot of this genesis work.
 //
-// Thankfully for Mokisis-custom modules, we don't really care about genesis logic. (yet)
+// Thankfully for Mokita-custom modules, we don't really care about genesis logic. (yet)
 // The architectural errors for future readers revolve around on the design of the
 // * Design of the AppStateFn (just look at it, mokita/simapp/state.go)
 //   - Abstraction leaks overt amounts of code riddle it!

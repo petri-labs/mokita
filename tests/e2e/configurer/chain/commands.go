@@ -283,7 +283,7 @@ func (n *NodeConfig) QueryPropStatusTimed(proposalNumber int, desiredStatus stri
 		},
 		1*time.Minute,
 		10*time.Millisecond,
-		"Mokisis node failed to retrieve prop tally",
+		"Mokita node failed to retrieve prop tally",
 	)
 	elapsed := time.Since(start)
 	totalTime <- elapsed

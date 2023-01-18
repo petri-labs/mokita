@@ -64,7 +64,7 @@ func (k Keeper) GetProfitsByDenom(ctx sdk.Context, denom string) (sdk.Coin, erro
 }
 
 // GetAllProfits returns all of the profits made by the ProtoRev module. This will only include
-// profits made in the Atom and Mokisis denominations because protorev only trades in those two.
+// profits made in the Atom and Mokita denominations because protorev only trades in those two.
 func (k Keeper) GetAllProfits(ctx sdk.Context) []*sdk.Coin {
 	profits := make([]*sdk.Coin, 0)
 
@@ -72,7 +72,7 @@ func (k Keeper) GetAllProfits(ctx sdk.Context) []*sdk.Coin {
 		profits = append(profits, &profit)
 	}
 
-	if profit, err := k.GetProfitsByDenom(ctx, types.MokisisDenomination); err == nil {
+	if profit, err := k.GetProfitsByDenom(ctx, types.MokitaDenomination); err == nil {
 		profits = append(profits, &profit)
 	}
 
@@ -171,14 +171,14 @@ func (k Keeper) GetProfitsByRoute(ctx sdk.Context, route []uint64, denom string)
 }
 
 // GetAllProfitsByRoute returns all of the profits made by the ProtoRev module for the given route. This will only include
-// profits made in the Atom and Mokisis denominations because protorev only trades in those two.
+// profits made in the Atom and Mokita denominations because protorev only trades in those two.
 func (k Keeper) GetAllProfitsByRoute(ctx sdk.Context, route []uint64) []*sdk.Coin {
 	profits := make([]*sdk.Coin, 0)
 	if profit, err := k.GetProfitsByRoute(ctx, route, types.AtomDenomination); err == nil {
 		profits = append(profits, &profit)
 	}
 
-	if profit, err := k.GetProfitsByRoute(ctx, route, types.MokisisDenomination); err == nil {
+	if profit, err := k.GetProfitsByRoute(ctx, route, types.MokitaDenomination); err == nil {
 		profits = append(profits, &profit)
 	}
 

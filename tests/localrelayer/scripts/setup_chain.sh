@@ -101,7 +101,7 @@ edit_config () {
 if [[ ! -d $CONFIG_FOLDER ]]
 then
     install_prerequisites
-    echo "🧪 Creating Mokisis home for $VALIDATOR_MONIKER"
+    echo "🧪 Creating Mokita home for $VALIDATOR_MONIKER"
     echo $VALIDATOR_MNEMONIC | mokitad init -o --chain-id=$CHAIN_ID --home $MOKISIS_HOME --recover $VALIDATOR_MONIKER
     edit_genesis
     add_genesis_accounts

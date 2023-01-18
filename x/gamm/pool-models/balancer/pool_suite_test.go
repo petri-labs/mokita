@@ -459,7 +459,7 @@ var multiAssetExactInputTestCases = []calcJoinSharesTestCase{
 	},
 	{
 		// This test doubles the liquidity in a fresh pool, so it should generate the base number of LP shares for pool creation as new shares
-		// This is set to 1e20 (or 100 * 10^18) for Mokisis, so we should expect:
+		// This is set to 1e20 (or 100 * 10^18) for Mokita, so we should expect:
 		// P_issued = 1e20
 		name:    "minimum input with two assets and minimum liquidity",
 		swapFee: sdk.MustNewDecFromStr("0"),

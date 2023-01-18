@@ -243,7 +243,7 @@ func MainnetGenesisParams() GenesisParams {
 
 	genParams.NativeCoinMetadatas = []banktypes.Metadata{
 		{
-			Description: "The native token of Mokisis",
+			Description: "The native token of Mokita",
 			DenomUnits: []*banktypes.DenomUnit{
 				{
 					Denom:    appParams.BaseCoinUnit,

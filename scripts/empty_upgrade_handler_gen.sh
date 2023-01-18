@@ -56,7 +56,7 @@
  echo -e ")\n" >> $CONSTANTS_FILE
  
  # constants.go logic
- echo "// UpgradeName defines the on-chain upgrade name for the Mokisis $version_create upgrade." >> $CONSTANTS_FILE
+ echo "// UpgradeName defines the on-chain upgrade name for the Mokita $version_create upgrade." >> $CONSTANTS_FILE
  echo "const UpgradeName = ${bracks}$version_create$bracks" >> $CONSTANTS_FILE
  echo "
 var Upgrade = upgrades.Upgrade{

@@ -88,14 +88,14 @@ func NewRootCmd() (*cobra.Command, params.EncodingConfig) {
 // initAppConfig helps to override default appConfig template and configs.
 // return "", nil if no custom configuration is required for the application.
 func initAppConfig() (string, interface{}) {
-	type MokisisMempoolConfig struct {
+	type MokitaMempoolConfig struct {
 		ArbitrageMinGasPrice string `mapstructure:"arbitrage-min-gas-fee"`
 	}
 
 	type CustomAppConfig struct {
 		serverconfig.Config
 
-		MokisisMempoolConfig MokisisMempoolConfig `mapstructure:"mokita-mempool"`
+		MokitaMempoolConfig MokitaMempoolConfig `mapstructure:"mokita-mempool"`
 	}
 
 	// Optionally allow the chain developer to overwrite the SDK's default
@@ -109,13 +109,13 @@ func initAppConfig() (string, interface{}) {
 	// 128MB IAVL cache
 	srvCfg.IAVLCacheSize = 781250
 
-	memCfg := MokisisMempoolConfig{ArbitrageMinGasPrice: "0.01"}
+	memCfg := MokitaMempoolConfig{ArbitrageMinGasPrice: "0.01"}
 
-	MokisisAppCfg := CustomAppConfig{Config: *srvCfg, MokisisMempoolConfig: memCfg}
+	MokitaAppCfg := CustomAppConfig{Config: *srvCfg, MokitaMempoolConfig: memCfg}
 
-	MokisisAppTemplate := serverconfig.DefaultConfigTemplate + `
+	MokitaAppTemplate := serverconfig.DefaultConfigTemplate + `
 ###############################################################################
-###                      Mokisis Mempool Configuration                      ###
+###                      Mokita Mempool Configuration                      ###
 ###############################################################################
 
 [mokita-mempool]
@@ -132,7 +132,7 @@ arbitrage-min-gas-fee = ".005"
 min-gas-price-for-high-gas-tx = ".0025"
 `
 
-	return MokisisAppTemplate, MokisisAppCfg
+	return MokitaAppTemplate, MokitaAppCfg
 }
 
 // initRootCmd initializes root commands when creating a new root command for simd.
@@ -163,7 +163,7 @@ func initRootCmd(rootCmd *cobra.Command, encodingConfig params.EncodingConfig) {
 		config.Cmd(),
 	)
 
-	server.AddCommands(rootCmd, mokita.DefaultNodeHome, newApp, createMokisisAppAndExport, addModuleInitFlags)
+	server.AddCommands(rootCmd, mokita.DefaultNodeHome, newApp, createMokitaAppAndExport, addModuleInitFlags)
 
 	// add keybase, auxiliary RPC, query, and tx child commands
 	rootCmd.AddCommand(
@@ -233,7 +233,7 @@ func txCommand() *cobra.Command {
 	return cmd
 }
 
-// newApp initializes and returns a new Mokisis app.
+// newApp initializes and returns a new Mokita app.
 func newApp(logger log.Logger, db dbm.DB, traceStore io.Writer, appOpts servertypes.AppOptions) servertypes.Application {
 	var cache sdk.MultiStorePersistentCache
 
@@ -266,7 +266,7 @@ func newApp(logger log.Logger, db dbm.DB, traceStore io.Writer, appOpts serverty
 		wasmOpts = append(wasmOpts, wasmkeeper.WithVMCacheMetrics(prometheus.DefaultRegisterer))
 	}
 
-	return mokita.NewMokisisApp(
+	return mokita.NewMokitaApp(
 		logger, db, traceStore, true, skipUpgradeHeights,
 		cast.ToString(appOpts.Get(flags.FlagHome)),
 		cast.ToUint(appOpts.Get(server.FlagInvCheckPeriod)),
@@ -286,8 +286,8 @@ func newApp(logger log.Logger, db dbm.DB, traceStore io.Writer, appOpts serverty
 	)
 }
 
-// createMokisisAppAndExport creates and exports the new Mokisis app, returns the state of the new Mokisis app for a genesis file.
-func createMokisisAppAndExport(
+// createMokitaAppAndExport creates and exports the new Mokita app, returns the state of the new Mokita app for a genesis file.
+func createMokitaAppAndExport(
 	logger log.Logger, db dbm.DB, traceStore io.Writer, height int64, forZeroHeight bool, jailWhiteList []string,
 	appOpts servertypes.AppOptions, modulesToExport []string,
 ) (servertypes.ExportedApp, error) {
@@ -295,7 +295,7 @@ func createMokisisAppAndExport(
 	encCfg.Marshaler = codec.NewProtoCodec(encCfg.InterfaceRegistry)
 	loadLatest := height == -1
 	homeDir := cast.ToString(appOpts.Get(flags.FlagHome))
-	app := mokita.NewMokisisApp(logger, db, traceStore, loadLatest, map[int64]bool{}, homeDir, 0, appOpts, mokita.GetWasmEnabledProposals(), mokita.EmptyWasmOpts)
+	app := mokita.NewMokitaApp(logger, db, traceStore, loadLatest, map[int64]bool{}, homeDir, 0, appOpts, mokita.GetWasmEnabledProposals(), mokita.EmptyWasmOpts)
 
 	if !loadLatest {
 		if err := app.LoadHeight(height); err != nil {

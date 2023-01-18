@@ -88,7 +88,7 @@ func (s *IntegrationTestSuite) TestSuperfluidVoting() {
 		},
 		1*time.Minute,
 		10*time.Millisecond,
-		"Mokisis node failed to retrieve prop tally",
+		"Mokita node failed to retrieve prop tally",
 	)
 	noTotal, _, _, _, _ := chainANode.QueryPropTally(chainA.LatestProposalNumber)
 	noTotalFinal, err := strconv.Atoi(noTotal.String())
@@ -216,7 +216,7 @@ func (s *IntegrationTestSuite) TestIBCTokenTransferRateLimiting() {
 		},
 		1*time.Minute,
 		10*time.Millisecond,
-		"Mokisis node failed to retrieve params",
+		"Mokita node failed to retrieve params",
 	)
 
 	// Sending <1%. Should work

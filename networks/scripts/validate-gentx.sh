@@ -46,7 +46,7 @@ else
     echo "GentxFile::::"
     echo $GENTX_FILE
 
-    echo "...........Init Mokisis.............."
+    echo "...........Init Mokita.............."
 
     git clone https://github.com/petri-labs/mokita
     cd mokita
@@ -60,7 +60,7 @@ else
 
     echo "..........Fetching genesis......."
     rm -rf $MOKISIS_HOME/config/genesis.json
-    curl -s https://raw.githubusercontent.com/mokita-labs/networks/main/$CHAIN_ID/pregenesis.json >$MOKISIS_HOME/config/genesis.json
+    curl -s https://raw.githubusercontent.com/osmosis-labs/networks/main/$CHAIN_ID/pregenesis.json >$MOKISIS_HOME/config/genesis.json
 
     # this genesis time is different from original genesis time, just for validating gentx.
     sed -i '/genesis_time/c\   \"genesis_time\" : \"2021-03-29T00:00:00Z\",' $MOKISIS_HOME/config/genesis.json

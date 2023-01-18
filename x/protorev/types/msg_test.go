@@ -19,14 +19,14 @@ func TestMsgsTestSuite(t *testing.T) {
 }
 
 func (suite *MsgsTestSuite) TestMsgSetHotRoutes() {
-	validArbRoutes := types.CreateSeacherRoutes(3, types.MokisisDenomination, "ethereum", types.AtomDenomination, types.AtomDenomination)
+	validArbRoutes := types.CreateSeacherRoutes(3, types.MokitaDenomination, "ethereum", types.AtomDenomination, types.AtomDenomination)
 
-	notThreePoolArbRoutes := types.CreateSeacherRoutes(3, types.MokisisDenomination, "ethereum", types.AtomDenomination, types.AtomDenomination)
+	notThreePoolArbRoutes := types.CreateSeacherRoutes(3, types.MokitaDenomination, "ethereum", types.AtomDenomination, types.AtomDenomination)
 	extraTrade := types.NewTrade(100000, "a", "b")
 	notThreePoolArbRoutes.ArbRoutes = append(notThreePoolArbRoutes.ArbRoutes, &types.Route{[]*types.Trade{&extraTrade}})
 
-	invalidArbDenoms := types.CreateSeacherRoutes(3, types.MokisisDenomination, "ethereum", "juno", "juno")
-	mismatchedDenoms := types.CreateSeacherRoutes(3, types.MokisisDenomination, "ethereum", types.AtomDenomination, types.MokisisDenomination)
+	invalidArbDenoms := types.CreateSeacherRoutes(3, types.MokitaDenomination, "ethereum", "juno", "juno")
+	mismatchedDenoms := types.CreateSeacherRoutes(3, types.MokitaDenomination, "ethereum", types.AtomDenomination, types.MokitaDenomination)
 	cases := []struct {
 		description string
 		admin       string

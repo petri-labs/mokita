@@ -6,8 +6,8 @@ type ImageConfig struct {
 	InitRepository string
 	InitTag        string
 
-	MokisisRepository string
-	MokisisTag        string
+	MokitaRepository string
+	MokitaTag        string
 
 	RelayerRepository string
 	RelayerTag        string
@@ -46,8 +46,8 @@ func NewImageConfig(isUpgrade, isFork bool) ImageConfig {
 		// If upgrade is not tested, we do not need InitRepository and InitTag
 		// because we directly call the initialization logic without
 		// the need for Docker.
-		config.MokisisRepository = CurrentBranchMokiRepository
-		config.MokisisTag = CurrentBranchMokiTag
+		config.MokitaRepository = CurrentBranchMokiRepository
+		config.MokitaTag = CurrentBranchMokiTag
 		return config
 	}
 
@@ -61,16 +61,16 @@ func NewImageConfig(isUpgrade, isFork bool) ImageConfig {
 		// Normally, validators switch the binaries pre-fork height
 		// Then, once the fork height is reached, the state breaking-logic
 		// is run.
-		config.MokisisRepository = CurrentBranchMokiRepository
-		config.MokisisTag = CurrentBranchMokiTag
+		config.MokitaRepository = CurrentBranchMokiRepository
+		config.MokitaTag = CurrentBranchMokiTag
 	} else {
 		// Upgrades are run at the time when upgrade height is reached
 		// and are submitted via a governance proposal. Thefore, we
-		// must start running the previous Mokisis version. Then, the node
+		// must start running the previous Mokita version. Then, the node
 		// should auto-upgrade, at which point we can restart the updated
-		// Mokisis validator container.
-		config.MokisisRepository = previousVersionMokiRepository
-		config.MokisisTag = previousVersionMokiTag
+		// Mokita validator container.
+		config.MokitaRepository = previousVersionMokiRepository
+		config.MokitaTag = previousVersionMokiTag
 	}
 
 	return config

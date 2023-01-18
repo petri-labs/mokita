@@ -9,7 +9,7 @@ import (
 // for 4713065.
 const ForkHeight = 4713065
 
-// UpgradeName defines the on-chain upgrade name for the Mokisis v9-fork for recovery.
+// UpgradeName defines the on-chain upgrade name for the Mokita v9-fork for recovery.
 // This is not called v10, due to this bug that would require a state migration to fix:
 const UpgradeName = "v10"
 

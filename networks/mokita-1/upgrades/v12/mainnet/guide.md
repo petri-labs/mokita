@@ -1,6 +1,6 @@
 # v11 to v12 Mainnet Upgrade Guide
 
-Mokisis v12 Gov Prop: <https://www.mintscan.io/mokita/proposals/335>
+Mokita v12 Gov Prop: <https://www.mintscan.io/mokita/proposals/335>
 
 Countdown: <https://www.mintscan.io/mokita/blocks/6246000>
 
@@ -106,7 +106,7 @@ Now, at the upgrade height, Cmokivisor will upgrade to the v12 binary
 
 ## Manual Option
 
-1. Wait for Mokisis to reach the upgrade height (FILL ME IN WITH UPGRADE HEIGHT)
+1. Wait for Mokita to reach the upgrade height (FILL ME IN WITH UPGRADE HEIGHT)
 
 2. Look for a panic message, followed by endless peer logs. Stop the daemon
 
@@ -123,5 +123,5 @@ make install
 
 ## Further Help
 
-If you need more help, please go to <https://docs.mokita.zone> or join
+If you need more help, please go to <https://docs.osmosis.zone> or join
 our discord at <https://discord.gg/pAxjcFnAFH>.

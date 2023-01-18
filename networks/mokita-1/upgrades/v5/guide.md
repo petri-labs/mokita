@@ -17,7 +17,7 @@ In depth swap setup instructions:
 
 # GO Version
 
-Please note, Mokisis `v5.0.0` requires go version `1.17`, if you run
+Please note, Mokita `v5.0.0` requires go version `1.17`, if you run
 `go version` and it says `1.16.x` you should uninstall go and update to
 `1.17`. The easiest way to do this is with these
 scripts<https://github.com/canha/golang-tools-install-script>
