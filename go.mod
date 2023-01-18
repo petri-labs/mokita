@@ -1,4 +1,4 @@
-module github.com/Petri-Labs/petri/v13
+module github.com/Petri-Labs/Mokita
 
 go 1.18
 
