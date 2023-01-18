@@ -69,12 +69,7 @@ func (e ErrTolerance) Compare(expected sdk.Int, actual sdk.Int) int {
 	}
 	// Check multiplicative tolerance equations
 	if !e.MultiplicativeTolerance.IsNil() && !e.MultiplicativeTolerance.IsZero() {
-		minValue := sdk.MinInt(expected.Abs(), actual.Abs())
-		if minValue.IsZero() {
-			return comparisonSign
-		}
-
-		errTerm := diff.Quo(minValue.ToDec())
+		errTerm := diff.Quo(sdk.MinInt(expected.Abs(), actual.Abs()).ToDec())
 		if errTerm.GT(e.MultiplicativeTolerance) {
 			return comparisonSign
 		}
@@ -107,7 +102,7 @@ func (e ErrTolerance) CompareBigDec(expected BigDec, actual BigDec) int {
 	comparisonSign := 0
 	if expected.GT(actual) {
 		comparisonSign = 1
-	} else if expected.LT(actual) {
+	} else {
 		comparisonSign = -1
 	}
 
@@ -126,12 +121,7 @@ func (e ErrTolerance) CompareBigDec(expected BigDec, actual BigDec) int {
 	}
 	// Check multiplicative tolerance equations
 	if !e.MultiplicativeTolerance.IsNil() && !e.MultiplicativeTolerance.IsZero() {
-		minValue := MinDec(expected.Abs(), actual.Abs())
-		if minValue.IsZero() {
-			return comparisonSign
-		}
-
-		errTerm := diff.Quo(minValue)
+		errTerm := diff.Quo(MinDec(expected.Abs(), actual.Abs()))
 		// fmt.Printf("err term %v\n", errTerm)
 		if errTerm.GT(BigDecFromSDKDec(e.MultiplicativeTolerance)) {
 			return comparisonSign
@@ -144,26 +134,21 @@ func (e ErrTolerance) CompareBigDec(expected BigDec, actual BigDec) int {
 // Binary search inputs between [lowerbound, upperbound] to a monotonic increasing function f.
 // We stop once f(found_input) meets the ErrTolerance constraints.
 // If we perform more than maxIterations (or equivalently lowerbound = upperbound), we return an error.
-func BinarySearch(f func(sdk.Int) (sdk.Int, error),
+func BinarySearch(f func(input sdk.Int) (sdk.Int, error),
 	lowerbound sdk.Int,
 	upperbound sdk.Int,
 	targetOutput sdk.Int,
 	errTolerance ErrTolerance,
 	maxIterations int,
 ) (sdk.Int, error) {
-	var (
-		curEstimate, curOutput sdk.Int
-		err                    error
-	)
-
+	// Setup base case of loop
+	curEstimate := lowerbound.Add(upperbound).QuoRaw(2)
+	curOutput, err := f(curEstimate)
+	if err != nil {
+		return sdk.Int{}, err
+	}
 	curIteration := 0
 	for ; curIteration < maxIterations; curIteration += 1 {
-		curEstimate = lowerbound.Add(upperbound).QuoRaw(2)
-		curOutput, err = f(curEstimate)
-		if err != nil {
-			return sdk.Int{}, err
-		}
-
 		compRes := errTolerance.Compare(targetOutput, curOutput)
 		if compRes < 0 {
 			upperbound = curEstimate
@@ -171,6 +156,11 @@ func BinarySearch(f func(sdk.Int) (sdk.Int, error),
 			lowerbound = curEstimate
 		} else {
 			return curEstimate, nil
+		}
+		curEstimate = lowerbound.Add(upperbound).QuoRaw(2)
+		curOutput, err = f(curEstimate)
+		if err != nil {
+			return sdk.Int{}, err
 		}
 	}
 
@@ -192,22 +182,21 @@ type SdkDec[D any] interface {
 //
 // It binary searches on the input range, until it finds an input y s.t. f(y) meets the err tolerance constraints for how close it is to x.
 // If we perform more than maxIterations (or equivalently lowerbound = upperbound), we return an error.
-func BinarySearchBigDec(f func(BigDec) BigDec,
+func BinarySearchBigDec(f func(input BigDec) (BigDec, error),
 	lowerbound BigDec,
 	upperbound BigDec,
 	targetOutput BigDec,
 	errTolerance ErrTolerance,
 	maxIterations int,
 ) (BigDec, error) {
-	var (
-		curEstimate, curOutput BigDec
-	)
-
+	// Setup base case of loop
+	curEstimate := lowerbound.Add(upperbound).Quo(NewBigDec(2))
+	curOutput, err := f(curEstimate)
+	if err != nil {
+		return BigDec{}, err
+	}
 	curIteration := 0
 	for ; curIteration < maxIterations; curIteration += 1 {
-		curEstimate = lowerbound.Add(upperbound).Quo(NewBigDec(2))
-		curOutput = f(curEstimate)
-
 		// fmt.Println("binary search, input, target output, cur output", curEstimate, targetOutput, curOutput)
 		compRes := errTolerance.CompareBigDec(targetOutput, curOutput)
 		if compRes < 0 {
@@ -216,6 +205,11 @@ func BinarySearchBigDec(f func(BigDec) BigDec,
 			lowerbound = curEstimate
 		} else {
 			return curEstimate, nil
+		}
+		curEstimate = lowerbound.Add(upperbound).Quo(NewBigDec(2))
+		curOutput, err = f(curEstimate)
+		if err != nil {
+			return BigDec{}, err
 		}
 	}
 

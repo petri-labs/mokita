@@ -8,9 +8,8 @@ import (
 )
 
 var (
-	MaxSupportedExponent = maxSupportedExponent
-	EulersNumber         = eulersNumber
-	TwoBigDec            = twoBigDec
+	EulersNumber = eulersNumber
+	TwoBigDec    = twoBigDec
 )
 
 // 2^128 - 1, needs to be the same as gammtypes.MaxSpotPrice
@@ -28,8 +27,4 @@ func ConditionalPanic(t *testing.T, expectPanic bool, sut func()) {
 		return
 	}
 	require.NotPanics(t, sut)
-}
-
-func Exp2ChebyshevRationalApprox(exponent BigDec) BigDec {
-	return exp2ChebyshevRationalApprox(exponent)
 }
