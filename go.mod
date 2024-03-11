@@ -7,10 +7,9 @@ require (
 	github.com/cosmos/cosmos-proto v1.0.0-alpha8
 	github.com/cosmos/cosmos-sdk v0.46.7
 	github.com/cosmos/go-bip39 v1.0.0
-	github.com/cosmos/ibc-go/v3 v3.4.0
 	github.com/gogo/protobuf v1.3.3
 	github.com/golang/mock v1.6.0
-	github.com/golang/protobuf v1.5.2
+	github.com/golang/protobuf v1.5.4
 	github.com/golangci/golangci-lint v1.50.1
 	github.com/gorilla/mux v1.8.0
 	github.com/grpc-ecosystem/grpc-gateway v1.16.0
@@ -42,6 +41,7 @@ require (
 	github.com/alingse/asasalint v0.0.11 // indirect
 	github.com/cosmos/gogoproto v1.4.2 // indirect
 	github.com/cosmos/iavl v0.19.4 // indirect
+	github.com/cosmos/ibc-go/v3 v3.4.0 // indirect
 	github.com/creachadair/taskgroup v0.3.2 // indirect
 	github.com/curioswitch/go-reassign v0.2.0 // indirect
 	github.com/felixge/httpsnoop v1.0.1 // indirect
@@ -284,7 +284,7 @@ require (
 	golang.org/x/term v0.1.0 // indirect
 	golang.org/x/text v0.4.0 // indirect
 	golang.org/x/tools v0.2.0 // indirect
-	google.golang.org/protobuf v1.28.2-0.20220831092852-f930b1dc76e8 // indirect
+	google.golang.org/protobuf v1.33.0 // indirect
 	gopkg.in/check.v1 v1.0.0-20201130134442-10cb98267c6c // indirect
 	gopkg.in/ini.v1 v1.67.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1
